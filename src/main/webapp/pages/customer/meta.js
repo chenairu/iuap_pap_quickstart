@@ -11,7 +11,7 @@ var meta = {
         code: {
             type: 'string',
             required: true,
-            nullMsg: '字典类型编码不能为空!'
+            nullMsg: '编码不能为空!'
         },
         //名称
         name: {
