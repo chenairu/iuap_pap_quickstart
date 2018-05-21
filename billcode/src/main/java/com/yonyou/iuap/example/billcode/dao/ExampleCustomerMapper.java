@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 @MyBatisRepository
-public interface exampleCustomerMapper {
+public interface ExampleCustomerMapper {
     int deleteByPrimaryKey(String id);
 
     int insert(exampleCustomer record);

@@ -1,4 +1,4 @@
-define(["text!./record.html", "./meta.js", "css!./record.css", 
+define(["text!./customer.html", "./meta.js", "css!./record.css",
 	"css!../../style/style.css", "../../config/sys_const.js", 
 	"css!../../style/widget.css", "../sever.js", 
 	"css!../../style/currency.css"],

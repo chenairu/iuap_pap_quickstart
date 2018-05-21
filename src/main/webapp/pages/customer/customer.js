@@ -1,4 +1,4 @@
-define(["text!./record.html", "./meta.js", "css!./record.css", 
+define(["text!./customer.html", "./meta.js", "css!./customer.css",
 	"css!../../style/style.css", "../../config/sys_const.js", 
 	"css!../../style/widget.css", "../sever.js", 
 	"css!../../style/currency.css"],
@@ -13,17 +13,8 @@ define(["text!./record.html", "./meta.js", "css!./record.css",
 
                 listRowUrl: ctx + "/list",					//列表查询URL
                 saveRowUrl: ctx + "/save",					//新增和修改URL， 有id为修改 无id为新增
-                delRowUrl: ctx + "/delete",					//刪除URL
+                delRowUrl: ctx + "/delete",				   //刪除URL
 
-                yesOrNo: [{
-                    name: "是",
-                    value: "Y"
-                },
-                {
-                    name: "否",
-                    value: "N"
-                }
-                ],
                 gridData: new u.DataTable(meta),
                 formData: new u.DataTable(meta),
                 event: {

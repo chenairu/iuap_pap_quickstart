@@ -1,7 +1,7 @@
 <div class="u-mdlayout " id="dicttype-mdlayout">
     <div class="u-mdlayout-btn">
         <div class="center-title">
-            <span>档案管理</span>
+            <span>客户管理</span>
         </div>
     </div>
     <div class=" form-search " style="z-index:0;">
@@ -63,12 +63,12 @@
                         <div class="table-container">
                             <div type="text" id="dicttype" u-meta='{"id":"grid_dicttype","data":"gridData","type":"grid","editable":false,"editType":"default","rowHeight":"40px","multiSelect":true,"canDrag":false,"canSwap":false,"onRowSelected":"event.selectRow","onRowUnSelected":"event.selectRow","onRowHover":"event.rowHoverHandel"}'
                                 data-bind="event: { mouseout: event.mouseoutFunc  }">
-                                <div options='{"field":"code","dataType":"String","title":"编码","editType":"string","editOptions":{"validType":"string","required":true}}'></div>
-                                <div options='{"field":"name","dataType":"String","title":"名称","editType":"string","editOptions":{"validType":"string","required":true},"renderType":"event.renderName"}'></div>
-                                <div options='{"field":"sys","dataType":"String","title":"系统预置","editType":"combo","editOptions":{"datasource":"yesOrNo","type":"combo","onlySelect":true},"renderType":"event.showValue"}'></div>
-                                <div options='{"field":"creator","dataType":"String","title":"创建人","editType":"string"}'></div>
-                                <div options='{"field":"createtime","dataType":"date","title":"创建时间","editType":"date","renderType":"dateRender","format":"YYYY-MM-DD"}'></div>
-                                <div options='{"field":"remark","dataType":"String","title":"备注","editType":"string"}'></div>
+                                <div options='{"field":"code","dataType":"String","title":"编码","editType":"string"}'></div>
+                                <div options='{"field":"name","dataType":"String","title":"名称","editType":"string"}'></div>
+                                <div options='{"field":"province","dataType":"String","title":"系统预置","editType":"string"}'></div>
+                                <div options='{"field":"city","dataType":"String","title":"创建人","editType":"string"}'></div>
+                                <div options='{"field":"corpSize","dataType":"String","title":"创建时间","editType":"string"}'></div>
+                                <div options='{"field":"status","dataType":"String","title":"备注","editType":"string"}'></div>
                                 <div options='{"field":"operate","dataType":"String","title":"","renderType":"optFun","editable":true}'></div>
                             </div>
                             <div id='pagination' class='pagination u-pagination pagination-sm'></div>
@@ -92,7 +92,6 @@
                             <div class="u-input-group-before padding-left-10 " style="color: red;">*
                             </div>
                             <div u-meta='{"id":"code","type":"u-text","data":"formData","field":"code"}'>
-                                <input type="text" class="u-form-control padding-left-20" placeholder="编码不能为空">
                             </div>
                         </div>
                     </div>
@@ -123,10 +122,10 @@
                     </div>
                     <div class="u-msg-dialog-lable-out u-col-6">
                         <div class="u-msg-dialog-lable">
-                            <label class="u-input-label left">系统预置</label>
+                            <label class="u-input-label left">省份</label>
                         </div>
                         <div class="u-col-12 u-msg-dialog-input ">
-						    <div u-meta='{"id":"sys","type":"u-combobox","data":"formData","field":"sys","datasource":"yesOrNo"}'>
+						    <div u-meta='{"id":"province","type":"u-text","data":"formData","field":"province"}'>
                                 <input type="text" class="u-form-control padding-left-20" placeholder="系统预置">
                             </div>
                         </div>
@@ -135,20 +134,20 @@
                 <div class="u-row margin-top-20">
                     <div class="u-msg-dialog-lable-out u-col-6">
                         <div class="u-msg-dialog-lable ">
-                            <label class="u-input-label left">创建人</label>
+                            <label class="u-input-label left">城市</label>
                         </div>
                         <div class="u-col-12 u-msg-dialog-input ">
-                            <div u-meta='{"id":"creator","type":"u-text","data":"formData","field":"creator"}'>
+                            <div u-meta='{"id":"city","type":"u-text","data":"formData","field":"city"}'>
                                 <input type="text" class="u-form-control padding-left-20" placeholder="创建人">
                             </div>
                         </div>
                     </div>
                     <div class="u-msg-dialog-lable-out u-col-6">
                         <div class="u-msg-dialog-lable ">
-                            <label class="u-input-label left">备注</label>
+                            <label class="u-input-label left">企业规模</label>
                         </div>
                         <div class="u-col-12 u-msg-dialog-input ">
-                            <div u-meta='{"id":"remark","type":"u-text","data":"formData","field":"remark"}'>
+                            <div u-meta='{"id":"corpSize","type":"u-text","data":"formData","field":"corpSize"}'>
                                 <input type="text" class="u-form-control padding-left-20" placeholder="备注">
                             </div>
                         </div>

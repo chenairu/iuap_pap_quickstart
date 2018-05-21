@@ -17,24 +17,20 @@ var meta = {
         name: {
             type: 'string',
             required: true,
-            nullMsg: '字典类型名称不能为空!'
+            nullMsg: '名称不能为空!'
         },
-        //是否固定(系统预置)
-        sys: {
-            type: 'string',
-            'default': 'N'
-        },
-        //备注信息
-        remark: {
+        //省份
+        province: {
             type: 'string'
         },
-        //创建者
-        creator: {
+        //城市
+        city: {
             type: 'string'
         },
-        createtime: {
-            type: 'string'
-        }
+        //企业规模
+        corpSize:{},
+        //状态
+        status: {}
     },
     
     pageSize: 5,
