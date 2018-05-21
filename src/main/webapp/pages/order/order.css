@@ -1,0 +1,668 @@
+/*outside frame*/
+
+div#content {
+    background: #eceff1;
+    font-family: "Open Sans", "Helvetica Neue", Arial, "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+
+.u-col-xs-1,
+.u-col-sm-1,
+.u-col-md-1,
+.u-col-lg-1,
+.u-col-1,
+.u-col-xs-2,
+.u-col-sm-2,
+.u-col-md-2,
+.u-col-lg-2,
+.u-col-2,
+.u-col-xs-3,
+.u-col-sm-3,
+.u-col-md-3,
+.u-col-lg-3,
+.u-col-3,
+.u-col-xs-4,
+.u-col-sm-4,
+.u-col-md-4,
+.u-col-lg-4,
+.u-col-4,
+.u-col-xs-5,
+.u-col-sm-5,
+.u-col-md-5,
+.u-col-lg-5,
+.u-col-5,
+.u-col-xs-6,
+.u-col-sm-6,
+.u-col-md-6,
+.u-col-lg-6,
+.u-col-6,
+.u-col-xs-7,
+.u-col-sm-7,
+.u-col-md-7,
+.u-col-lg-7,
+.u-col-7,
+.u-col-xs-8,
+.u-col-sm-8,
+.u-col-md-8,
+.u-col-lg-8,
+.u-col-8,
+.u-col-xs-9,
+.u-col-sm-9,
+.u-col-md-9,
+.u-col-lg-9,
+.u-col-9,
+.u-col-xs-10,
+.u-col-sm-10,
+.u-col-md-10,
+.u-col-lg-10,
+.u-col-10,
+.u-col-xs-11,
+.u-col-sm-11,
+.u-col-md-11,
+.u-col-lg-11,
+.u-col-11,
+.u-col-xs-12,
+.u-col-sm-12,
+.u-col-md-12,
+.u-col-lg-12,
+.u-col-12 {
+    padding: 0;
+    height: 40px;
+    line-height: 40px;
+}
+
+div#content .u-mdlayout {
+    background: #eeeff1;
+    box-shadow: none;
+}
+
+header>.u-container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+header>.u-container>.u-row {
+    margin-left: 0;
+    margin-right: 15px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.u-col-xs-12.u-col-sm-12.text-right {
+    padding-right: 0;
+}
+
+/*搜索框部分*/
+
+#dicctype-mdlayout .u-panel {
+    width: 100%;
+}
+
+.form-search {
+    background: #f5f5f5;
+    padding: 0 15px;
+}
+
+#dicttype-mdlayout .u-panel.form-search {
+    font-family: "Open Sans", "Helvetica Neue", Arial, "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    font-size: 14px;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+#dicttype-mdlayout .u-row {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    margin: 5px 0;
+    height: 40px;
+    line-height: 40px;
+}
+
+.u-navlayout-fixed-drawer .u-navlayout-content {
+    margin-left: 200px;
+}
+
+#condition-toggle-dic .u-link:focus,
+.u-link:hover {
+    text-decoration: none;
+}
+
+#dicttype-mdlayout .u-panel-title {
+    font-size: 14px;
+    height: 40px;
+    line-height: 40px;
+    padding: 0;
+    cursor: pointer;
+}
+
+#dicttype-mdlayout .u-panel-title .u-link {
+    cursor: pointer;
+    float: right;
+    text-align: right;
+}
+
+#condition-toggle-dic .uf {
+    font-size: 12px;
+}
+
+.form-search .gray-btn {
+    color: #2196f3;
+    background-color: #f7f7f7;
+    border: 1px #f7f7f7 solid;
+}
+
+/*中间列表的样式*/
+
+#grid_dicttype_content_table .u-grid td {
+    height: 36px;
+    line-height: 36px;
+}
+
+div#list {
+    background: #fff;
+}
+
+/*表格最前方单选按钮*/
+
+.u-grid-content-multiSelect {
+    /*margin: 0.02rem !important;*/
+}
+
+#dicttype-mdlayout .u-mdlayout-page-section {
+    top: 0;
+    bottom: 35px;
+}
+
+#dicttype-mdlayout .u-mdlayout-page-section {
+    top: 0;
+    bottom: 72px;
+}
+
+.user-datagrid {
+    padding: 0px 0px 15px 0px;
+}
+
+#dicttype_list_button {
+    width: 100%;
+    background: white;
+    z-index: 2000;
+    position: fixed;
+    padding: 15px;
+}
+
+/*  按钮列表复制修改 */
+
+.u-mdlayout-btn {
+    background: #fff;
+}
+
+#dicttype_list_button_2 {
+    padding: 7px 15px 7px 15px;
+    height: 40px;
+    background: #ffff;
+}
+
+.u-button-group .u-button-primary.u-button-sm {
+    color: rgb(255, 255, 255);
+    background-color: #1e7be2;
+    border: 1px #1e7be2 solid;
+    padding: 0 20px;
+}
+
+.u-grid-content-td-div {
+    padding: 0 18px;
+    width: 300px;
+}
+
+/*加上分割线*/
+
+.u-button-group .u-button-primary.u-button-sm:not(:last-child) {
+    border-right: 1px solid #fff;
+}
+
+#dicttype_list_button_2 .u-button-group {
+    float: left;
+}
+
+#dicttype_list_button_2 .u-button {
+    min-width: 2.5rem;
+}
+
+.center-title {
+    text-align: center;
+    line-height: 44px;
+    height: 44px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(26, 26, 26, .1);
+    margin-bottom: 3px;
+}
+
+/* 与user不同的是去掉table的最上层border */
+
+div#grid_dicttype {
+    border: none;
+}
+
+#grid_dicttype_header_thead .u-grid-header-link {
+    font-family: "Open Sans", "Helvetica Neue", Arial, "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    display: block;
+    padding: 0 18px 0 18px;
+    color: var(--table_fs_color);
+    font-size: 12px !important;
+    height: 32px !important;
+    font-weight: 400;
+    line-height: 32px !important;
+}
+
+.u-grid-header-th {
+    height: 32px !important;
+}
+
+.u-grid-header-multi-select {
+    height: 32px !important;
+    line-height: 32px !important;
+}
+
+.u-grid-content-multiSelect {
+    /*height: 43px !important;*/
+}
+
+.u-grid-header .u-grid-checkbox-outline {
+    top: 9px !important;
+}
+
+/*页码*/
+
+#pagination {
+    margin: 15px;
+}
+
+.user-page-content .pagination {
+    display: inline-block !important;
+}
+
+#list .u-mdlayout-page-section {
+    text-align: center;
+}
+
+/*测试collapse*/
+
+.u-panel-body {
+    padding: 0px;
+    overflow: hidden;
+}
+
+.collapse.in {
+    height: auto;
+}
+
+.collapse {
+    -webkit-transition: height 0.35s ease;
+    -moz-transition: height 0.35s ease;
+    -ms-transition: height 0.35s ease;
+    -o-transition: height 0.35s ease;
+    transition: height 0.35s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 搜索展开收起动画 */
+
+.b-searech-open {
+    -webkit-transition: height 0.35s ease-in-out;
+    -moz-transition: height 0.35s ease-in-out;
+    -ms-transition: height 0.35s ease-in-out;
+    -o-transition: height 0.35s ease-in-out;
+    transition: height 0.35s ease-in-out;
+    position: relative;
+    overflow: hidden;
+    height: 110px !important;
+}
+
+.b-searech-close {
+    -webkit-transition: height 0.35s ease-in-out;
+    -moz-transition: height 0.35s ease-in-out;
+    -ms-transition: height 0.35s ease-in-out;
+    -o-transition: height 0.35s ease-in-out;
+    transition: height 0.35s ease-in-out;
+    position: relative;
+    overflow: hidden;
+    height: 0 !important;
+}
+
+/*兼容ie9输入框*/
+
+.u-row .input_search {
+    padding: 0 0 0 5px \9;
+}
+
+.backbutton {
+    background: #ffffff;
+    outline: none;
+    margin-left: 25px;
+    min-width: 72px;
+    font-size: 12px !important;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-border-radius: 1px;
+    -moz-border-radius: 1px;
+    border-radius: 1px;
+    text-decoration: none;
+    border: none;
+    color: rgb(3, 155, 229);
+}
+
+.backbutton:hover {
+    background: #ffffff;
+    outline: none;
+    margin-left: 25px;
+    min-width: 72px;
+    font-size: 12px !important;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-border-radius: 1px;
+    -moz-border-radius: 1px;
+    border-radius: 1px;
+    text-decoration: none;
+    border: none;
+    color: rgb(3, 155, 229);
+}
+
+.checkbox,
+.radio {
+    margin-top: 0;
+}
+
+.search-lable {
+    height: 34px;
+}
+
+.search-input {
+    margin: 0 10px;
+}
+
+.search-input>input {
+    height: 30px;
+}
+
+.u-button {
+    height: 30px;
+}
+
+.u-widget {
+    margin: 0;
+}
+
+.u-input-label.sm {
+    margin: 0 10px;
+}
+
+/*  新增样式
+  房帅中修改
+*/
+
+.u-input-group {
+    margin: 0;
+}
+
+.u-link {
+    cursor: pointer;
+    color: var(--button_bg_color);
+    background-color: transparent;
+    text-decoration: none;
+}
+
+.u-button-primary,
+.u-button.primary {
+    color: var(--button_fc_color) !important;
+    background-color: var(--button_bg_color) !important;
+    border: 1px solid var(--button_bd_color) !important;
+}
+
+.u-button-primary:hover {
+    background-color: var(--button_hover_color) !important;
+}
+
+.u-grid-content-sel-row {
+    background-color: var(--table_tr_select_color) !important;
+}
+
+.u-pagination>li>a:focus,
+.u-pagination>li>a:hover,
+.u-pagination>li>span:focus,
+.u-pagination>li>span:hover {
+    color: var(--page_fs_color);
+    background-color: var(--page_hover_color);
+    border-color: var(--page_bd_color);
+    cursor: pointer;
+}
+
+.u-pagination>.active>a,
+.u-pagination>.active>span,
+.u-pagination>.active>a:hover,
+.u-pagination>.active>span:hover,
+.u-pagination>.active>a:focus,
+.u-pagination>.active>span:focus {
+    z-index: 2;
+    color: #fff;
+    cursor: default;
+    background-color: var(--page_bg_color) !important;
+    border-color: var(--page_bg_color) !important;
+}
+
+.form-search .b_pl {
+    padding-right: 30px;
+    padding-left: 95px;
+}
+
+.form-search .b_pl:last-child {
+    padding-right: 0;
+}
+
+.form-search .b_label {
+    width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    text-align: right;
+}
+
+#dicttype-mdlayout .form-search .u-form-control.sm {
+    height: 26px;
+}
+
+#dicttype-mdlayout .u-button {
+    padding: 0 15px;
+    height: 26px;
+    line-height: 26px;
+    border-radius: 3px;
+    float: left;
+    color: var(--button_bg_color)
+}
+
+#dicttype-mdlayout .u-button:hover {
+    background-color: var(--button_hover_bd_color) !important;
+    color: #fff;
+}
+
+#dicttype-mdlayout .u-button-border {
+    border: 1px solid var(--button_bd_color);
+}
+
+#dicttype-mdlayout .b_seach_modul {
+    float: right;
+    padding: 7px 0;
+}
+
+#dicttype-mdlayout .u-grid {
+    border: none;
+}
+
+#dialog_content .u-input-label {
+    padding-right: 15px;
+    line-height: 40px;
+    padding-right: 15px;
+    line-height: 40px;
+    width: 100%;
+    text-align: left;
+}
+
+.editTable {
+    display: none;
+}
+
+.editTable button {
+    top: 7px;
+    border: none !important;
+    font-size: 12px;
+}
+
+/* 模态框样式修改byfang */
+
+.u-msg-dialog-content {
+    max-width: 900px;
+}
+
+.u-msg-dialog {
+    height: auto !important;
+    max-width: 300px !important;
+}
+
+#dialog_content,
+#testDialg {
+    max-width: 900px !important;
+}
+
+.u-msg-dialog .u-msg-content {
+    padding: 15px;
+    height: auto !important;
+    padding-top: 30px;
+    text-align: center;
+    width: 100%;
+    padding-bottom: 30px;
+    color: #000;
+}
+.u-msg-dialog .u-msg-content #dic-date {
+    background: #fff;
+}
+.u-msg-dialog .del-icon {
+    top: -30px;
+    position: absolute;
+    top: 30px;
+    margin: auto;
+    left: 0;
+    right: 0;
+}
+
+.u-msg-dialog .u-msg-content .u-msg-content-center {
+    text-align: center;
+    width: 100%;
+}
+
+.u-msg-dialog .u-msg-date-content {
+    min-height: 400px;
+}
+
+.u-msg-dialog .u-msg-date-footer button {
+    float: right !important;
+}
+
+.u-msg-dialog .u-msg-title {
+    padding: 0;
+}
+
+.u-msg-dialog .u-msg-close {
+    padding: 0;
+    margin: 0;
+    top: 0;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    line-height: 35px;
+    margin-right: 20px;
+}
+
+.u-msg-dialog h4 {
+    height: 40px;
+    line-height: 40px;
+    text-align: left;
+    padding-left: 30px;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.u-msg-dialog .u-msg-content .u-row {
+    padding: 0 15px;
+}
+
+.u-msg-dialog .u-button,
+.u-msg-dialog .u-msg-cancel .u-button-container {
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.u-msg-dialog .u-msg-footer {
+    position: relative;
+    text-align: center;
+    height: 50px;
+}
+
+.u-msg-dialog .u-msg-footer button {
+    float: none;
+}
+
+.u-msg-dialog .u-msg-dialog-lable-out {
+    position: relative;
+    float: left;
+    padding: 0 15px;
+}
+
+.u-msg-dialog .u-msg-dialog-lable {
+    position: absolute;
+    left: 15px;
+    z-index: 1;
+    width: 80px;
+    line-height: 26px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.u-msg-dialog .u-msg-dialog-input {
+    width: 100%;
+    padding-left: 80px;
+}
+
+.u-msg-dialog .u-form-control {
+    height: 26px;
+    line-height: 26px;
+}

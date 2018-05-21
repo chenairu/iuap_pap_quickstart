@@ -1,0 +1,578 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.yonyou.iuap</groupId>
+        <artifactId>eiap-plus-parent</artifactId>
+        <version>3.6.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>iuap-example</artifactId>
+    <packaging>war</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>iuap-example</name>
+    <url>http://maven.apache.org</url>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.yonyou.iuap</groupId>
+            <artifactId>eiap-plus-common</artifactId>
+            <version>${module.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-websocket</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-messaging</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+            <version>2.0.6.RELEASE</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- 业务日志 -->
+        <dependency>
+            <groupId>com.yonyou.iuap.pap.busilog</groupId>
+            <artifactId>iuap-busilog-core</artifactId>
+            <version>${module.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.yonyou.iuap</groupId>
+                    <artifactId>iuap-user-adapter</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!--数据权限SDK -->
+        <dependency>
+            <groupId>com.yonyou.iuap.pap.authrbac</groupId>
+            <artifactId>iuap-authrbac-sdk</artifactId>
+            <version>${module.version}</version>
+        </dependency>
+        <!-- 元数据相关 -->
+        <dependency>
+            <groupId>com.yonyou.iuap</groupId>
+            <artifactId>iuap-mdjdbc</artifactId>
+            <version>${iuap.modules.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.alibaba</groupId>
+                    <artifactId>jconsole</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.alibaba</groupId>
+                    <artifactId>tools</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>io.springside</groupId>
+            <artifactId>springside-core</artifactId>
+            <version>${springside.version}</version>
+            <classifier>tests</classifier>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.yonyou.iuap</groupId>
+            <artifactId>iuap-jdbc</artifactId>
+            <version>${iuap.modules.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.yonyou.iuap.pap.bpm</groupId>
+            <artifactId>ubpm-rest-sdk</artifactId>
+            <version>${module.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yonyou.iuap</groupId>
+            <artifactId>iuap-security</artifactId>
+            <version>${iuap.modules.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>log4j</artifactId>
+                    <groupId>log4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.yonyou.iuap</groupId>
+            <artifactId>iuap-auth</artifactId>
+            <version>3.1.1-RC001</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yonyou.iuap</groupId>
+            <artifactId>iuap-iweb</artifactId>
+            <version>${iuap.modules.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yonyou.iuap</groupId>
+            <artifactId>iuap-exp</artifactId>
+            <version>${iuap.modules.version}</version>
+        </dependency>
+
+        <!-- ui模板参照 -->
+        <dependency>
+            <groupId>com.yonyou.iuap.pap.uitemplate</groupId>
+            <artifactId>uitemplate_ref</artifactId>
+            <version>${iuap-uitemplate-ref.version}</version>
+            <classifier>classes</classifier>
+        </dependency>
+        <!-- ui模板运行时 -->
+        <dependency>
+            <groupId>com.yonyou.iuap.pap.uitemplate</groupId>
+            <artifactId>uitemplate_rt</artifactId>
+            <version>${iuap-uitemplate-rt.version}</version>
+            <classifier>classes</classifier>
+        </dependency>
+
+        <!-- zk分布式锁 -->
+        <dependency>
+            <groupId>com.github.sgroschupf</groupId>
+            <artifactId>zkclient</artifactId>
+            <version>0.1</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>log4j</artifactId>
+                    <groupId>log4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <version>3.4.6</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-log4j12</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>log4j</artifactId>
+                    <groupId>log4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- 消息 -->
+        <dependency>
+            <groupId>com.yonyou.iuap.pap.message</groupId>
+            <artifactId>iuap-message-sdk</artifactId>
+            <version>${module.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.jettison</groupId>
+            <artifactId>jettison</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.yonyou.iuap</groupId>
+            <artifactId>iuap-mybatis</artifactId>
+            <version>${iuap.modules.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate-validator.version}</version>
+            <!-- <exclusions> <exclusion> <groupId>com.fasterxml</groupId> <artifactId>classmate</artifactId>
+                </exclusion> </exclusions> -->
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+            <version>1.1.2</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.yonyou.iuap</groupId>
+            <artifactId>iuap-sign</artifactId>
+            <version>${iuap.modules.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>18.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.yonyou.iuap</groupId>
+            <artifactId>iuap-file</artifactId>
+            <version>${iuap.modules.version}</version>
+        </dependency>
+
+
+        <!-- Swagger2 -->
+        <!-- <dependency> <groupId>io.springfox</groupId> <artifactId>springfox-swagger2</artifactId>
+            <version>2.6.1</version> </dependency> <dependency> <groupId>com.fasterxml</groupId>
+            <artifactId>classmate</artifactId> <version>1.3.3</version> </dependency>
+            <dependency> <groupId>io.springfox</groupId> <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.6.1</version> </dependency> -->
+        <!-- Swagger2 -->
+
+        <dependency>
+            <groupId>com.yonyou.iuap.pap.workbench</groupId>
+            <artifactId>workbench-model</artifactId>
+            <version>${module.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.yonyou.iuap.portal</groupId>
+                    <artifactId>portal</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.yonyou.iuap.pap.passwordpolicy</groupId>
+                    <artifactId>iuap-passwordpolicy</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.yonyou.iuap.pap.authrbac</groupId>
+                    <artifactId>iuap-authrbac-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.yonyou.iuap.pap</groupId>
+                    <artifactId>iweb_app_fe</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+
+        <!-- maven mybatis generator -->
+        <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-core</artifactId>
+            <version>1.3.5</version>
+        </dependency>
+    </dependencies>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>iUAP-Snapshots</id>
+            <name>iUAP-Snapshots</name>
+            <url>http://maven.yonyou.com/nexus/content/repositories/iUAP-Snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>iUAP-Stagings</id>
+            <name>iUAP-Stagings</name>
+            <url>http://maven.yonyou.com/nexus/content/repositories/iUAP-Stagings/</url>
+        </repository>
+    </distributionManagement>
+
+    <!-- 插件配置 -->
+    <build>
+        <plugins>
+            <!-- compiler插件, 设定JDK版本 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <showWarnings>true</showWarnings>
+                </configuration>
+            </plugin>
+
+            <!-- resource插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.7</version>
+            </plugin>
+
+            <!-- war打包插件, 设定war包名称不带版本号 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <warName>${project.artifactId}</warName>
+                </configuration>
+            </plugin>
+
+            <!-- jar打包相关插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.4</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- clean插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.6.1</version>
+            </plugin>
+
+            <!-- install插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>2.5.2</version>
+            </plugin>
+
+            <!-- <plugin> <groupId>org.mortbay.jetty</groupId> <artifactId>jetty-maven-plugin</artifactId>
+                <version>${jetty.version}</version> <configuration> <contextXml>${project.basedir}/src/test/resources/jetty-context.xml</contextXml>
+                <webAppConfig> <contextPath>/${project.name}</contextPath> <defaultsDescriptor>${project.basedir}/src/test/resources/webdefault.xml</defaultsDescriptor>
+                </webAppConfig> <connectors> <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+                <port>8080</port> <maxIdleTime>60000</maxIdleTime> </connector> </connectors>
+                </configuration> </plugin> -->
+
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.3.2</version>
+                <configuration>
+                    <!--配置文件的路径-->
+                    <configurationFile>${basedir}/src/main/resources/generatorConfig.xml</configurationFile>
+                    <verbose>true</verbose>
+                    <overwrite>true</overwrite>
+                </configuration>
+                <!--<executions>
+                    <execution>
+                        <id>Generate MyBatis Files</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <phase>generate</phase>
+                        <configuration>
+                            <verbose>true</verbose>
+                            <overwrite>true</overwrite>
+                        </configuration>
+                    </execution>
+                </executions>-->
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>5.1.38</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.mybatis.generator</groupId>
+                        <artifactId>mybatis-generator-core</artifactId>
+                        <version>1.3.5</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.mybatis</groupId>
+                        <artifactId>mybatis</artifactId>
+                        <version>3.4.2</version>
+                    </dependency>
+                </dependencies>
+
+            </plugin>
+        </plugins>
+
+    </build>
+
+
+    <!-- 以下为profile示例 -->
+    <profiles>
+
+        <profile>
+            <!-- 本地开发环境 -->
+            <id>development</id>
+            <properties>
+                <profiles.active>development</profiles.active>
+                <deploy.url>http://host:port/manager/text</deploy.url>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <!-- 测试环境 -->
+            <id>testcase</id>
+            <properties>
+                <profiles.active>testcase</profiles.active>
+                <deploy.url>http://host:port/manager/text</deploy.url>
+            </properties>
+        </profile>
+        <profile>
+            <!-- 生产环境 -->
+            <id>production</id>
+            <properties>
+                <profiles.active>production</profiles.active>
+                <deploy.url>http://host:port/manager/text</deploy.url>
+            </properties>
+        </profile>
+
+
+        <profile>
+            <id>develop</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+
+                <!-- 事件 -->
+                <pom.mq.address>172.20.18.24:5672</pom.mq.address>
+                <pom.mq.username>admin</pom.mq.username>
+                <pom.mq.password>admin</pom.mq.password>
+                <pom.log.clusterCode>SERURITYLOG</pom.log.clusterCode>
+                <pom.msg.clusterCode>APP_INIT_CLUSTER</pom.msg.clusterCode>
+                <pom.event.manager.url>https://uastest.yyuap.com/event/eventmanager/eventinfo/index.do
+                </pom.event.manager.url>
+
+                <!-- fastDFS -->
+                <pom.fdfs.tracker_server>172.20.18.16:22122</pom.fdfs.tracker_server>
+
+                <!-- mysql -->
+                <pom.jdbc.url>
+                    <![CDATA[jdbc:mysql://172.20.14.148:3306/tenant?useUnicode=true&characterEncoding=utf-8]]></pom.jdbc.url>
+                <pom.jdbc.username>6eLJVbeWA/E=</pom.jdbc.username>
+                <pom.jdbc.password>6eLJVbeWA/E=</pom.jdbc.password>
+
+                <!-- Redis -->
+                <pom.redis.url>
+                    <![CDATA[direct://172.20.14.149:6379?poolName=mypool&masterName=mymaster&poolSize=100]]></pom.redis.url>
+
+                <!-- URL -->
+                <pom.cas.server>http://idtest.yyuap.com</pom.cas.server>
+                <pom.tenantuser.server>http://idtest.yyuap.com</pom.tenantuser.server>
+                <pom.yht.redisSessionStore>com.yonyou.yht.cache.RedisSessionStore</pom.yht.redisSessionStore>
+
+                <pom.tenant.server>http://localhost:8080</pom.tenant.server>
+                <pom.tenant.openappserver>http://localhost:8080</pom.tenant.openappserver>
+                <!-- 租户登录的url -->
+                <pom.tenant.login>https://uastest.yyuap.com/apptenant</pom.tenant.login>
+                <apps.tenant.base.url>https://uastest.yyuap.com</apps.tenant.base.url>
+
+                <pom.clientCredentialPath><![CDATA[D:/authfile.txt]]></pom.clientCredentialPath>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <!-- 事件 -->
+                <pom.mq.address>172.20.18.24:5672</pom.mq.address>
+                <pom.mq.username>admin</pom.mq.username>
+                <pom.mq.password>admin</pom.mq.password>
+                <pom.msg.clusterCode>APP_INIT_CLUSTER</pom.msg.clusterCode>
+                <pom.event.manager.url>https://uastest.yyuap.com/event/eventmanager/eventinfo/index.do
+                </pom.event.manager.url>
+
+
+                <!-- mysql -->
+                <pom.jdbc.url>
+                    <![CDATA[jdbc:mysql://172.20.14.148:3306/tenant?useUnicode=true&characterEncoding=utf-8]]></pom.jdbc.url>
+                <pom.jdbc.username>6eLJVbeWA/E=</pom.jdbc.username>
+                <pom.jdbc.password>6eLJVbeWA/E=</pom.jdbc.password>
+
+                <!-- redis -->
+                <pom.redis.url>
+                    <![CDATA[direct://172.20.14.149:6379?poolName=mypool&masterName=mymaster&poolSize=100]]></pom.redis.url>
+
+                <!-- URL -->
+                <pom.cas.server>http://idtest.yyuap.com</pom.cas.server>
+                <pom.tenant.server>https://uastest.yyuap.com</pom.tenant.server>
+                <pom.tenantuser.server>http://idtest.yyuap.com</pom.tenantuser.server>
+                <pom.tenantauth.server>http://uastest.yyuap.com</pom.tenantauth.server>
+                <pom.tenant.login>https://uastest.yyuap.com/apptenant</pom.tenant.login>
+                <apps.tenant.base.url>https://uastest.yyuap.com</apps.tenant.base.url>
+                <pom.yht.redisSessionStore>com.yonyou.yht.cache.RedisSessionStore</pom.yht.redisSessionStore>
+
+                <!-- clientCredentialPath -->
+                <pom.clientCredentialPath>/data/authfile.txt</pom.clientCredentialPath>
+            </properties>
+        </profile>
+        <profile>
+            <id>release</id>
+            <properties>
+                <!-- 事件中心配置 -->
+                <pom.mq.address>172.20.18.24:5672</pom.mq.address>
+                <pom.mq.username>yonyouuser</pom.mq.username>
+                <pom.mq.password>admin</pom.mq.password>
+                <pom.msg.clusterCode>SSO_CLUSTER</pom.msg.clusterCode>
+                <pom.event.manager.url>https://uastest.yyuap.com:6272/event/eventmanager/eventinfo/index.do
+                </pom.event.manager.url>
+                <pom.log.clusterCode>SERURITYLOG</pom.log.clusterCode>
+
+                <!-- 数据库 -->
+                <pom.jdbc.url>
+                    <![CDATA[jdbc:mysql://172.20.4.211:3307/usercenter?useUnicode=true&characterEncoding=utf-8]]></pom.jdbc.url>
+                <pom.jdbc.username>COuXQLiIZ2fG1YgSwKzwEQ==</pom.jdbc.username>
+                <pom.jdbc.password>COuXQLiIZ2d8K+l//nJFgV0ZrNgf9NFG</pom.jdbc.password>
+
+
+                <!-- Redis -->
+                <pom.redis.url>
+                    <![CDATA[direct://172.20.4.212:6380?poolName=mypool&masterName=mymaster&poolSize=300]]></pom.redis.url>
+
+                <!-- URL -->
+                <pom.cas.server>https://uastest.yyuap.com:6272</pom.cas.server>
+                <pom.tenant.server>https://uastest.yyuap.com:6272</pom.tenant.server>
+                <pom.tenantuser.server>https://uastest.yyuap.com:6272</pom.tenantuser.server>
+                <pom.tenantauth.server>https://uastest.yyuap.com:6272</pom.tenantauth.server>
+
+                <!-- clientCredentialPath -->
+                <pom.clientCredentialPath>/usr/local/tomcat/webapps/cas/WEB-INF/authfile.txt</pom.clientCredentialPath>
+            </properties>
+        </profile>
+
+    </profiles>
+
+
+</project>

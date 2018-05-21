@@ -1,0 +1,41 @@
+package com.yonyou.iuap.example.record.validator;
+
+import java.util.List;
+
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.yonyou.iuap.example.record.entity.ExampleRecord;
+import com.yonyou.iuap.example.record.service.ExampleRecordService;
+import com.yonyou.iuap.iweb.exception.ValidException;
+
+/**
+ * Created by zhukai on 2016/11/28.
+ */
+@Component
+public class ExampleRecordValidator {
+    @Autowired
+    private ExampleRecordService exampleRecordService;
+
+    public void valid(List<ExampleRecord> example_recordlist) {
+        if (CollectionUtils.isEmpty(example_recordlist)) {
+            throw new ValidException("提交的数据集为空!");
+        }
+        StringBuilder builder = new StringBuilder();
+        for (ExampleRecord example_record : example_recordlist) {
+            if (StringUtils.isEmpty(example_record.getId())) {
+                if (!exampleRecordService.findByCode(example_record.getCode()).isEmpty()) {
+                    builder.append(example_record.getCode()).append(",");
+                }
+            }
+        }
+        if (builder.toString().length() > 0) {
+            String codeStr = builder.deleteCharAt(builder.length() - 1).toString();
+            StringBuilder msgBuilder = new StringBuilder("编码为");
+            msgBuilder.append(codeStr).append("的记录已经存在!");
+            throw new ValidException(msgBuilder.toString());
+        }
+    }
+}

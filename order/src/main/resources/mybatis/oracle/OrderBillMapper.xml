@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yonyou.iuap.example.order.dao.OrderBillMapper">
+
+	<resultMap id="BaseResultMap" type="com.yonyou.iuap.example.order.entity.OrderBill">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="orderCode" property="orderCode" jdbcType="VARCHAR" />
+		<result column="orderName" property="orderName" jdbcType="VARCHAR" />
+		<result column="beginDate" property="beginDate" jdbcType="DATE" />
+		<result column="endDate" property="endDate" jdbcType="DATE" />
+		<result column="customer" property="customer" jdbcType="VARCHAR" />
+		<result column="dept" property="dept" jdbcType="VARCHAR" />
+		<result column="busiman" property="busiman" jdbcType="VARCHAR" />
+		<result column="amount" property="amount" jdbcType="NUMERIC" />
+		<result column="currency" property="currency" jdbcType="VARCHAR" />
+		<result column="orderState" property="orderState" jdbcType="VARCHAR" />
+		<result column="version" property="version" jdbcType="NUMERIC" />
+		<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="lastModified" property="lastModified" jdbcType="TIMESTAMP" />
+		<result column="createUser" property="createUser" jdbcType="VARCHAR" />
+		<result column="lastModifyUser" property="lastModifyUser" jdbcType="VARCHAR" />
+		<result column="ts" property="ts" jdbcType="TIMESTAMP" />
+		<result column="dr" property="dr" jdbcType="NUMERIC" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		  id,
+		  orderCode,
+		  orderName,
+		  beginDate,
+		  endDate,
+		  customer,
+		  dept,
+		  busiman,
+		  amount,
+		  currency,
+		  orderState,
+		  version,
+		  createTime,
+		  createUser,
+		  lastModified,
+		  lastModifyUser,
+		  ts,
+		  dr
+	</sql>
+	
+	<select id="selectAllByPage" resultMap="BaseResultMap" resultType="java.util.List">
+		SELECT
+			<include refid="Base_Column_List" />
+		FROM example_order_bill where 1=1 
+			<if test="search != null">
+				<if test="search.searchMap.orderCode!=null and search.searchMap.orderCode!='' ">
+					and orderCode like CONCAT(CONCAT('%', #{search.searchMap.orderCode}),'%')
+				</if>
+				<if test="search.searchMap.orderName!=null and search.searchMap.orderName!='' ">
+					and orderCode like CONCAT(CONCAT('%', #{search.searchMap.orderName}),'%')
+				</if>
+			</if>		
+			<if test="page != null">
+				<if test="page.sort!=null">
+					order by 
+					<foreach collection="page.sort" item="item" separator=" ">
+						${item.property} ${item.direction}
+					</foreach>
+				</if>
+			</if>	
+	</select>
+	
+	<select id="getByIds" resultMap="BaseResultMap" parameterType="java.util.List">
+		SELECT
+		<include refid="Base_Column_List" />
+		from orderbill where 
+		id in
+		<foreach collection="list" item="item" index="index"
+			separator="," open="(" close=")">
+			#{item,jdbcType=VARCHAR}
+		</foreach>
+	</select>
+	
+	<insert id="insert" parameterType="com.yonyou.iuap.example.order.entity.OrderBill">
+		insert into orderbill (	create_name,
+								id,
+								billstate,
+								update_time,
+								end_date,
+								kpi_flag,
+								unitid,
+								name,
+								create_time,
+								code,
+								begin_date,
+								kpi_level,
+								dept,
+								ts,
+								dr,
+								tenant_id,
+								customer,
+								busiman,
+								money
+		)
+		values (#{create_name,jdbcType=VARCHAR}, 
+				#{id,jdbcType=VARCHAR},
+				#{billstate,jdbcType=VARCHAR},
+				#{update_time,jdbcType=VARCHAR}, 
+				#{end_date,jdbcType=VARCHAR}, 
+				#{kpi_flag,jdbcType=VARCHAR},
+				#{unitid,jdbcType=VARCHAR},
+				#{name,jdbcType=VARCHAR}, 
+				#{create_time,jdbcType=VARCHAR},
+				#{code,jdbcType=VARCHAR},
+				#{begin_date,jdbcType=VARCHAR}, 
+				#{kpi_level,jdbcType=VARCHAR},
+				#{dept,jdbcType=VARCHAR},
+				#{ts,jdbcType=TIMESTAMP},
+				#{dr,jdbcType=NUMERIC},
+				#{tenant_id,jdbcType=VARCHAR},
+				#{customer,jdbcType=VARCHAR},
+				#{busiman,jdbcType=VARCHAR},
+				#{money,jdbcType=NUMERIC}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.yonyou.iuap.example.order.entity.OrderBill">
+		update 	example_order_bill
+		set		orderCode=#{orderCode,jdbcType=VARCHAR},
+				orderName=#{orderName,jdbcType=VARCHAR},
+				beginDate=#{beginDate,jdbcType=VARCHAR},
+				endDate=#{endDate,jdbcType=TIMESTAMP},
+				billstate=#{billstate,jdbcType=VARCHAR},
+				customer=#{customer,jdbcType=VARCHAR},
+				dept=#{dept,jdbcType=VARCHAR},
+				busiman=#{busiman,jdbcType=VARCHAR},
+				amount=#{amount,jdbcType=NUMERIC},
+				currency=#{currency,jdbcType=VARCHAR},
+				version=#{version,jdbcType=NUMERIC}+1,
+				lastModified=#{lastModified,jdbcType=TIMESTAMP},
+				lastModifyUser=#{lastModifyUser,jdbcType=VARCHAR}
+		where	id=#{id}
+				and version=#{version}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM example_order_bill
+		WHERE 1=1
+			<if test="condition==null">
+				and 1=2
+			</if>
+			<if test="condition!=null">
+				<if test="condition.id!=null and condition.id!=''">
+					and id = #{id}
+				</if>
+				<if test="condition.listOrder!=null">
+					and id in 
+					<foreach collection="condition.listOrder" item="item" separator="," open="(" close=")">
+						#{item.id,jdbcType=VARCHAR}
+					</foreach>
+				</if>
+			</if>
+	</delete>
+	
+</mapper>

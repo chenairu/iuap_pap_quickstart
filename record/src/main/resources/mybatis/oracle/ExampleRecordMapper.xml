@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yonyou.iuap.example.record.dao.ExampleRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.yonyou.iuap.example.record.entity.ExampleRecord" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="SYS" property="sys" jdbcType="VARCHAR" />
+    <result column="CREATOR" property="creator" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createtime" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, CODE, NAME, SYS, CREATOR, create_time, REMARK
+  </sql>
+  
+  <select id="findAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from EXAMPLE_RECORD
+	</select>
+  
+  <select id="findByCode" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from EXAMPLE_RECORD
+		where  code= #{code,jdbcType=VARCHAR}
+	</select>
+	
+	
+	<select id="selectAllByPage" resultMap="BaseResultMap"
+		resultType="java.util.List">
+		SELECT
+		<include refid="Base_Column_List" />
+		from EXAMPLE_RECORD where 1=1
+		<if test="search != null">
+			<if
+				test="search.code!=null and search.code!='' ">
+				and code like CONCAT(CONCAT('%', #{search.code}),'%')
+			</if>
+			<if
+				test="search.name!=null and search.name!='' ">
+				and name like CONCAT(CONCAT('%', #{search.name}),'%')
+			</if>
+		</if>
+	</select>
+	
+	
+	<insert id="batchInsert" parameterType="java.util.List">
+		insert into  EXAMPLE_RECORD(ID, CODE, NAME, SYS, CREATOR, create_time, REMARK)
+		
+		 <foreach collection="list" item="item" index="index" separator="union" open="(" close=")">
+			select
+			#{item.id,jdbcType=TIMESTAMP},
+			#{item.code,jdbcType=VARCHAR},
+			#{item.name,jdbcType=VARCHAR},
+			#{item.sys,jdbcType=VARCHAR}, 
+			#{item.creator,jdbcType=VARCHAR}, 
+			#{item.createtime,jdbcType=VARCHAR},
+			#{item.remark,jdbcType=VARCHAR}
+			from dual
+		</foreach>
+	</insert>
+	
+	<update id="batchUpdate" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" open="" close="" separator=";">
+			update EXAMPLE_RECORD
+			<set>
+				id=#{item.id,jdbcType=VARCHAR}, 
+				code=#{item.code,jdbcType=VARCHAR},
+				name=#{item.name,jdbcType=VARCHAR},
+				sys=#{item.sys,jdbcType=VARCHAR}, 
+				creator=#{item.creator,jdbcType=VARCHAR},
+				create_time= #{item.createtime,jdbcType=VARCHAR},
+				remark=#{item.remark,jdbcType=VARCHAR}
+			</set>
+			where id = #{item.id,jdbcType=VARCHAR}
+		</foreach>
+	</update>
+	
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from EXAMPLE_RECORD
+		where
+		id in
+		<foreach collection="list" item="item" index="index"
+			separator="," open="(" close=")">
+			#{item.id,jdbcType=VARCHAR}
+		</foreach>
+	</delete>
+
+	<select id="selectInstitByIds" resultMap="BaseResultMap" parameterType="java.util.Set"
+			resultType="java.util.List">
+		SELECT
+		<include refid="Base_Column_List" />
+		from id where 1=1 and id in
+		<foreach collection="set" item="item" index="index"
+				 separator="," open="(" close=")">
+			#{item,jdbcType=VARCHAR}
+		</foreach>
+
+	</select>
+</mapper>
