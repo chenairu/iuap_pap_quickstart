@@ -101,7 +101,7 @@ header>.u-container>.u-row {
 
 .form-search {
     background: #f5f5f5;
-    padding: 0 15px;
+    padding: 0 15px 10px 15px;
 }
 
 #dicttype-mdlayout .u-panel.form-search {
@@ -323,7 +323,8 @@ div#grid_dicttype {
     transition: height 0.35s ease-in-out;
     position: relative;
     overflow: hidden;
-    height: 110px !important;
+
+    /*height: 110px !important;*/
 }
 
 .b-searech-close {

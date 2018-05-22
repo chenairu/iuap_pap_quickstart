@@ -8,13 +8,12 @@ var meta = {
         //主键  
         id: {type: 'string'},
         //编码
-        code: {
+        customerCode: {
             type: 'string',
-            required: true,
-            nullMsg: '编码不能为空!'
+            enable:false
         },
         //名称
-        name: {
+        customerName: {
             type: 'string',
             required: true,
             nullMsg: '名称不能为空!'
@@ -28,9 +27,13 @@ var meta = {
             type: 'string'
         },
         //企业规模
-        corpSize:{},
+        corpsize:{
+            type: 'string'
+        },
         //状态
-        status: {}
+        status: {
+            type: 'string'
+        }
     },
     
     pageSize: 5,

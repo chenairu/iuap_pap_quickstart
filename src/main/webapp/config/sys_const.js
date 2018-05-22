@@ -1,5 +1,5 @@
 define( function() {
-	
+    appCtx="/iuap-example";
 	//系统常量，被系统各个页面使用。
 	window._CONST={
 			//卡片(form)操作类型（增加-ADD,编辑-EDIT,查看-VIEW,列表-LIST,删除-DELETE）

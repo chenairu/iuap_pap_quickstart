@@ -1,11 +1,11 @@
 define(["text!./customer.html", "./meta.js", "css!./customer.css",
-	"css!../../style/style.css", "../../config/sys_const.js", 
+	"css!../../style/style.css", "../../config/sys_const.js",
 	"css!../../style/widget.css", "../sever.js", 
 	"css!../../style/currency.css"],
 
     function (html) {
         var init = function (element, cookie, bpmopenbill) {
-            var ctx = cookie.appCtx + "/exampleRecord";
+            var ctx = cookie.appCtx + "/customer";
             var viewModel = {
                 draw: 1,
                 //页数(第几页)
@@ -50,8 +50,8 @@ define(["text!./customer.html", "./meta.js", "css!./customer.css",
                         var jsonData = {
                             pageIndex: viewModel.draw - 1,
                             pageSize: viewModel.pageSize,
-                            sortField: "create_time",
-                            sortDirection: "desc"
+                            // sortField: "create_time",
+                            // sortDirection: "desc"
                         };
 
                         var searchinfo = viewModel.gridData.params;
@@ -374,9 +374,10 @@ define(["text!./customer.html", "./meta.js", "css!./customer.css",
                     u.stopEvent(e);
                 }
             };
-
+             window.initButton(viewModel,element);
             //加载Html页面
             $(element).html(html);
+            ko.cleanNode(element);
             viewModel.event.pageinit();
 
             //搜索导航（查询、筛选）展开/收起

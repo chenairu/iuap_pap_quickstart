@@ -24,8 +24,8 @@ public class ExampleCustomerValidator {
         StringBuilder builder = new StringBuilder();
         for (ExampleCustomer example_record : example_recordlist) {
             if (StringUtils.isEmpty(example_record.getId())) {
-                if (!exampleCustomerService.findByCode(example_record.getCode()).isEmpty()) {
-                    builder.append(example_record.getCode()).append(",");
+                if (!exampleCustomerService.findByCode(example_record.getCustomerCode()).isEmpty()) {
+                    builder.append(example_record.getCustomerCode()).append(",");
                 }
             }
         }

@@ -1,7 +1,6 @@
 package com.yonyou.iuap.example.billcode.dao;
 
 import com.yonyou.iuap.example.billcode.entity.ExampleCustomer;
-import com.yonyou.iuap.example.billcode.entity.exampleCustomer;
 import com.yonyou.iuap.mybatis.type.PageResult;
 import com.yonyou.iuap.persistence.mybatis.anotation.MyBatisRepository;
 import org.apache.ibatis.annotations.Param;
@@ -15,15 +14,15 @@ import java.util.Set;
 public interface ExampleCustomerMapper {
     int deleteByPrimaryKey(String id);
 
-    int insert(exampleCustomer record);
+    int insert(ExampleCustomer record);
 
-    int insertSelective(exampleCustomer record);
+    int insertSelective(ExampleCustomer record);
 
-    exampleCustomer selectByPrimaryKey(String id);
+    ExampleCustomer selectByPrimaryKey(String id);
 
-    int updateByPrimaryKeySelective(exampleCustomer record);
+    int updateByPrimaryKeySelective(ExampleCustomer record);
 
-    int updateByPrimaryKey(exampleCustomer record);
+    int updateByPrimaryKey(ExampleCustomer record);
 
     List<ExampleCustomer> findAll();
 

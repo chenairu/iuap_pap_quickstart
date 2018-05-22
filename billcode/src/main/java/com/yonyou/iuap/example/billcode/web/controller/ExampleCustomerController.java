@@ -38,7 +38,14 @@ public class ExampleCustomerController extends BaseController {
     @RequestMapping(value = "/save" ,method=RequestMethod.POST)
     public @ResponseBody Object save(@RequestBody List<ExampleCustomer> list){
         validator.valid(list);
+        exampleCustomerService.save(list);
+        return buildSuccess();
+    }
 
+    @RequestMapping(value="/delete",method = RequestMethod.POST)
+    public @ResponseBody Object del(@RequestBody List<ExampleCustomer> list){
+        exampleCustomerService.batchDeleteByPrimaryKey(list);
+        return buildSuccess();
     }
 
 }

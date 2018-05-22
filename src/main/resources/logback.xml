@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true">
 	<jmxConfigurator />
-    <property name="log_name" value="example"/>
+    <property name="log_name" value="iuap-example"/>
     
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
@@ -21,8 +21,8 @@
 	</appender>
 
 	<!-- 自定义特殊包的日志级别 -->
-	<logger name="com.yonyou.iuap" level="INFO" />
-	<logger name="com.yonyou.uap.ieop.busilog.writer.BusiLogRestWriter" level="INFO" />
+	<logger name="com.yonyou.iuap" level="ERROR" />
+	<logger name="com.yonyou.uap.ieop.busilog.writer.BusiLogRestWriter" level="ERROR" />
 	
 	<!-- log4j.logger.com.ibatis=DEBUG
 	log4j.logger.com.ibatis.common.jdbc.SimpleDataSource=DEBUG
@@ -30,21 +30,21 @@
 	log4j.logger.com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate=DEBUG
 	log4j.logger.Java.sql.Connection=DEBUG
 	log4j.logger.java.sql.Statement=DEBUG
-	log4j.logger.java.sql.PreparedStatement=DEBUG -->
-	
+	log4j.logger.java.sql.PreparedStatement=DEBUG
+	-->
 	<!-- mybatis -->
-	<logger name="com.ibatis" level="ERROR" />
-	<logger name="java.sql" level="ERROR" />
+	<logger name="com.ibatis" level="debug" />
+	<logger name="java.sql" level="debug" />
 	<logger name="com.yonyou.iuap" level="ERROR" />
 
-	<!--log4jdbc 选项，默认关闭-->
-	<!--
-	<logger name="jdbc.connection" level="OFF" />
-	<logger name="jdbc.audit" level="OFF" />
-	<logger name="jdbc.resultset" level="OFF" />
-	<logger name="jdbc.sqlonly" level="OFF" />
-	<logger name="jdbc.sqltiming" level="OFF" />
-	-->
+	<!--log4jdbc 选项，默认关闭
+
+	<logger name="jdbc.connection" level="debug" />
+	<logger name="jdbc.audit" level="debug" />
+	<logger name="jdbc.resultset" level="debug" />
+	<logger name="jdbc.sqlonly" level="debug" />
+	<logger name="jdbc.sqltiming" level="debug" />
+-->
 
 	<root level="INFO">
 		<appender-ref ref="console" />

@@ -1,14 +1,20 @@
 package com.yonyou.iuap.example.billcode.entity;
 
-public class ExampleCustomer {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.io.Serializable;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
+public class ExampleCustomer implements Serializable {
+
+    private static final long serialVersionUID = 8664047040719480432L;
     private String id;
-    private String code;
-    private String name;
+    private String customerCode;
+    private String customerName;
     private String province;
     private String city;
-    private int corpSize;
-    private int status;
+    private String corpsize;
+    private String status;
 
     public String getId() {
         return id;
@@ -18,20 +24,20 @@ public class ExampleCustomer {
         this.id = id;
     }
 
-    public String getCode() {
-        return code;
+    public String getCustomerCode() {
+        return customerCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setCustomerCode(String customerCode) {
+        this.customerCode = customerCode;
     }
 
-    public String getName() {
-        return name;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public String getProvince() {
@@ -50,21 +56,19 @@ public class ExampleCustomer {
         this.city = city;
     }
 
-    public int getCorpSize() {
-        return corpSize;
+    public String getCorpsize() {
+        return corpsize;
     }
 
-    public void setCorpSize(int corpSize) {
-        this.corpSize = corpSize;
+    public void setCorpsize(String corpsize) {
+        this.corpsize = corpsize;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
-
-
 }
