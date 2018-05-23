@@ -73,3 +73,5 @@ fabric.properties
 */rebel.xml
 */rebel-remote.xml
 */generatorConfig.xml
+pom.xml
+*/pom.xml
