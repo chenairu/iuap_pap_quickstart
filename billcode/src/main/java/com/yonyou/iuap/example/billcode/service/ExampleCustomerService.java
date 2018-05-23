@@ -51,7 +51,7 @@ public class ExampleCustomerService {
             if(customer.getId() == null){
                 customer.setId(UUID.randomUUID().toString());
                 //编码规则
-                String customerCode = this.getCustomerCode("customer","",customer,customer.getCustomerCode());
+                String customerCode = this.getCustomerCode("customer","",customer);
                 customer.setCustomerCode(customerCode);
                 addList.add(customer);
                 sendMessage(customer); //发送消息
@@ -76,7 +76,7 @@ public class ExampleCustomerService {
         }
     }
 
-    private String getCustomerCode(String billObjCode,String pkAssign,ExampleCustomer customer,String customerCode){
+    private String getCustomerCode(String billObjCode,String pkAssign,ExampleCustomer customer){
         String billvo = JSONObject.toJSONString(customer);
 
         String getCodeUrl = PropertyUtil.getPropertyByKey("billcodeservice.base.url")+"/billcoderest/getBillCode";

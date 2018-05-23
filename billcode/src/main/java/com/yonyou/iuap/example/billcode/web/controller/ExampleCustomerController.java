@@ -4,7 +4,6 @@ import com.yonyou.iuap.base.web.BaseController;
 import com.yonyou.iuap.example.billcode.entity.ExampleCustomer;
 import com.yonyou.iuap.example.billcode.service.ExampleCustomerService;
 import com.yonyou.iuap.example.billcode.validator.ExampleCustomerValidator;
-import com.yonyou.iuap.example.supervise.utils.CommonUtils;
 import com.yonyou.iuap.mvc.type.SearchParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,7 +29,6 @@ public class ExampleCustomerController extends BaseController {
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public @ResponseBody
     Object page(PageRequest pageRequest, SearchParams searchParams){
-        CommonUtils.decode(searchParams);
         Page<ExampleCustomer> tmpdata = exampleCustomerService.selectAllByPage(pageRequest,searchParams);
         return buildSuccess(tmpdata);
     }
