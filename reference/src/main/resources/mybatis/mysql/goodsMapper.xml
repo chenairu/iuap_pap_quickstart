@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yonyou.iuap.example.reference.goods.dao.GoodsMapper">
+
+	<resultMap id="BaseResultMap" type="com.yonyou.iuap.example.reference.goods.entity.Goods">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="goodsCode" property="goodsCode" jdbcType="VARCHAR" />
+		<result column="goodsName" property="goodsName" jdbcType="VARCHAR" />
+		<result column="model" property="model" jdbcType="VARCHAR" />
+		<result column="price" property="price" jdbcType="NUMERIC" />
+		<result column="currency" property="currency" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="version" property="version" jdbcType="NUMERIC" />
+		<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="lastModified" property="lastModified" jdbcType="TIMESTAMP" />
+		<result column="createUser" property="createUser" jdbcType="VARCHAR" />
+		<result column="lastModifyUser" property="lastModifyUser" jdbcType="VARCHAR" />
+		<result column="ts" property="ts" jdbcType="TIMESTAMP" />
+		<result column="dr" property="dr" jdbcType="NUMERIC" />		
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+			id,
+			goodsCode,
+			goodsName,
+			model,
+			price,
+			currency,
+			manufacturer,
+			linkman,
+			remark,
+			version,
+			createUser,
+			createTime,
+			lastModified,
+			lastModifyUser
+	</sql>
+	
+	<select id="selectAllByPage" resultMap="BaseResultMap" resultType="java.util.List">
+		select	
+			<include refid="Base_Column_List"></include>
+		from	example_goods
+		where	1=1
+			<if test="condition!=null">
+				<if test="condition.searchMap.goodsCode!=null">
+					and goodsCode = #{condition.searchMap.goodsCode}
+				</if>
+			</if>
+	</select>
+	
+	<select id="queryList" resultMap="BaseResultMap" resultType="java.util.List">
+		SELECT	t.id,
+				t.goodsCode,
+				t.goodsName,
+				t.model,
+				t.price,
+				t.currency,
+				ed.name AS currency_name,
+				t.manufacturer,
+				eo.instit_name AS manufacturer_name,
+				t.linkman,
+				ec.peoname AS linkman_name,
+				t.remark,
+				t.version,
+				t.createUser,
+				t.createTime,
+				t.lastModified,
+				t.lastModifyUser
+		FROM	example_goods t LEFT OUTER JOIN example_dictionary ed ON t.currency=ed.code
+								LEFT OUTER JOIN example_organization eo ON t.manufacturer=eo.institid
+								LEFT OUTER JOIN example_contacts ec ON t.linkman=ec.id
+		WHERE	1=1
+			<if test="condition!=null">
+				<if test="condition.id!=null and condition.id!=''">
+					and t.id = #{condition.id}
+				</if>
+			</if>
+	</select>
+	
+	<insert id="insert" parameterType="com.yonyou.iuap.example.reference.goods.entity.Goods">
+		insert into example_goods (	id,
+									goodsCode,
+									goodsName,
+									model,
+									price,
+									currency,
+									manufacturer,
+									linkman,
+									remark,
+									version,
+									createUser,
+									createTime,
+									lastModified,
+									lastModifyUser,
+									ts,
+									dr
+		)
+		values (#{id,jdbcType=VARCHAR}, 
+				#{goodsCode,jdbcType=VARCHAR},
+				#{goodsName,jdbcType=VARCHAR},
+				#{model,jdbcType=VARCHAR}, 
+				#{price,jdbcType=NUMERIC}, 
+				#{currency,jdbcType=VARCHAR}, 
+				#{manufacturer,jdbcType=VARCHAR}, 
+				#{linkman,jdbcType=VARCHAR}, 
+				#{remark,jdbcType=VARCHAR}, 
+				#{version,jdbcType=NUMERIC},
+				#{createUser,jdbcType=VARCHAR},
+				#{createTime,jdbcType=TIMESTAMP},
+				#{lastModified,jdbcType=TIMESTAMP},
+				#{lastModifyUser,jdbcType=VARCHAR},
+				#{ts,jdbcType=TIMESTAMP},
+				#{dr,jdbcType=NUMERIC}
+		)
+	</insert>
+	
+	<update id="update">
+		update 	example_goods
+		set		goodsCode=#{goodsCode,jdbcType=VARCHAR},
+				goodsName=#{goodsName,jdbcType=VARCHAR},
+				model=#{model,jdbcType=VARCHAR},
+				price=#{price,jdbcType=NUMERIC},
+				currency=#{currency,jdbcType=VARCHAR}, 
+				manufacturer=#{manufacturer,jdbcType=VARCHAR}, 
+				linkman=#{linkman,jdbcType=VARCHAR}, 
+				remark=#{remark,jdbcType=VARCHAR}, 
+				version=#{version,jdbcType=NUMERIC}+1,
+				lastModified=#{lastModified,jdbcType=TIMESTAMP},
+				lastModifyUser=#{lastModifyUser,jdbcType=VARCHAR}
+		where	id=#{id}
+	</update>
+	
+	<delete id="delete">
+		delete from example_goods
+		where 1=1
+			<if test="condition!=null">
+				<if test="condition.id!=null and condition.id!=''">
+					and id = #{id}
+				</if>
+			</if>
+			<if test="condition==null">
+				and 1=2
+			</if>
+	</delete>
+	
+</mapper>
