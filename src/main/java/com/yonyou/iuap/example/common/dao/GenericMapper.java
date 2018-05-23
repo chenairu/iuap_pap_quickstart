@@ -15,7 +15,9 @@ public interface GenericMapper<T extends GenericEntity> {
 	public PageResult<T> selectAllByPage(@Param("page") PageRequest pageRequest, @Param("condition") SearchParams searchParams);
 	
 	public List<T> queryList(@Param("condition")Map<String,Object> params);
-	
+
+	public List<Map<String,Object>> queryListByMap(@Param("condition")Map<String,Object> params);
+
 	public int insert(T entity);
 	
 	public int update(T entity);
