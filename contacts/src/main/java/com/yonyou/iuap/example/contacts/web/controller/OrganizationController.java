@@ -45,7 +45,7 @@ public class OrganizationController extends BaseController {
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public @ResponseBody Object loadTree() {
-        List<Organization> data = oranizationService.selectAll();
+        List<Organization> data = oranizationService.findAll();
         return buildSuccess(data);
     }
 

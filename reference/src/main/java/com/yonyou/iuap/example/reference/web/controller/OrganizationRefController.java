@@ -21,15 +21,10 @@ import iuap.ref.sdk.refmodel.vo.RefViewModelVO;
 public class OrganizationRefController extends AbstractTreeRefModel{
 
 	@Override
-	public List<Map<String, String>> filterRefJSON(@RequestBody RefViewModelVO refViewVo) {
-		return null;
-	}
-
-	@Override
 	public Map<String, Object> getCommonRefData(@RequestBody RefViewModelVO refViewVo) {
 	    List<Map<String, Object>> list4Tree = new ArrayList<Map<String,Object>>();
-	    List<Organization> listOrganization = this.organizationService.selectAll();
-	    for(Organization organization : listOrganization) {
+	    List<Organization> listData = this.organizationService.findAll();
+	    for(Organization organization : listData) {
 		    Map<String, Object> curData = new HashMap<String, Object>();
 		    curData.put("id", organization.getInstitid());
 		    curData.put("pid", organization.getParent_id());
@@ -46,10 +41,41 @@ public class OrganizationRefController extends AbstractTreeRefModel{
 	    result.put("refViewModel", refViewVo);
 	    return result;
 	}
+	
+	@Override
+	public List<Map<String, String>> filterRefJSON(@RequestBody RefViewModelVO refViewVo) {
+	    List<Map<String, String>> list4Tree = new ArrayList<Map<String,String>>();
+	    List<Organization> listData = organizationService.queryList("searchParam", refViewVo.getContent());
+	    for(Organization organization : listData) {
+		    Map<String, String> curData = new HashMap<String, String>();
+		    curData.put("id", organization.getInstitid());
+		    curData.put("pid", organization.getParent_id());
+		    curData.put("refcode", organization.getInstit_code());
+		    curData.put("refname", organization.getInstit_name());
+		    curData.put("refpk", organization.getInstitid());
+		    
+		    //isLeaf
+		    list4Tree.add(curData);
+	    }
+	    return list4Tree;
+	}
 
 	@Override
 	public List<Map<String, String>> matchBlurRefJSON(@RequestBody RefViewModelVO refViewVo) {
-		return null;
+	    List<Map<String, String>> list4Tree = new ArrayList<Map<String,String>>();
+	    List<Organization> listData = organizationService.queryList("searchParam", refViewVo.getContent());
+	    for(Organization organization : listData) {
+		    Map<String, String> curData = new HashMap<String, String>();
+		    curData.put("id", organization.getInstitid());
+		    curData.put("pid", organization.getParent_id());
+		    curData.put("refcode", organization.getInstit_code());
+		    curData.put("refname", organization.getInstit_name());
+		    curData.put("refpk", organization.getInstitid());
+		    
+		    //isLeaf
+		    list4Tree.add(curData);
+	    }
+	    return list4Tree;
 	}
 
 	@Override

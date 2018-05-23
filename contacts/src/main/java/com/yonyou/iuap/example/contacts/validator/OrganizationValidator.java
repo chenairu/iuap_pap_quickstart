@@ -11,17 +11,11 @@ import com.yonyou.iuap.example.contacts.entity.Organization;
 import com.yonyou.iuap.example.contacts.service.OrganizationService;
 import com.yonyou.iuap.iweb.exception.ValidException;
 
-/**
- * <p>Title: InstitValidator</p>
- * <p>Description: </p>
- * @author zhukai
- */
 @Component
 public class OrganizationValidator {
     @Autowired
     private OrganizationService service;
     
-
     public void valid(List<Organization> institList) {
         if (CollectionUtils.isEmpty(institList)) {
             throw new ValidException("提交的数据集为空!");
@@ -29,7 +23,7 @@ public class OrganizationValidator {
         StringBuilder builder = new StringBuilder();
         for (Organization instit : institList) {
             if (StringUtils.isEmpty(instit.getInstitid())) {
-                if (!service.findByCode(instit.getInstit_code()).isEmpty()) {
+                if (!service.queryList("institCode", instit.getInstit_code()).isEmpty()) {
                     builder.append(instit.getInstit_code()).append(",");
                 }
             }
@@ -41,4 +35,5 @@ public class OrganizationValidator {
             throw new ValidException(msgBuilder.toString());
         }
     }
+
 }

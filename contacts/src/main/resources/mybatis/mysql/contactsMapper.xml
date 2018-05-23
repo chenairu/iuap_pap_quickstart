@@ -25,21 +25,21 @@
 	<select id="selectAllByPage" resultMap="BaseResultMap" resultType="java.util.List">
 		SELECT
 			<include refid="Base_Column_List" />
-		from example_contacts 
-		where 1=1 
+		FROM example_contacts 
+		WHERE 1=1 
 			<if test="condition != null">
-				<if test="condition.ids!=null and condition.ids.size>0 ">
+				<if test="condition.searchMap.ids!=null and condition.searchMap.ids.size>0 ">
 					and institid in
-						<foreach collection="condition.ids" item="item" index="index"
+						<foreach collection="condition.searchMap.ids" item="item" index="index"
 							separator="," open="(" close=")">
-							#{condition.ids[${index}], jdbcType=VARCHAR}
+							#{condition.searchMap.ids[${index}], jdbcType=VARCHAR}
 						</foreach>
 				</if>
-				<if test="condition.searchParam!=null and condition.searchParam!='' ">
-					and (peoname like CONCAT(CONCAT('%',#{condition.searchParam}),'%')
-						 or peocode like CONCAT(CONCAT('%', #{condition.searchParam}),'%')
-						 or tel like CONCAT(CONCAT('%', #{condition.searchParam}),'%')
-						 or email like CONCAT(CONCAT('%', #{condition.searchParam}),'%'))
+				<if test="condition.searchMap.searchParam!=null and condition.searchMap.searchParam!='' ">
+					and (peoname like CONCAT(CONCAT('%',#{condition.searchMap.searchParam}),'%')
+						 or peocode like CONCAT(CONCAT('%', #{condition.searchMap.searchParam}),'%')
+						 or tel like CONCAT(CONCAT('%', #{condition.searchMap.searchParam}),'%')
+						 or email like CONCAT(CONCAT('%', #{condition.searchMap.searchParam}),'%'))
 				</if>
 			</if>
 	</select>
@@ -50,8 +50,8 @@
 		FROM example_contacts
 		WHERE 1=1
 			<if test="condition != null">
-				<if test="condition.refParam!=null and search.refParam!='' ">
-					and ( peocode like CONCAT(CONCAT('%',#{condition.refParm}),'%') or peoname like CONCAT(CONCAT('%',#{condition.refParm}),'%'))
+				<if test="condition.refParam!=null and condition.refParam!='' ">
+					and ( peocode like CONCAT(CONCAT('%',#{condition.refParam}),'%') or peoname like CONCAT(CONCAT('%',#{condition.refParam}),'%'))
 				</if>
 			</if>
 	</select>

@@ -45,7 +45,7 @@ public class GoodsController extends BaseController {
      */
     @RequestMapping(value = "/get", method = RequestMethod.POST)
     public @ResponseBody Object get(String id) {
-    	Goods data = goodsService.getById(id);
+    	Goods data = goodsService.findById(id);
         return buildSuccess(data);
     }
 

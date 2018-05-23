@@ -1,6 +1,7 @@
 package com.yonyou.iuap.example.contacts.service;
 
 import com.yonyou.iuap.example.contacts.dao.OrganizationMapper;
+import com.yonyou.iuap.example.common.service.GenericService;
 import com.yonyou.iuap.example.contacts.dao.ContactsMapper;
 import com.yonyou.iuap.example.contacts.entity.Organization;
 import com.yonyou.iuap.example.contacts.entity.Contacts;
@@ -16,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 @Service
-public class ContactsService {
+public class ContactsService extends GenericService<Contacts>{
 
     @Autowired
     private ContactsMapper contactsMapper;
@@ -45,7 +46,7 @@ public class ContactsService {
      * 分页相关
      */
     public Page<Contacts> selectAllByPage(PageRequest pageRequest, SearchParams searchParams) {
-    	return contactsMapper.selectAllByPage(pageRequest, searchParams.getSearchMap()).getPage();
+    	return contactsMapper.selectAllByPage(pageRequest, searchParams).getPage();
     }
     
     public List<Contacts> query4Refer(String refParam){

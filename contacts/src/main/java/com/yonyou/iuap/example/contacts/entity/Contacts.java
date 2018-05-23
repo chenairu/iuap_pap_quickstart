@@ -1,32 +1,30 @@
 package com.yonyou.iuap.example.contacts.entity;
 
-public class Contacts {
+import com.yonyou.iuap.example.common.entity.AbsGenericEntity;
+
+public class Contacts extends AbsGenericEntity{
 	
-	private java.lang.String institid;
+	private String id;
 
-	private java.lang.String id;
+	private String peoname;
 
-	private java.lang.String peoname;
+	private String peocode;
 
-	private java.lang.String peocode;
+	private String institid;
 
-	private java.lang.String institname;
+	private String institname;
 
-	private java.lang.String worktel;
+	private String worktel;
 
-	private java.lang.String email;
+	private String email;
 
-	private java.lang.String sex;
+	private String sex;
 
-	private java.lang.String tel;
+	private String tel;
 
-	private java.lang.String office;
+	private String office;
 
-	private java.lang.String countryzone;
-
-	private java.lang.Integer dr = 0;
-
-	private java.util.Date ts;
+	private String countryzone;
 
 	private String operate;
 
@@ -38,108 +36,92 @@ public class Contacts {
 		this.operate = operate;
 	}
 
-	public java.lang.String getInstitid() {
+	public String getInstitid() {
 		return institid;
 	}
 
-	public void setInstitid(java.lang.String institid) {
+	public void setInstitid(String institid) {
 		this.institid = institid;
 	}
 
-	public java.lang.String getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(java.lang.String id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public java.lang.String getPeoname() {
+	public String getPeoname() {
 		return peoname;
 	}
 
-	public void setPeoname(java.lang.String peoname) {
+	public void setPeoname(String peoname) {
 		this.peoname = peoname;
 	}
 
-	public java.lang.String getPeocode() {
+	public String getPeocode() {
 		return peocode;
 	}
 
-	public void setPeocode(java.lang.String peocode) {
+	public void setPeocode(String peocode) {
 		this.peocode = peocode;
 	}
 
-	public java.lang.String getInstitname() {
+	public String getInstitname() {
 		return institname;
 	}
 
-	public void setInstitname(java.lang.String institname) {
+	public void setInstitname(String institname) {
 		this.institname = institname;
 	}
 
-	public java.lang.String getWorktel() {
+	public String getWorktel() {
 		return worktel;
 	}
 
-	public void setWorktel(java.lang.String worktel) {
+	public void setWorktel(String worktel) {
 		this.worktel = worktel;
 	}
 
-	public java.lang.String getEmail() {
+	public String getEmail() {
 		return email;
 	}
 
-	public void setEmail(java.lang.String email) {
+	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	public java.lang.String getSex() {
+	public String getSex() {
 		return sex;
 	}
 
-	public void setSex(java.lang.String sex) {
+	public void setSex(String sex) {
 		this.sex = sex;
 	}
 
-	public java.lang.String getTel() {
+	public String getTel() {
 		return tel;
 	}
 
-	public void setTel(java.lang.String tel) {
+	public void setTel(String tel) {
 		this.tel = tel;
 	}
 
-	public java.lang.String getOffice() {
+	public String getOffice() {
 		return office;
 	}
 
-	public void setOffice(java.lang.String office) {
+	public void setOffice(String office) {
 		this.office = office;
 	}
 
-	public java.lang.String getCountryzone() {
+	public String getCountryzone() {
 		return countryzone;
 	}
 
-	public void setCountryzone(java.lang.String countryzone) {
+	public void setCountryzone(String countryzone) {
 		this.countryzone = countryzone;
-	}
-
-	public java.lang.Integer getDr() {
-		return dr;
-	}
-
-	public void setDr(java.lang.Integer dr) {
-		this.dr = dr;
-	}
-
-	public java.util.Date getTs() {
-		return ts;
-	}
-
-	public void setTs(java.util.Date ts) {
-		this.ts = ts;
 	}
 
 }

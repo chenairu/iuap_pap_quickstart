@@ -17,18 +17,89 @@
 	</resultMap>
 	
 	<sql id="Base_Column_List">
-		institid,
-		instit_code,
-		creationtime,
-		short_name,
-		instit_name,
-		email,
-		creator,
-		instit_type,
-		parent_id,
-		ts,
-		dr
+			institid,
+			instit_code,
+			creationtime,
+			short_name,
+			instit_name,
+			email,
+			creator,
+			instit_type,
+			parent_id,
+			ts,
+			dr
 	</sql>
+	
+	<select id="selectAllByPage" resultMap="BaseResultMap" resultType="java.util.List">
+		SELECT
+			<include refid="Base_Column_List" />
+		FROM example_organization where 1=1
+			<if test="condition != null">
+				<if test="condition.searchParam!=null and condition.searchParam!='' ">
+					and instit_code like CONCAT(CONCAT('%', #{condition.searchParam}),'%') 
+					or instit_name like CONCAT(CONCAT('%', #{condition.searchParam}),'%')
+				</if>
+			</if>
+	</select>
+	
+	<select id="queryList" resultMap="BaseResultMap" resultType="java.util.List">
+		SELECT
+			<include refid="Base_Column_List" />
+		FROM example_organization where 1=1
+			<if test="condition != null">
+				<if test="condition.institCode!=null and condition.institCode!='' ">
+					and instit_code = #{condition.institCode, jdbcType="VARCHAR"}
+				</if>
+				<if test="condition.searchParam!=null and condition.searchParam!='' ">
+					and instit_code like CONCAT(CONCAT('%', #{condition.searchParam}),'%') 
+					or instit_name like CONCAT(CONCAT('%', #{condition.searchParam}),'%')
+				</if>
+			</if>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO example_organization(
+				creationtime,
+				short_name,
+				instit_name,
+				email,
+				institid,
+				creator,
+				instit_type,
+				parent_id,
+				instit_code,
+				ts,
+				dr
+		) VALUES (
+			#{creationtime,jdbcType=TIMESTAMP},
+			#{short_name,jdbcType=VARCHAR},
+			#{instit_name,jdbcType=VARCHAR},
+			#{email,jdbcType=VARCHAR}, 
+			#{institid,jdbcType=VARCHAR}, 
+			#{creator,jdbcType=VARCHAR},
+			#{instit_type,jdbcType=VARCHAR},
+			#{parent_id,jdbcType=VARCHAR},
+			#{instit_code,jdbcType=VARCHAR},
+			#{ts,jdbcType=TIMESTAMP},
+			#{dr,jdbcType=NUMERIC}		
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE 	example_organization
+		SET		creationtime=#{item.creationtime,jdbcType=TIMESTAMP}, 
+				short_name=#{item.short_name,jdbcType=VARCHAR},
+				instit_name=#{item.instit_name,jdbcType=VARCHAR},
+				email=#{item.email,jdbcType=VARCHAR}, 
+				institid=#{item.institid,jdbcType=VARCHAR},
+				creator= #{item.creator,jdbcType=VARCHAR},
+				instit_type=#{item.instit_type,jdbcType=VARCHAR},
+				parent_id=#{item.parent_id,jdbcType=VARCHAR}, 
+				instit_code=#{item.instit_code,jdbcType=VARCHAR},
+				ts=#{item.ts,jdbcType=TIMESTAMP},
+				dr=#{item.dr,jdbcType=NUMERIC}
+		WHERE institid = #{item.institid,jdbcType=VARCHAR}
+	</update>
 	
 	
 	<select id="findAll" resultMap="BaseResultMap">
@@ -51,21 +122,6 @@
 		<include refid="Base_Column_List" />
 		from example_organization
 		where  instit_code= #{instit_code,jdbcType=VARCHAR}
-	</select>
-	
-	
-	<select id="selectAllByPage" resultMap="BaseResultMap"
-		resultType="java.util.List">
-		SELECT
-		<include refid="Base_Column_List" />
-		from example_organization where 1=1
-		<if test="search != null">
-			<if
-				test="search.searchParam!=null and search.searchParam!='' ">
-				and instit_code like CONCAT(CONCAT('%', #{search.searchParam}),'%') 
-				or instit_name like CONCAT(CONCAT('%', #{search.searchParam}),'%')
-			</if>
-		</if>
 	</select>
 	
 	

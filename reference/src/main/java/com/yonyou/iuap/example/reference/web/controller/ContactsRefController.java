@@ -52,7 +52,7 @@ public class ContactsRefController extends AbstractCommonRefModel {
 		
 		String searchParams = StringUtils.isEmpty(refViewVo.getContent())? null :refViewVo.getContent();
 		
-		Page<Contacts> pageData = contactsService.selectAllByPage(request, this.buildSearchParams(searchParams));
+		Page<Contacts> pageData = service.selectAllByPage(request, this.buildSearchParams(searchParams));
 		List<Contacts> listData = pageData.getContent();
 		if(CollectionUtils.isNotEmpty(listData)) {
 			List<Map<String, String>> listRefer = buildRtnValsOfRef(listData);
@@ -73,7 +73,7 @@ public class ContactsRefController extends AbstractCommonRefModel {
 	@Override
 	public List<Map<String, String>> filterRefJSON(@RequestBody RefViewModelVO refViewVo) {
 		List<Map<String, String>> results = new ArrayList<Map<String,String>>();
-		List<Contacts> rtnVal = this.contactsService.query4Refer(refViewVo.getContent());
+		List<Contacts> rtnVal = this.service.query4Refer(refViewVo.getContent());
 		results = buildRtnValsOfRef(rtnVal);
 		return results;
 	}
@@ -82,7 +82,7 @@ public class ContactsRefController extends AbstractCommonRefModel {
 	public List<Map<String, String>> matchBlurRefJSON(@RequestBody RefViewModelVO refViewVo) {
 		List<Map<String, String>> results = new ArrayList<Map<String,String>>();
 		try {
-			List<Contacts> rtnVal = this.contactsService.query4Refer(refViewVo.getContent());
+			List<Contacts> rtnVal = this.service.query4Refer(refViewVo.getContent());
 			results = buildRtnValsOfRef(rtnVal);
 		} catch (Exception e) {
 			logger.error("服务异常：", e);
@@ -133,6 +133,6 @@ public class ContactsRefController extends AbstractCommonRefModel {
 	
 	/*****************************************************************************/
 	@Autowired
-	private ContactsService contactsService;
+	private ContactsService service;
 
 }
