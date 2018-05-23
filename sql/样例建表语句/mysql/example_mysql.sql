@@ -115,3 +115,22 @@ CREATE TABLE example_order_detail (
   dr INT(11) DEFAULT '0' COMMENT '删除标志：0-未删除；1-已删除',
   PRIMARY KEY (id)
 );
+
+/*************示例应用：附件上传、下载、删除***************/
+CREATE TABLE `example_attachment` (
+  `id` varchar(36) COLLATE utf8_unicode_ci NOT NULL,
+  `code` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_code` (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*************示例应用：模板下载、导入、导出***************/
+CREATE TABLE `example_template` (
+  `id` varchar(36) COLLATE utf8_unicode_ci NOT NULL,
+  `code` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `remark` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
