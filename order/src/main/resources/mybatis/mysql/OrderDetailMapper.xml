@@ -23,6 +23,7 @@
 			detailCode,
 			goodsCode,
 			goodsName,
+			manufacturer,
 			price,
 			total,
 			amount,
@@ -35,7 +36,7 @@
 	<select id="selectAllByPage" resultMap="BaseResultMap" resultType="java.util.List">
 		SELECT	
 			<include refid="Base_Column_List"></include>
-		FROM	ex_order_detail
+		FROM	example_order_detail
 		WHERE	1=1
 			<if test="condition!=null">
 				<if test="condition.searchMap.orderId!=null">
@@ -50,6 +51,7 @@
 											detailCode,
 											goodsCode,
 											goodsName,
+											manufacturer,
 											price,
 											total,
 											amount,
@@ -62,6 +64,7 @@
 				#{detailCode,jdbcType=VARCHAR},
 				#{goodsCode,jdbcType=VARCHAR},
 				#{goodsName,jdbcType=VARCHAR},
+				#{manufacturer,jdbcType=VARCHAR},
 				#{price,jdbcType=NUMERIC},
 				#{total,jdbcType=NUMERIC},
 				#{amount,jdbcType=NUMERIC},
@@ -76,13 +79,13 @@
 		UPDATE 	example_order_detail
 		SET		goodsCode=#{goodsCode,jdbcType=VARCHAR},
 				goodsName=#{goodsName,jdbcType=VARCHAR},
-				remark=#{remark,jdbcType=VARCHAR},
+				manufacturer=#{manufacturer,jdbcType=VARCHAR},
 				price=#{price,jdbcType=NUMERIC},
 				total=#{total,jdbcType=NUMERIC},
 				amount=#{amount,jdbcType=NUMERIC},
+				remark=#{remark,jdbcType=VARCHAR},
 				version=#{version,jdbcType=NUMERIC}+1
 		WHERE	id=#{id}
-				and version=#{version}
 	</update>
 	
 	<delete id="delete">
@@ -92,21 +95,28 @@
 				<if test="condition.id!=null and condition.id!=''">
 					and id=#{condition.id}
 				</if>
+				<if test="condition.ids!=null and condition.ids.size>0">
+					and id in 
+					<foreach collection="condition.ids" item="item"
+			        		open="(" close=")" separator=",">
+			            #{item,jdbcType=VARCHAR}
+			        </foreach>
+				</if>
 				<if test="condition.orderId!=null and condition.orderId!=''">
 					and orderId=#{condition.orderId}
 				</if>
-				<if test="condition.orderIds!=null and condition.orderIds.size>0">
+				<if test="condition.orderIds!=null and condition.orderIds.size==0">
 					and orderId in
 					  	<foreach collection="condition.orderIds" item="item"
 			            	open="(" close=")" separator=",">
-			            	#{item}
+			            	#{item,jdbcType=VARCHAR}
 			        	</foreach>
 				</if>
-				<if test="condition.sub_ids4NoDel!=null and condition.detailIds4NoDel.size>0">
+				<if test="condition.detailIds4NoDel!=null and condition.detailIds4NoDel.size>0">
 					and id not in
 					  	<foreach collection="condition.detailIds4NoDel" item="item"
 			            	open="(" close=")" separator=",">
-			            	#{item}
+			            	#{item,jdbcType=VARCHAR}
 			        	</foreach>
 				</if>
 			</if>

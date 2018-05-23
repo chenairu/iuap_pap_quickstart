@@ -5,13 +5,15 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.yonyou.iuap.example.common.entity.AbsGenericEntity;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class OrderBill {
+public class OrderBill extends AbsGenericEntity{
 
 	private String id;
 	private String orderCode;
 	private String orderName;
+	private Date orderDate;
 	private Date beginDate;
 	private Date endDate;
 	private String customer;
@@ -21,12 +23,12 @@ public class OrderBill {
 	private String currency;
 	private String orderState;
 	private int version;
-	private Date createTime;
-	private String createUser;
-	private Date lastModified;
-	private String lastModifyUser;
-	private Date ts;
-	private int dr;
+	//private Date createTime;
+	//private String createUser;
+	//private Date lastModified;
+	//private String lastModifyUser;
+	//private Date ts;
+	//private int dr;
 	private List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
 
 	
@@ -173,6 +175,14 @@ public class OrderBill {
 	public void setDr(int dr) {
 		this.dr = dr;
 	}
+
+	public Date getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
+	}
 	
 	public List<OrderDetail> getOrderDetails() {
 		return orderDetails;
@@ -181,5 +191,5 @@ public class OrderBill {
 	public void setOrderDetails(List<OrderDetail> orderDetails) {
 		this.orderDetails = orderDetails;
 	}
-
+	
 }

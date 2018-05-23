@@ -18,6 +18,8 @@ public class OrderDetail {
 	private int version;
 	private Date ts;
 	private int dr;
+	private String manufacturer;
+	private String manufacturer_name;
 
 	public String getId() {
 		return id;
@@ -113,6 +115,22 @@ public class OrderDetail {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
-	}	
+	}
+
+	public String getManufacturer() {
+		return manufacturer;
+	}
+
+	public void setManufacturer(String manufacturer) {
+		this.manufacturer = manufacturer;
+	}
+
+	public String getManufacturer_name() {
+		return manufacturer_name;
+	}
+
+	public void setManufacturer_name(String manufacturer_name) {
+		this.manufacturer_name = manufacturer_name;
+	}
 
 }

@@ -6,6 +6,7 @@
 		<id column="id" property="id" jdbcType="VARCHAR" />
 		<result column="orderCode" property="orderCode" jdbcType="VARCHAR" />
 		<result column="orderName" property="orderName" jdbcType="VARCHAR" />
+		<result column="orderDate" property="beginDate" jdbcType="DATE" />
 		<result column="beginDate" property="beginDate" jdbcType="DATE" />
 		<result column="endDate" property="endDate" jdbcType="DATE" />
 		<result column="customer" property="customer" jdbcType="VARCHAR" />
@@ -27,6 +28,7 @@
 		  id,
 		  orderCode,
 		  orderName,
+		  orderDate,
 		  beginDate,
 		  endDate,
 		  customer,
@@ -48,11 +50,14 @@
 		SELECT
 			<include refid="Base_Column_List" />
 		FROM example_order_bill where 1=1 
-			<if test="search != null">
-				<if test="search.searchMap.orderCode!=null and search.searchMap.orderCode!='' ">
+			<if test="condition != null">
+				<if test="condition.searchMap.id!=null and condition.searchMap.id!='' ">
+					and id = #{id, jdbcType=VARCHAR}
+				</if>
+				<if test="condition.searchMap.orderCode!=null and condition.searchMap.orderCode!='' ">
 					and orderCode like CONCAT(CONCAT('%', #{search.searchMap.orderCode}),'%')
 				</if>
-				<if test="search.searchMap.orderName!=null and search.searchMap.orderName!='' ">
+				<if test="condition.searchMap.orderName!=null and condition.searchMap.orderName!='' ">
 					and orderCode like CONCAT(CONCAT('%', #{search.searchMap.orderName}),'%')
 				</if>
 			</if>		
@@ -66,57 +71,58 @@
 			</if>	
 	</select>
 	
-	<select id="getByIds" resultMap="BaseResultMap" parameterType="java.util.List">
+	<select id="queryList" resultMap="BaseResultMap" parameterType="java.util.List">
 		SELECT
-		<include refid="Base_Column_List" />
-		from orderbill where 
-		id in
-		<foreach collection="list" item="item" index="index"
-			separator="," open="(" close=")">
-			#{item,jdbcType=VARCHAR}
-		</foreach>
+			<include refid="Base_Column_List" />
+		FROM   example_order_bill
+		WHERE  1=1
+			<if test="condition != null">
+				<if test="condition.id!=null and condition.id!=''">
+					and id = #{condition.id, jdbcType=VARCHAR}
+				</if>
+			</if>
 	</select>
 	
 	<insert id="insert" parameterType="com.yonyou.iuap.example.order.entity.OrderBill">
-		insert into orderbill (	create_name,
-								id,
-								billstate,
-								update_time,
-								end_date,
-								kpi_flag,
-								unitid,
-								name,
-								create_time,
-								code,
-								begin_date,
-								kpi_level,
-								dept,
-								ts,
-								dr,
-								tenant_id,
-								customer,
-								busiman,
-								money
-		)
-		values (#{create_name,jdbcType=VARCHAR}, 
-				#{id,jdbcType=VARCHAR},
-				#{billstate,jdbcType=VARCHAR},
-				#{update_time,jdbcType=VARCHAR}, 
-				#{end_date,jdbcType=VARCHAR}, 
-				#{kpi_flag,jdbcType=VARCHAR},
-				#{unitid,jdbcType=VARCHAR},
-				#{name,jdbcType=VARCHAR}, 
-				#{create_time,jdbcType=VARCHAR},
-				#{code,jdbcType=VARCHAR},
-				#{begin_date,jdbcType=VARCHAR}, 
-				#{kpi_level,jdbcType=VARCHAR},
-				#{dept,jdbcType=VARCHAR},
-				#{ts,jdbcType=TIMESTAMP},
-				#{dr,jdbcType=NUMERIC},
-				#{tenant_id,jdbcType=VARCHAR},
-				#{customer,jdbcType=VARCHAR},
-				#{busiman,jdbcType=VARCHAR},
-				#{money,jdbcType=NUMERIC}
+		insert into example_order_bill (
+				  id,
+				  orderCode,
+				  orderName,
+				  orderDate,
+				  beginDate,
+				  endDate,
+				  customer,
+				  dept,
+				  busiman,
+				  amount,
+				  currency,
+				  orderState,
+				  version,
+				  createTime,
+				  createUser,
+				  lastModified,
+				  lastModifyUser,
+				  ts,
+				  dr
+		)values(	#{id,jdbcType=VARCHAR},
+					#{orderCode,jdbcType=VARCHAR},
+					#{orderName,jdbcType=VARCHAR},
+					#{orderDate,jdbcType=DATE},
+					#{beginDate,jdbcType=DATE},
+					#{endDate,jdbcType=DATE},
+					#{customer,jdbcType=VARCHAR},
+					#{dept,jdbcType=VARCHAR},
+					#{busiman,jdbcType=VARCHAR},
+					#{amount,jdbcType=NUMERIC},
+					#{currency,jdbcType=VARCHAR},
+					#{orderState,jdbcType=VARCHAR},
+					#{version,jdbcType=NUMERIC},
+					#{createTime,jdbcType=VARCHAR},
+					#{createUser,jdbcType=VARCHAR},
+					#{lastModified,jdbcType=VARCHAR},
+					#{lastModifyUser,jdbcType=VARCHAR},
+					#{ts,jdbcType=VARCHAR},
+					#{dr,jdbcType=DATE}
 		)
 	</insert>
 	
@@ -124,9 +130,10 @@
 		update 	example_order_bill
 		set		orderCode=#{orderCode,jdbcType=VARCHAR},
 				orderName=#{orderName,jdbcType=VARCHAR},
-				beginDate=#{beginDate,jdbcType=VARCHAR},
-				endDate=#{endDate,jdbcType=TIMESTAMP},
-				billstate=#{billstate,jdbcType=VARCHAR},
+				orderDate=#{orderDate,jdbcType=DATE},
+				beginDate=#{beginDate,jdbcType=DATE},
+				endDate=#{endDate,jdbcType=DATE},
+				orderState=#{orderState,jdbcType=VARCHAR},
 				customer=#{customer,jdbcType=VARCHAR},
 				dept=#{dept,jdbcType=VARCHAR},
 				busiman=#{busiman,jdbcType=VARCHAR},
@@ -149,10 +156,10 @@
 				<if test="condition.id!=null and condition.id!=''">
 					and id = #{id}
 				</if>
-				<if test="condition.listOrder!=null">
+				<if test="condition.orderIds!=null">
 					and id in 
-					<foreach collection="condition.listOrder" item="item" separator="," open="(" close=")">
-						#{item.id,jdbcType=VARCHAR}
+					<foreach collection="condition.orderIds" item="item" separator="," open="(" close=")">
+						#{item,jdbcType=VARCHAR}
 					</foreach>
 				</if>
 			</if>

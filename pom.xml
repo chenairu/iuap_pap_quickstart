@@ -380,49 +380,6 @@
                 </webAppConfig> <connectors> <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
                 <port>8080</port> <maxIdleTime>60000</maxIdleTime> </connector> </connectors>
                 </configuration> </plugin> -->
-
-            <plugin>
-                <groupId>org.mybatis.generator</groupId>
-                <artifactId>mybatis-generator-maven-plugin</artifactId>
-                <version>1.3.2</version>
-                <configuration>
-                    <!--配置文件的路径-->
-                    <configurationFile>${basedir}/src/main/resources/generatorConfig.xml</configurationFile>
-                    <verbose>true</verbose>
-                    <overwrite>true</overwrite>
-                </configuration>
-                <!--<executions>
-                    <execution>
-                        <id>Generate MyBatis Files</id>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <phase>generate</phase>
-                        <configuration>
-                            <verbose>true</verbose>
-                            <overwrite>true</overwrite>
-                        </configuration>
-                    </execution>
-                </executions>-->
-                <dependencies>
-                    <dependency>
-                        <groupId>mysql</groupId>
-                        <artifactId>mysql-connector-java</artifactId>
-                        <version>5.1.38</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.mybatis.generator</groupId>
-                        <artifactId>mybatis-generator-core</artifactId>
-                        <version>1.3.5</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.mybatis</groupId>
-                        <artifactId>mybatis</artifactId>
-                        <version>3.4.2</version>
-                    </dependency>
-                </dependencies>
-
-            </plugin>
         </plugins>
 
     </build>

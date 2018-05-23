@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yonyou.iuap.example.template.dao.ExampleTemplateMapper">
+	<resultMap id="BaseResultMap" type="com.yonyou.iuap.example.template.entity.ExampleTemplate">
+		<id column="id" property="id"/>
+		<result column="code" property="code"/>
+		<result column="name" property="name"/>
+		<result column="remark" property="remark"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+		id,code,name,remark
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from example_template
+		where id = #{id}
+	</select>
+
+	<select id="selectAllByPage" resultMap="BaseResultMap"
+		resultType="java.util.List">
+		SELECT
+		<include refid="Base_Column_List" />
+		from example_template where 1=1
+		<if test="search != null">
+			<if
+				test="search.searchMap.searchParam!=null and search.searchMap.searchParam!='' ">
+				and 
+			</if>
+		</if>
+		<if test="page != null">
+			<if test="page.sort!=null">
+				order by
+				<foreach collection="page.sort" item="item" separator=" ">
+					${item.property} ${item.direction}
+				</foreach>
+			</if>
+		</if>
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from example_template
+		where id = #{id}
+	</delete>
+
+	<delete id="batchDeleteByPrimaryKey" parameterType="java.util.List">
+		delete from example_template
+		where
+		id in
+		<foreach collection="list" item="item" index="index"
+			separator="," open="(" close=")">
+		#{item.id}
+		</foreach>
+	</delete>
+
+	<insert id="insert" parameterType="com.yonyou.iuap.example.template.entity.ExampleTemplate">
+		insert into example_template (
+		id,code,name,remark
+		)
+		values (
+		#{id},
+		#{code},
+		#{name},
+		#{remark}
+		)
+	</insert>
+
+	<insert id="batchInsert" parameterType="java.util.List">
+		insert into example_template (
+		id,code,name,remark
+		)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(
+		#{item.id},
+		#{item.code},
+		#{item.name},
+		#{item.remark}
+			)
+		</foreach>
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.yonyou.iuap.example.template.entity.ExampleTemplate">
+		insert into example_template
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="code != null">
+				code,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="code != null">
+				#{code},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="remark != null">
+				#{remark},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.yonyou.iuap.example.template.entity.ExampleTemplate">
+		update example_template
+		<set>
+			<if test="id != null">
+				id = #{id},
+			</if>
+			<if test="code != null">
+				code = #{code},
+			</if>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="remark != null">
+				remark = #{remark},
+			</if>
+		</set>
+		where id = #{id} 
+		<!--and ts = #ts-->
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.yonyou.iuap.example.template.entity.ExampleTemplate">
+		update example_template
+		set
+				code = #{code},
+				name = #{name},
+				remark = #{remark}
+		where id = #{id}
+		<!-- and ts = #ts-->
+	</update>
+
+	<update id="batchUpdate" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" open=""
+			close="" separator=";">
+			update example_template
+			set
+				code = #{item.code},
+				name = #{item.name},
+				remark = #{item.remark}
+			where id = #{item.id} 
+			<!--and ts = #{item.ts}-->
+		</foreach>
+	</update>
+</mapper>

@@ -16,24 +16,34 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yonyou.iuap.context.InvocationInfoProxy;
+import com.yonyou.iuap.example.common.service.GenericService;
 import com.yonyou.iuap.example.order.dao.OrderBillMapper;
 import com.yonyou.iuap.example.order.entity.OrderBill;
 import com.yonyou.iuap.example.order.entity.OrderDetail;
 import com.yonyou.iuap.mvc.type.SearchParams;
 
 @Service
-public class OrderBillService implements IOrderBillService{
+public class OrderBillService extends GenericService<OrderBill>{
 
 	//根据传递的参数，进行分页查询
-	@Override
 	public Page<OrderBill> selectAllByPage(PageRequest pageRequest, SearchParams searchParams) {		
 		Page<OrderBill> pageResult = orderBillMapper.selectAllByPage(pageRequest, searchParams).getPage();
 		return pageResult;
 	}
+	
+	public OrderBill findById(String orderId) {
+		Map<String,Object> params = new HashMap<String,Object>();
+		params.put("id", orderId);
+		List<OrderBill> listOrders = orderBillMapper.queryList(params);
+		if(listOrders.size()==1) {
+			return listOrders.get(0);
+		}else {
+			throw new RuntimeException("检索数据出错：id="+orderId);
+		}
+	}
 
 	//保存订单（事务控制）
 	@Transactional
-	@Override
 	public OrderBill saveEntity(OrderBill order) {
 		if(StringUtils.isEmpty(order.getId())) {
 			return this.save4Insert(order);					//新增保存订单
@@ -105,8 +115,14 @@ public class OrderBillService implements IOrderBillService{
 		return order;
 	}
 	
-	@Override
-	public int delete(List<OrderBill> listOrder) {
+	public int delete(List<String> orderIds) {
+		orderDetailService.delete4Order(orderIds);
+		Map<String,Object> params = new HashMap<String, Object>();
+		params.put("orderIds", orderIds);
+		return orderBillMapper.delete(params);
+	}
+	
+	public int deleteOrders(List<OrderBill> listOrder) {
 		List<String> orderIds = new ArrayList<String>();
 		for(OrderBill order: listOrder) {
 			orderIds.add(order.getId());
@@ -119,9 +135,16 @@ public class OrderBillService implements IOrderBillService{
 	}
 	
 	/*********************************************/
-	@Autowired
 	private OrderBillMapper orderBillMapper;
 	@Autowired
 	private OrderDetailService orderDetailService;
+	
+	@Autowired
+	public void setOrderBillMapper(OrderBillMapper orderBillMapper) {
+		super.ibatisMapper = orderBillMapper;
+		this.orderBillMapper = orderBillMapper;
+	}
+	
+	
 
 }

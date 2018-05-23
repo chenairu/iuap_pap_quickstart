@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yonyou.iuap.base.web.BaseController;
 import com.yonyou.iuap.example.order.entity.OrderBill;
-import com.yonyou.iuap.example.order.service.IOrderBillService;
+import com.yonyou.iuap.example.order.entity.OrderDetail;
+import com.yonyou.iuap.example.order.service.OrderBillService;
+import com.yonyou.iuap.example.order.service.OrderDetailService;
 import com.yonyou.iuap.mvc.annotation.FrontModelExchange;
 import com.yonyou.iuap.mvc.constants.RequestStatusEnum;
 import com.yonyou.iuap.mvc.type.JsonResponse;
@@ -42,7 +45,23 @@ public class OrderBillController extends BaseController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("data", page);
-		return super.buildMapSuccess(map);
+		return this.buildMapSuccess(map);
+	}
+	
+	@RequestMapping(value = "/get", method = RequestMethod.GET)
+	@ResponseBody
+	public Object get(PageRequest pageRequest,
+			@FrontModelExchange(modelType = Map.class) SearchParams searchParams) {
+		
+		String orderId = MapUtils.getString(searchParams.getSearchMap(), "orderId");
+		OrderBill order = orderBillService.findById(orderId);
+		Page<OrderDetail> subPage = orderDetailService.selectAllByPage(pageRequest, searchParams);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("data", order);
+		map.put("subPage", subPage);
+		
+		return this.buildSuccess(map);
 	}
 	
 	
@@ -60,32 +79,20 @@ public class OrderBillController extends BaseController {
 		return jsonResp;
 	}
 	
-/*	
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	@ResponseBody
-	public Object update(@RequestBody OrderBill order, HttpServletRequest request, HttpServletResponse response) {
-		JsonResponse jsonResp;
-		try {
-			orderService.saveEntity(order);
-			jsonResp = this.buildSuccess(order);
-		}catch(Exception exp) {
-			logger.error("订单保存出错!", exp);
-			jsonResp = this.buildError("msg", exp.getMessage(), RequestStatusEnum.FAIL_FIELD);
-		}
-		return jsonResp;
-	}*/
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	@ResponseBody
-	public Object deleteBatch(@RequestBody List<OrderBill> objs, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		orderBillService.delete(objs);
-		return super.buildSuccess(objs);
+	public Object deleteBatch(@RequestBody List<String> orderIds, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		orderBillService.delete(orderIds);
+		return super.buildSuccess(orderIds);
 	}
 	
 	
 	/***********************************************************/
 	@Autowired
-	private IOrderBillService orderBillService;
+	private OrderBillService orderBillService;
+	@Autowired
+	private OrderDetailService orderDetailService;
 	
 
 }
