@@ -1,452 +1,653 @@
-define(["text!./order.html", "./meta.js", 
-		"css!./order.css", "css!../../style/style.css", "../../config/sys_const.js", 
-		"css!../../style/widget.css", "../sever.js", "css!../../style/currency.css"],
+define(['text!./order.html','./meta.js', 'css!./order.css',
+        'cookieOperation',
+        '/eiap-plus/pages/flow/bpmapproveref/bpmopenbill.js',
+        '../../config/sys_const.js', 'css!../../style/style.css',
+        'css!../../style/widget.css', 'css!../../style/currency.css',
+        'uiReferComp', 'uiNewReferComp', 'refer'], function (template, cookie, bpmopenbill) {
 
-    function (html) {
-        var init = function (element, cookie, bpmopenbill) {
-            var ctx = cookie.appCtx + "/demo_order";
-            var viewModel = {
-                draw: 1,
-                //页数(第几页)
-                pageSize: 5,
+	//开始初始页面基础数据
+    var init =  function (element, arg) {
+    	var appCtx = arg.appCtx;
+        var viewModel = {
+            draw: 1,												//页数(第几页)
+            pageSize: 10,
+            loadingTimer:{},
+            
+            listUrl: appCtx + '/demo_order/list',
+            saveUrl: appCtx + "/demo_order/save",
+            deleteUrl: appCtx + "/demo_order/delete",
+            getUrl: appCtx + "/demo_order/get",
+            
+            
+            subGridListUrl: appCtx + "/demo_order_detail/list",
+            subGridDeleteUrl: appCtx + "/demo_order_detail/delete",
+            
+            //根据单据主键获得单据
+            formStatus: _CONST.FORM_STATUS_ADD,
 
-                listRowUrl: ctx + "/list",					//列表查询URL
-                saveRowUrl: ctx + "/save",					//新增和修改URL， 有id为修改 无id为新增
-                delRowUrl: ctx + "/delete",					//刪除URL
-
-                yesOrNo: [{
-                    name: "是",
-                    value: "Y"
+            ygdemo_searchFormDa:new u.DataTable(searchData),
+            gridData: new u.DataTable(meta),
+            formData: new u.DataTable(meta),
+            subGridData: new u.DataTable(meta_sub),
+            
+            //orderState_refers : [{value:'0', name:'待确认'},{value:'1', name:'执行中'},{value:'2', name:'已办结'},{value:'3', name:'终止'}],
+            
+            event: {
+                /*** 头部区操作事件、方法 ***/
+            	//返回|取消
+                listBack: function () {
+                    viewModel.event.userListBtn();
+                    viewModel.md.dBack();
+                    viewModel.event.initDataGrid();
+                    $('#papList').show();
                 },
-                {
-                    name: "否",
-                    value: "N"
-                }
-                ],
-                gridData: new u.DataTable(meta),
-                formData: new u.DataTable(meta),
-                event: {
-                    //新增或修改的保存或取消按钮
-                    saveClick: function () {
-                        if (!viewModel.app.compsValidate($(element).find("#dialog_content")[0])) {
-                            u.messageDialog({
-                                msg: "请检查必输项(*)!",
-                                title: "提示",
-                                btnText: "OK"
-                            });
-                            return;
-                        }
-                        viewModel.event.addNewData();
-                        viewModel.dialog.close();
-                    },
-                    cancelClick: function () {
-                        viewModel.dialog.close();
-                    },
+                
+                //保存
+                saveClick: function () {
+                    if (! app.compsValidate($(element).find('#user-form')[0])) {
+                    	u.messageDialog({
+                            msg: "请检查必输项(*)!",
+                            title: "提示",
+                            btnText: "OK"
+                        });
+                        return;
+                    }
 
-                    //清除 datatable的数据
-                    clearDt: function (dt) {
-                        dt.removeAllRows();
-                        dt.clear();
-                    },
-                    //返回
-                    goBack: function () {
-                        window.history.go(- 1);
-                        return false;
-                    },
+                    var data = viewModel.formData.getSimpleData();
+                    var subData = viewModel.subGridData.getSimpleData();
+                    var jsondata =data[0];
+                    jsondata.orderDetails = subData;
 
-                    initGridDataList: function () {
-                        var jsonData = {
-                            pageIndex: viewModel.draw - 1,
-                            pageSize: viewModel.pageSize,
-                            sortField: "createTime",
-                            sortDirection: "desc"
-                        };
-
-                        var searchinfo = viewModel.gridData.params;
-                        for (var key in searchinfo) {
-                            if (searchinfo[key] && searchinfo[key] != null) {
-                                jsonData[key] = encodeURI(removeSpace(searchinfo[key]));
+                    $.ajax({
+                        type: "post",
+                        url: viewModel.saveUrl,
+                        contentType: 'application/json;charset=utf-8',
+                        data: JSON.stringify(jsondata),							//将对象序列化成JSON字符串
+                        success: function (result) {
+                            if (result) {
+                                $('#papList').show();
+                                if (result.success == 'success') {
+                                	message("操作成功");
+                                    viewModel.event.initDataGrid();
+                                    viewModel.event.userListBtn();
+                                    viewModel.md.dBack();
+                                } else {
+                                    var msg = "";
+                                    if (result.success == 'fail_global') {
+                                        msg = result.message;
+                                    } else {
+                                        for (var key in result.detailMsg) {
+                                            msg += result.detailMsg[key] + "<br/>";
+                                        }
+                                    }
+                                    u.messageDialog({msg: msg, title: '请求错误', btnText: '确定'});
+                                }
+                            } else {
+                            	message("<i class=\"fa fa-check-circle margin-r-5\"></i>没有返回数据","error");
                             }
                         }
+                    });
+                },
 
-                        $.ajax({
-                            type: "get",
-                            url: viewModel.listRowUrl,
-                            datatype: "json",
-                            data: jsonData,
-                            contentType: "application/json;charset=utf-8",
-                            success: function (res) {
-                                if (res) {
-                                    if (res.success == "success") {
-                                        if (res.detailMsg.data) {
-                                            var totalCount = res.detailMsg.data.totalElements;
-                                            var totalPage = res.detailMsg.data.totalPages;
-                                            viewModel.event.comps.update({
-                                                totalPages: totalPage,
-                                                pageSize: viewModel.pageSize,
-                                                currentPage: viewModel.draw,
-                                                totalCount: totalCount
-                                            });
-                                            viewModel.event.clearDt(viewModel.gridData);
-                                            viewModel.gridData.setSimpleData(res.detailMsg.data.content, {
-                                                unSelect: true
-                                            });
+            	//查询条件区--操作事件、方法
+                //搜索
+                search: function () {
+                    viewModel.draw = 1;
+                    viewModel.gridData.clear();
+                    var queryParams = {};
+                    $(".form-search").find(".input_search").each(function () {
+                    	queryParams[this.name] = removeSpace(this.value);
+                    });
+                    viewModel.gridData.addParams(queryParams);
+                    viewModel.event.initDataGrid();
+                },
+                
+                //清空条件
+                cleanSearch: function () {
+                    $(element).find(".form-search").find("input").val("");
+                    viewModel.event.initDataGrid();
+                },
+                
+                //加载列表
+                initDataGrid: function () {
+                    var jsonData = {
+                        pageIndex: viewModel.draw - 1,
+                        pageSize: viewModel.pageSize,
+                        sortField: "ts",
+                        sortDirection: "desc"
+                    };
+                    var searchObj = viewModel.gridData.params;
+                    for(var key in searchObj){
+                        if(searchObj[key] && searchObj[key] != null ){
+                            jsonData['search_' + key] = encodeURI(removeSpace(searchObj[key]));
+                        }
+                    }
+
+                    $.ajax({
+                        type: 'get',
+                        url: viewModel.listUrl,
+                        datatype: 'json',
+                        data: jsonData,
+                        contentType: 'application/json;charset=utf-8',
+                        success: function (result) {
+                            if (result) {
+                                if (result.success == 'success') {
+                                    if (result.detailMsg.data) {
+                                        if (result.detailMsg.data.content.length) {
+                                            $('#noData').hide();
+                                        }else{
+                                            $('#noData').show();
                                         }
-                                    } else {
-                                        var msg = "";
-                                        for (var key in res.detailMsg) {
-                                            msg += res.detailMsg[key] + "<br/>";
-                                        }
-                                        u.messageDialog({
-                                            msg: msg,
-                                            title: "请求错误",
-                                            btnText: "确定"
+                                        
+                                        var totalCount = result.detailMsg.data.totalElements;
+                                        var totalPage = result.detailMsg.data.totalPages;
+                                        //viewModel.event.comps.update({
+                                        viewModel.comps.update({
+                                            totalPages: totalPage,
+                                            pageSize: viewModel.pageSize,
+                                            currentPage: viewModel.draw,
+                                            totalCount: totalCount
                                         });
+                                        viewModel.event.clearDa(viewModel.gridData);
+                                        viewModel.gridData.setSimpleData(result.detailMsg.data.content, {
+                                            unSelect: true
+                                        });
+                                        window.setTimeout(function(){
+                                            viewModel.event.initTableHeight();
+                                        },500);
                                     }
                                 } else {
+                                    $('#noData').show();
+                                    var msg = "";
+                                    for (var key in result.detailMsg) {
+                                        msg += result.detailMsg[key] + "<br/>";
+                                    }
+                                    u.messageDialog({msg: msg, title: '请求错误', btnText: '确定'});
+                                }
+                            } else {
+                                $('#noData').show();
+                                u.messageDialog({msg: '后台返回数据格式有误，请联系管理员', title: '数据错误', btnText: '确定'});
+                            }
+                        }
+                    });
+                },            	
+                /*** 头部区操作事件、方法——end ***/
+            	
+                
+                /*** 列表区【主表】操作事件、方法 ***/
+                //新增操作
+                addClick: function() {
+                    viewModel.formStatus = _CONST.FORM_STATUS_ADD;
+                    //只显示返回和保存按钮
+                    viewModel.event.userCardBtn();
+                    viewModel.event.clearDa(viewModel.formData);
+                    viewModel.formData.createEmptyRow();
+                    viewModel.formData.setRowSelect(0);
+                    
+                    //设置业务操作逻辑
+                    viewModel.event.clearDa(viewModel.subGridData);
+                    var row = viewModel.formData.getCurrentRow();
+                    
+                    //显示操作卡片
+                    viewModel.md.dGo('addPage');
+                    $('#addPage').each(function(index,element){
+                        $(element).find('input[type!="radio"]').attr('disabled',false);
+                    });
+                    //防止多次HTML不为空
+                    viewModel.event.initTableHeight();
+                },
+                
+                //主表行——双击事件
+                dbClickRow:function(gridObj){
+                    viewModel.event.doEdit(gridObj.rowObj.value);
+                },
+                
+                //刪除操作
+                deleteClick: function() {
+                    let num = viewModel.gridData.selectedIndices();
+                    if (num.length > 0) {
+                        var selectDatas = viewModel.gridData.getSimpleData({
+                            "type": 'select'
+                        });
+                        viewModel.event.deleteFunc(selectDatas);
+                    }
+                },
+                
+                //刪除方法——调用后台服务
+                deleteFunc: function(datas) {
+                    var ids = [];
+                    for (var i = 0; i < datas.length; i++) {
+                    	ids.push(datas[i].id);
+                    }
+                    $.ajax({
+                        type: "post",
+                        url: viewModel.deleteUrl,
+                        datatype: "json",
+                        data: JSON.stringify(ids),
+                        contentType: "application/json;charset=utf-8",
+                        success: function (result) {
+                            if (result) {
+                                if (result.success == "success") {
+                                    viewModel.event.initDataGrid();
+                                } else {
+                                    var msg = "";
+                                    for (var key in result.detailMsg) {
+                                        msg += result.detailMsg[key] + "<br/>";
+                                    }
                                     u.messageDialog({
-                                        msg: "后台返回数据格式有误，请联系管理员",
-                                        title: "数据错误",
+                                        msg: msg,
+                                        title: "请求错误",
                                         btnText: "确定"
                                     });
                                 }
-                            }
-                        });
-                    },
-
-                    //分页组件初始化
-                    pageinit: function () {
-                        viewModel.app = u.createApp({
-                            el: element,
-                            model: viewModel
-                        });
-                        //分页初始化
-                        var paginationDiv = $(element).find("#pagination")[0];
-
-                        this.comps = new u.pagination({
-                            el: paginationDiv,
-                            jumppage: true
-                        });
-                        this.comps.update({
-                            pageSize: 5
-                        }); //默认每页显示5条数据
-                        this.initGridDataList();
-                        viewModel.event.pageChange();
-                        viewModel.event.sizeChange();
-                        $(".search-enter").keydown(function (e) {
-                            if (e.keyCode == 13) {
-                                $("#user-action-search").trigger("click");
-                                u.stopEvent(e);
-                            }
-                        });
-                    },
-                    pageChange: function () {
-                        viewModel.event.comps.on("pageChange",
-                            function (pageIndex) {
-                                viewModel.draw = pageIndex + 1;
-                                viewModel.event.initGridDataList();
-                            });
-                    },
-                    sizeChange: function (size) {
-                        viewModel.event.comps.on("sizeChange",
-                            function (arg) {
-                                viewModel.pageSize = parseInt(arg);
-                                viewModel.draw = 1;
-                                viewModel.event.initGridDataList();
-                            });
-                    },
-
-                    //删除操作 TODO: 冲突的方法
-                    dels: function (rowId) {
-                        var datatableRow = viewModel.listDataTable.getRowByRowId(rowId);
-                        //请求后端删除对应的数据；
-                        // index为数据下标
-                        viewModel.gridData.removeRow(datatableRow);
-                    },
-                    search: function () {
-                        viewModel.gridData.clear();
-                        var queryData = {};
-                        $(".form-search").find(".input_search").each(function () {
-                            queryData[this.name] = removeSpace(this.value);
-                        });
-                        viewModel.gridData.addParams(queryData);
-                        viewModel.event.initGridDataList();
-                    },
-                    cleanSearch: function () {
-                        $(element).find(".form-search").find("input").val("");
-                    },
-
-                    getRowData: function (rows) {
-                        //rows 表示行数据对象
-                        var rowsdata = [];
-                        for (var i = 0; i < rows.length; i++) {
-                            var d = rows[i].getSimpleData();
-                            rowsdata.push(d);
-                        }
-                        return rowsdata;
-                    },
-
-                    del: function (data) { // flag = 0 单条删除 1多条删除
-                        var arr = [];
-                        for (var i = 0; i < data.length; i++) {
-                            arr.push({
-                                "id": data[i].id
-                            });
-                        }
-                        $.ajax({
-                            type: "post",
-                            url: viewModel.delRowUrl,
-                            datatype: "json",
-                            data: JSON.stringify(arr),
-                            contentType: "application/json;charset=utf-8",
-                            success: function (res) {
-                                if (res) {
-                                    if (res.success == "success") {
-                                        // TODO 增加调用初始化页面接口
-                                        viewModel.event.initGridDataList();
-                                    } else {
-                                        var msg = "";
-                                        for (var key in res.detailMsg) {
-                                            msg += res.detailMsg[key] + "<br/>";
-                                        }
-                                        u.messageDialog({
-                                            msg: msg,
-                                            title: "请求错误",
-                                            btnText: "确定"
-                                        });
-                                    }
-                                } else {
-                                    u.messageDialog({
-                                        msg: "后台返回数据格式有误，请联系管理员",
-                                        title: "数据错误",
-                                        btnText: "确定"
-                                    });
-                                }
-                            }
-                        });
-                    },
-                    delRows: function (data) {
-                        let num = viewModel.gridData.selectedIndices();
-                        if (num.length > 1) {
-                            // 获取所有选中的数据
-                            var seldatas = viewModel.gridData.getSimpleData({
-                                "type": 'select'
-                            });
-                            viewModel.event.del(seldatas);
-                        }
-                    },
-                    delRow: function (data, index) {
-                        u.confirmDialog({
-                            msg: '<div class="pull-left col-padding u-msg-content-center" >' + '<i class="fa fa-exclamation-triangle margin-r-5 fa-3x red del-icon" style="vertical-align:middle"></i>确认删除这些数据吗？</div>',
-                            title: "",
-                            onOk: function () {
-                                var seldatas = viewModel.gridData.getSimpleData({
-                                    "type": 'select'
+                            } else {
+                                u.messageDialog({
+                                    msg: "后台返回数据格式有误，请联系管理员",
+                                    title: "数据错误",
+                                    btnText: "确定"
                                 });
-                                viewModel.event.del(seldatas);
-                            }
-                        });
-                    },
-                    showValue: function (obj) {
-                        var showValue = "";
-                        if (obj.value === "Y") {
-                            showValue = "是";
-                        } else {
-                            showValue = "否";
-                        }
-                        obj.element.innerHTML = showValue;
-                    },
-
-                    //选中列表行数据,【多条】行数删除是否可用
-                    selectRow: function () {
-                        let num = viewModel.gridData.selectedIndices();
-                        if (num.length > 1) {
-                            $("#user-action-del").attr("disabled", false).removeClass("disable");
-                        } else {
-                            $("#user-action-del").attr("disabled", true).addClass("disable");
-                        }
-                    },
-
-                    //列表行悬停
-                    rowHoverHandel: function (obj) {
-                        $(".editTable").hide();
-                        let num = obj["rowIndex"];
-                        let a = $("#grid_dicttype_content_tbody").find("tr")[num];
-                        let ele = a.getElementsByClassName("editTable");
-                        ele[0].style.display = "block";
-                    },
-
-                    //鼠标离开事件						
-                    mouseoutFunc: function () {
-                        $(".editTable").hide();
-                    },
-
-                    //code转name
-                    renderName: function (obj) {
-                        if (obj["value"] && obj["value"].length > 0) {
-                            var dataTableRowId = obj.row.value["$_#_@_id"];
-                            var infoFun = "data-bind=click:event.showInfo.bind($data," + dataTableRowId + ")";
-                            obj.element.innerHTML = "<div " + infoFun + ">" + obj["value"] + "</div>";
-                            ko.applyBindings(viewModel, obj.element);
-                        }
-                    },
-
-                    //提示框
-                    showInfo: function (obj) {
-                        viewModel.md.dGo("addPage");
-                    },
-
-                    //新增数据
-                    addNewData: function () {
-                        var data = viewModel.formData.getSimpleData()[0];
-                        for (var key in data) {
-                            if (key === "operate") {
-                                delete data.operate;
                             }
                         }
-                        var jsonData = viewModel.event.genDataList(data);
+                    });
+                },
+                
+                //编辑信息
+                doEdit: function(rowData){
+                	if(rowData){
+                    	var id = rowData.id;
+                    	var jsonData = {
+                   			pageIndex: 0,
+                            pageSize: viewModel.pageSize,
+                            sortField: "ts",
+                            sortDirection: "asc"
+                    	};
+                        jsonData['search_orderId'] = id;
                         $.ajax({
-                            type: "post",
-                            url: viewModel.saveRowUrl,
-                            datatype: "json",
-                            data: JSON.stringify(jsonData),
-                            contentType: "application/json;charset=utf-8",
-                            success: function (res) {
-                                if (res) {
-                                    if (res.success == "success") {
-                                        viewModel.event.initGridDataList();
+                            type: 'GET',
+                            url: viewModel.getUrl,
+                            datatype: 'json',
+                            data: jsonData,
+                            contentType: 'application/json;charset=utf-8',
+                            success: function(result){
+                                if (result) {
+                                    if (result.success == 'success') {
+                                    	if (result.detailMsg.data) {
+                                            viewModel.formStatus = _CONST.FORM_STATUS_EDIT;
+                                            //表单数据
+                                            var curFormData =[result.detailMsg.data.data];
+                                            viewModel.event.userCardBtn();
+                                            viewModel.formData.clear();
+                                            viewModel.formData.setSimpleData(curFormData);
+
+                                            //子表数据
+                                            if(result.detailMsg.data.subPage.content.length){
+                                                $('#childNoData').hide();
+                                            }else{
+                                                $('#childNoData').show();
+                                            };
+                                            viewModel.subGridData.removeAllRows();
+                                            viewModel.subGridData.clear();
+                                            var subPage = result.detailMsg.data.subPage;
+                                            viewModel.subGridData.setSimpleData(subPage.content, {unSelect: true});
+                                            
+                                            //显示操作卡片
+                                            viewModel.md.dGo('addPage');
+                                            $('#addPage').each(function(index,element){
+                                                $(element).find('input[type!="radio"]').attr('disabled',false);
+                                            });
+
+                                            viewModel.child_card_pcomp.update({ 				//卡片页子表的分页信息
+                                                totalPages: subPage.totalPages,
+                                                pageSize: viewModel.pageSize,
+                                                currentPage: viewModel.childdraw,
+                                                totalCount: subPage.totalElements
+                                            });
+
+                                            if(subPage.totalElements > viewModel.pageSize ){	//根据总条数，来判断是否显示子表的分页层
+                                                $('#child_card_pagination').show();
+                                            }else{
+                                                $('#child_card_pagination').hide();
+                                            }
+                                            viewModel.event.initTableHeight();
+                                    	}else {
+                                            $('#childNoData').show();
+                                            var msg = "";
+                                            for (var key in res.message) {
+                                                msg += res.message[key] + "<br/>";
+                                            }
+                                            u.messageDialog({msg: msg, title: '请求错误', btnText: '确定'});
+                                        }
                                     } else {
-                                        var msg = res.message;
-                                        u.messageDialog({
-                                            msg: msg,
-                                            title: "请求错误",
-                                            btnText: "确定"
-                                        });
+                                        $('#childNoData').show();
+                                        u.messageDialog({msg: '后台返回数据格式有误，请联系管理员', title: '数据错误', btnText: '确定'});
                                     }
-                                } else {
-                                    u.messageDialog({
-                                        msg: "后台返回数据格式有误，请联系管理员",
-                                        title: "数据错误",
-                                        btnText: "确定"
-                                    });
-                                }
+                            	}
                             }
                         });
-                    },
-
-                    //组装list
-                    genDataList: function (data) {
-                        var datalist = [];
-                        datalist.push(data);
-                        return datalist;
-                    },
+                	}else{
+                        u.messageDialog({msg: '请选择一条记录！', title: '提示信息', btnText: '确定'});
+                	}
+                },
+                
+                /*** 新增/修改页面操作事件、方法 ***/
+                //子表操作
+                //子表——新增行
+                addRow4SubGrid: function () {
+                    viewModel.subGridData.createEmptyRow();
                 },
 
-                //列表行内操作-按钮定义
-                optFun: function (obj) {
-                    var dataTableRowId = obj.row.value["$_#_@_id"];
-                    var delfun = "data-bind=click:event.delRow.bind($data," + dataTableRowId + ")";
-                    var editfun = "data-bind=click:beforeEdit.bind($data," + dataTableRowId + ")";
-                    obj.element.innerHTML = '<div class="editTable" style="display:none;"><button class="u-button u-button-border" title="修改"' + editfun + ">修改</button>" + '<button class="u-button u-button-border" title="删除" ' + delfun + ">删除</button></div>";
+                //子表行——操作列
+                optFunc4SubGrid:function(obj){
+                    var curRowId = obj.row.value["$_#_@_id"];
+                    var rownum = obj.rowIndex;
+                    var delFunc = "data-bind=click:event.subDeleteClick.bind($data," + curRowId + ","+ rownum +")";
+                    obj.element.innerHTML = '<div class="editTable" style="display:none;">' + 
+                    							'<button class="u-button u-button-border" title="删除" ' + delFunc + ">删除</button></div>";
+                    ko.cleanNode(obj.element);
                     ko.applyBindings(viewModel, obj.element);
                 },
-
-                //编辑按钮绑定方法
-                beforeEdit: function (rowId, s, e) {
-                    var self = this;
-                    viewModel.rowId = rowId;
+                
+                //任务分解子表删除
+                subDeleteClick: function(rowId,rowIndex,e){
                     if (rowId && rowId != -1) {
-                        var datatableRow = viewModel.gridData.getRowByRowId(rowId);
+                        var datatableRow = viewModel.subGridData.getRowByRowId(rowId);
                         //修改操作
-                        var currentData = datatableRow.getSimpleData();
-                        viewModel.formData.setSimpleData(currentData);
-                    } else {
-                        //添加操作
-                        viewModel.formData.removeAllRows();
-                        viewModel.formData.createEmptyRow();
+                        var rowData = datatableRow.getSimpleData();
+                        viewModel.event.doDelete4SubGrid(rowData,rowIndex);
                     }
-
-                    //显示模态框，如果模态框不存在创建模态框，存在则直接显示
-                    if (!viewModel.dialog) {
-                        viewModel.dialog = u.dialog({
-                            id: "testDialg",
-                            content: "#dialog_content",
-                            hasCloseMenu: true,
-                            width: "80%;",
-                            height: "500px"
+                },
+                
+                //子表删除方法
+                doDelete4SubGrid: function (data,rowIndex) {
+                    if (!data) {
+                        u.messageDialog({
+                            msg: "请选择要删除的行!",
+                            title: "提示",
+                            btnText: "OK"
                         });
-                        $(".u-msg-dialog").css("width", "80%");
-                    } else {
-                        viewModel.dialog.show();
+                    }else {
+                    u.confirmDialog({
+                        msg: '<div class="pull-left col-padding u-msg-content-center" >' +
+                        	 '<i class="fa fa-exclamation-triangle margin-r-5 fa-3x red del-icon" style="vertical-align:middle"></i><br/>确认删除这些数据吗？</div>',
+                        title: ' ',
+                        onOk: function () {
+                        	var ids = [];
+                            if(data.id==null || data.id==""){
+                            	return;
+                            }else{
+                            	ids = [data.id];
+                            }
+
+                            $.ajax({
+                                type: "post",
+                                url: viewModel.subGridDeleteUrl,
+                                contentType: 'application/json;charset=utf-8',
+                                data: JSON.stringify(ids),
+                                success: function (result) {
+                                    if (result) {
+                                        if (result.success == 'success') {
+                                            viewModel.subGridData.removeRows(rowIndex);
+                                        } else {
+                                            u.messageDialog({msg: result.message, title: '操作提示', btnText: '确定'});
+                                        }
+                                    } else {
+                                        u.messageDialog({msg: '无返回数据', title: '操作提示', btnText: '确定'});
+                                    }
+                                }
+                            });
+                        }
+                    });
                     }
-                    u.stopEvent(e);
-                }
-            };
+                },
+                
+                //子表行——悬浮事件
+                rowHover4SubGrid:function (obj) {
+                    $(".editTable").hide();
+                    var num = obj["rowIndex"];
+                    var a = $("#subDataGrid_content_tbody").find("tr")[num];
+                    var ele = a.getElementsByClassName("editTable");
+                    ele[0].style.display = "block";
+                },
+                
+                /**********************************************************************/
+				goBack:function(){
+                   window.history.go(-1);
+                   return false;
+				},
 
-            //加载Html页面
-            $(element).html(html);
-            viewModel.event.pageinit();
+                open: function () {
+	                if ($('#openIcon').hasClass('uf-arrow-right')) {
+	                    $('#openIcon').removeClass('uf-arrow-right').addClass('uf-arrow-down');
+	                } else {
+	                    $('#openIcon').removeClass('uf-arrow-down').addClass('uf-arrow-right');
+	                }
+                },
 
-            //搜索导航（查询、筛选）展开/收起
-            var toggleBtn = document.querySelector("#condition-toggle");
-            u.on(toggleBtn, "click",
-                function () {
-                    var conditionRow = document.querySelector("#condition-row");
-                    var toggleIcon = this.querySelector("i");
-                    if (u.hasClass(conditionRow, "b-searech-close")) {
-                        u.removeClass(conditionRow, "b-searech-close").addClass(conditionRow, "b-searech-open");
-                        u.removeClass(toggleIcon, "uf-arrow-up").addClass(toggleIcon, "uf-arrow-down");
-                        this.querySelector("span").innerText = "展开";
+                //修改最外层框架按钮组的显示与隐藏
+                userListBtn: function () {  //显示user_list_button_2
+                    $('#user_list_button_2').parent('.u-mdlayout-btn').removeClass('hide');
+                    $('.form-search').removeClass('hide');
+                    $('#user_card_button').parent('.u-mdlayout-btn').addClass('hide');
+                },
+
+                userCardBtn: function () {   //显示user_card_button
+                    $('#user_list_button_2').parent('.u-mdlayout-btn').addClass('hide');
+                    $('.form-search').addClass('hide');
+                    $('#user_card_button').parent('.u-mdlayout-btn').removeClass('hide');
+                    $("#save").show();
+                    $('#papList').hide();
+                },
+
+                //判断对象的值是否为空
+                isEmpty: function (obj) {
+                    if (obj.value == undefined || obj.value == '' || obj.value.length == 0) {
+                        return true;
                     } else {
-                        u.removeClass(conditionRow, "b-searech-open").addClass(conditionRow, "b-searech-close");
-                        u.removeClass(toggleIcon, "uf-arrow-down").addClass(toggleIcon, "uf-arrow-up");
-                        this.querySelector("span").innerText = "收起";
+                        return false;
+                    }
+                },
+
+                //清除 datatable的数据
+                clearDa: function (da) {
+                    da.removeAllRows();
+                    da.clear();
+                },
+
+                pageChange: function () {
+                    viewModel.comps.on('pageChange', function (pageIndex) {
+                        viewModel.draw = pageIndex + 1;
+                        viewModel.event.initDataGrid();
+                    });
+                },
+                //end pageChange
+                
+                sizeChange: function () {
+                    viewModel.comps.on('sizeChange', function (arg) {
+                        //数据库分页
+                        viewModel.pageSize = parseInt(arg);
+                        viewModel.draw = 1;
+                        viewModel.event.initDataGrid();
+                    });
+
+                    viewModel.child_card_pcomp.on('sizeChange', function (arg) {
+                    	viewModel.pageSize = parseInt(arg);
+                    	viewModel.childdraw = 1;
+                    	viewModel.event.getUserJobList();
+                    });
+                },
+                //end sizeChange
+
+                /**子表列表 */
+                initTableHeight:function(){
+                    var Total =$('.duban').height();
+                    var topPart = $(".topPart").height();
+                    var bottom = $("#pagination").height()+20;
+                    var hh = $('#dubanMainGrid_header').height();
+                    if(!hh||hh==null){
+                        hh=33;
+                    }
+                    var h = Total-topPart-bottom-hh;
+                    $("#dubanMainGrid_content").css("max-height",h);
+                    $("#addPage").css("max-height",Total-topPart-10);
+                },
+            }, // end  event
+
+            
+            /*************** 列表操作 ******************/
+            //定义列表——操作列内容
+            optFunc: function(obj) {
+                var rowId = obj.row.value["$_#_@_id"];
+                var editFunc = "data-bind=click:doEditRow.bind($data," + rowId + ")";
+                var delFunc = "data-bind=click:doDeleteRow.bind($data," + rowId + ")";
+                obj.element.innerHTML =  '<div class="editTable">' + 
+                						 '<button class="u-button u-button-border"title="修改" ' + editFunc + ">修改</button>" +
+                						 '<button class="u-button u-button-border" title="删除" ' + delFunc + ">删除</button></div>";
+                ko.applyBindings(viewModel, obj.element);
+            },
+            
+            //行操作——修改
+            doEditRow: function(rowId, s, e) {
+                var self = this;
+                viewModel.rowId = rowId;
+                if (rowId && rowId != -1) {				//修改操作
+                    var datatableRow = viewModel.gridData.getRowByRowId(rowId);
+                    var currentData = datatableRow.getSimpleData();
+                    viewModel.event.doEdit(currentData);
+                } else {								//添加操作
+                    viewModel.formDataTable.removeAllRows();
+                    viewModel.formDataTable.createEmptyRow();
+                }
+            },
+
+            //行操作——删除
+            doDeleteRow: function(rowId) {
+                var dataGridRow = viewModel.gridData.getRowByRowId(rowId);
+                u.confirmDialog({
+                    msg: '<div class="pull-left col-padding u-msg-content-center" >' +
+                    	 '<i class="fa fa-exclamation-triangle margin-r-5 fa-3x red del-icon" style="vertical-align:middle"></i><br/>确认删除这些数据吗？</div>',
+                    title: "删除确认提示",
+                    onOk: function() {
+                        var currentData = dataGridRow.getSimpleData();
+                        viewModel.event.deleteFunc([currentData]);
                     }
                 });
-
-            //存在问题，需要调整：涉及死循环
-            var inputDom = document.querySelectorAll("input");
-            var searchbtn = document.querySelector('[data-role="searchbtn"]');
-            var clearbtn = document.querySelector('[data-role="clearbtn"]');
-            var inputlen = inputDom.length;
-            var ifuse = false; //是否可用
-            var domshasvalue = function () {
-                for (var i = 0; i < inputlen; i++) {
-                    if (inputDom[i].value.length > 0) {
-                        return true;
-                    }
-                }
-                return false;
-            };
-            if (inputlen > 0) {
-                for (var i = 0; i < inputlen; i++) {
-                    u.on(inputDom[i], "blur",
-                        function () {
-                            ifuse = false;
-                            if (this.value && this.value.length > 0) {
-                                //如果本元素失去焦点时有value则按钮直接可用，
-                                ifuse = true;
-                            }
-                            if (!ifuse) {
-                                //如果离开时无value则查看其它框是否有值
-                                ifuse = domshasvalue();
-                            }
-                            if (ifuse) {
-                                //有值时去除不可用样式
-                                u.removeClass(searchbtn, "disable");
-                                u.removeClass(clearbtn, "disable");
-                            } else {
-                                //没值时添加不可用样式
-                                u.addClass(searchbtn, "disable");
-                                u.addClass(clearbtn, "disable");
-                            }
-                        });
-                }
             }
         };
+        //end viewModel
 
-        return {
-            template: html,
-            init: init
-        };
-    });
+        viewModel.ygdemo_searchFormDa.createEmptyRow();
+        window.csrfDefense();									//跨站请求伪造防御
+
+        $(element).html(template);
+
+        if(arg && arg.vtype && arg.vtype=='bpm'){
+        	ko.cleanNode($(element)[0]);
+        }else{
+        	ko.cleanNode(element);
+        }
+
+        var app = u.createApp({
+            el: element,
+            model: viewModel
+        });
+
+        viewModel.md = $(element).find('#user-mdlayout')[0]['u.MDLayout'];
+        var paginationDiv = $(element).find('#pagination')[0];
+        viewModel.comps = new u.pagination({el: paginationDiv, jumppage: true});
+
+        viewModel.child_card_pcomp = new u.pagination({el: $(element).find('#child_card_pagination')[0], jumppage: true});
+        viewModel.childdraw=1 ;
+
+        if(arg && arg.vtype && arg.vtype=='bpm'){
+        	viewModel.initBpmFromTask(arg,viewModel);//初始化BPM相关内容(添加审批操作头部和审批相关弹出框的代码片段)
+
+            viewModel.event.initPage(viewModel.id);//加载表单数据
+            viewModel.md.dGo('addPage');//跳转到浏览页面
+
+            // 把卡片页面变成不能编辑
+            $('#addPage').each(function(index,element){
+            	$(element).find('input[type!="radio"]').attr('disabled',true);
+            });
+
+   			//隐藏查询框
+   			bpmHideQueryInfoHandler('.u-mdlayout-btn');
+   			bpmHideQueryInfoHandler('.form-search');
+           //隐藏子表
+			bpmHideQueryInfoHandler('#ygdemo_yw_sub-form');
+        }else{
+        	 viewModel.event.initDataGrid();
+             viewModel.event.pageChange();
+             viewModel.event.sizeChange();
+        }
+
+        /*
+         * 参照滚动条
+         */
+        $("#user-mdlayout").scroll(function(){
+        	$("#autocompdiv").css("display",'none');
+        });
+        $("#addPage").scroll(function(){
+            $("#autocompdiv").css("display",'none');
+        });
+
+
+        window.vm = viewModel;
+
+        //加载条
+		window.vm.onLoading = function onLoading(){
+		 	 var centerContent='<i class="fa fa-cloud u-loader-centerContent"></i>';
+		 	 var opt1={
+		 		 hasback:true,
+		 		 hasDesc:true,//是否含有加载内容描述
+		 		 centerContent:centerContent
+		 	 };
+		 	 u.showLoader(opt1);
+		 }
+
+		 //关闭加载条
+		 window.vm.onCloseLoading = function onCloseLoading(){
+		 	 u.hideLoader();
+		 }
+
+    }  //end init
+
+    return {
+        'model': init.viewModel,
+        'template': template,
+        init: function (param1, param2) {
+            if(typeof(param1)=="string"){
+                var arg = {};
+                arg.appCtx = '/example';
+                init(param2, arg);
+            }else{
+                init(param1, param2);
+            }
+
+            /*回车搜索*/
+            $('.search-enter').keydown(function (e) {
+                if (e.keyCode == 13) {			//失去焦点
+                    $('.search-enter').blur();
+                    $('#user-action-search').trigger('click');
+                }
+            });
+            var toggleBtn = document.querySelector("#condition-toggle");
+            u.on(toggleBtn, "click", function() {
+                var conditionRow = document.querySelector("#condition-row");
+                var toggleIcon = this.querySelector("i");
+                if (u.hasClass(conditionRow, "b-searech-close")) {
+                    u.removeClass(conditionRow, "b-searech-close")
+                        .addClass(conditionRow, "b-searech-open");
+                    u.removeClass(toggleIcon, "uf-arrow-up")
+                        .addClass(toggleIcon, "uf-arrow-down");
+                    this.querySelector("span").innerText = "收起";
+                } else {
+                    u.removeClass(conditionRow, "b-searech-open")
+                        .addClass(conditionRow, "b-searech-close");
+                    u.removeClass(toggleIcon, "uf-arrow-down")
+                        .addClass(toggleIcon, "uf-arrow-up");
+                    this.querySelector("span").innerText = "展开";
+                }
+            });
+        }
+    }
+});

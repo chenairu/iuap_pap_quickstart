@@ -2,9 +2,7 @@ var meta = {
 	meta : {
 		id : {},
 		orderCode : {
-			enable : true,
-			required : true,
-			nullMsg : "不能为空"
+			enable : false
 		},
 		orderName : {
 			enable : true,
@@ -28,12 +26,12 @@ var meta = {
 		},
 		busiman_name : {},
 		amount : {
-			enable : false
+			enable : true
 		},
 		beginDate : {},
 		endDate : {},
 		orderState : {
-			enable : false,
+			enable : true,
 			required : true,
 			nullMsg : "不能为空"
 		},
@@ -55,7 +53,7 @@ var meta = {
 	}
 };
 
-var meta_detail = {
+var meta_sub = {
 	meta : {
 		id : {},
 		detailCode : {},
@@ -73,6 +71,30 @@ var meta_detail = {
 		remark : {},
 		version : {},
 		dr : {},
-		ts : {}
+		ts : {},
+		manufacturer : {
+			'refmodel' : JSON.stringify({
+							"refClientInfoPageInfo": {
+										"currentPageIndex":0,
+										"pageCount":0,
+										"pageSize":1000},
+							"refCode":'currency',
+							"refModelUrl":"http://localhost:8088/iuap-example/reference/organization/",
+							"refName": "生产厂商",
+							"refUIType": "RefTree",
+							"rootName": "生产厂商列表"
+					}),
+			'refcfg' : '{"ctx":"/uitemplate_web"}'
+		},
+		manufacturer_name : {}
 	}
 };
+
+var searchData = {
+		meta : {
+			id : {},
+			code : {},
+			name : {},
+			ly_code : {},
+		}
+	};

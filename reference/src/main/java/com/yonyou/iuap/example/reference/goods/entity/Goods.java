@@ -1,8 +1,8 @@
 package com.yonyou.iuap.example.reference.goods.entity;
 
-import com.yonyou.iuap.example.common.entity.GenericEntity;
+import com.yonyou.iuap.example.common.entity.AbsGenericEntity;
 
-public class Goods extends GenericEntity{
+public class Goods extends AbsGenericEntity{
 
 	private String goodsCode;
 	private String goodsName;

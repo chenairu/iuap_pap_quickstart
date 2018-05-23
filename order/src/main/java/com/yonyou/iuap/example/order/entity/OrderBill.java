@@ -5,10 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.yonyou.iuap.example.common.entity.GenericEntity;
+import com.yonyou.iuap.example.common.entity.AbsGenericEntity;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class OrderBill extends GenericEntity{
+public class OrderBill extends AbsGenericEntity{
 
 	private String id;
 	private String orderCode;
