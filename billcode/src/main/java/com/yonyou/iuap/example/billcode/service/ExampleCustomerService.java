@@ -129,7 +129,7 @@ public class ExampleCustomerService {
         msg.setSendman(userid);
         msg.setChannel(new String[]{WebappMessageConst.CHANNEL_SYS});
         msg.setRecevier(new String[]{InvocationInfoProxy.getUserid(),"U001"});
-        msg.setTemplatecode("busidemomsg");
+        msg.setTemplatecode("cust");
         msg.setBillid(customer.getCustomerCode());
         msg.setTencentid(InvocationInfoProxy.getTenantid());
         msg.setMsgtype(WebappMessageConst.MESSAGETYPE_NOTICE);

@@ -9,6 +9,10 @@
     <result column="LSTDATE" jdbcType="TIMESTAMP" property="lstdate" />
     <result column="IS_SYSTEM" jdbcType="CHAR" property="isSystem" />
   </resultMap>
+  <resultMap id="ComboboxResultMap" type="com.yonyou.iuap.example.asval.entity.ComboboxEntity">
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="VALUE" jdbcType="INTEGER" property="value" />
+  </resultMap>
   <sql id="Base_Column_List">
     VALSET_ID, VAL_ID, VAL, ORD_INDEX, LSTDATE, IS_SYSTEM
   </sql>
@@ -103,4 +107,14 @@
     where VALSET_ID = #{valsetId,jdbcType=VARCHAR}
       and VAL_ID = #{valId,jdbcType=VARCHAR}
   </update>
+
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from example_as_val
+  </select>
+
+  <select id="findProvince" resultMap="ComboboxResultMap">
+    select VAL_ID as VALUE, VAL as NAME from example_as_val where valset_id='SSSFM_INS_TYPE_KIND'
+  </select>
 </mapper>

@@ -17,6 +17,15 @@ define(["text!./customer.html", "./meta.js", "css!./customer.css",
 
                 gridData: new u.DataTable(meta),
                 formData: new u.DataTable(meta),
+                provinceData: [{
+                    name: "是",
+                    value: "Y"
+                },
+                    {
+                        name: "否",
+                        value: "N"
+                    }
+                ],
                 event: {
                     //新增或修改的保存或取消按钮
                     saveClick: function () {
@@ -332,6 +341,23 @@ define(["text!./customer.html", "./meta.js", "css!./customer.css",
                         datalist.push(data);
                         return datalist;
                     },
+                    initCombox:function(){
+                        $.ajax({
+                            type: "get",
+                            url: cookie.appCtx+"/exampleAsVal/list",
+                            datatype: "json",
+                            success: function (res) {
+                               if(res){
+                                   if(res.success="success"){
+                                       var data = res.detailMsg.data;
+                                       var combo1Obj = document.getElementById('province')['u.Combo'];
+                                        console.log(data);
+                                       combo1Obj.setComboData(data);
+                                   }
+                               }
+                           }
+                        });
+                    }
                 },
 
                 //列表行内操作-按钮定义
@@ -379,6 +405,7 @@ define(["text!./customer.html", "./meta.js", "css!./customer.css",
             $(element).html(html);
             ko.cleanNode(element);
             viewModel.event.pageinit();
+            viewModel.event.initCombox();
 
             //搜索导航（查询、筛选）展开/收起
             var toggleBtn = document.querySelector("#condition-toggle");
