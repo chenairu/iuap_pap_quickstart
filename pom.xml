@@ -279,13 +279,6 @@
             </exclusions>
         </dependency>
 
-
-        <!-- maven mybatis generator -->
-        <dependency>
-            <groupId>org.mybatis.generator</groupId>
-            <artifactId>mybatis-generator-core</artifactId>
-            <version>1.3.5</version>
-        </dependency>
     </dependencies>
 
     <distributionManagement>
