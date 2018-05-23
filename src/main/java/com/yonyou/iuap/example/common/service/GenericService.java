@@ -20,16 +20,33 @@ public abstract class GenericService<T extends GenericEntity> {
     public Page<T> selectAllByPage(PageRequest pageRequest, SearchParams searchParams) {
         return ibatisMapper.selectAllByPage(pageRequest, searchParams).getPage();
     }
+
+    public List<T> findAll(){
+    	Map<String,Object> queryParams = new HashMap<String,Object>();
+    	return this.queryList(queryParams);
+    }
     
-    public T getById(String id) {
-    	Map<String,Object> params = new HashMap<String, Object>();
-    	params.put("id", id);
-    	List<T> listResult = ibatisMapper.queryList(params);
-    	if(listResult.size() == 1) {
-    		return listResult.get(0);
+    public List<T> queryList(Map<String,Object> queryParams){
+    	return this.ibatisMapper.queryList(queryParams);
+    }
+    
+    public List<T> queryList(String name, Object value){
+    	Map<String,Object> queryParams = new HashMap<String,Object>();
+    	queryParams.put(name, value);
+    	return this.queryList(queryParams);
+    }
+    
+    public T findUnique(String name, Object value) {
+    	List<T> listData = this.queryList(name, value);
+    	if(listData!=null && listData.size()==1) {
+    		return listData.get(0);
     	}else {
-    		throw new RuntimeException("根据ID获取数据出错:id="+id);
+    		throw new RuntimeException("检索数据不唯一, "+name + ":" + value);
     	}
+    }
+    
+    public T findById(String id) {
+    	return this.findUnique("id", id);
     }
 
 	public T save(T entity) {
@@ -76,5 +93,9 @@ public abstract class GenericService<T extends GenericEntity> {
 	
 	/***************************************************/
 	protected GenericMapper<T> ibatisMapper;
+
+	public void setIbatisMapper(GenericMapper<T> ibatisMapper) {
+		this.ibatisMapper = ibatisMapper;
+	}
 
 }
