@@ -115,6 +115,17 @@
   </select>
 
   <select id="findProvince" resultMap="ComboboxResultMap">
-    select VAL_ID as VALUE, VAL as NAME from example_as_val where valset_id='SSSFM_INS_TYPE_KIND'
+    select VAL_ID as VALUE, VAL as NAME from example_as_val
+    where 1=1
+      AND valset_id=#{valsetId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getByIds" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select *
+    from example_as_val where valset_id = "SSSFM_ITEM_CODE_ID" and VAL_ID in
+    <foreach collection="list" item="item" index="index"
+             separator="," open="(" close=")">
+      #{item,jdbcType=VARCHAR}
+    </foreach>
   </select>
 </mapper>

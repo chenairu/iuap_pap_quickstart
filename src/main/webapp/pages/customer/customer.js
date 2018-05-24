@@ -1,10 +1,10 @@
-define(["text!./customer.html", "./meta.js", "css!./customer.css",
+define(["text!./customer.html","cookieOperation","./meta.js", "css!./customer.css",
 	"css!../../style/style.css", "../../config/sys_const.js",
 	"css!../../style/widget.css", "../sever.js", 
 	"css!../../style/currency.css"],
 
     function (html) {
-        var init = function (element, cookie, bpmopenbill) {
+        var init = function (element,cookie) {
             var ctx = cookie.appCtx + "/customer";
             var viewModel = {
                 draw: 1,
@@ -346,6 +346,9 @@ define(["text!./customer.html", "./meta.js", "css!./customer.css",
                             type: "get",
                             url: cookie.appCtx+"/exampleAsVal/list",
                             datatype: "json",
+                            data:{
+                              code :'SSSFM_ITEM_CODE_ID'
+                            },
                             success: function (res) {
                                if(res){
                                    if(res.success="success"){

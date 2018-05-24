@@ -4,7 +4,6 @@ package com.yonyou.iuap.example.template.web.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.yonyou.iuap.base.web.BaseController;
-import com.yonyou.iuap.example.supervise.web.controller.Ygdemo_yw_infoController;
 import com.yonyou.iuap.example.template.entity.ExampleTemplate;
 import com.yonyou.iuap.example.template.service.ExampleTemplateService;
 import com.yonyou.iuap.mvc.type.SearchParams;

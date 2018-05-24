@@ -43,7 +43,7 @@ public class ExampleCustomerService {
         return exampleCustomerMapper.findByCode(code);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void save(List<ExampleCustomer> list){
         List<ExampleCustomer> addList = new ArrayList<>(list.size());
         List<ExampleCustomer> updateList = new ArrayList<>(list.size());
@@ -69,6 +69,7 @@ public class ExampleCustomerService {
 
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void batchDeleteByPrimaryKey(List<ExampleCustomer> list){
         exampleCustomerMapper.batchDelete(list);
         for(ExampleCustomer customer : list){
@@ -125,7 +126,7 @@ public class ExampleCustomerService {
     private void sendMessage(ExampleCustomer customer){
         MessageEntity msg = new MessageEntity();
         String userid = InvocationInfoProxy.getUserid();
-
+        String userName = InvocationInfoProxy.getUsername();
         msg.setSendman(userid);
         msg.setChannel(new String[]{WebappMessageConst.CHANNEL_SYS});
         msg.setRecevier(new String[]{InvocationInfoProxy.getUserid(),"U001"});
@@ -134,7 +135,7 @@ public class ExampleCustomerService {
         msg.setTencentid(InvocationInfoProxy.getTenantid());
         msg.setMsgtype(WebappMessageConst.MESSAGETYPE_NOTICE);
         msg.setSubject("站内消息标题");
-        msg.setContent("您新建了一条单据,单据号为"+customer.getCustomerCode()+"单据名称为"+customer.getCustomerName());
+        msg.setContent(userName+"新建了一条单据,单据号为"+customer.getCustomerCode()+"单据名称为"+customer.getCustomerName());
         JSONObject busiData = new JSONObject();
         busiData.put("busientity.code",customer.getCustomerCode());
         busiData.put("busientity.name",customer.getCustomerName());
@@ -147,7 +148,7 @@ public class ExampleCustomerService {
         mapParameter4.put("userIds",JSONArray.toJSON(listUser_name).toString());
 
         Map<String,String> mapUser_name = convertRefName(url_user,mapParameter4);
-        String userName = InvocationInfoProxy.getUsername();
+
         userName = mapUser_name.get(userid);
         busiData.put("SENDMAN",userName);
         SimpleDateFormat df0 = new SimpleDateFormat("HH:mm:ss");
