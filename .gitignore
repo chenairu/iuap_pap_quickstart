@@ -72,6 +72,8 @@ fabric.properties
 */application.properties
 */rebel.xml
 */rebel-remote.xml
-*/generatorConfig.xml
+src/main/resources
 pom.xml
 */pom.xml
+overlays
+
