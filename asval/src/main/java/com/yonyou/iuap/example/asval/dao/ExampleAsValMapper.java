@@ -1,6 +1,5 @@
 package com.yonyou.iuap.example.asval.dao;
 
-import com.yonyou.iuap.example.asval.entity.ComboboxEntity;
 import com.yonyou.iuap.example.asval.entity.ExampleAsVal;
 import com.yonyou.iuap.mvc.type.SearchParams;
 import com.yonyou.iuap.mybatis.anotation.MyBatisRepository;
@@ -20,7 +19,7 @@ public interface ExampleAsValMapper {
 
     List<ExampleAsVal> findAll();
 
-    List<ComboboxEntity> findProvince(String valsetId);
+    List<ExampleAsVal> findProvince(String valsetId);
 
     List<ExampleAsVal> getByIds(String tenantId, @Param("list") List<String> ids);
 

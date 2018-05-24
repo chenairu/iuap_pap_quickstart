@@ -1,9 +1,4 @@
 var meta = {
-		//待确认	houlf
-    params: {
-        "cls": "com.yonyou.iuap.example.entity.mybatis.SysDictType" //使用 mybaties方式
-    },
-    
     meta: {
         //主键  
         id: {type: 'string'},

@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.yonyou.iuap.base.web.BaseController;
-import com.yonyou.iuap.example.asval.entity.ComboboxEntity;
 import com.yonyou.iuap.example.asval.entity.ExampleAsVal;
 import com.yonyou.iuap.example.asval.service.ExampleAsValService;
 import com.yonyou.iuap.persistence.vo.pub.util.StringUtil;
@@ -30,8 +29,9 @@ public class ExampleAsValController extends BaseController {
     private ExampleAsValService exampleAsValService;
 
     @RequestMapping(value={"/list"},method = {RequestMethod.GET})
-    public @ResponseBody Object list(@RequestParam(value="code") String code) {
-        List<ComboboxEntity> list = exampleAsValService.findProvince(code);
+    public @ResponseBody Object list(HttpServletRequest request,@RequestParam(value="code") String code) {
+
+        List<ExampleAsVal> list = exampleAsValService.findProvince(code);
         return buildSuccess(list);
     }
 
@@ -57,7 +57,7 @@ public class ExampleAsValController extends BaseController {
         List<OrganizationBrief> results = new ArrayList<>();
         if(!CollectionUtils.isEmpty(asValList)){
             for (ExampleAsVal entity:asValList){
-                results.add(new OrganizationBrief(entity.getValId(),entity.getVal(),entity.getValId()));
+                results.add(new OrganizationBrief(entity.getId(),entity.getValue(),entity.getCode()));
             }
         }
 

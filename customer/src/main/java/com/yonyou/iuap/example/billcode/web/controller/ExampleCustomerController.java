@@ -1,10 +1,13 @@
 package com.yonyou.iuap.example.billcode.web.controller;
 
+import com.yonyou.iuap.auth.session.SessionManager;
 import com.yonyou.iuap.base.web.BaseController;
 import com.yonyou.iuap.example.billcode.entity.ExampleCustomer;
 import com.yonyou.iuap.example.billcode.service.ExampleCustomerService;
 import com.yonyou.iuap.example.billcode.validator.ExampleCustomerValidator;
 import com.yonyou.iuap.mvc.type.SearchParams;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.mgt.DefaultSessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,6 +28,8 @@ public class ExampleCustomerController extends BaseController {
 
     @Autowired
     private ExampleCustomerValidator validator;
+
+
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public @ResponseBody

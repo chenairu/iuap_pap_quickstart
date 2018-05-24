@@ -2,88 +2,47 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yonyou.iuap.example.asval.dao.ExampleAsValMapper">
   <resultMap id="BaseResultMap" type="com.yonyou.iuap.example.asval.entity.ExampleAsVal">
-    <id column="VALSET_ID" jdbcType="VARCHAR" property="valsetId" />
-    <id column="VAL_ID" jdbcType="VARCHAR" property="valId" />
-    <result column="VAL" jdbcType="VARCHAR" property="val" />
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="VALUE" jdbcType="VARCHAR" property="value" />
     <result column="ORD_INDEX" jdbcType="INTEGER" property="ordIndex" />
     <result column="LSTDATE" jdbcType="TIMESTAMP" property="lstdate" />
     <result column="IS_SYSTEM" jdbcType="CHAR" property="isSystem" />
   </resultMap>
-  <resultMap id="ComboboxResultMap" type="com.yonyou.iuap.example.asval.entity.ComboboxEntity">
-    <result column="NAME" jdbcType="VARCHAR" property="name" />
-    <result column="VALUE" jdbcType="INTEGER" property="value" />
-  </resultMap>
   <sql id="Base_Column_List">
-    VALSET_ID, VAL_ID, VAL, ORD_INDEX, LSTDATE, IS_SYSTEM
+    ID,CODE,NAME,VALUE,ORD_INDEX,LSTDATE,IS_SYSTEM
   </sql>
   <select id="selectByPrimaryKey" parameterType="com.yonyou.iuap.example.asval.entity.ExampleAsVal" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from example_as_val
-    where VALSET_ID = #{valsetId,jdbcType=VARCHAR}
-      and VAL_ID = #{valId,jdbcType=VARCHAR}
+    where  ID = #{id,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="com.yonyou.iuap.example.asval.entity.ExampleAsVal">
     delete from example_as_val
-    where VALSET_ID = #{valsetId,jdbcType=VARCHAR}
-      and VAL_ID = #{valId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.yonyou.iuap.example.asval.entity.ExampleAsVal">
-    insert into example_as_val (VALSET_ID, VAL_ID, VAL,
+    insert into example_as_val (ID, CODE, NAME,VALUE,
       ORD_INDEX, LSTDATE, IS_SYSTEM
       )
-    values (#{valsetId,jdbcType=VARCHAR}, #{valId,jdbcType=VARCHAR}, #{val,jdbcType=VARCHAR},
+    values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},#{value,jdbcType=VARCHAR},
       #{ordIndex,jdbcType=INTEGER}, #{lstdate,jdbcType=TIMESTAMP}, #{isSystem,jdbcType=CHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.yonyou.iuap.example.asval.entity.ExampleAsVal">
-    insert into example_as_val
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="valsetId != null">
-        VALSET_ID,
-      </if>
-      <if test="valId != null">
-        VAL_ID,
-      </if>
-      <if test="val != null">
-        VAL,
-      </if>
-      <if test="ordIndex != null">
-        ORD_INDEX,
-      </if>
-      <if test="lstdate != null">
-        LSTDATE,
-      </if>
-      <if test="isSystem != null">
-        IS_SYSTEM,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="valsetId != null">
-        #{valsetId,jdbcType=VARCHAR},
-      </if>
-      <if test="valId != null">
-        #{valId,jdbcType=VARCHAR},
-      </if>
-      <if test="val != null">
-        #{val,jdbcType=VARCHAR},
-      </if>
-      <if test="ordIndex != null">
-        #{ordIndex,jdbcType=INTEGER},
-      </if>
-      <if test="lstdate != null">
-        #{lstdate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="isSystem != null">
-        #{isSystem,jdbcType=CHAR},
-      </if>
-    </trim>
-  </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.yonyou.iuap.example.asval.entity.ExampleAsVal">
     update example_as_val
     <set>
-      <if test="val != null">
-        VAL = #{val,jdbcType=VARCHAR},
+      <if test="code != null">
+        CODE = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        VALUE = #{value,jdbcType=VARCHAR},
       </if>
       <if test="ordIndex != null">
         ORD_INDEX = #{ordIndex,jdbcType=INTEGER},
@@ -95,17 +54,17 @@
         IS_SYSTEM = #{isSystem,jdbcType=CHAR},
       </if>
     </set>
-    where VALSET_ID = #{valsetId,jdbcType=VARCHAR}
-      and VAL_ID = #{valId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yonyou.iuap.example.asval.entity.ExampleAsVal">
     update example_as_val
-    set VAL = #{val,jdbcType=VARCHAR},
+    set CODE = #{code,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      VALUE = #{value,jdbcType=VARCHAR},
       ORD_INDEX = #{ordIndex,jdbcType=INTEGER},
       LSTDATE = #{lstdate,jdbcType=TIMESTAMP},
       IS_SYSTEM = #{isSystem,jdbcType=CHAR}
-    where VALSET_ID = #{valsetId,jdbcType=VARCHAR}
-      and VAL_ID = #{valId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
   </update>
 
   <select id="findAll" resultMap="BaseResultMap">
@@ -114,15 +73,17 @@
     from example_as_val
   </select>
 
-  <select id="findProvince" resultMap="ComboboxResultMap">
-    select VAL_ID as VALUE, VAL as NAME from example_as_val
+  <select id="findProvince" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from example_as_val
     where 1=1
-      AND valset_id=#{valsetId,jdbcType=VARCHAR}
+      AND code=#{code,jdbcType=VARCHAR}
   </select>
 
   <select id="getByIds" parameterType="java.lang.String" resultMap="BaseResultMap">
     select *
-    from example_as_val where valset_id = "SSSFM_ITEM_CODE_ID" and VAL_ID in
+    from example_as_val where code = "SSSFM_ITEM_CODE_ID" and NAME in
     <foreach collection="list" item="item" index="index"
              separator="," open="(" close=")">
       #{item,jdbcType=VARCHAR}
@@ -134,7 +95,7 @@
     select
     <include refid="Base_Column_List" />
     from example_as_val
-    where  VAL_ID like CONCAT(CONCAT('%', #{1}),'%') or VAL like CONCAT(CONCAT('%', #{1}),'%')
+    where  NAME like CONCAT(CONCAT('%', #{1}),'%') or VAL like CONCAT(CONCAT('%', #{1}),'%')
   </select>
 
   <select id="selectAllByPage" resultMap="BaseResultMap"
@@ -146,7 +107,7 @@
       <if
               test="search.searchMap.searchParam!=null and search.searchMap.searchParam!='' ">
         and
-        VAL_ID like CONCAT(CONCAT('%', #{search.searchMap.searchParam}),'%')
+        NAME like CONCAT(CONCAT('%', #{search.searchMap.searchParam}),'%')
       </if>
     </if>
     <if test="page != null">

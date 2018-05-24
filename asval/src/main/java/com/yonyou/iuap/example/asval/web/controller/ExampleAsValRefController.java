@@ -144,12 +144,12 @@ public class ExampleAsValRefController extends AbstractGridRefModel {
 
         if(list != null && !list.isEmpty()){
             for(ExampleAsVal asVal:list){
-                if(isUserDataPower || (isUserDataPower&&set.contains(asVal.getValId()))){
+                if(isUserDataPower || (isUserDataPower&&set.contains(asVal.getId()))){
                     Map<String,String> refDataMap = new HashMap<>();
-                    refDataMap.put("id",asVal.getValId());
-                    refDataMap.put("refname",asVal.getVal());
-                    refDataMap.put("refcode",asVal.getValId());
-                    refDataMap.put("refpk",asVal.getValId());
+                    refDataMap.put("id",asVal.getId());
+                    refDataMap.put("refname",asVal.getValue());
+                    refDataMap.put("refcode",asVal.getCode());
+                    refDataMap.put("refpk",asVal.getId());
 
                     results.add(refDataMap);
                 }

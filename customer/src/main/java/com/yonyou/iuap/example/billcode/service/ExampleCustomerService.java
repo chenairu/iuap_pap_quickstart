@@ -3,6 +3,7 @@ package com.yonyou.iuap.example.billcode.service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.yonyou.iuap.auth.session.SessionManager;
 import com.yonyou.iuap.base.utils.RestUtils;
 import com.yonyou.iuap.context.InvocationInfoProxy;
 import com.yonyou.iuap.example.billcode.dao.ExampleCustomerMapper;
@@ -14,6 +15,8 @@ import com.yonyou.iuap.mvc.type.SearchParams;
 import com.yonyou.iuap.persistence.vo.pub.BusinessException;
 import com.yonyou.iuap.utils.PropertyUtil;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.session.mgt.DefaultSessionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,11 +38,14 @@ public class ExampleCustomerService {
     private ExampleCustomerMapper exampleCustomerMapper;
     @Autowired
     private CommonMessageSendService commonMessageSendService;
+
     public Page<ExampleCustomer> selectAllByPage(PageRequest pageRequest, SearchParams searchParams){
         return exampleCustomerMapper.selectAllByPage(pageRequest,searchParams.getSearchMap()).getPage();
     }
 
     public List<ExampleCustomer> findByCode(String code){
+
+
         return exampleCustomerMapper.findByCode(code);
     }
 
@@ -135,7 +141,7 @@ public class ExampleCustomerService {
         msg.setTencentid(InvocationInfoProxy.getTenantid());
         msg.setMsgtype(WebappMessageConst.MESSAGETYPE_NOTICE);
         msg.setSubject("站内消息标题");
-        msg.setContent(userName+"新建了一条单据,单据号为"+customer.getCustomerCode()+"单据名称为"+customer.getCustomerName());
+        msg.setContent("您新建了一条单据,单据号为"+customer.getCustomerCode()+"单据名称为"+customer.getCustomerName());
         JSONObject busiData = new JSONObject();
         busiData.put("busientity.code",customer.getCustomerCode());
         busiData.put("busientity.name",customer.getCustomerName());

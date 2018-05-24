@@ -5,11 +5,13 @@ import java.util.Date;
 
 public class ExampleAsVal implements Serializable {
 
-    private String valsetId;
+    private String id;
 
-    private String valId;
+    private String code;
 
-    private String val;
+    private String name;
+
+    private String value;
 
     private Integer ordIndex;
 
@@ -19,28 +21,36 @@ public class ExampleAsVal implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public String getValsetId() {
-        return valsetId;
+    public String getId() {
+        return id;
     }
 
-    public void setValsetId(String valsetId) {
-        this.valsetId = valsetId == null ? null : valsetId.trim();
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getValId() {
-        return valId;
+    public String getCode() {
+        return code;
     }
 
-    public void setValId(String valId) {
-        this.valId = valId == null ? null : valId.trim();
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getVal() {
-        return val;
+    public String getName() {
+        return name;
     }
 
-    public void setVal(String val) {
-        this.val = val == null ? null : val.trim();
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public Integer getOrdIndex() {
@@ -64,6 +74,10 @@ public class ExampleAsVal implements Serializable {
     }
 
     public void setIsSystem(String isSystem) {
-        this.isSystem = isSystem == null ? null : isSystem.trim();
+        this.isSystem = isSystem;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 }

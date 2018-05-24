@@ -2,7 +2,6 @@ package com.yonyou.iuap.example.asval.service;
 
 import com.yonyou.iuap.context.InvocationInfoProxy;
 import com.yonyou.iuap.example.asval.dao.ExampleAsValMapper;
-import com.yonyou.iuap.example.asval.entity.ComboboxEntity;
 import com.yonyou.iuap.example.asval.entity.ExampleAsVal;
 import com.yonyou.iuap.mvc.type.SearchParams;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,7 @@ public class ExampleAsValService {
         return exampleAsValMapper.findAll();
     }
 
-    public List<ComboboxEntity> findProvince(String code){
+    public List<ExampleAsVal> findProvince(String code){
         return exampleAsValMapper.findProvince(code);
     }
     public List<ExampleAsVal> getCurrtypeByIds(String[] strArray) {
