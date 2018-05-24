@@ -128,4 +128,34 @@
       #{item,jdbcType=VARCHAR}
     </foreach>
   </select>
+
+  <!--参照配置-->
+  <select id="queryByClause" parameterType="java.lang.String" resultType="com.yonyou.iuap.example.asval.entity.ExampleAsVal">
+    select
+    <include refid="Base_Column_List" />
+    from example_as_val
+    where  VAL_ID like CONCAT(CONCAT('%', #{1}),'%') or VAL like CONCAT(CONCAT('%', #{1}),'%')
+  </select>
+
+  <select id="selectAllByPage" resultMap="BaseResultMap"
+          resultType="java.util.List">
+    SELECT
+    <include refid="Base_Column_List" />
+    from example_as_val where 1=1
+    <if test="search != null">
+      <if
+              test="search.searchMap.searchParam!=null and search.searchMap.searchParam!='' ">
+        and
+        VAL_ID like CONCAT(CONCAT('%', #{search.searchMap.searchParam}),'%')
+      </if>
+    </if>
+    <if test="page != null">
+      <if test="page.sort!=null">
+        order by
+        <foreach collection="page.sort" item="item" separator=" ">
+          ${item.property} ${item.direction}
+        </foreach>
+      </if>
+    </if>
+  </select>
 </mapper>

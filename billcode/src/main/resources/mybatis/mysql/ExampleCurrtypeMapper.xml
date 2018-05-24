@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yonyou.iuap.example.billcode.dao.ExampleCurrtypeMapper">
+    <resultMap id="BaseResultMap" type="com.yonyou.iuap.example.billcode.entity.ExampleCurrtype">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="create_name" jdbcType="VARCHAR" property="createName"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, code, name, create_time, create_name, status
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from example_currtype
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from example_currtype
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.yonyou.iuap.example.billcode.entity.ExampleCurrtype">
+    insert into example_currtype (id, code, name, create_time, create_name, status)
+    values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+      #{create_time,jdbcType=VARCHAR}, #{create_name,jdbcType=VARCHAR},  #{status,jdbcType=VARCHAR})
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.yonyou.iuap.example.billcode.entity.ExampleCurrtype">
+    update example_currtype
+    set customer_code = #{customerCode,jdbcType=VARCHAR},
+      customer_name = #{customerName,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      corpSize = #{corpsize,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from example_currtype
+    </select>
+
+    <select id="findByCode" resultMap="BaseResultMap"
+            parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from example_currtype
+        where code= #{code,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="selectAllByPage" resultMap="BaseResultMap"
+            resultType="java.util.List">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from example_currtype where 1=1
+        <if test="search != null">
+            <if
+                    test="search.code!=null and search.code!='' ">
+                and code like CONCAT(CONCAT('%', #{search.code}),'%')
+            </if>
+            <if
+                    test="search.name!=null and search.name!='' ">
+                and name like CONCAT(CONCAT('%', #{search.name}),'%')
+            </if>
+        </if>
+    </select>
+</mapper>
