@@ -145,3 +145,14 @@ CREATE TABLE `example_customer` (
   `status` tinyint(1) DEFAULT NULL COMMENT '状态',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+create table `example_as_val`(
+	`id` varchar(36) not null,
+	`code` varchar(36) not NULL COMMENT '编码',
+	`name` varchar(255) not null COMMENT '下拉框NAME',
+	`value` varchar(255) not null COMMENT '下拉框VALUE',
+	`ord_index` tinyint DEFAULT NULL COMMENT '顺序',
+	`lstdate` timestamp DEFAULT NULL COMMENT '最后更新时间',,
+	`is_system` tinyint DEFAULT NULL COMMENT '是否系统预置',,
+	PRIMARY KEY(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
