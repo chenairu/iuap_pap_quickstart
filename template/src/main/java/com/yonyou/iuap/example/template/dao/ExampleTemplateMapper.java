@@ -1,5 +1,6 @@
 package com.yonyou.iuap.example.template.dao;
 
+import com.yonyou.iuap.example.supervise.entity.Ygdemo_yw_info;
 import com.yonyou.iuap.example.template.entity.ExampleTemplate;
 import com.yonyou.iuap.mvc.type.SearchParams;
 import com.yonyou.iuap.mybatis.type.PageResult;
@@ -29,6 +30,9 @@ public interface ExampleTemplateMapper {
 
     ExampleTemplate selectByPrimaryKey(String pk);
     
+    PageResult<ExampleTemplate> getByIds(List<String> ids);
+    
+    List<String> getIds();
     
 	PageResult<ExampleTemplate> selectAllByPage(@Param("page") PageRequest pageRequest, @Param("search") SearchParams searchParams);
     

@@ -38,6 +38,44 @@
 			</if>
 		</if>
 	</select>
+	
+	
+	<select id="getByIds" resultMap="BaseResultMap" parameterType="java.util.List">
+		SELECT
+		<include refid="Base_Column_List" />
+		from example_template where 
+		id in
+		<foreach collection="list" item="item" index="index"
+			separator="," open="(" close=")">
+			#{item,jdbcType=VARCHAR}
+		</foreach>
+	</select>
+	
+	
+	<select id="getIds" resultType="java.lang.String" >
+		SELECT id from example_template 
+	</select>
+	
+	
+	<delete id="update"  parameterType="com.yonyou.iuap.example.template.entity.ExampleTemplate">
+			update example_template
+		<set>
+			<if test="id != null">
+				id = #{id},
+			</if>
+			<if test="code != null">
+				code = #{code},
+			</if>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="remark != null">
+				remark = #{remark},
+			</if>
+		</set>
+		where id = #{id} 
+	</delete>
+	
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
 		delete from example_template

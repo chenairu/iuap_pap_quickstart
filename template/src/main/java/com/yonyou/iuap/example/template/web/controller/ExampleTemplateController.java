@@ -4,6 +4,7 @@ package com.yonyou.iuap.example.template.web.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.yonyou.iuap.base.web.BaseController;
+import com.yonyou.iuap.example.supervise.web.controller.Ygdemo_yw_infoController;
 import com.yonyou.iuap.example.template.entity.ExampleTemplate;
 import com.yonyou.iuap.example.template.service.ExampleTemplateService;
 import com.yonyou.iuap.mvc.type.SearchParams;
@@ -110,7 +111,7 @@ public class ExampleTemplateController extends BaseController {
 	public @ResponseBody Map<String, String> excelTemplateDownload(HttpServletRequest request,
 			HttpServletResponse response) throws BusinessException {
 		Map<String, String> result = new HashMap<String, String>();
-
+	
 		try {
 			service.downloadExcelTemplate(response);
 			result.put("status", "success");
@@ -134,27 +135,45 @@ public class ExampleTemplateController extends BaseController {
 	@RequestMapping(value = "/excelDataImport", method = RequestMethod.POST)
 	public @ResponseBody Map<String, String> excelDataImport(
 			@RequestParam(value = "fileName", required = false) MultipartFile fileName, ModelMap model,
-			HttpServletRequest request) throws BusinessException {	
-		System.out.println("1111111111111111111...");
-		System.out.println("fileName");
-		
-		System.out.println("2222...");
-		
+			HttpServletRequest request) throws BusinessException {		
+		Map<String, String> result = new HashMap<String, String>();
+		try {	
+			service.importExcelData(fileName.getInputStream());
+			result.put("status", "success");
+			result.put("msg", "Excel导入成功");
+		} catch (Exception e) {
+			logger.error("Excel导入失败", e);
+			result.put("status", "failed");
+			result.put("msg", "Excel导入失败");
+		}
+		return result;
+	}
+
+	
+	
+	/**
+	 * 督办任务信息导出
+	 * @param request
+	 * @param response
+	 * @throws BusinessException
+	 */
+	@RequestMapping(value = "/excelDataExport", method = { RequestMethod.GET, RequestMethod.POST })
+	public @ResponseBody Map<String, String> excelDataExport(PageRequest pageRequest, HttpServletRequest request,
+			@RequestParam String ids, HttpServletResponse response) throws BusinessException {
 		Map<String, String> result = new HashMap<String, String>();
 
 		try {
-			service.importExcelData(fileName.getInputStream());
+			service.exportExcelData(pageRequest, response, ids);
 			result.put("status", "success");
-			result.put("msg", "督办任务信息Excel导入成功");
+			result.put("msg", "信息导出成功");
 		} catch (Exception e) {
-			logger.error("督办任务信息Excel导入失败", e);
+			logger.error("Excel下载失败", e);
 			result.put("status", "failed");
-			result.put("msg", "督办任务信息Excel导入失败");
+			result.put("msg", "Excel下载失败");
 		}
 
 		return result;
 	}
-
 
     
 }
