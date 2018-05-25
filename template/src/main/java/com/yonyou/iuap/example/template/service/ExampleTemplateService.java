@@ -185,4 +185,23 @@ public class ExampleTemplateService extends ParentService<ExampleTemplate> {
 	}
 
 	
+	
+	
+	public ExampleTemplate queryByPK(String id) {
+
+		List<String> ids = new ArrayList<String>();
+
+		ids.add(id);
+
+		List<ExampleTemplate> list = mapper.getByIds(ids);
+		
+		if (list != null && list.size() > 0) {
+			ExampleTemplate entity = list.get(0);
+
+			return entity;
+		} else {
+			return null;
+		}
+	}
+	
 }

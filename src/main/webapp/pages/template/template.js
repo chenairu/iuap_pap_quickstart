@@ -16,13 +16,10 @@ define(["text!./template.html",
             var ctx = cookie.appCtx + "/exampleTemplate";
             var viewModel = {
                 draw: 1,
-                //页数(第几页)
                 pageSize: 5,
-
                 listRowUrl: ctx + "/list",					//列表查询URL
                 saveRowUrl: ctx + "/save",					//新增和修改URL， 有id为修改 无id为新增
                 delRowUrl: ctx + "/delete",					//刪除URL
-
                 gridData: new u.DataTable(meta),
                 formData: new u.DataTable(meta),
                 event: {
@@ -490,8 +487,65 @@ define(["text!./template.html",
                         input2.attr('value', window.x_xsrf_token);
                         form.append(input2);
                         form.submit();
-                    }
+                    },
 
+
+
+                    /** 打印*/
+                    printPage: function () {
+                        $.ajax({
+                            type: 'GET',
+                            url: '/eiap-plus/appResAllocate/queryPrintTemplateAllocate?funccode=teaplate&nodekey=printTemplate1',
+                            datatype: 'json',
+                            contentType: 'application/json;charset=utf-8',
+                            success: function (result) {
+                                if (result) {
+
+
+                                    console.log(result);
+                                    if (result.success == 'success') {
+                                        var data = result.detailMsg.data;
+                                        var templateCode = data.res_code;
+                                        //调用打印
+                                        viewModel.event.printPageByTemplateCode(templateCode);
+                                    } else {
+                                        u.messageDialog({
+                                            msg: result.detailMsg.msg,
+                                            title: "提示",
+                                            btnText: "OK"
+                                        });
+                                    }
+
+                                } else {
+                                    u.messageDialog({ msg: '无返回数据', title: '操作提示', btnText: '确定' });
+                                }
+                            }
+                        })
+                    },
+
+                    printPageByTemplateCode: function (templateCode) {
+                        //打印逻辑
+                        var rows = viewModel.gridData.getSelectedRows();
+                        var currentData = rows[0].getSimpleData();
+                        id = currentData.id;
+                        if (id != undefined && id.trim() != null) {
+                            //                		var tenantId = cookie.get('tenantid');//租户ID
+                            var tenantId = "tenant";//固定字符串
+                            var serverUrl = ctx + '/dataForPrint';//取数据的url地址
+                            var params = {//去后台打印数据的参数
+                                'id': id
+                            };
+                            params = encodeURIComponent(JSON.stringify(params));//URL参数部分有特殊字符，必须编码(不同的tomcat对特殊字符的处理不一样)
+                            var url = '/print_service/print/preview?tenantId='
+                                + tenantId + '&printcode=' + templateCode + '&serverUrl=' + serverUrl
+                                + '&params=' + params + '&sendType=post';
+                            console.log("url:", url);
+                            window.open(url);
+                        }
+                        else {
+                            u.messageDialog({ msg: '请选择一条数据进行打印', title: '提示', btnText: '确定' });
+                        }
+                    }
                 },
 
                 //列表行内操作-按钮定义
@@ -539,62 +593,62 @@ define(["text!./template.html",
             $(element).html(html);
             viewModel.event.pageinit();
 
-            //搜索导航（查询、筛选）展开/收起
-            var toggleBtn = document.querySelector("#condition-toggle");
-            u.on(toggleBtn, "click",
-                function () {
-                    var conditionRow = document.querySelector("#condition-row");
-                    var toggleIcon = this.querySelector("i");
-                    if (u.hasClass(conditionRow, "b-searech-close")) {
-                        u.removeClass(conditionRow, "b-searech-close").addClass(conditionRow, "b-searech-open");
-                        u.removeClass(toggleIcon, "uf-arrow-up").addClass(toggleIcon, "uf-arrow-down");
-                        this.querySelector("span").innerText = "展开";
-                    } else {
-                        u.removeClass(conditionRow, "b-searech-open").addClass(conditionRow, "b-searech-close");
-                        u.removeClass(toggleIcon, "uf-arrow-down").addClass(toggleIcon, "uf-arrow-up");
-                        this.querySelector("span").innerText = "收起";
-                    }
-                });
+            // //搜索导航（查询、筛选）展开/收起
+            // var toggleBtn = document.querySelector("#condition-toggle");
+            // u.on(toggleBtn, "click",
+            //     function () {
+            //         var conditionRow = document.querySelector("#condition-row");
+            //         var toggleIcon = this.querySelector("i");
+            //         if (u.hasClass(conditionRow, "b-searech-close")) {
+            //             u.removeClass(conditionRow, "b-searech-close").addClass(conditionRow, "b-searech-open");
+            //             u.removeClass(toggleIcon, "uf-arrow-up").addClass(toggleIcon, "uf-arrow-down");
+            //             this.querySelector("span").innerText = "展开";
+            //         } else {
+            //             u.removeClass(conditionRow, "b-searech-open").addClass(conditionRow, "b-searech-close");
+            //             u.removeClass(toggleIcon, "uf-arrow-down").addClass(toggleIcon, "uf-arrow-up");
+            //             this.querySelector("span").innerText = "收起";
+            //         }
+            //     });
 
-            //存在问题，需要调整：涉及死循环
-            var inputDom = document.querySelectorAll("input");
-            var searchbtn = document.querySelector('[data-role="searchbtn"]');
-            var clearbtn = document.querySelector('[data-role="clearbtn"]');
-            var inputlen = inputDom.length;
-            var ifuse = false; //是否可用
-            var domshasvalue = function () {
-                for (var i = 0; i < inputlen; i++) {
-                    if (inputDom[i].value.length > 0) {
-                        return true;
-                    }
-                }
-                return false;
-            };
-            if (inputlen > 0) {
-                for (var i = 0; i < inputlen; i++) {
-                    u.on(inputDom[i], "blur",
-                        function () {
-                            ifuse = false;
-                            if (this.value && this.value.length > 0) {
-                                //如果本元素失去焦点时有value则按钮直接可用，
-                                ifuse = true;
-                            }
-                            if (!ifuse) {
-                                //如果离开时无value则查看其它框是否有值
-                                ifuse = domshasvalue();
-                            }
-                            if (ifuse) {
-                                //有值时去除不可用样式
-                                u.removeClass(searchbtn, "disable");
-                                u.removeClass(clearbtn, "disable");
-                            } else {
-                                //没值时添加不可用样式
-                                u.addClass(searchbtn, "disable");
-                                u.addClass(clearbtn, "disable");
-                            }
-                        });
-                }
-            }
+            // //存在问题，需要调整：涉及死循环
+            // var inputDom = document.querySelectorAll("input");
+            // var searchbtn = document.querySelector('[data-role="searchbtn"]');
+            // var clearbtn = document.querySelector('[data-role="clearbtn"]');
+            // var inputlen = inputDom.length;
+            // var ifuse = false; //是否可用
+            // var domshasvalue = function () {
+            //     for (var i = 0; i < inputlen; i++) {
+            //         if (inputDom[i].value.length > 0) {
+            //             return true;
+            //         }
+            //     }
+            //     return false;
+            // };
+            // if (inputlen > 0) {
+            //     for (var i = 0; i < inputlen; i++) {
+            //         u.on(inputDom[i], "blur",
+            //             function () {
+            //                 ifuse = false;
+            //                 if (this.value && this.value.length > 0) {
+            //                     //如果本元素失去焦点时有value则按钮直接可用，
+            //                     ifuse = true;
+            //                 }
+            //                 if (!ifuse) {
+            //                     //如果离开时无value则查看其它框是否有值
+            //                     ifuse = domshasvalue();
+            //                 }
+            //                 if (ifuse) {
+            //                     //有值时去除不可用样式
+            //                     u.removeClass(searchbtn, "disable");
+            //                     u.removeClass(clearbtn, "disable");
+            //                 } else {
+            //                     //没值时添加不可用样式
+            //                     u.addClass(searchbtn, "disable");
+            //                     u.addClass(clearbtn, "disable");
+            //                 }
+            //             });
+            //     }
+            // }
         };
 
         return {

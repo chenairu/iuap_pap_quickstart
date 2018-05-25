@@ -3,7 +3,11 @@ package com.yonyou.iuap.example.template.web.controller;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.yonyou.iuap.base.web.BaseController;
+import com.yonyou.iuap.common.BaseEntityUtils;
+import com.yonyou.iuap.example.supervise.utils.CommonUtils;
 import com.yonyou.iuap.example.supervise.web.controller.Ygdemo_yw_infoController;
 import com.yonyou.iuap.example.template.entity.ExampleTemplate;
 import com.yonyou.iuap.example.template.service.ExampleTemplateService;
@@ -115,11 +119,11 @@ public class ExampleTemplateController extends BaseController {
 		try {
 			service.downloadExcelTemplate(response);
 			result.put("status", "success");
-			result.put("msg", "Excel模版下载成功");
+			result.put("msg", "督办任务信息Excel模版下载成功");
 		} catch (Exception e) {
-			logger.error("Excel模版下载失败", e);
+			logger.error("督办任务信息Excel模版下载失败", e);
 			result.put("status", "failed");
-			result.put("msg", "Excel模版下载失败");
+			result.put("msg", "督办任务信息Excel模版下载失败");
 		}
 
 		return result;
@@ -175,5 +179,59 @@ public class ExampleTemplateController extends BaseController {
 		return result;
 	}
 
+	
+	
+	
+	/**
+	 * 打印时获取数据
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/dataForPrint", method = RequestMethod.POST)
+	@ResponseBody
+	public Object getDataForPrint(HttpServletRequest request) {
+		
+		
+		
+		String params = request.getParameter("params");
+		JSONObject jsonObj = JSON.parseObject(params);
+		String id = (String) jsonObj.get("id");
+
+		ExampleTemplate vo = service.queryByPK(id);
+
+		JSONArray mainDataJson = new JSONArray();// 主实体数据
+		List<String> lsAttr = vo.getAllAttributeNames();
+		JSONObject mainData = new JSONObject();
+
+		for (String attr : lsAttr) {
+			if (BaseEntityUtils.lsAttrExclude.contains(attr) || attr.equals("id_ygdemo_yw_sub")) {
+				continue;
+			}
+			
+			System.out.println("attr"+attr+"------"+vo.getAttribute(attr));
+			mainData.put(attr, vo.getAttribute(attr));
+			/*
+			 *因云打印将打印模板的字段与本方法传入的数值一一对应显示，出现显示不正确问题
+			 * 例如：责任单位    显示为‘af267958-7ac1-43f3-aa97-ceee2b3c5db9’。显示的是vo中zr_dw字段的值，而我们期望为zr_dw_name字段
+			 *       是否为KPI   显示为1或者0，而我们期望为是或者否
+			 *       各类日期     由于字段为date类型  显示为	1522512000000，而我们期望为2018-04-01
+			 *       所以转换为JSONObject时需要进行处理，增加下面一行代码    
+			 * */
+//			mainData=CommonUtils.formatDataForPrint(vo, attr,  mainData);//为使打印显示正常
+		}
+
+		mainDataJson.add(mainData);// 主表只有一行
+
+		JSONObject boAttr = new JSONObject();
+		boAttr.put("ygdemo_yw_info", mainDataJson);
+		
+		
+		System.out.println(boAttr.toString());
+		
+
+		return boAttr.toString();
+	}
+	
     
 }
