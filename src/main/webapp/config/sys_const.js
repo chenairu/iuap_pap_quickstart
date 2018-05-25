@@ -42,5 +42,16 @@ define( function() {
 		newStr = newStr.replace(/\s+/g, "");
 		return newStr;
 	}
- 
+    initUserId = function(id){
+        var userName = $.cookie("_A_P_userName")
+        var userId = $.cookie("userId");
+        var combo1Obj = document.getElementById(id)['u.Combo'];
+        var arr = [{
+            name:decodeURI(userName),
+            value:userId
+        }];
+        combo1Obj.setComboData(arr);
+        combo1Obj.selectItem(0);
+        return combo1Obj.value;
+    }
 });

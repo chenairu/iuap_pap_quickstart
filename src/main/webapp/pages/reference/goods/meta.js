@@ -22,7 +22,7 @@ var meta = {
 										"pageCount":0,
 										"pageSize":5},
 							"refCode":'currency',
-							"refModelUrl":"http://localhost:8088/iuap-example/reference/dictionary/",
+							"refModelUrl":"http://10.6.197.111:8081/iuap-example/reference/dictionary/",
 							"refName": "币种",
 							"refUIType": "RefGrid",
 							"rootName": "币种列表"
@@ -45,7 +45,7 @@ var meta = {
 										"pageCount":0,
 										"pageSize":1000},
 							"refCode":'currency',
-							"refModelUrl":"http://localhost:8088/iuap-example/reference/organization/",
+							"refModelUrl":"http://10.6.197.111:8081/iuap-example/reference/organization/",
 							"refName": "生产厂商",
 							"refUIType": "RefTree",
 							"rootName": "生产厂商列表"
@@ -60,7 +60,7 @@ var meta = {
 										"pageCount":0,
 										"pageSize":10},
 							"refCode":'currency',
-							"refModelUrl":"http://localhost:8088/iuap-example/reference/contacts/",
+							"refModelUrl":"http://10.6.197.111:8081/iuap-example/reference/contacts/",
 							"refName": "联系人",
 							"refUIType": "RefGrid",
 							"rootName": "联系人列表",

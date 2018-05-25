@@ -1,5 +1,6 @@
 package com.yonyou.iuap.example.dictionary.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -43,5 +44,6 @@ public interface DictionaryMapper extends GenericMapper<Dictionary> {
 	List<Dictionary> findAll();
 
 	List<Dictionary> findByCode(String code);
-	 
+
+    List<Dictionary> getByIds(String tenantId, @Param("list")ArrayList<String> ids);
 }

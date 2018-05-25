@@ -35,7 +35,7 @@ public class ExampleAsValController extends BaseController {
         return buildSuccess(list);
     }
 
-    @RequestMapping(value={"/getIds"},method={RequestMethod.POST})
+    @RequestMapping(value={"/getByIds"},method={RequestMethod.POST})
     @ResponseBody
     public JSONObject getIds(HttpServletRequest request){
         JSONObject result = new JSONObject();

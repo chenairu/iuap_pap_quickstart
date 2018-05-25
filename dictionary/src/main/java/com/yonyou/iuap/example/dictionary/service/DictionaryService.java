@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import com.yonyou.iuap.context.InvocationInfoProxy;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -101,5 +102,14 @@ public class DictionaryService extends GenericService<Dictionary>{
 		this.dictionaryMapper = dictionaryMapper;
 		super.setIbatisMapper(dictionaryMapper);
 	}
-    
+
+    public List<Dictionary> getCurrtypeByIds(String[] strArray) {
+
+            String tenantId = InvocationInfoProxy.getTenantid();
+            ArrayList<String> ids = new ArrayList<String>();
+            for (String key : strArray) {
+                ids.add(key);
+            }
+            return dictionaryMapper.getByIds(tenantId, ids);
+    }
 }

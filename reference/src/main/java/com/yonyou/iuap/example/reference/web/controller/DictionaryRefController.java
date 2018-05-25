@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yonyou.iuap.example.dictionary.entity.Dictionary;
@@ -32,7 +33,16 @@ public class DictionaryRefController extends AbstractGridRefModel {
 	private Logger logger = LoggerFactory.getLogger(DictionaryRefController.class);
 
 	@Override
-	public Map<String, Object> getCommonRefData(@RequestBody RefViewModelVO refViewVo) {
+	public RefViewModelVO getRefModelInfo(
+			@RequestBody RefViewModelVO refViewModel) {
+		RefViewModelVO retinfo = super.getRefModelInfo(refViewModel);
+		refViewModel.setRefName("币种");
+		refViewModel.setRootName("币种列表");
+		return retinfo;
+	}
+	@Override
+	public @ResponseBody
+	Map<String, Object> getCommonRefData(@RequestBody RefViewModelVO refViewVo) {
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		int pageNum = refViewVo.getRefClientPageInfo().getCurrPageIndex()==0 ? 1:refViewVo.getRefClientPageInfo().getCurrPageIndex();
 		int pageSize = refViewVo.getRefClientPageInfo().getPageSize();

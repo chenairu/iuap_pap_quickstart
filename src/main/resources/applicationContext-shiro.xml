@@ -113,6 +113,7 @@
 			<value>
 				/logout = logout
 				/**/static/** = anon
+				/reference/** =anon
 				/**/css/** = anon
 				/**/images/** = anon
 				/**/trd/** = anon

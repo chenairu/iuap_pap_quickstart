@@ -1,7 +1,17 @@
 package com.yonyou.iuap.example.dictionary.web.controller;
 
-import java.util.List;
-
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.yonyou.iuap.base.web.BaseController;
+import com.yonyou.iuap.example.common.utils.CommonUtils;
+import com.yonyou.iuap.example.dictionary.entity.Dictionary;
+import com.yonyou.iuap.example.dictionary.service.DictionaryService;
+import com.yonyou.iuap.example.dictionary.validator.DictionaryValidator;
+import com.yonyou.iuap.mvc.type.SearchParams;
+import com.yonyou.iuap.persistence.vo.pub.util.StringUtil;
+import com.yonyou.uap.wb.process.org.OrganizationBrief;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +23,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.yonyou.iuap.base.web.BaseController;
-import com.yonyou.iuap.example.common.utils.CommonUtils;
-import com.yonyou.iuap.example.dictionary.entity.Dictionary;
-import com.yonyou.iuap.example.dictionary.service.DictionaryService;
-import com.yonyou.iuap.example.dictionary.validator.DictionaryValidator;
-import com.yonyou.iuap.mvc.type.SearchParams;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/example_dictionary")
@@ -72,5 +79,32 @@ public class DictionaryController extends BaseController {
     	dictionaryService.batchDeleteByPrimaryKey(list);
         return buildSuccess();
     }
-    
+    @RequestMapping(value = { "/getByIds" }, method = { RequestMethod.POST })
+    @ResponseBody
+    public JSONObject getByIds(HttpServletRequest request) {
+        JSONObject result = new JSONObject();
+        String data = request.getParameter("data");
+        if (StringUtil.isEmpty(data)) {
+            return result;
+        }
+        JSONArray array = JSON.parseArray(data);
+
+        List<Dictionary> currtypeList = new ArrayList<Dictionary>();
+        if (!CollectionUtils.isEmpty(array)) {
+            String[] strArray = (String[]) array.toArray(new String[array.size()]);
+            currtypeList = this.dictionaryService.getCurrtypeByIds(strArray);
+        }
+        result.put("data", transformTOBriefEntity(currtypeList));
+        return result;
+    }
+    private List<OrganizationBrief> transformTOBriefEntity(List<Dictionary> currtypeList){
+        List<OrganizationBrief> results = new ArrayList<>();
+        if(!CollectionUtils.isEmpty(currtypeList)){
+            for (Dictionary entity:currtypeList){
+                results.add(new OrganizationBrief(entity.getId(),entity.getName(),entity.getCode()));
+            }
+        }
+
+        return results;
+    }
 }

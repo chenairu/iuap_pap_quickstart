@@ -30,7 +30,8 @@ import iuap.ref.sdk.refmodel.vo.RefViewModelVO;
 public class ContactsRefController extends AbstractCommonRefModel {
 	
 	private Logger logger = LoggerFactory.getLogger(ContactsRefController.class);
-	
+
+
 	public RefViewModelVO getRefModelInfo(@RequestBody RefViewModelVO refViewVo) {
 		refViewVo = super.getRefModelInfo(refViewVo);
 		refViewVo.setRefName("联系人");

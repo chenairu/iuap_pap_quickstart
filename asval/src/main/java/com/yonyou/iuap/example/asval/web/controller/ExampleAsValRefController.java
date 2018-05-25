@@ -53,7 +53,7 @@ public class ExampleAsValRefController extends AbstractGridRefModel {
          * tenantId 根据数据库表中的配置来决定,如果tenant未配置,则传 null,如果配置了,则选择该值
          */
         try{
-            List<ExampleAsVal> rtnVal = this.exampleAsValService.getByIds("tenant",Arrays.asList(refViewModelVO.getPk_val()));
+            List<ExampleAsVal> rtnVal = this.exampleAsValService.getByIds(null,Arrays.asList(refViewModelVO.getPk_val()));
             result = buildRtnValsOfRef(rtnVal,isUserDataPower(refViewModelVO));
         }catch(Exception e){
             e.printStackTrace();
@@ -147,7 +147,7 @@ public class ExampleAsValRefController extends AbstractGridRefModel {
                 if(isUserDataPower || (isUserDataPower&&set.contains(asVal.getId()))){
                     Map<String,String> refDataMap = new HashMap<>();
                     refDataMap.put("id",asVal.getId());
-                    refDataMap.put("refname",asVal.getValue());
+                    refDataMap.put("refname",asVal.getName());
                     refDataMap.put("refcode",asVal.getCode());
                     refDataMap.put("refpk",asVal.getId());
 

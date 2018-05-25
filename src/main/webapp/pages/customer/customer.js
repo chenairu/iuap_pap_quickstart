@@ -1,10 +1,12 @@
 define(["text!./customer.html","cookieOperation","./meta.js", "css!./customer.css",
 	"css!../../style/style.css", "../../config/sys_const.js",
-	"css!../../style/widget.css", "../sever.js", 
-	"css!../../style/currency.css"],
+	"css!../../style/widget.css",
+	"css!../../style/currency.css",'uiReferComp', 'uiNewReferComp', 'refer'],
 
     function (html) {
         var init = function (element,cookie) {
+
+            console.log($.cookie("userId"));
             var ctx = cookie.appCtx + "/customer";
             var viewModel = {
                 draw: 1,
@@ -299,6 +301,7 @@ define(["text!./customer.html","cookieOperation","./meta.js", "css!./customer.cs
 
                     //新增数据
                     addNewData: function () {
+                        viewModel.formData.setRowSelect(0);
                         var data = viewModel.formData.getSimpleData()[0];
                         for (var key in data) {
                             if (key === "operate") {
@@ -347,7 +350,7 @@ define(["text!./customer.html","cookieOperation","./meta.js", "css!./customer.cs
                             url: cookie.appCtx+"/exampleAsVal/list",
                             datatype: "json",
                             data:{
-                              code :'SSSFM_ITEM_CODE_ID'
+                              code :'PROVINCE'
                             },
                             success: function (res) {
                                if(res){
@@ -384,7 +387,14 @@ define(["text!./customer.html","cookieOperation","./meta.js", "css!./customer.cs
                     } else {
                         //添加操作
                         viewModel.formData.removeAllRows();
-                        viewModel.formData.createEmptyRow();
+                        var r = viewModel.formData.createEmptyRow();
+
+                        // var combo1Obj = document.getElementById("province")['u.Combo'];
+                        //
+                        // combo1Obj.selectItem(0);
+                        var data = initUserId("city");
+                        console.log(data);
+                        viewModel.formData.setSimpleData({city:data})
                     }
 
                     //显示模态框，如果模态框不存在创建模态框，存在则直接显示
@@ -401,14 +411,17 @@ define(["text!./customer.html","cookieOperation","./meta.js", "css!./customer.cs
                         viewModel.dialog.show();
                     }
                     u.stopEvent(e);
-                }
+                },
+
             };
              window.initButton(viewModel,element);
             //加载Html页面
+
             $(element).html(html);
             ko.cleanNode(element);
             viewModel.event.pageinit();
             viewModel.event.initCombox();
+
 
             //搜索导航（查询、筛选）展开/收起
             var toggleBtn = document.querySelector("#condition-toggle");

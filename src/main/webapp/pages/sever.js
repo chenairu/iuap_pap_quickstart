@@ -14,7 +14,7 @@ var mockserverurl = "https://mock.yonyoucloud.com/mock/164/cloud"
  */
 //var baseurl = "http://172.20.8.92:8080";
 //var treetableurl = "/example";
-var ctx = "http://172.20.8.92:8080/example";
+var ctx = "http://10.6.197.111:8081/iuap-example";
 /**
  * ajax封装
  * url 发送请求的地址

@@ -15,11 +15,13 @@ var meta = {
         },
         //省份
         province: {
-            type: 'string'
+            /*'refmodel' : JSON.stringify(refinfo['wbUser']),
+            'refcfg' : '{"ctx":"/uitemplate_web"}'*/
         },
         //城市
         city: {
-            type: 'string'
+            enable:false
+
         },
         //企业规模
         corpsize:{

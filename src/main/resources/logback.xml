@@ -37,14 +37,14 @@
 	<logger name="java.sql" level="debug" />
 	<logger name="com.yonyou.iuap" level="ERROR" />
 
-	<!--log4jdbc 选项，默认关闭
+	<!--log4jdbc 选项，默认关闭-->
 
 	<logger name="jdbc.connection" level="debug" />
 	<logger name="jdbc.audit" level="debug" />
 	<logger name="jdbc.resultset" level="debug" />
 	<logger name="jdbc.sqlonly" level="debug" />
 	<logger name="jdbc.sqltiming" level="debug" />
--->
+
 
 	<root level="INFO">
 		<appender-ref ref="console" />

@@ -30,7 +30,8 @@ import iuap.ref.sdk.refmodel.vo.RefViewModelVO;
 public class Dictionary2RefController extends AbstractCommonRefModel{
 	
 	private Logger logger = LoggerFactory.getLogger(Dictionary2RefController.class);
-	
+
+	@Override
 	public RefViewModelVO getRefModelInfo(@RequestBody RefViewModelVO refViewVo) {
 		refViewVo = super.getRefModelInfo(refViewVo);
 		refViewVo.setRefName("币种");
