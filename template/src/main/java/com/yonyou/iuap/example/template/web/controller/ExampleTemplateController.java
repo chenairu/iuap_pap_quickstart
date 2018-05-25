@@ -115,11 +115,11 @@ public class ExampleTemplateController extends BaseController {
 		try {
 			service.downloadExcelTemplate(response);
 			result.put("status", "success");
-			result.put("msg", "督办任务信息Excel模版下载成功");
+			result.put("msg", "Excel模版下载成功");
 		} catch (Exception e) {
-			logger.error("督办任务信息Excel模版下载失败", e);
+			logger.error("Excel模版下载失败", e);
 			result.put("status", "failed");
-			result.put("msg", "督办任务信息Excel模版下载失败");
+			result.put("msg", "Excel模版下载失败");
 		}
 
 		return result;
