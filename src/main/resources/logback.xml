@@ -24,7 +24,8 @@
 	<logger name="com.yonyou.iuap" level="ERROR" />
 	<logger name="com.yonyou.uap.ieop.busilog.writer.BusiLogRestWriter" level="ERROR" />
 	
-	<!-- log4j.logger.com.ibatis=DEBUG
+	<!--
+	log4j.logger.com.ibatis=DEBUG
 	log4j.logger.com.ibatis.common.jdbc.SimpleDataSource=DEBUG
 	log4j.logger.com.ibatis.common.jdbc.ScriptRunner=DEBUG
 	log4j.logger.com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate=DEBUG
@@ -32,21 +33,21 @@
 	log4j.logger.java.sql.Statement=DEBUG
 	log4j.logger.java.sql.PreparedStatement=DEBUG
 	-->
-	<!-- mybatis -->
+	<!-- mybatis
 	<logger name="com.ibatis" level="debug" />
-	<logger name="java.sql" level="debug" />
-	<logger name="com.yonyou.iuap" level="ERROR" />
+	<logger name="java.sql" level="debug" />-->
+	<logger name="com.yonyou.iuap" level="debug" />
 
-	<!--log4jdbc 选项，默认关闭-->
+	<!--log4jdbc 选项，默认关闭
 
 	<logger name="jdbc.connection" level="debug" />
 	<logger name="jdbc.audit" level="debug" />
 	<logger name="jdbc.resultset" level="debug" />
 	<logger name="jdbc.sqlonly" level="debug" />
 	<logger name="jdbc.sqltiming" level="debug" />
+-->
 
-
-	<root level="INFO">
+	<root level="info">
 		<appender-ref ref="console" />
 		<appender-ref ref="rollingFile" />
 	</root>
