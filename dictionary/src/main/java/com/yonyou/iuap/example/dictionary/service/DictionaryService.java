@@ -13,16 +13,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.yonyou.iuap.example.common.service.GenericService;
 import com.yonyou.iuap.example.dictionary.dao.DictionaryMapper;
 import com.yonyou.iuap.example.dictionary.entity.Dictionary;
 import com.yonyou.iuap.mvc.type.SearchParams;
 
 @Service
-public class DictionaryService {
+public class DictionaryService extends GenericService<Dictionary>{
 	
-    @Autowired
-    private DictionaryMapper dictionaryMapper;
-    
+   
     /**
      * 查询组织分页数据
      * 
@@ -93,5 +92,14 @@ public class DictionaryService {
     public void batchDeleteByPrimaryKey(List<Dictionary> list) {
     	dictionaryMapper.batchDelete(list);
     }
-
+    
+    /***********************************************************/
+    private DictionaryMapper dictionaryMapper;
+    
+    @Autowired
+	public void setDictionaryMapper(DictionaryMapper dictionaryMapper) {
+		this.dictionaryMapper = dictionaryMapper;
+		super.setIbatisMapper(dictionaryMapper);
+	}
+    
 }

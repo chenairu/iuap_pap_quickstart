@@ -1,6 +1,8 @@
 package com.yonyou.iuap.example.dictionary.entity;
 
-public class Dictionary {
+import com.yonyou.iuap.example.common.entity.AbsGenericEntity;
+
+public class Dictionary extends AbsGenericEntity{
 	private String id;
 
 	private String code;

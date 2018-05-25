@@ -7,12 +7,13 @@ import java.util.Set;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.PageRequest;
 
+import com.yonyou.iuap.example.common.dao.GenericMapper;
 import com.yonyou.iuap.example.dictionary.entity.Dictionary;
 import com.yonyou.iuap.mybatis.type.PageResult;
 import com.yonyou.iuap.persistence.mybatis.anotation.MyBatisRepository;
 
 @MyBatisRepository
-public interface DictionaryMapper {
+public interface DictionaryMapper extends GenericMapper<Dictionary> {
 	
 	PageResult<Dictionary> selectAllByPage(@Param("page") PageRequest pageRequest,
 			@Param("condition") Map<String, Object> searchParams);

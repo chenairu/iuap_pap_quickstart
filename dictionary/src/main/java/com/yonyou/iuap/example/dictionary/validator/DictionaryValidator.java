@@ -7,6 +7,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.yonyou.iuap.example.cache.support.Code;
+import com.yonyou.iuap.example.cache.support.CodeCache;
 import com.yonyou.iuap.example.dictionary.entity.Dictionary;
 import com.yonyou.iuap.example.dictionary.service.DictionaryService;
 import com.yonyou.iuap.iweb.exception.ValidException;
@@ -26,10 +28,14 @@ public class DictionaryValidator {
         StringBuilder builder = new StringBuilder();
         for (Dictionary example_record : example_recordlist) {
             if (StringUtils.isEmpty(example_record.getId())) {
-                if (!exampleRecordService.findByCode(example_record.getCode()).isEmpty()) {
+            	if(codeCache.getCode("code_test_001", example_record.getCode()) != null) {
+                    builder.append(example_record.getCode()).append(",");
+            	};
+            	
+/*                if (!exampleRecordService.findByCode(example_record.getCode()).isEmpty()) {
                     builder.append(example_record.getCode()).append(",");
                 }
-            }
+*/          }
         }
         if (builder.toString().length() > 0) {
             String codeStr = builder.deleteCharAt(builder.length() - 1).toString();
@@ -38,4 +44,9 @@ public class DictionaryValidator {
             throw new ValidException(msgBuilder.toString());
         }
     }
+    
+    /*****************************************************************************/
+    @Autowired
+    private CodeCache codeCache;
+    
 }
