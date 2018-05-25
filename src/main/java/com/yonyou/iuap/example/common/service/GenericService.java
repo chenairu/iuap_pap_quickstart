@@ -1,11 +1,10 @@
 package com.yonyou.iuap.example.common.service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
+import com.yonyou.iuap.base.utils.CommonConstants;
+import com.yonyou.uap.ieop.security.entity.DataPermission;
+import com.yonyou.uap.ieop.security.sdk.AuthRbacClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.util.StringUtils;
@@ -90,7 +89,7 @@ public abstract class GenericService<T extends GenericEntity> {
 		entity.setLastModifyUser(InvocationInfoProxy.getUserid());
 		return ibatisMapper.update(entity);
 	}
-	
+
 	/***************************************************/
 	protected GenericMapper<T> ibatisMapper;
 

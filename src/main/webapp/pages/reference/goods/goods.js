@@ -65,9 +65,9 @@ define(['text!./goods.html','./meta.js', 'css!./goods.css',
                                     if (result.success == 'fail_global') {
                                         msg = result.message;
                                     } else {
-                                        for (var key in res.detailMsg) {
+                                       /* for (var key in res.detailMsg) {
                                             msg += res.detailMsg[key] + "<br/>";
-                                        }
+                                        }*/
                                     }
                                     u.messageDialog({msg: msg, title: '请求错误', btnText: '确定'});
                                 }
