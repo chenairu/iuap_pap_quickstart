@@ -118,8 +118,8 @@
 	<select id="getByIds" resultMap="BaseResultMap" parameterType="java.lang.String">
 		SELECT
 		<include refid="Base_Column_List" />
-		from id where 1=1 and id in
-		<foreach collection="set" item="item" index="index"
+		from example_dictionary where 1=1 and id in
+		<foreach collection="list" item="item" index="index"
 				 separator="," open="(" close=")">
 			#{item,jdbcType=VARCHAR}
 		</foreach>

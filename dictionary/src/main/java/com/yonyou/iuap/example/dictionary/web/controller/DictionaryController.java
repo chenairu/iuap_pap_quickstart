@@ -10,6 +10,7 @@ import com.yonyou.iuap.example.dictionary.service.DictionaryService;
 import com.yonyou.iuap.example.dictionary.validator.DictionaryValidator;
 import com.yonyou.iuap.mvc.type.SearchParams;
 import com.yonyou.iuap.persistence.vo.pub.util.StringUtil;
+import com.yonyou.iuap.utils.PropertyUtil;
 import com.yonyou.uap.wb.process.org.OrganizationBrief;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;

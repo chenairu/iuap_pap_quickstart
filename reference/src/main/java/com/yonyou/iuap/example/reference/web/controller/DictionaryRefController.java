@@ -138,7 +138,7 @@ public class DictionaryRefController extends AbstractGridRefModel {
 		List<DataPermission> dataPerms = AuthRbacClient.getInstance().queryDataPerms(tenantId, sysId, userId, "currtype");
 
 		Set<String> set = new HashSet<String>();
-		if(set != null && set.size()>0){
+		if(dataPerms != null && dataPerms.size()>0){
 			for (DataPermission temp : dataPerms) {
 				if(temp != null){
 					set.add(temp.getResourceId());

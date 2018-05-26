@@ -60,7 +60,6 @@ public class ExampleCustomerService {
                 String customerCode = this.getCustomerCode("customer","",customer);
                 customer.setCustomerCode(customerCode);
                 addList.add(customer);
-                sendMessage(customer); //发送消息
             }else{
                 updateList.add(customer);
             }
@@ -72,7 +71,6 @@ public class ExampleCustomerService {
         if (CollectionUtils.isNotEmpty(updateList)) {
             exampleCustomerMapper.batchUpdate(updateList);
         }
-
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -82,7 +80,14 @@ public class ExampleCustomerService {
             this.returnCustomerCode("customer","",customer,customer.getCustomerCode());
         }
     }
-
+    /**
+     * 获取编码规则
+     *
+     * @param billObjCode 编码对象code
+     * @param pkAssign 分配关系
+     * @param customer
+     * @return
+     */
     private String getCustomerCode(String billObjCode,String pkAssign,ExampleCustomer customer){
         String billvo = JSONObject.toJSONString(customer);
 
@@ -106,7 +111,17 @@ public class ExampleCustomerService {
         }
         return billCode;
     }
-
+    /**
+     * 回退单据号，以保证单据号连号的业务需要
+     *
+     * @param billObjCode
+     *            编码对象code
+     * @param pkAssign
+     *            分配关系
+     * @param entity
+     * @param customerCode 编码字段
+     * @return
+     */
     private void returnCustomerCode(String billObjCode,String pkAssign,ExampleCustomer customer,String customerCode){
         String billVo = JSONObject.toJSONString(customer);
         String returnUrl = PropertyUtil.getPropertyByKey("billcodeservice.base.url")+"/billcoderest/returnBillCode";

@@ -18,6 +18,8 @@ public class Goods extends AbsGenericEntity{
 	
 	private String createUser_name;
 	private String lastModifyUser_name;
+	private String tenant_id;
+	private String pk_currtype;
 
 	public String getGoodsCode() {
 		return goodsCode;
@@ -123,4 +125,19 @@ public class Goods extends AbsGenericEntity{
 		this.lastModifyUser_name = lastModifyUser_name;
 	}
 
+	public String getTenant_id() {
+		return tenant_id;
+	}
+
+	public void setTenant_id(String tenant_id) {
+		this.tenant_id = tenant_id;
+	}
+
+	public String getPk_currtype() {
+		return pk_currtype;
+	}
+
+	public void setPk_currtype(String pk_currtype) {
+		this.pk_currtype = pk_currtype;
+	}
 }

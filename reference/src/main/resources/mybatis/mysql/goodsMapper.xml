@@ -16,7 +16,9 @@
 		<result column="createUser" property="createUser" jdbcType="VARCHAR" />
 		<result column="lastModifyUser" property="lastModifyUser" jdbcType="VARCHAR" />
 		<result column="ts" property="ts" jdbcType="TIMESTAMP" />
-		<result column="dr" property="dr" jdbcType="NUMERIC" />		
+		<result column="dr" property="dr" jdbcType="NUMERIC" />
+		<result column="tenant_id" property="tenant_id" jdbcType="VARCHAR" />
+		<result column="pk_currtype" property="pk_currtype" jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<sql id="Base_Column_List">
@@ -33,7 +35,9 @@
 			createUser,
 			createTime,
 			lastModified,
-			lastModifyUser
+			lastModifyUser,
+			tenant_id,
+			pk_currtype
 	</sql>
 	
 	<select id="selectAllByPage" resultMap="BaseResultMap" resultType="java.util.List">
@@ -68,7 +72,9 @@
 				t.createUser,
 				t.createTime,
 				t.lastModified,
-				t.lastModifyUser
+				t.lastModifyUser,
+				t.tenant_id,
+				t.pk_currtype
 		FROM	example_goods t LEFT OUTER JOIN example_dictionary ed ON t.currency=ed.code
 								LEFT OUTER JOIN example_organization eo ON t.manufacturer=eo.institid
 								LEFT OUTER JOIN example_contacts ec ON t.linkman=ec.id
@@ -96,7 +102,9 @@
 									lastModified,
 									lastModifyUser,
 									ts,
-									dr
+									dr,
+									tenant_id,
+									pk_currtype
 		)
 		values (#{id,jdbcType=VARCHAR}, 
 				#{goodsCode,jdbcType=VARCHAR},
@@ -113,7 +121,9 @@
 				#{lastModified,jdbcType=TIMESTAMP},
 				#{lastModifyUser,jdbcType=VARCHAR},
 				#{ts,jdbcType=TIMESTAMP},
-				#{dr,jdbcType=NUMERIC}
+				#{dr,jdbcType=NUMERIC},
+				#{tenant_id,jdbcType=VARCHAR},
+				#{pk_currtype,jdbcType=VARCHAR}
 		)
 	</insert>
 	
@@ -129,7 +139,9 @@
 				remark=#{remark,jdbcType=VARCHAR}, 
 				version=#{version,jdbcType=NUMERIC}+1,
 				lastModified=#{lastModified,jdbcType=TIMESTAMP},
-				lastModifyUser=#{lastModifyUser,jdbcType=VARCHAR}
+				lastModifyUser=#{lastModifyUser,jdbcType=VARCHAR},
+				tenant_id = #{tenant_id,jdbcType=VARCHAR},
+				pk_currtype = #{pk_currtype,jdbcType=VARCHAR}
 		where	id=#{id}
 	</update>
 	

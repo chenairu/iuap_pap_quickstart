@@ -22,7 +22,7 @@ var meta = {
 										"pageCount":0,
 										"pageSize":5},
 							"refCode":'currency',
-							"refModelUrl":"http://192.168.1.7:8082/iuap-example/reference/dictionary/",
+							"refModelUrl":"http://127.0.0.1:8081/iuap-example/reference/dictionary/",
 							"refName": "币种",
 							"refUIType": "RefGrid",
 							"rootName": "币种列表"
