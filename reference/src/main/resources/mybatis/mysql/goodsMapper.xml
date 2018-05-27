@@ -18,7 +18,6 @@
 		<result column="ts" property="ts" jdbcType="TIMESTAMP" />
 		<result column="dr" property="dr" jdbcType="NUMERIC" />
 		<result column="tenant_id" property="tenant_id" jdbcType="VARCHAR" />
-		<result column="pk_currtype" property="pk_currtype" jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<sql id="Base_Column_List">
@@ -36,8 +35,7 @@
 			createTime,
 			lastModified,
 			lastModifyUser,
-			tenant_id,
-			pk_currtype
+			tenant_id
 	</sql>
 	
 	<select id="selectAllByPage" resultMap="BaseResultMap" resultType="java.util.List">
@@ -73,8 +71,7 @@
 				t.createTime,
 				t.lastModified,
 				t.lastModifyUser,
-				t.tenant_id,
-				t.pk_currtype
+				t.tenant_id
 		FROM	example_goods t LEFT OUTER JOIN example_dictionary ed ON t.currency=ed.code
 								LEFT OUTER JOIN example_organization eo ON t.manufacturer=eo.institid
 								LEFT OUTER JOIN example_contacts ec ON t.linkman=ec.id
@@ -103,8 +100,7 @@
 									lastModifyUser,
 									ts,
 									dr,
-									tenant_id,
-									pk_currtype
+									tenant_id
 		)
 		values (#{id,jdbcType=VARCHAR}, 
 				#{goodsCode,jdbcType=VARCHAR},
@@ -122,8 +118,7 @@
 				#{lastModifyUser,jdbcType=VARCHAR},
 				#{ts,jdbcType=TIMESTAMP},
 				#{dr,jdbcType=NUMERIC},
-				#{tenant_id,jdbcType=VARCHAR},
-				#{pk_currtype,jdbcType=VARCHAR}
+				#{tenant_id,jdbcType=VARCHAR}
 		)
 	</insert>
 	
@@ -140,8 +135,7 @@
 				version=#{version,jdbcType=NUMERIC}+1,
 				lastModified=#{lastModified,jdbcType=TIMESTAMP},
 				lastModifyUser=#{lastModifyUser,jdbcType=VARCHAR},
-				tenant_id = #{tenant_id,jdbcType=VARCHAR},
-				pk_currtype = #{pk_currtype,jdbcType=VARCHAR}
+				tenant_id = #{tenant_id,jdbcType=VARCHAR}
 		where	id=#{id}
 	</update>
 	

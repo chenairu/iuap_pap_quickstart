@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.yonyou.iuap.example.common.service.GenericService;
 import com.yonyou.iuap.example.reference.goods.dao.GoodsMapper;
 import com.yonyou.iuap.example.reference.goods.entity.Goods;
+import org.springframework.util.StringUtils;
 
 @Service
 public class GoodsService extends GenericService<Goods>{
@@ -25,11 +26,19 @@ public class GoodsService extends GenericService<Goods>{
     	params.put("ids", ids);
     	goodsMapper.delete(params);
     }
+    @Override
     public Page<Goods> selectAllByPage(PageRequest pageRequest, SearchParams searchParams) {
         return goodsMapper.selectAllByPage(pageRequest, searchParams,buildPermSql()).getPage();
     }
-
-
+	@Override
+	public Goods save(Goods entity) {
+		if(StringUtils.isEmpty(entity.getId())) {
+			entity.setTenant_id("tenant");
+			return super.insert(entity);
+		}else {
+			return super.update(entity);
+		}
+	}
 	/**
 	 * 构造数据权限SQL
 	 * @return
@@ -75,7 +84,7 @@ public class GoodsService extends GenericService<Goods>{
 	 */
 	private HashMap<String, String> processFieldDataPermResTypeMap(){
 		HashMap<String, String> fieldDataPermResTypeMap = new HashMap<String, String>();
-		fieldDataPermResTypeMap.put("pk_currtype", "currtype"); //字段与权限资源名称的对应关系
+		fieldDataPermResTypeMap.put("currency", "currtype"); //字段与权限资源名称的对应关系
 		return fieldDataPermResTypeMap;
 	}
 	/**

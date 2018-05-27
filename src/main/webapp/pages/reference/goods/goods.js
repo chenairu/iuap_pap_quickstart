@@ -205,7 +205,9 @@ define(['text!./goods.html','./meta.js', 'css!./goods.css',
                 deleteFunc: function(datas) {
                     var ids = [];
                     for (var i = 0; i < datas.length; i++) {
-                    	ids.push(datas[i].id);
+                    	ids.push({
+                            "id": datas[i].id
+                        });
                     }
                     $.ajax({
                         type: "post",
