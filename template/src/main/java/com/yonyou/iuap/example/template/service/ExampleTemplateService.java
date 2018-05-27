@@ -3,6 +3,7 @@ package com.yonyou.iuap.example.template.service;
 import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -16,16 +17,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.yonyou.iuap.example.template.entity.ExampleTemplate;
+import com.yonyou.iuap.example.template.service.support.ParentService;
 import com.yonyou.iuap.common.utils.ExcelExportImportor;
 import com.yonyou.iuap.example.template.entity.ExampleTemplate;
 import com.yonyou.iuap.example.template.dao.ExampleTemplateMapper;
 import com.yonyou.iuap.mvc.type.SearchParams;
 import com.yonyou.iuap.persistence.vo.pub.VOStatus;
 
-@Component
-public class ExampleTemplateService {
+
+@Service
+public class ExampleTemplateService extends ParentService<ExampleTemplate> {
 	@Autowired
 	ExampleTemplateMapper mapper;
 	
@@ -110,25 +114,35 @@ public class ExampleTemplateService {
 	 * @param excelStream
 	 */
 	public void importExcelData(InputStream excelStream) throws Exception {
-		List<ExampleTemplate> list = ExcelExportImportor.loadExcel(excelStream, getHeadInfo(), ExampleTemplate.class);
+		
+		List<ExampleTemplate> list = ExcelExportImportor.loadExcel(excelStream, getHeadInfo(), ExampleTemplate.class);	
+		//先查出所有的Id。
+		List<String> ids= mapper.getIds();
+		
+
+		
 		for (ExampleTemplate entity : list) {
-			if (entity.getId() == null) {
-				entity.setStatus(VOStatus.NEW);  //新增
-			}
-			else
-			{
+			
+			System.out.println("Entityid:"+entity.getId());
+			
+			
+			if (ids.contains(entity.getId().trim())) {
+	
 				entity.setStatus(VOStatus.UPDATED);  //编辑
+			}
+			else{
+		
+				entity.setStatus(VOStatus.NEW);  //新增
 			}
 			saveEntity(entity);
 		}
 	}
 	
 	
-	private ExampleTemplate saveEntity(ExampleTemplate entity) {
-	
+	private ExampleTemplate saveEntity(ExampleTemplate entity) {	
 		// 保存主表数据
 		if (entity.getStatus() == VOStatus.NEW) {
-			entity.setId(UUID.randomUUID().toString());
+			//entity.setId(UUID.randomUUID().toString());
 			// 插入数据
 			mapper.insert(entity);
 		} else {
@@ -138,6 +152,56 @@ public class ExampleTemplateService {
 		return entity;
 	}
 	
+	
+	public List<ExampleTemplate> getByIds(List<String> ids) {
+		List<ExampleTemplate> list = mapper.getByIds(ids);
+		return list;
+	}
+	
+	
 
+
+	/**
+	 * 导出excel数据
+	 * 
+	 * @param pageRequest
+	 * @param response
+	 * @throws Exception
+	 */
+	public void exportExcelData(PageRequest pageRequest, HttpServletResponse response, String ids) throws Exception {
+		List<ExampleTemplate> list = null;
+		
+		if (null != ids && ids.length() > 0) {
+			String[] pks = ids.split(",");
+			list = this.getByIds(Arrays.asList(pks));
+		} else {
+			SearchParams searchParams = new SearchParams();
+			
+			Page<ExampleTemplate> page = selectAllByPage(pageRequest, searchParams, ExampleTemplate.class);
+			list = page.getContent();
+		}
+		
+		ExcelExportImportor.writeExcel(response, list, getHeadInfo(), "任务详细", "任务信息");
+	}
+
+	
+	
+	
+	public ExampleTemplate queryByPK(String id) {
+
+		List<String> ids = new ArrayList<String>();
+
+		ids.add(id);
+
+		List<ExampleTemplate> list = mapper.getByIds(ids);
+		
+		if (list != null && list.size() > 0) {
+			ExampleTemplate entity = list.get(0);
+
+			return entity;
+		} else {
+			return null;
+		}
+	}
 	
 }

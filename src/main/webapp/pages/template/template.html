@@ -4,57 +4,20 @@
             <span>测试模板</span>
         </div>
     </div>
-    <div class=" form-search " style="z-index:0;">
-        <div class="u-panel-heading  u-collapse-updown">
-            <span class="u-panel-title">查询与筛选
 
-                <span id='condition-toggle' class="u-col-4 u-col-sm-4 u-link u-right u-input-label">
-                    <span>展开</span>
-                    <i class="uf uf-arrow-down"></i>
-                </span>
-            </span>
-        </div>
-        <div class="u-row b-searech-open" id="condition-row">
-            <div class="u-col-12 u-col-sm-12">
-                <div class="u-col-4 u-col-sm-6">
-                    <div class="b_label">
-                        <label>编码</label>
-                    </div>
-                    <div class="u-col-12 u-col-sm-12 b_pl">
-                        <input class="u-form-control sm input_search search-enter" id="search_code" name="search_code" />
-                    </div>
-                </div>
-                <div class="u-col-4 u-col-sm-6">
-                    <div class="b_label">
-                        <label>名称</label>
-                    </div>
-                    <div class="u-col-12 u-col-sm-12 b_pl">
-                        <input class="u-form-control sm input_search search-enter" id="search_name" name="search_name" />
-                    </div>
-                </div>
-            </div>
-            <div class="u-col-12 u-col-sm-12">
-                <div class=" padding-top-2 b_seach_modul">
-                    <button class="u-button u-button-border  raised gray-btn u-button-pa margin-right-20" id="user-action-cleanSearch" data-bind="click: event.cleanSearch">清空
-                    </button>
-                    <button class="u-button  u-button-primary raised gray-btn u-button-pa " id="user-action-search" data-bind="click: event.search">搜索
-                    </button>
-
-                </div>
-            </div>
-        </div>
-    </div>
     <div id="dicttype_list_button_2" class="user-actions">
         <div class="margin-0 padding-0">
             <button class="u-button  u-button-primary raised gray-btn u-button-pa margin-right-20" id="user-action-add" data-bind="click:beforeEdit.bind($data,-1)">增加
             </button>
             <button class="u-button  u-button-primary raised gray-btn u-button-pa margin-right-20" id="user-action-del" data-bind="click: event.delRows">删除
             </button>
-            <button class="u-button  u-button-primary raised gray-btn u-button-pa margin-right-20" id="user-action-del" data-bind="click: event.onTempletExcel">模板下载
+            <button class="u-button  u-button-primary raised gray-btn u-button-pa margin-right-20" id="user-action-down" data-bind="click: event.onTempletExcel">模板下载
             </button>
-            <button class="u-button  u-button-primary raised gray-btn u-button-pa margin-right-20" id="user-action-del" data-bind="click: event.onUploadFile">导入
+            <button class="u-button  u-button-primary raised gray-btn u-button-pa margin-right-20" id="user-action-impot" data-bind="click: event.onUploadFile">导入
             </button>
-            <button class="u-button  u-button-primary raised gray-btn u-button-pa margin-right-20" id="user-action-del" data-bind="click: event.onDownloadExcel">导出
+            <button class="u-button  u-button-primary raised gray-btn u-button-pa margin-right-20" id="user-action-export" data-bind="click: event.onDownloadExcel">导出
+            </button>
+            <button class="u-button  u-button-primary raised gray-btn u-button-pa margin-right-20" id="user-action-print" data-bind="click: event.printPage">打印
             </button>
 
         </div>
@@ -80,7 +43,7 @@
             </div>
         </div>
         <!-- end list -->
-        <div id="dialog_content" style="display:none;max-width:900px;">
+        <div id="divForm" style="display:none;max-width:900px;">
             <div class="u-msg-title">
                 <h4>基本信息</h4>
             </div>
@@ -146,29 +109,30 @@
 
 
 
-    <div id="div_upload">
-        <div class="u-msg-title">
-            <h4>导入</h4>
-        </div>
-        <div class="u-msg-content">
-            <div class="u-msg-uplode-content">
-                <div class="choosefile">
-                    <div class="choosefileImg">
-                        <img src="../example/static/beforeUpload.svg" id="uploadingIMG2">
+	<div id="dialog_content">
+            <div class="u-msg-title">
+                <h4>导入</h4>
+            </div>
+            <div class="u-msg-content">
+                <div class ="u-msg-uplode-content" >
+                    <div class="choosefile">
+                        <div class="choosefileImg">
+                            <img src="../example/static/beforeUpload.svg" id="uploadingIMG2">
+                        </div>
+                        <div id="uploadingMsg2" class="uploadingMsg"></div>
+                        <button class="u-button u-button-border uploadBtn "title="选择上传文件" id="choosefileBtn2" onclick="document.getElementById('fileName').click()">选择上传文件</button>
+                        <input class="u-input"  type="file" name="fileName" id="fileName"   />
                     </div>
-                    <div id="uploadingMsg2" class="uploadingMsg"></div>
-                    <button class="u-button u-button-border uploadBtn " title="选择上传文件" id="choosefileBtn2" onclick="document.getElementById('fileName').click()">选择上传文件</button>
-                    <input class="u-input" type="file" name="fileName" id="fileName" />
-                </div>
-                <div class="filenamediv" id="filenamediv2"></div>
-                <div class="file-loding">
-                    <div class="file-lodedPart"></div>
+                    <div class="filenamediv" id="filenamediv2"></div>
+                    <div class="file-loding">
+                        <div class="file-lodedPart"></div>
+                    </div>
                 </div>
             </div>
+            <div class="u-msg-footer u-msg-date-footer">
+            </div>
         </div>
-        <div class="u-msg-footer u-msg-date-footer">
-        </div>
-    </div>
+    
 
 
 

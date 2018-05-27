@@ -1,5 +1,6 @@
 define(["text!./template.html",
     "./meta.js",
+    '/eiap-plus/pages/flow/bpmapproveref/bpmopenbill.js',
     "css!./template.css",
     "css!../../style/style.css",
     "../../config/sys_const.js",
@@ -15,19 +16,16 @@ define(["text!./template.html",
             var ctx = cookie.appCtx + "/exampleTemplate";
             var viewModel = {
                 draw: 1,
-                //页数(第几页)
                 pageSize: 5,
-
                 listRowUrl: ctx + "/list",					//列表查询URL
                 saveRowUrl: ctx + "/save",					//新增和修改URL， 有id为修改 无id为新增
                 delRowUrl: ctx + "/delete",					//刪除URL
-
                 gridData: new u.DataTable(meta),
                 formData: new u.DataTable(meta),
                 event: {
                     //新增或修改的保存或取消按钮
                     saveClick: function () {
-                        if (!viewModel.app.compsValidate($(element).find("#dialog_content")[0])) {
+                        if (!viewModel.app.compsValidate($(element).find("#divForm")[0])) {
                             u.messageDialog({
                                 msg: "请检查必输项(*)!",
                                 title: "提示",
@@ -357,72 +355,6 @@ define(["text!./template.html",
                         form.submit();
                     },
 
-                    //任务导入
-
-                    onUploadFile: function () {
-                        window.md = u.dialog({ id: 'testDialg2', content: "#div_upload", hasCloseMenu: true });
-                        $('.sub-list1-new').css('display', 'inline-block');
-                        $("#filenamediv2").html("");
-                        $("#uploadingIMG2").attr("src", "../example/static/beforeUpload.svg");
-                        $("#uploadingMsg2").html("").addClass("uploading").removeClass("fail").removeClass("success");
-                        $("#fileName").remove();
-                        $("#div_upload").find(".choosefile").append('<input class="u-input"  type="file" name="fileName" id="fileName"/>');
-                        var demoInput = document.getElementById('fileName');
-                        demoInput.addEventListener('change', viewModel.event.onUploadExcel);
-                    },
-                    onUploadExcel: function () {
-                        var filevalue = document.getElementById("fileName").files;
-                        if (!filevalue || filevalue.length < 1) {
-                            var demoInput = document.getElementById('fileName');
-                            demoInput.removeEventListener('change', viewModel.event.onUploadExcel);
-                            demoInput.addEventListener('change', viewModel.event.onUploadExcel);
-                            return;
-                        } else {
-                            $("#filenamediv2").html(filevalue[0].name);
-                        }
-                        var urlInfo = ctx + "/excelDataImport";
-
-                        alert(fileName)
-                        viewModel.event.uploadingshow();
-
-
-
-                        $.ajaxFileUpload({
-                            url: urlInfo,
-                            secureuri: false,
-                            fileElementId: 'fileName',
-                            dataType: 'json',
-                            //data:{id},
-                            success: function (data) {
-                                console.log(data);
-                                $("#fileName").remove();
-                                $("#dialog_content2").find(".choosefile").append('<input class="u-input"  type="file" name="fileName" id="fileName"/>');
-                                var demoInput = document.getElementById('fileName');
-                                demoInput.removeEventListener('change', viewModel.event.onUploadExcel);
-                                demoInput.addEventListener('change', viewModel.event.onUploadExcel);
-                                window.clearInterval(viewModel.loadingTimer);
-                                $('.file-lodedPart').width(200);
-                                viewModel.event.uploadingHide();
-                                $("#uploadingIMG2").attr("src", "../example/static/success.svg");
-                                $("#uploadingMsg2").html("导入成功").addClass("success").removeClass("uploading").removeClass("fail");
-                                viewModel.event.initUerList();
-                                // md.close();
-                            },
-                            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                                // u.messageDialog({msg:errorThrown,title:'请求错误',btnText:'确定'});
-                                $("#fileName").remove();
-                                $("#dialog_content2").find(".choosefile").append('<input class="u-input"  type="file" name="fileName" id="fileName"/>');
-                                var demoInput = document.getElementById('fileName');
-                                demoInput.removeEventListener('change', viewModel.event.onUploadExcel);
-                                demoInput.addEventListener('change', viewModel.event.onUploadExcel);
-                                $("#uploadingIMG2").attr("src", "../example/static/fail.svg");
-                                $("#uploadingMsg2").html("导入失败" + data.message).addClass("fail").removeClass("uploading").removeClass("success");
-                                // u.messageDialog({msg:"上传失败！"+data.message,title:"提示", btnText:"OK"});
-                                //是吧逻辑处理
-                                window.clearInterval(viewModel.loadingTimer);
-                            }
-                        });
-                    },
 
 
                     uploadingshow: function () {
@@ -452,11 +384,75 @@ define(["text!./template.html",
 
 
 
+                    //任务信息导入
+                    onUploadFile: function () {
+                        window.md = u.dialog({ id: 'testDialg2', content: "#dialog_content", hasCloseMenu: true });
+                        $('.sub-list1-new').css('display', 'inline-block');
+                        $("#filenamediv2").html("");
+                        $("#uploadingIMG2").attr("src", "../example/static/beforeUpload.svg");
+                        $("#uploadingMsg2").html("").addClass("uploading").removeClass("fail").removeClass("success");
+                        $("#fileName").remove();
+                        $("#dialog_content").find(".choosefile").append('<input class="u-input"  type="file" name="fileName" id="fileName"/>');
+                        var demoInput = document.getElementById('fileName');
+                        demoInput.addEventListener('change', viewModel.event.onUploadExcel);
+                    },
+
+                    onUploadExcel: function () {
+                        var filevalue = document.getElementById("fileName").files;
+
+                        console.log("filevalue:", filevalue);
+                        if (!filevalue || filevalue.length < 1) {
+                            var demoInput = document.getElementById('fileName');
+                            demoInput.removeEventListener('change', viewModel.event.onUploadExcel);
+                            demoInput.addEventListener('change', viewModel.event.onUploadExcel);
+                            return;
+                        } else {
+                            $("#filenamediv2").html(filevalue[0].name);
+                        }
+                        var urlInfo = "/excelDataImport";
+
+                        // var url = ctx + urlInfo;
+                        // console.log(url);
+
+                        viewModel.event.uploadingshow();
+                        $.ajaxFileUpload({
+                            url: ctx + urlInfo,
+                            secureuri: false,
+                            fileElementId: 'fileName',
+                            dataType: 'JSON',//返回值
+                            //data:{id},
+                            success: function (data) {
+                                $("#fileName").remove();
+                                $("#dialog_content").find(".choosefile").append('<input class="u-input"  type="file" name="fileName" id="fileName"/>');
+                                var demoInput = document.getElementById('fileName');
+                                demoInput.removeEventListener('change', viewModel.event.onUploadExcel);
+                                demoInput.addEventListener('change', viewModel.event.onUploadExcel);
+                                window.clearInterval(viewModel.loadingTimer);
+                                $('.file-lodedPart').width(200);
+                                viewModel.event.uploadingHide();
+                                $("#uploadingIMG2").attr("src", "../example/static/success.svg");
+                                $("#uploadingMsg2").html("导入成功").addClass("success").removeClass("uploading").removeClass("fail");
+                                viewModel.event.initGridDataList();
+                                md.close();
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                $("#fileName").remove();
+                                $("#dialog_content").find(".choosefile").append('<input class="u-input"  type="file" name="fileName" id="fileName"/>');
+                                var demoInput = document.getElementById('fileName');
+                                demoInput.removeEventListener('change', viewModel.event.onUploadExcel);
+                                demoInput.addEventListener('change', viewModel.event.onUploadExcel);
+                                $("#uploadingIMG2").attr("src", "../example/static/fail.svg");
+                                $("#uploadingMsg2").html("导入失败" + data.message).addClass("fail").removeClass("uploading").removeClass("success");
+                                window.clearInterval(viewModel.loadingTimer);
+                            }
+                        });
+                    },
+
                     //导出
                     onDownloadExcel: function () {
                         var dats = [];
                         var pks = ""
-                        var row = viewModel.ygdemo_yw_infoDa.getSelectedRows();
+                        var row = viewModel.gridData.getSelectedRows();
                         if (row == null || row.length == 0) {
                             u.messageDialog({ msg: "请选择要导出的数据", title: "提示", btnText: "确定" });
                             return;
@@ -478,28 +474,74 @@ define(["text!./template.html",
                         form.attr('style', 'display:none');   //在form表单中添加查询参数
                         form.attr('target', '');
                         form.attr('method', 'post');
-                        form.attr('action', appCtx + "/ygdemo_yw_info/excelDataExport");
-
+                        form.attr('action', ctx + "/excelDataExport");
                         $('#user-mdlayout').append(form);  //将表单放置在web中
-
                         var input1 = $('<input>');
                         input1.attr('type', 'hidden');
                         input1.attr('name', 'ids');
                         input1.attr('value', pks);
                         form.append(input1);   //将查询参数控件提交到表单上
-
                         var input2 = $('<input>');
                         input2.attr('type', 'hidden');
                         input2.attr('name', 'x-xsrf-token');
                         input2.attr('value', window.x_xsrf_token);
                         form.append(input2);
-
                         form.submit();
                     },
 
 
+                    /** 打印*/
+                    printPage: function () {
+                        $.ajax({
+                            type: 'GET',
+                            url: '/eiap-plus/appResAllocate/queryPrintTemplateAllocate?funccode=teaplate&nodekey=printTemplate1',
+                            datatype: 'json',
+                            contentType: 'application/json;charset=utf-8',
+                            success: function (result) {
+                                if (result) {
+                                    if (result.success == 'success') {
+                                        var data = result.detailMsg.data;
+                                        var templateCode = data.res_code;
+                                        //调用打印
+                                        viewModel.event.printPageByTemplateCode(templateCode);
+                                    } else {
+                                        u.messageDialog({
+                                            msg: result.detailMsg.msg,
+                                            title: "提示",
+                                            btnText: "OK"
+                                        });
+                                    }
 
+                                } else {
+                                    u.messageDialog({ msg: '无返回数据', title: '操作提示', btnText: '确定' });
+                                }
+                            }
+                        })
+                    },
 
+                    printPageByTemplateCode: function (templateCode) {
+                        //打印逻辑
+                        var rows = viewModel.gridData.getSelectedRows();
+                        var currentData = rows[0].getSimpleData();
+                        id = currentData.id;
+                        if (id != undefined && id.trim() != null) {
+                            //                		var tenantId = cookie.get('tenantid');//租户ID
+                            var tenantId = "tenant";//固定字符串
+                            var serverUrl = ctx + '/dataForPrint';//取数据的url地址
+                            var params = {//去后台打印数据的参数
+                                'id': id
+                            };
+                            params = encodeURIComponent(JSON.stringify(params));//URL参数部分有特殊字符，必须编码(不同的tomcat对特殊字符的处理不一样)
+                            var url = '/print_service/print/preview?tenantId='
+                                + tenantId + '&printcode=' + templateCode + '&serverUrl=' + serverUrl
+                                + '&params=' + params + '&sendType=post';
+                            console.log("url:", url);
+                            window.open(url);
+                        }
+                        else {
+                            u.messageDialog({ msg: '请选择一条数据进行打印', title: '提示', btnText: '确定' });
+                        }
+                    }
                 },
 
                 //列表行内操作-按钮定义
@@ -530,7 +572,7 @@ define(["text!./template.html",
                     if (!viewModel.dialog) {
                         viewModel.dialog = u.dialog({
                             id: "testDialg",
-                            content: "#dialog_content",
+                            content: "#divForm",
                             hasCloseMenu: true,
                             width: "80%;",
                             height: "500px"
@@ -546,63 +588,6 @@ define(["text!./template.html",
             //加载Html页面
             $(element).html(html);
             viewModel.event.pageinit();
-
-            //搜索导航（查询、筛选）展开/收起
-            var toggleBtn = document.querySelector("#condition-toggle");
-            u.on(toggleBtn, "click",
-                function () {
-                    var conditionRow = document.querySelector("#condition-row");
-                    var toggleIcon = this.querySelector("i");
-                    if (u.hasClass(conditionRow, "b-searech-close")) {
-                        u.removeClass(conditionRow, "b-searech-close").addClass(conditionRow, "b-searech-open");
-                        u.removeClass(toggleIcon, "uf-arrow-up").addClass(toggleIcon, "uf-arrow-down");
-                        this.querySelector("span").innerText = "展开";
-                    } else {
-                        u.removeClass(conditionRow, "b-searech-open").addClass(conditionRow, "b-searech-close");
-                        u.removeClass(toggleIcon, "uf-arrow-down").addClass(toggleIcon, "uf-arrow-up");
-                        this.querySelector("span").innerText = "收起";
-                    }
-                });
-
-            //存在问题，需要调整：涉及死循环
-            var inputDom = document.querySelectorAll("input");
-            var searchbtn = document.querySelector('[data-role="searchbtn"]');
-            var clearbtn = document.querySelector('[data-role="clearbtn"]');
-            var inputlen = inputDom.length;
-            var ifuse = false; //是否可用
-            var domshasvalue = function () {
-                for (var i = 0; i < inputlen; i++) {
-                    if (inputDom[i].value.length > 0) {
-                        return true;
-                    }
-                }
-                return false;
-            };
-            if (inputlen > 0) {
-                for (var i = 0; i < inputlen; i++) {
-                    u.on(inputDom[i], "blur",
-                        function () {
-                            ifuse = false;
-                            if (this.value && this.value.length > 0) {
-                                //如果本元素失去焦点时有value则按钮直接可用，
-                                ifuse = true;
-                            }
-                            if (!ifuse) {
-                                //如果离开时无value则查看其它框是否有值
-                                ifuse = domshasvalue();
-                            }
-                            if (ifuse) {
-                                //有值时去除不可用样式
-                                u.removeClass(searchbtn, "disable");
-                                u.removeClass(clearbtn, "disable");
-                            } else {
-                                //没值时添加不可用样式
-                                u.addClass(searchbtn, "disable");
-                                u.addClass(clearbtn, "disable");
-                            }
-                        });
-                }
-            }
         };
 
         return {
