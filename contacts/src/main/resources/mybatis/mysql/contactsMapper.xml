@@ -53,6 +53,9 @@
 				<if test="condition.refParam!=null and condition.refParam!='' ">
 					and ( peocode like CONCAT(CONCAT('%',#{condition.refParam}),'%') or peoname like CONCAT(CONCAT('%',#{condition.refParam}),'%'))
 				</if>
+				<if test="condition.institid!=null and condition.institid!='' ">
+					and institid = #{condition.institid, jdbcType=VARCHAR}
+				</if>
 			</if>
 	</select>
 

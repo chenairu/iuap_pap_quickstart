@@ -4,28 +4,16 @@ import com.yonyou.iuap.example.common.entity.AbsGenericEntity;
 
 public class Contacts extends AbsGenericEntity{
 	
-	private String id;
-
 	private String peoname;
-
 	private String peocode;
-
 	private String institid;
-
 	private String institname;
-
 	private String worktel;
-
 	private String email;
-
 	private String sex;
-
 	private String tel;
-
 	private String office;
-
 	private String countryzone;
-
 	private String operate;
 
 	public String getOperate() {

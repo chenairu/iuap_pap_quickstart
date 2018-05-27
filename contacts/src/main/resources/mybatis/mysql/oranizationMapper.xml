@@ -48,7 +48,7 @@
 		FROM example_organization where 1=1
 			<if test="condition != null">
 				<if test="condition.institCode!=null and condition.institCode!='' ">
-					and instit_code = #{condition.institCode, jdbcType="VARCHAR"}
+					and instit_code = #{condition.institCode, jdbcType=VARCHAR}
 				</if>
 				<if test="condition.searchParam!=null and condition.searchParam!='' ">
 					and instit_code like CONCAT(CONCAT('%', #{condition.searchParam}),'%') 
