@@ -6,9 +6,9 @@ public abstract class AbsGenericEntity implements GenericEntity {
 
 	protected String id;
 	
-	protected int version;
 	protected int dr;
 	protected Date ts;
+	protected int version;
 	protected Date lastModified;
 	protected String lastModifyUser;
 	protected Date createTime;
