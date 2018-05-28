@@ -13,7 +13,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.yonyou.iuap.example.dictionary.entity.Dictionary;
 import com.yonyou.iuap.example.dictionary.service.DictionaryService;
@@ -100,8 +102,8 @@ public class DictionaryRefController extends AbstractGridRefModel {
 		List<Map<String, String>> results = new ArrayList<Map<String,String>>();
 
 		try {
-			List<Dictionary> rtnVal = this.dictionaryService.getByIds(null,Arrays.asList(refViewVo.getPk_val()));
-			results = buildRtnValsOfRef(rtnVal,isUserDataPower(refViewVo));
+			List<Dictionary> rtnVal = this.dictionaryService.query4Refer(refViewVo.getContent());
+			results = buildRtnValsOfRef(rtnVal);
 		} catch (Exception e) {
 			logger.error("服务异常：", e);
 		}
@@ -155,85 +157,7 @@ public class DictionaryRefController extends AbstractGridRefModel {
 		}
 		return listResult;
 	}
-	private List<Map<String, String>> buildRtnValsOfRef(List<Dictionary> list, boolean isUserDataPower) {
-		// 数据权限集合set
-		String tenantId = InvocationInfoProxy.getTenantid();
-		String sysId = InvocationInfoProxy.getSysid();
-		String userId = InvocationInfoProxy.getUserid();
-		List<DataPermission> dataPerms = AuthRbacClient.getInstance().queryDataPerms(tenantId, sysId, userId, "currtype");
 
-		Set<String> set = new HashSet<String>();
-		if(dataPerms != null && dataPerms.size()>0){
-			for (DataPermission temp : dataPerms) {
-				if(temp != null){
-					set.add(temp.getResourceId());
-				}
-
-			}
-		}
-
-		List<Map<String, String>> results = new ArrayList<Map<String,String>>();
-
-		if ((list != null) && (!list.isEmpty())) {
-			for (Dictionary entity : list) {
-				if (!isUserDataPower || (isUserDataPower && set.contains(entity.getId()))) {
-					Map<String, String> refDataMap = new HashMap<String, String>();
-					refDataMap.put("id", entity.getId());
-					refDataMap.put("refname", entity.getName());
-					refDataMap.put("refcode", entity.getCode());
-					refDataMap.put("refpk", entity.getId());
-
-					results.add(refDataMap);
-				}
-			}
-		}
-		return results;
-	}
-	private boolean isUserDataPower(RefViewModelVO refViewModelVo) {
-		if (isAdmin()) {
-			return false;
-		}
-
-		boolean isUserDataPower = false;
-
-		String clientParam = refViewModelVo.getClientParam();
-		if ((clientParam != null) && (clientParam.trim().length() > 0)) {
-			net.sf.json.JSONObject json = net.sf.json.JSONObject
-					.fromObject(clientParam);
-			if (json.containsKey("isUseDataPower")) {
-				isUserDataPower = json.getBoolean("isUseDataPower");
-			}
-		}
-
-		return isUserDataPower;
-	}
-	private boolean isAdmin() {
-		String userId = InvocationInfoProxy.getUserid();
-		if (userId.equals("U001")) {
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * 实现在grid根据id显示name值操作
-	 * @param id
-	 * @param isUseDataPower
-	 * @return
-	 */
-	@RequestMapping("/filterData")
-	public String filterData(@RequestParam String id,@RequestParam boolean isUseDataPower){
-		StringBuilder refName = new StringBuilder("");
-		String[] ids = id.split(",");
-		List<Dictionary> rtnVal = this.dictionaryService.getByIds(null,Arrays.asList(ids));
-		List<Map<String,String>> list = buildRtnValsOfRef(rtnVal,isUseDataPower);
-		if(list != null && list.size()>0){
-			for(Map<String,String> map : list){
-				refName.append(map.get("refname")).append(",");
-			}
-		}
-		return refName.substring(0,refName.length()-1);
-	}
 	/****************************************************************/
 	@Autowired
 	private DictionaryService dictionaryService;
