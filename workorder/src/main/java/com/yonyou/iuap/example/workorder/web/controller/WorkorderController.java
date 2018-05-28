@@ -55,10 +55,9 @@ public class WorkorderController extends BaseController{
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody
 	public Object save(@RequestBody Workorder workorder, HttpServletRequest request, HttpServletResponse response) {
-		//	public Object save(@RequestBody Map<String,Object> workorder, HttpServletRequest request, HttpServletResponse response) {
 		JsonResponse jsonResp;
 		try {
-			//workorderService.save(workorder);
+			workorderService.save(workorder);
 			jsonResp = this.buildSuccess(workorder);
 		}catch(Exception exp) {
 			logger.error("工单信息保存出错!", exp);

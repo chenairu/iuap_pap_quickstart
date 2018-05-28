@@ -35,7 +35,7 @@ define(['text!./workorder.html',
     			entityId: "",
     			
     			doView: function(rowData){
-    				viewModel.flowEvent.entityId = '3ed913c0-44cf-4333-b2ae-a4010b103efe';
+    				viewModel.flowEvent.entityId = rowData.id;
     				if(rowData){
                         $.ajax({
                             type: 'POST',
@@ -58,11 +58,8 @@ define(['text!./workorder.html',
                                                 $(element).find('input[type!="radio"]').attr('disabled',false);
                                             });
                                             
-                                            
                                             //加入bpm按钮
-                                            viewModel.initBPMFromBill(
-                                            		viewModel.flowEvent.entityId, viewModel
-                                            );
+                                            viewModel.initBPMFromBill(viewModel.flowEvent.entityId, viewModel);
                                             
                                     	}else {
                                             var msg = "";
