@@ -19,11 +19,6 @@ import java.util.*;
 @Service
 public class ContactsService extends GenericService<Contacts>{
 
-    @Autowired
-    private ContactsMapper contactsMapper;
-    @Autowired
-    private OrganizationMapper oranizationMapper;
-
     /**
      * 根据某一非主键字段查询实体
      */
@@ -118,5 +113,20 @@ public class ContactsService extends GenericService<Contacts>{
     public List<Organization> selectInstitByIds(Set<String> ids) {
         return oranizationMapper.selectInstitByIds(ids);
     }
-
+    
+    /***************************************************************/
+    private ContactsMapper contactsMapper;
+    private OrganizationMapper oranizationMapper;
+    
+    @Autowired
+	public void setContactsMapper(ContactsMapper contactsMapper) {
+		this.contactsMapper = contactsMapper;
+		super.ibatisMapper = contactsMapper;
+	}
+    @Autowired
+	public void setOranizationMapper(OrganizationMapper oranizationMapper) {
+		this.oranizationMapper = oranizationMapper;
+	}
+    
+    
 }

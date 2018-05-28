@@ -22,19 +22,21 @@ var meta = {
 										"pageCount":0,
 										"pageSize":5},
 							"refCode":'currency',
-							"refModelUrl":"http://192.168.1.7:8082/iuap-example/reference/dictionary/",
+							"refModelUrl":"/iuap-example/reference/dictionary/",
 							"refName": "币种",
 							"refUIType": "RefGrid",
 							"rootName": "币种列表"
 					}),
-			'refcfg' : '{"ctx":"/uitemplate_web"}',
-            'refparam':'{"isUseDataPower":"true"}'
+			'refcfg' : '{"ctx":"/uitemplate_web"}'
 		},
 		currency_name : {},
 		remark : {},
 		version : {},
 		createTime : {},
-		createUser : {},
+		createUser : {
+			'refmodel' : JSON.stringify(refinfo['wbUser']),
+			'refcfg' : '{"ctx":"/uitemplate_web"}'
+		},
 		createUser_name : {},
 		lastModified : {},
 		lastModifyUser : {},
@@ -45,8 +47,8 @@ var meta = {
 										"currentPageIndex":0,
 										"pageCount":0,
 										"pageSize":1000},
-							"refCode":'currency',
-							"refModelUrl":"http://192.168.1.7:8082/iuap-example/reference/organization/",
+							"refCode":'customOrganization',
+							"refModelUrl":"/iuap-example/reference/organization/",
 							"refName": "生产厂商",
 							"refUIType": "RefTree",
 							"rootName": "生产厂商列表"
@@ -56,20 +58,22 @@ var meta = {
 		manufacturer_name : {},
 		linkman : {
 			'refmodel' : JSON.stringify({
-							"refClientInfoPageInfo": {
-										"currentPageIndex":0,
-										"pageCount":0,
-										"pageSize":10},
-							"refCode":'currency',
-							"refModelUrl":"http://192.168.1.7:8082/iuap-example/reference/contacts/",
-							"refName": "联系人",
-							"refUIType": "RefGrid",
-							"rootName": "联系人列表",
-							"strFieldCode":["refcode", "refname", "organization"],
-							"strFieldName":["联系人编码", "联系人名称", "所属机构"],
-							"defaultFieldCount":3
-					}),
-			'refcfg' : '{"ctx":"/uitemplate_web"}'
+								"refClientPageInfo" : {
+											"pageSize" : 100,
+											"currPageIndex" : 0,
+											"pageCount" : 0
+										},
+				    			"refCode" : "contactsTree",
+				    			"rootName" : "全部",
+				    			"refName" : "联系人",
+				    			strFieldName : ["编码", "名称","电话","邮箱"],
+				    			strFieldCode : ["refcode", "refname","reftel","refemail"],
+				    			defaultFieldCount : 4,
+				    			"refModelUrl" : "/iuap-example/reference/treegrid/",
+				    			"refUIType" : "RefGridTree"
+						}),
+			 'refcfg' : '{"ctx":"/uitemplate_web"}'
+
 		},
 		linkman_name : {}
 	}
