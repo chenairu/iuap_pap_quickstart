@@ -45,5 +45,6 @@ public interface DictionaryMapper extends GenericMapper<Dictionary> {
 
 	List<Dictionary> findByCode(String code);
 
-    List<Dictionary> getByIds(String tenantId, @Param("list")ArrayList<String> ids);
+    List<Dictionary> getByIds(String tenantId, @Param("list")List<String> ids);
+
 }

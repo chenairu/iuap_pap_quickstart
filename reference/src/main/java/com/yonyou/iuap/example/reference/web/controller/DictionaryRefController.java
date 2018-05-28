@@ -13,10 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.yonyou.iuap.example.dictionary.entity.Dictionary;
 import com.yonyou.iuap.example.dictionary.service.DictionaryService;
@@ -69,7 +66,12 @@ public class DictionaryRefController extends AbstractGridRefModel {
 		}
 		return resultMap;
 	}
-	
+
+	/**
+	 * 参照数据过滤
+	 * @param refViewVo
+	 * @return
+	 */
 	@Override
 	public List<Map<String, String>> filterRefJSON(@RequestBody RefViewModelVO refViewVo) {
 		List<Map<String, String>> results = new ArrayList<Map<String,String>>();		
@@ -78,11 +80,27 @@ public class DictionaryRefController extends AbstractGridRefModel {
 		return results;
 	}
 
+	/**
+	 * 获得鼠标焦点时 参照数据过滤
+	 * @param refViewVo
+	 * @return
+	 */
 	@Override
 	public List<Map<String, String>> matchBlurRefJSON(@RequestBody RefViewModelVO refViewVo) {
+		return filterRefJSON(refViewVo);
+	}
+
+	/**
+	 * 精确匹配参照数据,在打开表单页面时会调用该方法
+	 * @param refViewVo
+	 * @return
+	 */
+	@Override
+	public List<Map<String, String>> matchPKRefJSON(@RequestBody RefViewModelVO refViewVo) {
 		List<Map<String, String>> results = new ArrayList<Map<String,String>>();
+
 		try {
-			List<Dictionary> rtnVal = this.dictionaryService.query4Refer(refViewVo.getContent());
+			List<Dictionary> rtnVal = this.dictionaryService.getByIds(null,Arrays.asList(refViewVo.getPk_val()));
 			results = buildRtnValsOfRef(rtnVal,isUserDataPower(refViewVo));
 		} catch (Exception e) {
 			logger.error("服务异常：", e);
@@ -90,11 +108,11 @@ public class DictionaryRefController extends AbstractGridRefModel {
 		return results;
 	}
 
-	@Override
-	public List<Map<String, String>> matchPKRefJSON(@RequestBody RefViewModelVO refViewVo) {
-		return null;
-	}
-	
+	/**
+	 * 构建查询条件
+	 * @param searchParam
+	 * @return
+	 */
 	private SearchParams buildSearchParams(String searchParam) {
 		SearchParams params = new SearchParams();
 		Map<String,Object> results = new HashMap<String,Object>();
@@ -105,6 +123,13 @@ public class DictionaryRefController extends AbstractGridRefModel {
 		return params;
 	}
 
+	/**
+	 * 构建分页SQL
+	 * @param pageNum
+	 * @param pageSize
+	 * @param sortColumn
+	 * @return
+	 */
 	private PageRequest buildPageRequest(int pageNum, int pageSize, String sortColumn) {
 		Sort sort = null;
 		if(StringUtils.isEmpty(sortColumn) || "auto".equalsIgnoreCase(sortColumn)) {
@@ -188,6 +213,26 @@ public class DictionaryRefController extends AbstractGridRefModel {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * 实现在grid根据id显示name值操作
+	 * @param id
+	 * @param isUseDataPower
+	 * @return
+	 */
+	@RequestMapping("/filterData")
+	public String filterData(@RequestParam String id,@RequestParam boolean isUseDataPower){
+		StringBuilder refName = new StringBuilder("");
+		String[] ids = id.split(",");
+		List<Dictionary> rtnVal = this.dictionaryService.getByIds(null,Arrays.asList(ids));
+		List<Map<String,String>> list = buildRtnValsOfRef(rtnVal,isUseDataPower);
+		if(list != null && list.size()>0){
+			for(Map<String,String> map : list){
+				refName.append(map.get("refname")).append(",");
+			}
+		}
+		return refName.substring(0,refName.length()-1);
 	}
 	/****************************************************************/
 	@Autowired

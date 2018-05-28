@@ -72,7 +72,20 @@ public class ExampleCustomerService {
             exampleCustomerMapper.batchUpdate(updateList);
         }
     }
-
+    @Transactional(rollbackFor = Exception.class)
+    public void save(ExampleCustomer entity){
+        if(entity.getId() == null){
+            entity.setId(UUID.randomUUID().toString());
+            //编码规则
+            String customerCode = this.getCustomerCode("customer","",entity);
+            entity.setCustomerCode(customerCode);
+            exampleCustomerMapper.insert(entity);
+            //发送消息
+            sendMessage(entity);
+        }else{
+            exampleCustomerMapper.updateByPrimaryKey(entity);
+        }
+    }
     @Transactional(rollbackFor = Exception.class)
     public void batchDeleteByPrimaryKey(List<ExampleCustomer> list){
         exampleCustomerMapper.batchDelete(list);
@@ -118,7 +131,7 @@ public class ExampleCustomerService {
      *            编码对象code
      * @param pkAssign
      *            分配关系
-     * @param entity
+     * @param customer
      * @param customerCode 编码字段
      * @return
      */

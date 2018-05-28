@@ -6,14 +6,14 @@
 -- DROP TABLE example_contacts;
 CREATE TABLE example_contacts (
 id NCHAR(36) NOT NULL ,
-peocode NVARCHAR2(100) NOT NULL ,
-peoname NVARCHAR2(50) NOT NULL ,
-sex NVARCHAR2(50) NULL ,
-worktel NVARCHAR2(100) NULL ,
-office NVARCHAR2(100) NULL ,
-tel NVARCHAR2(100) NULL ,
-email NVARCHAR2(100) NULL ,
-countryzone NVARCHAR2(36) NULL ,
+peocode VARCHAR2(100) NOT NULL ,
+peoname VARCHAR2(50) NOT NULL ,
+sex VARCHAR2(50) NULL ,
+worktel VARCHAR2(100) NULL ,
+office VARCHAR2(100) NULL ,
+tel VARCHAR2(100) NULL ,
+email VARCHAR2(100) NULL ,
+countryzone VARCHAR2(36) NULL ,
 institid NCHAR(36) NULL ,
 institname NCHAR(50) NULL ,
 ts DATE NULL ,
@@ -31,13 +31,13 @@ dr NUMBER(11) NULL
 -- ----------------------------
 -- DROP TABLE example_dictionary;
 CREATE TABLE example_dictionary (
-id NVARCHAR2(36) NOT NULL ,
-code NVARCHAR2(50) NULL ,
-name NVARCHAR2(50) NULL ,
-sys NVARCHAR2(50) NULL ,
-creator NVARCHAR2(50) NULL ,
-create_time NVARCHAR2(50) NULL ,
-remark NVARCHAR2(50) NULL 
+id VARCHAR2(36) NOT NULL ,
+code VARCHAR2(50) NULL ,
+name VARCHAR2(50) NULL ,
+sys VARCHAR2(50) NULL ,
+creator VARCHAR2(50) NULL ,
+create_time VARCHAR2(50) NULL ,
+remark VARCHAR2(50) NULL 
 )
 
 ;
@@ -51,20 +51,20 @@ remark NVARCHAR2(50) NULL
 -- ----------------------------
 -- DROP TABLE example_goods;
 CREATE TABLE example_goods (
-id NVARCHAR2(64) NOT NULL ,
-goodsCode NVARCHAR2(20) NOT NULL ,
-goodsName NVARCHAR2(64) NOT NULL ,
-model NVARCHAR2(64) NULL ,
+id VARCHAR2(64) NOT NULL ,
+goodsCode VARCHAR2(20) NOT NULL ,
+goodsName VARCHAR2(64) NOT NULL ,
+model VARCHAR2(64) NULL ,
 price NUMBER NULL ,
-currency NVARCHAR2(64) NULL ,
-manufacturer NVARCHAR2(64) NULL ,
-linkman NVARCHAR2(64) NULL ,
+currency VARCHAR2(64) NULL ,
+manufacturer VARCHAR2(64) NULL ,
+linkman VARCHAR2(64) NULL ,
 remark NCLOB NULL ,
 version NUMBER(11) NULL ,
 createTime DATE NULL ,
-createUser NVARCHAR2(64) NULL ,
+createUser VARCHAR2(64) NULL ,
 lastModified DATE NULL ,
-lastModifyUser NVARCHAR2(64) NULL ,
+lastModifyUser VARCHAR2(64) NULL ,
 ts DATE NULL ,
 dr NUMBER(11) NULL 
 )
@@ -97,24 +97,25 @@ COMMENT ON COLUMN example_goods.dr IS '删除标志：0-可用；1-已删除';
 -- DROP TABLE example_order_bill;
 CREATE TABLE example_order_bill (
 id NCHAR(36) NOT NULL ,
-orderCode NVARCHAR2(50) NULL ,
-orderName NVARCHAR2(50) NULL ,
+orderCode VARCHAR2(50) NULL ,
+orderName VARCHAR2(50) NULL ,
 orderDate DATE NULL ,
 beginDate DATE NULL ,
 endDate DATE NULL ,
-customer NVARCHAR2(255) NULL ,
-dept NVARCHAR2(36) NULL ,
-busiman NVARCHAR2(50) NULL ,
+customer VARCHAR2(255) NULL ,
+dept VARCHAR2(36) NULL ,
+busiman VARCHAR2(50) NULL ,
 amount NUMBER NULL ,
-currency NVARCHAR2(36) NULL ,
-orderState NVARCHAR2(10) NULL ,
+currency VARCHAR2(36) NULL ,
+orderState VARCHAR2(10) NULL ,
 version NUMBER(11) NULL ,
 createTime DATE NULL ,
-createUser NVARCHAR2(36) NULL ,
+createUser VARCHAR2(36) NULL ,
 lastModified DATE NULL ,
-lastModifyUser NVARCHAR2(36) NULL ,
+lastModifyUser VARCHAR2(36) NULL ,
 ts DATE NULL ,
-dr NUMBER(11) NULL 
+dr NUMBER(11) NULL,
+tenant_id varchar2(32)
 )
 
 ;
@@ -149,10 +150,10 @@ COMMENT ON COLUMN example_order_bill.dr IS '删除标志：0-未删除；1-已�
 CREATE TABLE example_order_detail (
 id NCHAR(36) NOT NULL ,
 orderId NCHAR(36) NULL ,
-detailCode NVARCHAR2(50) NULL ,
-goodsCode NVARCHAR2(50) NULL ,
-goodsName NVARCHAR2(50) NULL ,
-manufacturer NVARCHAR2(64) NULL ,
+detailCode VARCHAR2(50) NULL ,
+goodsCode VARCHAR2(50) NULL ,
+goodsName VARCHAR2(50) NULL ,
+manufacturer VARCHAR2(64) NULL ,
 price NUMBER NULL ,
 total NUMBER(11) NULL ,
 amount NUMBER NULL ,
@@ -186,13 +187,13 @@ COMMENT ON COLUMN example_order_detail.dr IS '删除标志：0-未删除；1-已
 -- DROP TABLE example_organization;
 CREATE TABLE example_organization (
 institid NCHAR(36) NOT NULL ,
-instit_code NVARCHAR2(200) NOT NULL ,
-instit_name NVARCHAR2(200) NOT NULL ,
-short_name NVARCHAR2(50) NULL ,
-email NVARCHAR2(50) NULL ,
-instit_type NVARCHAR2(10) NULL ,
-parent_id NVARCHAR2(36) NULL ,
-creator NVARCHAR2(20) NULL ,
+instit_code VARCHAR2(200) NOT NULL ,
+instit_name VARCHAR2(200) NOT NULL ,
+short_name VARCHAR2(50) NULL ,
+email VARCHAR2(50) NULL ,
+instit_type VARCHAR2(10) NULL ,
+parent_id VARCHAR2(36) NULL ,
+creator VARCHAR2(20) NULL ,
 creationtime DATE NULL ,
 ts DATE NULL ,
 dr NUMBER(11) NULL 

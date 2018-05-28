@@ -69,6 +69,7 @@ CREATE TABLE example_goods (
   lastModifyUser VARCHAR(64) DEFAULT NULL COMMENT '修改人',
   ts TIMESTAMP NULL DEFAULT NULL COMMENT '数据时间',
   dr INT(11) DEFAULT NULL COMMENT '删除标志：0-可用；1-已删除',
+   tenant_id VARCHAR(32) DEFAULT 'tenant',
   PRIMARY KEY (id)
 );
 

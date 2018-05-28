@@ -85,8 +85,9 @@
                             <div options='{"field":"goodsName","dataType":"String","title":"商品名称","editType":"string"}'></div>
                             <div options='{"field":"model","dataType":"String","title":"型号","editType":"string"}'></div>
                             <div options='{"field":"price","dataType":"numeric","title":"单价","editType":"string"}'></div>
-                            <div options='{"field":"currency","dataType":"String","title":"币种","editType":"string"}'></div>
-                            <div options='{"field":"lastModified","dataType":"date","title":"最后修改时间", "editType":"date","renderType":"dateRender","format":"YYYY-MM-DD"}'></div>
+							<div options='{"field":"currency","dataType":"String","title":"币种","renderType":"useRender"}'></div>
+							<div options='{"field":"createUser","dataType":"String","title":"创建人"}'></div>
+                            <div options='{"field":"lastModified","dataType":"date","title":"最后修改时间","editType":"date","renderType":"dateRender","format":"YYYY-MM-DD"}'></div>
 							<div options='{"field":"operate","dataType":"String","title":"操作","renderType":"optFunc","editable":true,"fixed":true,"width":"180px"}'></div>
 						</div>
                         <div id='pagination' class='pagination u-pagination pagination-sm'></div>

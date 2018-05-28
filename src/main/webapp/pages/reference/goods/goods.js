@@ -373,7 +373,41 @@ define(['text!./goods.html','./meta.js', 'css!./goods.css',
                 						 '<button class="u-button u-button-border" title="删除" ' + delFunc + ">删除</button></div>";
                 ko.applyBindings(viewModel, obj.element);
             },
-            
+            useRender:function(options){
+                var grid = options.gridObj;
+                var datatable = grid.dataTable;
+                var column = options.gridCompColumn;
+                var field = column.options.field;
+                var showField = column.options.showField;
+                var rowIndex = options.rowIndex;
+                var rowId =  $(grid.dataSourceObj.rows[rowIndex].value).attr("$_#_@_id");
+                //0830增加rowId的获取
+                var rowId = options.row.value["$_#_@_id"];
+                var row = datatable.getRowByRowId(rowId);
+
+                var refModel = JSON.parse(row.getMeta(field,'refmodel'));
+                var isUseDataPower = false;
+                refparam = JSON.parse(row.getMeta(field,'refparam'));
+                if(refparam){
+                    isUseDataPower = refparam.isUseDataPower;
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: refModel.refModelUrl+"filterData",
+                    datatype: "json",
+                    data: {
+                        id : options.value,
+                        isUseDataPower:isUseDataPower
+                    },
+                    //contentType: "application/json;charset=utf-8",
+                    success: function(result){
+                        var display = result;
+                        options.element.innerHTML = display;
+                        $(options.element).attr('title', display);
+                        $(options.element).closest("body").find(".ref_ac_results").css("display","none");
+                    }
+                })
+            },
             //行操作——修改
             doEditRow: function(rowId, s, e) {
                 var self = this;

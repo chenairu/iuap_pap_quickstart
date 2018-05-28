@@ -35,22 +35,23 @@
 			createTime,
 			lastModified,
 			lastModifyUser,
-			tenant_id
+			tenant_id,
+			ts
 	</sql>
 	
 	<select id="selectAllByPage" resultMap="BaseResultMap" resultType="java.util.List">
-		select	
-			<include refid="Base_Column_List"></include>
+		select
+		<include refid="Base_Column_List"/>
 		from	example_goods
 		where	1=1
 		<if test="sql != null">
 			${sql}
 		</if>
-			<if test="condition!=null">
-				<if test="condition.searchMap.goodsCode!=null">
-					and goodsCode = #{condition.searchMap.goodsCode}
-				</if>
-			</if>
+		<if test="condition!=null">
+		<if test="condition.searchMap.goodsCode!=null">
+			and goodsCode = #{condition.searchMap.goodsCode}
+		</if>
+	</if>
 	</select>
 	
 	<select id="queryList" resultMap="BaseResultMap" resultType="java.util.List">
@@ -72,7 +73,7 @@
 				t.lastModified,
 				t.lastModifyUser,
 				t.tenant_id
-		FROM	example_goods t LEFT OUTER JOIN example_dictionary ed ON t.currency=ed.code
+		FROM	example_goods t LEFT OUTER JOIN example_dictionary ed ON t.currency=ed.id
 								LEFT OUTER JOIN example_organization eo ON t.manufacturer=eo.institid
 								LEFT OUTER JOIN example_contacts ec ON t.linkman=ec.id
 		WHERE	1=1

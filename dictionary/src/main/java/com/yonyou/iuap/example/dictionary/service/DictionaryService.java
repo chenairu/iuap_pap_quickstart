@@ -30,13 +30,14 @@ public class DictionaryService extends GenericService<Dictionary>{
      * @param searchParams
      * @return
      */
+    @Override
     public Page<Dictionary> selectAllByPage(PageRequest pageRequest, SearchParams searchParams) {
         return dictionaryMapper.selectAllByPage(pageRequest, searchParams.getSearchMap()).getPage();
     }
 
     /**
      * 查询
-     * @param keyword
+     * @param refParam
      * @return
      */
     public List<Dictionary> query4Refer(String refParam){
@@ -111,5 +112,12 @@ public class DictionaryService extends GenericService<Dictionary>{
                 ids.add(key);
             }
             return dictionaryMapper.getByIds(tenantId, ids);
+    }
+
+    public List<Dictionary> getByIds(String tenantId, List<String> ids) {
+        if(ids==null||ids.size()==0){
+            return null;
+        }
+        return dictionaryMapper.getByIds(tenantId, ids);
     }
 }

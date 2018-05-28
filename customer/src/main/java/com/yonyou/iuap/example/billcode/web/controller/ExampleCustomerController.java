@@ -41,7 +41,13 @@ public class ExampleCustomerController extends BaseController {
     @RequestMapping(value = "/save" ,method=RequestMethod.POST)
     public @ResponseBody Object save(@RequestBody List<ExampleCustomer> list){
         validator.valid(list);
-        exampleCustomerService.save(list);
+        //测试编码规则
+        //exampleCustomerService.save(list);
+
+        //测试编码规则+发送消息,两段代码只能同时存在一个,否则会保存两条记录
+        if(list != null && list.size()==1){
+            exampleCustomerService.save(list.get(0));
+        }
         return buildSuccess();
     }
 

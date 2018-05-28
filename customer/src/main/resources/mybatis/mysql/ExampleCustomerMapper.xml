@@ -6,6 +6,7 @@
         <result column="customer_code" jdbcType="VARCHAR" property="customerCode"/>
         <result column="customer_name" jdbcType="VARCHAR" property="customerName"/>
         <result column="province" jdbcType="VARCHAR" property="province"/>
+        <result column="province_name" jdbcType="VARCHAR" property="provinceName"/>
         <result column="city" jdbcType="VARCHAR" property="city"/>
         <result column="corpSize" jdbcType="VARCHAR" property="corpsize"/>
         <result column="status" jdbcType="VARCHAR" property="status"/>
