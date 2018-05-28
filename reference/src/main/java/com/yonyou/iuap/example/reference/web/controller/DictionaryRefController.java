@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yonyou.iuap.example.dictionary.entity.Dictionary;
@@ -103,7 +104,7 @@ public class DictionaryRefController extends AbstractGridRefModel {
 
 		try {
 			List<Dictionary> rtnVal = this.dictionaryService.query4Refer(refViewVo.getContent());
-			results = buildRtnValsOfRef(rtnVal);
+			results = buildRtnValsOfRef(rtnVal,isUserDataPower(refViewVo));
 		} catch (Exception e) {
 			logger.error("服务异常：", e);
 		}
@@ -142,22 +143,65 @@ public class DictionaryRefController extends AbstractGridRefModel {
 		return new PageRequest(pageNum-1, pageSize, sort);
 	}
 	
-	private List<Map<String,String>> buildRtnValsOfRef(List<Dictionary> listDictionary){
-		List<Map<String,String>> listResult = new ArrayList<Map<String,String>>();
-		if(CollectionUtils.isNotEmpty(listDictionary)) {
-			for(Dictionary entity: listDictionary) {
-				Map<String,String> refData = new HashMap<String,String>();
-				refData.put("id", entity.getId());
-				refData.put("refname", entity.getName());
-				refData.put("refcode", entity.getCode());
-				//refData.put("remark", entity.getRemark());
-				refData.put("refpk", entity.getCode());
-				listResult.add(refData);
+	private List<Map<String,String>> buildRtnValsOfRef(List<Dictionary> listDictionary, boolean isUserDataPower){
+		// 数据权限集合set
+		String tenantId = InvocationInfoProxy.getTenantid();
+		String sysId = InvocationInfoProxy.getSysid();
+		String userId = InvocationInfoProxy.getUserid();
+		List<DataPermission> dataPerms = AuthRbacClient.getInstance().queryDataPerms(tenantId, sysId, userId, "currtype");
+
+		Set<String> set = new HashSet<String>();
+		if(dataPerms != null && dataPerms.size()>0){
+			for (DataPermission temp : dataPerms) {
+				if(temp != null){
+					set.add(temp.getResourceId());
+				}
+
 			}
 		}
-		return listResult;
-	}
 
+		List<Map<String, String>> results = new ArrayList<Map<String,String>>();
+
+		if ((listDictionary != null) && (!listDictionary.isEmpty())) {
+			for (Dictionary entity : listDictionary) {
+				if (!isUserDataPower || (isUserDataPower && set.contains(entity.getId()))) {
+					Map<String, String> refDataMap = new HashMap<String, String>();
+					refDataMap.put("id", entity.getId());
+					refDataMap.put("refname", entity.getName());
+					refDataMap.put("refcode", entity.getCode());
+					refDataMap.put("refpk", entity.getId());
+
+					results.add(refDataMap);
+				}
+			}
+		}
+		return results;
+	}
+	private boolean isUserDataPower(RefViewModelVO refViewModelVo) {
+		if (isAdmin()) {
+			return false;
+		}
+
+		boolean isUserDataPower = false;
+
+		String clientParam = refViewModelVo.getClientParam();
+		if ((clientParam != null) && (clientParam.trim().length() > 0)) {
+			net.sf.json.JSONObject json = net.sf.json.JSONObject
+					.fromObject(clientParam);
+			if (json.containsKey("isUseDataPower")) {
+				isUserDataPower = json.getBoolean("isUseDataPower");
+			}
+		}
+
+		return isUserDataPower;
+	}
+	private boolean isAdmin() {
+		String userId = InvocationInfoProxy.getUserid();
+		if (userId.equals("U001")) {
+			return true;
+		}
+		return false;
+	}
 	/****************************************************************/
 	@Autowired
 	private DictionaryService dictionaryService;
