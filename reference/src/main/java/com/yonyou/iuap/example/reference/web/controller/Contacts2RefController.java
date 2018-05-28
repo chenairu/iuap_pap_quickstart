@@ -68,7 +68,7 @@ public class Contacts2RefController extends AbstractTreeGridRefModel {
 				list.add(ret);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("联系人参照信息出错!", e);
 		}
 		return list;
 	}
