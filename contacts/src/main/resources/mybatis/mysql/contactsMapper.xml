@@ -19,7 +19,7 @@
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		id,institid,peoname,peocode,worktel,email,sex,tel,office,countryzone,ts,dr
+		id,institid,peoname,peocode,worktel,email,sex,tel,office,countryzone,institname,ts,dr
 	</sql>
 
 	<select id="selectAllByPage" resultMap="BaseResultMap" resultType="java.util.List">
@@ -84,28 +84,38 @@
 	</delete>
 
 
-
 	<insert id="batchInsert" parameterType="java.util.List">
-		insert into
-		example_contacts(id,institid,peocode,institname,peoname,worktel,email,sex,tel,office,countryzone,ts,dr)
-
+		INSERT INTO example_contacts (	id,
+										institid,
+										institname,
+										peocode,
+										peoname,
+										worktel,
+										email,
+										sex,
+										tel,
+										office,
+										countryzone,
+										ts,
+										dr
+			)
 		<foreach collection="list" item="item" index="index"
 			separator="union" open="(" close=")">
-			select
-			#{item.id,jdbcType=VARCHAR},
-			#{item.institid,jdbcType=VARCHAR},
-			#{item.peocode,jdbcType=VARCHAR},
-			#{item.institname,jdbcType=VARCHAR},
-			#{item.peoname,jdbcType=VARCHAR},
-			#{item.worktel,jdbcType=VARCHAR},
-			#{item.email,jdbcType=VARCHAR},
-			#{item.sex,jdbcType=VARCHAR},
-			#{item.tel,jdbcType=VARCHAR},
-			#{item.office,jdbcType=VARCHAR},
-			#{item.countryzone,jdbcType=VARCHAR},
-			#{item.ts,jdbcType=TIMESTAMP},
-			#{item.dr,jdbcType=NUMERIC}
-			from dual
+			SELECT
+					#{item.id,jdbcType=VARCHAR},
+					#{item.institid,jdbcType=VARCHAR},
+					#{item.institname,jdbcType=VARCHAR},
+					#{item.peocode,jdbcType=VARCHAR},
+					#{item.peoname,jdbcType=VARCHAR},
+					#{item.worktel,jdbcType=VARCHAR},
+					#{item.email,jdbcType=VARCHAR},
+					#{item.sex,jdbcType=VARCHAR},
+					#{item.tel,jdbcType=VARCHAR},
+					#{item.office,jdbcType=VARCHAR},
+					#{item.countryzone,jdbcType=VARCHAR},
+					#{item.ts,jdbcType=TIMESTAMP},
+					#{item.dr,jdbcType=NUMERIC}
+			FROM dual
 		</foreach>
 	</insert>
 
