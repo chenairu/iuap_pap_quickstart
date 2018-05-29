@@ -19,6 +19,11 @@
 		<result column="dr" property="dr" jdbcType="NUMERIC" />
 		<result column="tenant_id" property="tenant_id" jdbcType="VARCHAR" />
 		<result column="director" property="director" jdbcType="VARCHAR" />
+		<result column="supplier" property="supplier" jdbcType="VARCHAR" />
+		<result column="supplierTel" property="supplierTel" jdbcType="VARCHAR" />
+		<result column="supplierFax" property="supplierFax" jdbcType="VARCHAR" />
+		<result column="linkmanMobile" property="linkmanMobile" jdbcType="VARCHAR" />
+		<result column="supplierAddr" property="supplierAddr" jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<sql id="Base_Column_List">
@@ -30,22 +35,27 @@
 			currency,
 			manufacturer,
 			linkman,
+			tenant_id,
+			director,
 			remark,
 			version,
 			createUser,
 			createTime,
 			lastModified,
 			lastModifyUser,
-			tenant_id,
-			director,
-			ts
+			ts,
+			supplier,
+			supplierTel,
+			supplierFax,
+			linkmanMobile,
+			supplierAddr
 	</sql>
 	
 	<select id="selectAllByPage" resultMap="BaseResultMap" resultType="java.util.List">
-		select
-		<include refid="Base_Column_List"/>
-		from	example_goods
-		where	1=1
+		SELECT
+			<include refid="Base_Column_List"/>
+		FROM	example_goods
+		WHERE	1=1
 		<if test="sql != null">
 			${sql}
 		</if>
@@ -76,7 +86,12 @@
 				t.lastModifyUser,
 				t.tenant_id,
 				t.director,
-				ec2.peoname as director_name
+				ec2.peoname AS director_name,
+				t.supplier,
+				t.supplierTel,
+				t.supplierFax,
+				t.linkmanMobile,
+				t.supplierAddr
 		FROM	example_goods t LEFT OUTER JOIN example_dictionary ed ON t.currency=ed.id
 								LEFT OUTER JOIN example_organization eo ON t.manufacturer=eo.institid
 								LEFT OUTER JOIN example_contacts ec ON t.linkman=ec.id
@@ -107,7 +122,12 @@
 									ts,
 									dr,
 									tenant_id,
-									director
+									director,
+									supplier,
+									supplierTel,
+									supplierFax,
+									linkmanMobile,
+									supplierAddr
 		)
 		values (#{id,jdbcType=VARCHAR}, 
 				#{goodsCode,jdbcType=VARCHAR},
@@ -126,7 +146,12 @@
 				#{ts,jdbcType=TIMESTAMP},
 				#{dr,jdbcType=NUMERIC},
 				#{tenant_id,jdbcType=VARCHAR},
-				#{director,jdbcType=VARCHAR}
+				#{director,jdbcType=VARCHAR},
+				#{supplier,jdbcType=VARCHAR},
+				#{supplierTel,jdbcType=VARCHAR},
+				#{supplierFax,jdbcType=VARCHAR},
+				#{linkmanMobile,jdbcType=VARCHAR},
+				#{supplierAddr,jdbcType=VARCHAR}
 		)
 	</insert>
 	
@@ -144,7 +169,12 @@
 				lastModified=#{lastModified,jdbcType=TIMESTAMP},
 				lastModifyUser=#{lastModifyUser,jdbcType=VARCHAR},
 				tenant_id = #{tenant_id,jdbcType=VARCHAR},
-				director = #{director,jdbcType=VARCHAR}
+				director = #{director,jdbcType=VARCHAR},
+				supplier= #{supplier,jdbcType=VARCHAR},
+				supplierTel=#{supplierTel,jdbcType=VARCHAR},
+				supplierFax=#{supplierFax,jdbcType=VARCHAR},
+				linkmanMobile = #{linkmanMobile,jdbcType=VARCHAR},
+				supplierAddr = #{supplierAddr,jdbcType=VARCHAR}
 		where	id=#{id}
 	</update>
 	
