@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
 import com.yonyou.iuap.base.web.BaseController;
 import com.yonyou.iuap.example.workorder.entity.Workorder;
 import com.yonyou.iuap.example.workorder.service.WorkorderService;
@@ -66,7 +67,13 @@ public class WorkorderController extends BaseController{
 		return jsonResp;
 	}
 	
-	/** 提交审批 */
+	/**
+	 * 提交申请
+	 * @param listWorkorder
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping(value = "/submit", method = RequestMethod.POST)
 	@ResponseBody
 	public Object submit(@RequestBody List<Workorder> listWorkorder, HttpServletRequest request, HttpServletResponse response) {
@@ -78,6 +85,21 @@ public class WorkorderController extends BaseController{
 			exp.printStackTrace();
 		}
 		return this.buildSuccess();
+	}
+
+	/**
+	 * 撤回申请
+	 * @param listWorkorder
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/recall", method = RequestMethod.POST)
+	@ResponseBody
+	public Object recall(@RequestBody List<Workorder> listWorkorder, HttpServletRequest request, HttpServletResponse response) {
+		logger.debug("execute recall operate.");
+		JSONObject recallResult = workorderService.batchRecall(listWorkorder);
+		return super.buildSuccess(recallResult);
 	}
 	
 	/*************************************************************/
