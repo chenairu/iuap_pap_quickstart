@@ -97,7 +97,13 @@ var meta = {
 			 'refcfg' : '{"ctx":"/uitemplate_web"}'
 
 		},
-		director_name : {}
+		director_name : {},
+		
+		supplier : {},
+		linkmanMobile : {},
+		supplierTel : {},
+		supplierFax : {},
+		supplierAddr : {}
 	}
 
 };
