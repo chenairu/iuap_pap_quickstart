@@ -142,8 +142,8 @@ CREATE TABLE `example_customer` (
   `customer_name` varchar(255) DEFAULT NULL COMMENT '客户名称',
   `province` varchar(255) DEFAULT NULL COMMENT '省份',
   `city` varchar(255) DEFAULT NULL COMMENT '城市',
-  `corpSize` tinyint(1) DEFAULT NULL COMMENT '企业规模',
-  `status` tinyint(1) DEFAULT NULL COMMENT '状态',
+  `corpSize` varchar(1) DEFAULT NULL COMMENT '企业规模',
+  `status` varchar(1) DEFAULT NULL COMMENT '状态',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
