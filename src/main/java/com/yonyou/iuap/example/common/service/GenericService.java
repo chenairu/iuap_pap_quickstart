@@ -2,9 +2,6 @@ package com.yonyou.iuap.example.common.service;
 
 import java.util.*;
 
-import com.yonyou.iuap.base.utils.CommonConstants;
-import com.yonyou.uap.ieop.security.entity.DataPermission;
-import com.yonyou.uap.ieop.security.sdk.AuthRbacClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.util.StringUtils;
@@ -33,6 +30,10 @@ public abstract class GenericService<T extends GenericEntity> {
     	Map<String,Object> queryParams = new HashMap<String,Object>();
     	queryParams.put(name, value);
     	return this.queryList(queryParams);
+    }
+    
+    public List<Map<String,Object>> queryListByMap(Map<String,Object> params){
+    	return this.ibatisMapper.queryListByMap(params);
     }
     
     public T findUnique(String name, Object value) {
