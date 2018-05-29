@@ -22,6 +22,7 @@ public class Workorder extends AbsGenericEntity implements GenericEntity {
 	private String content;
 	private String applicant;
 	private Date applyTime;
+	private Date finishTime;
 
 	public String getCode() {
 		return code;
@@ -161,4 +162,12 @@ public class Workorder extends AbsGenericEntity implements GenericEntity {
 		this.applyTime = applyTime;
 	}
 
+	public Date getFinishTime() {
+		return finishTime;
+	}
+
+	public void setFinishTime(Date finishTime) {
+		this.finishTime = finishTime;
+	}
+	
 }
