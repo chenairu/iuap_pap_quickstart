@@ -2,7 +2,7 @@ define(['text!./workorder.html',
 		'cookieOperation',
 	    '/eiap-plus/pages/flow/bpmapproveref/bpmopenbill.js',
 		'./meta.js', 'css!./workorder.css', 'css!../../style/style.css',
-        '../../config/sys_const.js', '../../config/iuap-util.js',
+        '../../config/sys_const.js', 
         'css!../../style/widget.css', 'css!../../style/currency.css',
         'uiReferComp', 'uiNewReferComp', 'refer'], function (template, cookie, bpmopenbill) {
 
@@ -176,8 +176,28 @@ define(['text!./workorder.html',
                 	});
                 },
         		
+                //工作流撤回
         		recall: function(){
-        			alert("撤回");
+        			var selectedData = viewModel.gridData.getSimpleData({type: 'select'});
+        			$.ajax({
+                    	type: "post",
+                        url: viewModel.flowEvent.recallUrl,
+                        contentType: 'application/json;charset=utf-8',
+                        data: JSON.stringify(selectedData),
+                        success: function (res) {
+                            if (res) {
+                                if (res.detailMsg.data.success == 'success') {
+                                	message("流程收回成功");
+                                	viewModel.event.initDataGrid();
+                                } else {
+                                    u.messageDialog({msg: res.detailMsg.data.message, title: '操作提示', btnText: '确定'});
+                                }
+                            } else {
+                                u.messageDialog({msg: '无返回数据', title: '操作提示', btnText: '确定'});
+                            }
+                        }
+        			});
+        			
         		},
         		
         		
