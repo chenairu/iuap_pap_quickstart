@@ -21,9 +21,9 @@ var meta = {
 							"refClientInfoPageInfo": {
 										"currentPageIndex":0,
 										"pageCount":0,
-										"pageSize":5},
+										"pageSize":100},
 							"refCode":'currency',
-							"refModelUrl":"http://172.168.200.103:8081/iuap-example/reference/dictionary/",
+							"refModelUrl":"http://127.0.0.1:8088/iuap-example/reference/dictionary/",
 							"refName": "币种",
 							"refUIType": "RefGrid",
 							"rootName": "币种列表"
@@ -49,9 +49,9 @@ var meta = {
 							"refClientInfoPageInfo": {
 										"currentPageIndex":0,
 										"pageCount":0,
-										"pageSize":1000},
+										"pageSize":100},
 							"refCode":'customOrganization',
-							"refModelUrl":"http://172.168.200.103:8081/iuap-example/reference/organization/",
+							"refModelUrl":"http://127.0.0.1:8088/iuap-example/reference/organization/",
 							"refName": "生产厂商",
 							"refUIType": "RefTree",
 							"rootName": "生产厂商列表"
@@ -72,13 +72,32 @@ var meta = {
 				    			strFieldName : ["编码", "名称","电话","邮箱"],
 				    			strFieldCode : ["refcode", "refname","reftel","refemail"],
 				    			defaultFieldCount : 4,
-				    			"refModelUrl" : "http://172.168.200.103:8081/iuap-example/reference/treegrid/",
+				    			"refModelUrl" : "http://127.0.0.1:8088/iuap-example/reference/treegrid/",
 				    			"refUIType" : "RefGridTree"
 						}),
 			 'refcfg' : '{"ctx":"/uitemplate_web"}'
 
 		},
-		linkman_name : {}
+		linkman_name : {},
+		director : {
+			'refmodel' : JSON.stringify({
+							"refClientInfoPageInfo": {
+										"currentPageIndex":0,
+										"pageCount":0,
+										"pageSize":100},
+							"refCode":'currency',
+							"refModelUrl":"http://127.0.0.1:8088/iuap-example/reference/director/",
+							"rootName": "业务负责人",
+							"refName": "业务负责人列表",
+			    			strFieldName : ["负责人编码", "负责人名称", "所属机构"],
+			    			strFieldCode : ["refcode", "refname", "organization"],
+			    			defaultFieldCount : 3,
+							"refUIType": "RefGrid"
+						}),
+			 'refcfg' : '{"ctx":"/uitemplate_web"}'
+
+		},
+		director_name : {}
 	}
 
 };
