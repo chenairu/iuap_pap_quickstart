@@ -19,6 +19,9 @@ public class Goods extends AbsGenericEntity{
 	private String createUser_name;
 	private String lastModifyUser_name;
 	private String tenant_id;
+	
+	private String director;
+	private String director_name;
 
 	public String getGoodsCode() {
 		return goodsCode;
@@ -131,4 +134,22 @@ public class Goods extends AbsGenericEntity{
 	public void setTenant_id(String tenant_id) {
 		this.tenant_id = tenant_id;
 	}
+
+	public String getDirector() {
+		return director;
+	}
+
+	public void setDirector(String director) {
+		this.director = director;
+	}
+
+	public String getDirector_name() {
+		return director_name;
+	}
+
+	public void setDirector_name(String director_name) {
+		this.director_name = director_name;
+	}
+		
+	
 }
