@@ -119,7 +119,7 @@ define([
       viewModel.gridData.clear();
       var queryData = {};
       $(".form-search")
-        .find(".input_search")
+        .find("input")
         .each(function() {
           queryData[this.name] = removeSpace(this.value);
         });
