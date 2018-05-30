@@ -28,9 +28,13 @@ public class WorkorderBPMController implements IBPMBusinessProcessController {
 	
 	private Logger logger = LoggerFactory.getLogger(WorkorderBPMController.class);
 
-	  @RequestMapping(value={"/doApprove"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
-	  @ResponseBody
-	  public Object doApproveAction(@RequestBody Map<String, Object> params, HttpServletRequest arg1) throws Exception {
+	
+	/**
+	 * 审批通过回调服务
+	 */
+	@RequestMapping(value={"/doApprove"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
+	@ResponseBody
+	public Object doApproveAction(@RequestBody Map<String, Object> params, HttpServletRequest arg1) throws Exception {
 		logger.info(JSON.toJSONString(params));
 		String jsonResult = this.jsonResultService.toJson(params);
 		JSONObject requestBody = (JSONObject) this.jsonResultService.toObject(jsonResult, JSONObject.class);
@@ -38,18 +42,24 @@ public class WorkorderBPMController implements IBPMBusinessProcessController {
 		HistoricProcessInstanceResponse historicProcessInstance = (HistoricProcessInstanceResponse) this.jsonResultService
 																		.toObject(Node.toString(), HistoricProcessInstanceResponse.class);
 		Date endTime = historicProcessInstance.getEndTime();
+		String busiId = historicProcessInstance.getBusinessKey();
 		if (endTime != null) {
-			String busiId = historicProcessInstance.getBusinessKey();
-			workorderService.doApprove(busiId);
+			workorderService.doApprove(busiId, 3);					//已办结
+		}else {
+			workorderService.doApprove(busiId, 2);					//审批中
 		}
 		JsonResponse response = new JsonResponse();
 		return response;
 	}
 
+	/**
+	 * 审批驳回回调服务
+	 */
 	@Override
 	public JsonResponse doRejectMarkerBillAction(Map<String, Object> params) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		String busiId = params.get("billId").toString();
+		workorderService.doReject(busiId);
+		return new JsonResponse();
 	}
 
 	@Override
