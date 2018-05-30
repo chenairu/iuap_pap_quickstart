@@ -1,33 +1,27 @@
-define(["text!./customer.html","cookieOperation","./meta.js", "css!./customer.css",
-                "css!../../style/style.css", "../../config/sys_const.js",
-                "css!../../style/widget.css",
-                "css!../../style/currency.css",'uiReferComp', 'uiNewReferComp', 'refer'],
+define(["text!./exampleEquip.html","cookieOperation","./meta.js",
+        "../../../config/sever.js",
+        "../../../config/sys_const.js",
+        "css!./sysRefer.css",
+        "css!../../../style/style.css",
+        "css!../../../style/widget.css", "css!../../../style/currency.css",
+        'uiReferComp', 'uiNewReferComp', 'refer'],
 
-            function (html) {
-                var init = function (element,cookie) {
-
-            console.log($.cookie("userId"));
-            var ctx = cookie.appCtx + "/customer";
+    function (html) {
+        var init = function (element,cookie) {
+            var ctx = cookie.appCtx + "/exampleEquip";
             var viewModel = {
                 draw: 1,
                 //页数(第几页)
                 pageSize: 5,
 
                 listRowUrl: ctx + "/list",					//列表查询URL
-                saveRowUrl: ctx + "/save",					//新增和修改URL， 有id为修改 无id为新增
+                insertRowUrl: ctx + "/insert",					//新增和修改URL， 有id为修改 无id为新增
+                updateRowUrl:ctx+"/update",
                 delRowUrl: ctx + "/delete",				   //刪除URL
 
                 gridData: new u.DataTable(meta),
                 formData: new u.DataTable(meta),
-                provinceData: [{
-                    name: "是",
-                    value: "Y"
-                },
-                    {
-                        name: "否",
-                        value: "N"
-                    }
-                ],
+
                 event: {
                     //新增或修改的保存或取消按钮
                     saveClick: function () {
@@ -196,37 +190,7 @@ define(["text!./customer.html","cookieOperation","./meta.js", "css!./customer.cs
                                 "id": data[i].id
                             });
                         }
-                        $.ajax({
-                            type: "post",
-                            url: viewModel.delRowUrl,
-                            datatype: "json",
-                            data: JSON.stringify(arr),
-                            contentType: "application/json;charset=utf-8",
-                            success: function (res) {
-                                if (res) {
-                                    if (res.success == "success") {
-                                        // TODO 增加调用初始化页面接口
-                                        viewModel.event.initGridDataList();
-                                    } else {
-                                        var msg = "";
-                                        for (var key in res.detailMsg) {
-                                            msg += res.detailMsg[key] + "<br/>";
-                                        }
-                                        u.messageDialog({
-                                            msg: msg,
-                                            title: "请求错误",
-                                            btnText: "确定"
-                                        });
-                                    }
-                                } else {
-                                    u.messageDialog({
-                                        msg: "后台返回数据格式有误，请联系管理员",
-                                        title: "数据错误",
-                                        btnText: "确定"
-                                    });
-                                }
-                            }
-                        });
+                        $ajax(viewModel.delRowUrl, JSON.stringify(arr), viewModel.event.initGridDataList(), viewModel.event.showErr, "DELETE", "json");
                     },
                     delRows: function (data) {
                         let num = viewModel.gridData.selectedIndices();
@@ -279,7 +243,7 @@ define(["text!./customer.html","cookieOperation","./meta.js", "css!./customer.cs
                         ele[0].style.display = "block";
                     },
 
-                    //鼠标离开事件						
+                    //鼠标离开事件
                     mouseoutFunc: function () {
                         $(".editTable").hide();
                     },
@@ -293,12 +257,17 @@ define(["text!./customer.html","cookieOperation","./meta.js", "css!./customer.cs
                             ko.applyBindings(viewModel, obj.element);
                         }
                     },
-
+                    showErr:function(res){
+                        u.messageDialog({
+                            msg: "操作失败",
+                            title: "请求错误",
+                            btnText: "确定"
+                        });
+                    },
                     //提示框
                     showInfo: function (obj) {
                         viewModel.md.dGo("addPage");
                     },
-
                     //新增数据
                     addNewData: function () {
                         viewModel.formData.setRowSelect(0);
@@ -308,34 +277,14 @@ define(["text!./customer.html","cookieOperation","./meta.js", "css!./customer.cs
                                 delete data.operate;
                             }
                         }
+
                         var jsonData = viewModel.event.genDataList(data);
-                        $.ajax({
-                            type: "post",
-                            url: viewModel.saveRowUrl,
-                            datatype: "json",
-                            data: JSON.stringify(jsonData),
-                            contentType: "application/json;charset=utf-8",
-                            success: function (res) {
-                                if (res) {
-                                    if (res.success == "success") {
-                                        viewModel.event.initGridDataList();
-                                    } else {
-                                        var msg = res.message;
-                                        u.messageDialog({
-                                            msg: msg,
-                                            title: "请求错误",
-                                            btnText: "确定"
-                                        });
-                                    }
-                                } else {
-                                    u.messageDialog({
-                                        msg: "后台返回数据格式有误，请联系管理员",
-                                        title: "数据错误",
-                                        btnText: "确定"
-                                    });
-                                }
-                            }
-                        });
+                        if(data.id == null){
+                            $ajax(viewModel.insertRowUrl, JSON.stringify(jsonData[0]), viewModel.event.initGridDataList(), viewModel.event.showErr, "POST", "json");
+                        }else{
+                            $ajax(viewModel.updateRowUrl, JSON.stringify(jsonData[0]), viewModel.event.initGridDataList(), viewModel.event.showErr, "PUT", "json");
+                        }
+
                     },
 
                     //组装list
@@ -343,27 +292,8 @@ define(["text!./customer.html","cookieOperation","./meta.js", "css!./customer.cs
                         var datalist = [];
                         datalist.push(data);
                         return datalist;
-                    },
-                    initCombox:function(){
-                        $.ajax({
-                            type: "get",
-                            url: cookie.appCtx+"/exampleAsVal/list",
-                            datatype: "json",
-                            data:{
-                              code :'PROVINCE'
-                            },
-                            success: function (res) {
-                               if(res){
-                                   if(res.success="success"){
-                                       var data = res.detailMsg.data;
-                                       var combo1Obj = document.getElementById('province')['u.Combo'];
-                                        console.log(data);
-                                       combo1Obj.setComboData(data);
-                                   }
-                               }
-                           }
-                        });
                     }
+
                 },
 
                 //列表行内操作-按钮定义
@@ -414,13 +344,15 @@ define(["text!./customer.html","cookieOperation","./meta.js", "css!./customer.cs
                 },
 
             };
-             window.initButton(viewModel,element);
+            viewModel.formData.on("orgId.valueChange",function (e) {
+                var jsonData = {};
+                jsonData["pk_org"] = viewModel.formData.getCurrentRow().getSimpleData().orgId;
+                console.log(jsonData);
+                $("#equip_dept").attr("data-refparam",JSON.stringify(jsonData));
+            });
             //加载Html页面
-
             $(element).html(html);
-            ko.cleanNode(element);
             viewModel.event.pageinit();
-            viewModel.event.initCombox();
 
 
             //搜索导航（查询、筛选）展开/收起
@@ -440,45 +372,7 @@ define(["text!./customer.html","cookieOperation","./meta.js", "css!./customer.cs
                     }
                 });
 
-            //存在问题，需要调整：涉及死循环
-            var inputDom = document.querySelectorAll("input");
-            var searchbtn = document.querySelector('[data-role="searchbtn"]');
-            var clearbtn = document.querySelector('[data-role="clearbtn"]');
-            var inputlen = inputDom.length;
-            var ifuse = false; //是否可用
-            var domshasvalue = function () {
-                for (var i = 0; i < inputlen; i++) {
-                    if (inputDom[i].value.length > 0) {
-                        return true;
-                    }
-                }
-                return false;
-            };
-            if (inputlen > 0) {
-                for (var i = 0; i < inputlen; i++) {
-                    u.on(inputDom[i], "blur",
-                        function () {
-                            ifuse = false;
-                            if (this.value && this.value.length > 0) {
-                                //如果本元素失去焦点时有value则按钮直接可用，
-                                ifuse = true;
-                            }
-                            if (!ifuse) {
-                                //如果离开时无value则查看其它框是否有值
-                                ifuse = domshasvalue();
-                            }
-                            if (ifuse) {
-                                //有值时去除不可用样式
-                                u.removeClass(searchbtn, "disable");
-                                u.removeClass(clearbtn, "disable");
-                            } else {
-                                //没值时添加不可用样式
-                                u.addClass(searchbtn, "disable");
-                                u.addClass(clearbtn, "disable");
-                            }
-                        });
-                }
-            }
+
         };
 
         return {

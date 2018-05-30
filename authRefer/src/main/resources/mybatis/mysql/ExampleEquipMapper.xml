@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yonyou.iuap.example.sysRefer.dao.ExampleEquipMapper">
+  <resultMap id="BaseResultMap" type="com.yonyou.iuap.example.sysRefer.entity.ExampleEquip">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="org_id" jdbcType="VARCHAR" property="orgId" />
+    <result column="org_name" jdbcType="VARCHAR" property="orgName" />
+    <result column="dept_id" jdbcType="VARCHAR" property="deptId" />
+    <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
+    <result column="create_user_id" jdbcType="VARCHAR" property="createUserId" />
+    <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+    <result column="update_user_id" jdbcType="VARCHAR" property="updateUserId" />
+    <result column="update_user_name" jdbcType="VARCHAR" property="updateUserName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="tenant_id" jdbcType="VARCHAR" property="tenantId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, code, name, org_id, org_name, dept_id, dept_name, create_user_id, create_user_name, 
+    update_user_id, update_user_name, create_time, update_time, version, tenant_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from example_equip
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from example_equip
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yonyou.iuap.example.sysRefer.entity.ExampleEquip">
+    insert into example_equip (id, code, name, 
+      org_id, org_name, dept_id, 
+      dept_name, create_user_id, create_user_name, 
+      update_user_id, update_user_name, create_time, 
+      update_time, version, tenant_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{orgId,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, #{deptId,jdbcType=VARCHAR}, 
+      #{deptName,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, 
+      #{updateUserId,jdbcType=VARCHAR}, #{updateUserName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER}, #{tenantId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yonyou.iuap.example.sysRefer.entity.ExampleEquip">
+    insert into example_equip
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="orgId != null">
+        org_id,
+      </if>
+      <if test="orgName != null">
+        org_name,
+      </if>
+      <if test="deptId != null">
+        dept_id,
+      </if>
+      <if test="deptName != null">
+        dept_name,
+      </if>
+      <if test="createUserId != null">
+        create_user_id,
+      </if>
+      <if test="createUserName != null">
+        create_user_name,
+      </if>
+      <if test="updateUserId != null">
+        update_user_id,
+      </if>
+      <if test="updateUserName != null">
+        update_user_name,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="tenantId != null">
+        tenant_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null">
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null">
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null">
+        #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null">
+        #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null">
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserId != null">
+        #{updateUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserName != null">
+        #{updateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="tenantId != null">
+        #{tenantId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yonyou.iuap.example.sysRefer.entity.ExampleEquip">
+    update example_equip
+    <set>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null">
+        org_id = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null">
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null">
+        dept_id = #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null">
+        dept_name = #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null">
+        create_user_id = #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null">
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserId != null">
+        update_user_id = #{updateUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserName != null">
+        update_user_name = #{updateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="tenantId != null">
+        tenant_id = #{tenantId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yonyou.iuap.example.sysRefer.entity.ExampleEquip">
+    update example_equip
+    set code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      org_id = #{orgId,jdbcType=VARCHAR},
+      org_name = #{orgName,jdbcType=VARCHAR},
+      dept_id = #{deptId,jdbcType=VARCHAR},
+      dept_name = #{deptName,jdbcType=VARCHAR},
+      create_user_id = #{createUserId,jdbcType=VARCHAR},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      update_user_id = #{updateUserId,jdbcType=VARCHAR},
+      update_user_name = #{updateUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      version = #{version,jdbcType=INTEGER},
+      tenant_id = #{tenantId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectAllByPage" resultMap="BaseResultMap"
+          resultType="java.util.List">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from example_equip where 1=1
+    <if test="sql != null">
+      ${sql}
+    </if>
+    <if test="search != null">
+      <if
+              test="search.code!=null and search.code!='' ">
+        and  code like CONCAT(CONCAT('%', #{search.code}),'%')
+      </if>
+      <if
+              test="search.name!=null and search.name!='' ">
+        and name like CONCAT(CONCAT('%', #{search.name}),'%')
+      </if>
+    </if>
+  </select>
+
+  <select id="findByCode" resultMap="BaseResultMap"
+          parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List"/>
+    from example_equip
+    where code= #{code,jdbcType=VARCHAR}
+  </select>
+</mapper>
