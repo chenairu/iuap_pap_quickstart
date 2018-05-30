@@ -21,6 +21,10 @@ import iuap.ref.ref.RefClientPageInfo;
 import iuap.ref.sdk.refmodel.model.AbstractTreeGridRefModel;
 import iuap.ref.sdk.refmodel.vo.RefViewModelVO;
 
+/**
+ * 树表参照
+ * @author Aton
+ */
 @Controller
 @RequestMapping(value = "/reference/treegrid")
 public class Contacts2RefController extends AbstractTreeGridRefModel {
@@ -68,7 +72,7 @@ public class Contacts2RefController extends AbstractTreeGridRefModel {
 				list.add(ret);
 			}
 		} catch (Exception e) {
-			logger.error("联系人参照信息出错!", e);
+			logger.error("联系人参照信息——Tree数据构造出错!", e);
 		}
 		return list;
 	}
@@ -104,7 +108,7 @@ public class Contacts2RefController extends AbstractTreeGridRefModel {
 			map.put("dataList", list);
 			map.put("refViewModel", refViewVo);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("联系人参照信息——列表数据构造出错!", e);
 		}
 		return map;
 	}
@@ -128,7 +132,7 @@ public class Contacts2RefController extends AbstractTreeGridRefModel {
 				list.add(ret);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("联系人参照信息出错!", e);
 		}
 		return list;
 	}
@@ -151,7 +155,7 @@ public class Contacts2RefController extends AbstractTreeGridRefModel {
 				list.add(ret);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("联系人参照信息出错!", e);
 		}
 		return list;
 	}
@@ -173,7 +177,7 @@ public class Contacts2RefController extends AbstractTreeGridRefModel {
 				list.add(ret);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("联系人参照信息出错!", e);
 		}
 		return list;
 	}

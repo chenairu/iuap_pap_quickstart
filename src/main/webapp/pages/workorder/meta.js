@@ -14,6 +14,10 @@ var meta = {
 			required : true,
 			nullMsg : "不能为空"
 		},
+		content : {},
+		applicant : {},
+		applyTime : {},
+		finishTime : {},
 		status : {},
 		remark : {},
 		version : {},

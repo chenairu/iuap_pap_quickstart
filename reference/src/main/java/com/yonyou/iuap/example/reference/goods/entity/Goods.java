@@ -13,12 +13,22 @@ public class Goods extends AbsGenericEntity{
 	private String remark;
 	private String manufacturer;
 	private String manufacturer_name;
-	private String linkman;
-	private String linkman_name;
 	
 	private String createUser_name;
 	private String lastModifyUser_name;
 	private String tenant_id;
+
+	private String director;
+	private String director_name;
+
+	private String linkman;
+	private String linkman_name;
+	
+	private String supplier;
+	private String linkmanMobile;
+	private String supplierTel;
+	private String supplierFax;
+	private String supplierAddr;
 
 	public String getGoodsCode() {
 		return goodsCode;
@@ -131,4 +141,61 @@ public class Goods extends AbsGenericEntity{
 	public void setTenant_id(String tenant_id) {
 		this.tenant_id = tenant_id;
 	}
+
+	public String getDirector() {
+		return director;
+	}
+
+	public void setDirector(String director) {
+		this.director = director;
+	}
+
+	public String getDirector_name() {
+		return director_name;
+	}
+
+	public void setDirector_name(String director_name) {
+		this.director_name = director_name;
+	}
+
+	public String getSupplier() {
+		return supplier;
+	}
+
+	public void setSupplier(String supplier) {
+		this.supplier = supplier;
+	}
+
+	public String getLinkmanMobile() {
+		return linkmanMobile;
+	}
+
+	public void setLinkmanMobile(String linkmanMobile) {
+		this.linkmanMobile = linkmanMobile;
+	}
+
+	public String getSupplierTel() {
+		return supplierTel;
+	}
+
+	public void setSupplierTel(String supplierTel) {
+		this.supplierTel = supplierTel;
+	}
+
+	public String getSupplierFax() {
+		return supplierFax;
+	}
+
+	public void setSupplierFax(String supplierFax) {
+		this.supplierFax = supplierFax;
+	}
+
+	public String getSupplierAddr() {
+		return supplierAddr;
+	}
+
+	public void setSupplierAddr(String supplierAddr) {
+		this.supplierAddr = supplierAddr;
+	}
+	
 }

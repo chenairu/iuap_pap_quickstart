@@ -26,7 +26,7 @@ import iuap.ref.sdk.refmodel.model.AbstractCommonRefModel;
 import iuap.ref.sdk.refmodel.vo.RefViewModelVO;
 
 @Controller
-@RequestMapping(value = "/reference/contacts")
+@RequestMapping(value = "/reference/director")
 public class ContactsRefController extends AbstractCommonRefModel {
 	
 	private Logger logger = LoggerFactory.getLogger(ContactsRefController.class);
@@ -34,8 +34,8 @@ public class ContactsRefController extends AbstractCommonRefModel {
 
 	public RefViewModelVO getRefModelInfo(@RequestBody RefViewModelVO refViewVo) {
 		refViewVo = super.getRefModelInfo(refViewVo);
-		refViewVo.setRefName("联系人");
-		refViewVo.setRootName("联系人列表");
+		refViewVo.setRefName("业务负责人");
+		refViewVo.setRootName("业务负责人列表");
 		refViewVo.setStrFieldName(new String[] { "联系人编码", "联系人名称", "所属机构" });
 		refViewVo.setStrFieldCode(new String[] { "refcode", "refname", "organization" });
 		refViewVo.setDefaultFieldCount(3);

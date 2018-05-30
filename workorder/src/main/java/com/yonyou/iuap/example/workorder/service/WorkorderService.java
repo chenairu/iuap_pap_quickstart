@@ -22,7 +22,11 @@ import yonyou.bpm.rest.request.RestVariable;
 @Component
 public class WorkorderService extends GenericService<Workorder>{
 
-	
+	/**
+	 * 工单申请提交（批量）
+	 * @param listWorkorder
+	 * @param processDefineCode
+	 */
 	public void batchSubmit(List<Workorder> listWorkorder, String processDefineCode) {
 		for(Workorder workorder : listWorkorder) {
 			this.doSubmit(workorder, processDefineCode);
@@ -39,6 +43,28 @@ public class WorkorderService extends GenericService<Workorder>{
 			String msg = resultJson.get("msg").toString();
 			throw new BusinessException("提交启动流程实例发生错误，请联系管理员！错误原因：" + msg);
 		}
+	}
+	
+	/**
+	 * 工单申请撤回
+	 * @param listWorkorder
+	 */
+	public JSONObject batchRecall(List<Workorder> listWorkorder) {
+		Workorder entity = listWorkorder.get(0);
+		entity.setStatus(0);							// 从已提交状态改为未提交状态;
+		this.save(entity);
+		
+		return bpmSubmitBasicService.unsubmit(entity.getId());
+	}
+	
+	/**
+	 * 审批通过
+	 * @param workorder
+	 */
+	public void doApprove(String id) {
+		Workorder workorder = this.findById(id);
+		workorder.setStatus(2);
+		this.save(workorder);
 	}
 	
 	private boolean isSuccess(JSONObject resultJson){

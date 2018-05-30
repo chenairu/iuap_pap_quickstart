@@ -99,107 +99,170 @@
 
 		<!-- 新增|编辑页面操作区 -->
 		<div class="u-mdlayout-page ygdemo-addpage" id="addPage">
-			<div id="user-form">
-				<div class="u-container-fluid ygdemo-fluid">
-					<div class="u-row">
-						<div class="u-col-md-4">
-							<div class="u-form-group">
-								<label class="u-col-3">商品编码</label>
-								<div class="u-col-9 u-input-group u-has-feedback" u-meta='{"id":"code","type":"u-text","data":"formData","field":"goodsCode"}'>
-									<input type="text" class="u-form-control readonlyinput" placeholder="">
-								</div>
-							</div>
-						</div>
-						<div class="u-col-md-4">
-							<div class="u-form-group">
-								<label class="u-col-3">商品名称</label>
-								<div class="u-col-9 u-input-group u-has-feedback" u-meta='{"id":"name","type":"u-text","data":"formData","field":"goodsName"}'>
-									<div class="u-input-group-before" >*</div>
-									<input type="text" class="u-form-control" placeholder="">
-								</div>
-							</div>
-						</div>
-						<div class="u-col-md-4">
-							<div class="u-form-group">
-								<label class="u-col-3">商品型号</label>
-								<div class="u-col-9 u-input-group u-has-feedback" u-meta='{"id":"sys","type":"u-combobox","data":"formData","field":"model"}'>
-									<input type="text" class="u-form-control" placeholder="">
-								</div>
-							</div>
-						</div>
-						<div class="u-col-md-4">
-							<div class="u-form-group">
-								<label class="u-col-3">业务负责人</label>
-								<div class="u-col-9 u-combo" u-meta='{"type":"uiRefer","data":"formData","field":"director","display":"director_name"}'>
-									<div class="u-input-group u-has-feedback">
-										<input class="u-form-control" readonly="readonly" />
-										<span class="u-form-control-feedback fa fa-list-ul refer"></span>
-									</div>
-								</div>								
-							</div>
-						</div>
-						<div class="u-col-md-4">
-							<div class="u-form-group">
-								<label class="u-col-3">单价</label>
-								<div class="u-col-9 u-input-group u-has-feedback" u-meta='{"id":"sys","type":"u-combobox","data":"formData","field":"price"}'>
-									<div class="u-input-group-before" >*</div>
-									<input type="text" class="u-form-control" placeholder="">
-								</div>
-							</div>
-						</div>
-						<div class="u-col-md-4">
-							<div class="u-form-group">
-								<label class="u-col-3">币种</label>
-								<div class="u-col-9 u-combo" u-meta='{"type":"uiRefer","data":"formData","field":"currency","display":"currency_name"}'>
-									<div class="u-input-group u-has-feedback">
-										<input class="u-form-control" readonly="readonly" />
-										<span class="u-form-control-feedback fa fa-list-ul refer"></span>
-									</div>
-								</div>								
-							</div>
-						</div>
-						<div class="u-col-md-4">
-							<div class="u-form-group">
-								<label class="u-col-3">制造商</label>
-								<div class="u-col-9 u-combo" u-meta='{"type":"uiRefer","data":"formData","field":"manufacturer","display":"manufacturer_name"}'>
-									<div class="u-input-group u-has-feedback">
-										<input class="u-form-control" readonly="readonly" />
-										<span class="u-form-control-feedback fa fa-list-ul refer"></span>
-									</div>
-								</div>								
-							</div>
-						</div>
-						<div class="u-col-md-4">
-							<div class="u-form-group">
-								<label class="u-col-3">联系人</label>
-								<div class="u-col-9 u-combo" u-meta='{"type":"uiRefer","data":"formData","field":"linkman","display":"linkman_name"}'>
-									<div class="u-input-group u-has-feedback">
-										<input class="u-form-control" readonly="readonly" />
-										<span class="u-form-control-feedback fa fa-list-ul refer"></span>
-									</div>
-								</div>								
-							</div>
-						</div>
-						<div class="u-col-md-4">
-							<div class="u-form-group">
-								<label class="u-col-3">创建人</label>
-								<div class="u-col-9 u-combo" u-meta='{"type":"uiRefer","data":"formData","field":"createUser","display":"createUser_name"}'>
-									<div class="u-input-group u-has-feedback">
-										<input class="u-form-control" readonly="readonly" />
-										<span class="u-form-control-feedback fa fa-list-ul refer"></span>
+			<div class="u-tabs u-tab-inner" style="padding:10px">
+				<div class="u-tabs__tab-bar">
+					<a href="#tab-panel-1" class="u-tabs__tab is-active">商品信息</a>
+					<a href="#tab-panel-2" class="u-tabs__tab">供应商</a>
+				</div>
+				<div class="u-tabs__panel is-active" id="tab-panel-1">
+					<br>
+					<div class="user-form">
+						<div class="u-container-fluid ygdemo-fluid">
+							<div class="u-row">
+								<div class="u-col-md-4">
+									<div class="u-form-group">
+										<label class="u-col-3">商品编码</label>
+										<div class="u-col-9 u-input-group u-has-feedback" u-meta='{"id":"code","type":"u-text","data":"formData","field":"goodsCode"}'>
+											<input type="text" class="u-form-control readonlyinput" placeholder="">
+										</div>
 									</div>
 								</div>
-							</div>
-						</div>
-						<div class="u-col-md-12">
-							<div class="u-form-group">
-								<label class="u-col-1">备注</label>
-								<textarea u-meta='{"type":"textarea","data":"formData","field":"remark"}'
-										  placeholder="" style="width:90%"></textarea>
+								<div class="u-col-md-4">
+									<div class="u-form-group">
+										<label class="u-col-3">商品名称</label>
+										<div class="u-col-9 u-input-group u-has-feedback" u-meta='{"id":"name","type":"u-text","data":"formData","field":"goodsName"}'>
+											<div class="u-input-group-before" >*</div>
+											<input type="text" class="u-form-control" placeholder="">
+										</div>
+									</div>
+								</div>
+								<div class="u-col-md-4">
+									<div class="u-form-group">
+										<label class="u-col-3">商品型号</label>
+										<div class="u-col-9 u-input-group u-has-feedback" u-meta='{"id":"sys","type":"u-combobox","data":"formData","field":"model"}'>
+											<input type="text" class="u-form-control" placeholder="">
+										</div>
+									</div>
+								</div>
+								<div class="u-col-md-4">
+									<div class="u-form-group">
+										<label class="u-col-3">商品负责人</label>
+										<div class="u-col-9 u-combo" u-meta='{"type":"uiRefer","data":"formData","field":"director","display":"director_name"}'>
+											<div class="u-input-group u-has-feedback">
+												<input class="u-form-control" readonly="readonly" />
+												<span class="u-form-control-feedback fa fa-list-ul refer"></span>
+											</div>
+										</div>								
+									</div>
+								</div>
+								<div class="u-col-md-4">
+									<div class="u-form-group">
+										<label class="u-col-3">单价</label>
+										<div class="u-col-9 u-input-group u-has-feedback" u-meta='{"id":"sys","type":"u-combobox","data":"formData","field":"price"}'>
+											<div class="u-input-group-before" >*</div>
+											<input type="text" class="u-form-control" placeholder="">
+										</div>
+									</div>
+								</div>
+								<div class="u-col-md-4">
+									<div class="u-form-group">
+										<label class="u-col-3">币种</label>
+										<div class="u-col-9 u-combo" u-meta='{"type":"uiRefer","data":"formData","field":"currency","display":"currency_name"}'>
+											<div class="u-input-group u-has-feedback">
+												<input class="u-form-control" readonly="readonly" />
+												<span class="u-form-control-feedback fa fa-list-ul refer"></span>
+											</div>
+										</div>								
+									</div>
+								</div>
+								<div class="u-col-md-4">
+									<div class="u-form-group">
+										<label class="u-col-3">生产厂商</label>
+										<div class="u-col-9 u-combo" u-meta='{"type":"uiRefer","data":"formData","field":"manufacturer","display":"manufacturer_name"}'>
+											<div class="u-input-group u-has-feedback">
+												<input class="u-form-control" readonly="readonly" />
+												<span class="u-form-control-feedback fa fa-list-ul refer"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="u-col-md-4">
+									<div class="u-form-group">
+										<label class="u-col-3">创建人</label>
+										<div class="u-col-9 u-combo" u-meta='{"type":"uiRefer","data":"formData","field":"createUser","display":"createUser_name"}'>
+											<div class="u-input-group u-has-feedback">
+												<input class="u-form-control" readonly="readonly" />
+												<span class="u-form-control-feedback fa fa-list-ul refer"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="u-col-md-12">
+									<div class="u-form-group">
+										<label class="u-col-1">备注</label>
+										<textarea u-meta='{"type":"textarea","data":"formData","field":"remark"}'
+												  placeholder="" style="width:90%"></textarea>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+				<div class="u-tabs__panel" id="tab-panel-2">
+					<br>
+					<div class="user-form">
+						<div class="u-container-fluid ygdemo-fluid">
+							<div class="u-row">
+								<div class="u-col-md-4">
+									<div class="u-form-group">
+										<label class="u-col-3">供应商</label>
+										<div class="u-col-9 u-input-group u-has-feedback" u-meta='{"id":"code","type":"u-text","data":"formData","field":"supplier"}'>
+											<input type="text" class="u-form-control readonlyinput" placeholder="">
+										</div>
+									</div>
+								</div>
+								<div class="u-col-md-4">
+									<div class="u-form-group">
+										<label class="u-col-3">供应商联系人</label>
+										<div class="u-col-9 u-combo" u-meta='{"type":"uiRefer","data":"formData","field":"linkman","display":"linkman_name"}'>
+											<div class="u-input-group u-has-feedback">
+												<input class="u-form-control" readonly="readonly" />
+												<span class="u-form-control-feedback fa fa-list-ul refer"></span>
+											</div>
+										</div>								
+									</div>
+								</div>
+								<div class="u-col-md-4">
+									<div class="u-form-group">
+										<label class="u-col-3">联系人电话</label>
+										<div class="u-col-9 u-input-group u-has-feedback" u-meta='{"id":"name","type":"u-text","data":"formData","field":"linkmanMobile"}'>
+											<div class="u-input-group-before" >*</div>
+											<input type="text" class="u-form-control" placeholder="">
+										</div>
+									</div>
+								</div>
+								<div class="u-col-md-4">
+									<div class="u-form-group">
+										<label class="u-col-3">供应商电话</label>
+										<div class="u-col-9 u-input-group u-has-feedback" u-meta='{"id":"name","type":"u-text","data":"formData","field":"supplierTel"}'>
+											<div class="u-input-group-before" >*</div>
+											<input type="text" class="u-form-control" placeholder="">
+										</div>
+									</div>
+								</div>
+								<div class="u-col-md-4">
+									<div class="u-form-group">
+										<label class="u-col-3">供应商传真</label>
+										<div class="u-col-9 u-input-group u-has-feedback" u-meta='{"id":"name","type":"u-text","data":"formData","field":"supplierFax"}'>
+											<div class="u-input-group-before" >*</div>
+											<input type="text" class="u-form-control" placeholder="">
+										</div>
+									</div>
+								</div>
+								<div class="u-col-md-4">
+									<div class="u-form-group">
+										<label class="u-col-3">供应商地址</label>
+										<div class="u-col-9 u-input-group u-has-feedback" u-meta='{"id":"name","type":"u-text","data":"formData","field":"supplierAddr"}'>
+											<div class="u-input-group-before" >*</div>
+											<input type="text" class="u-form-control" placeholder="">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					
+					</div>
+				</div>				
 			</div>
 		</div>
 		<div class="u-mdlayout-page" id="showPage">

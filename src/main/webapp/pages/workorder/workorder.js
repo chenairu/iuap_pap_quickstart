@@ -2,7 +2,7 @@ define(['text!./workorder.html',
 		'cookieOperation',
 	    '/eiap-plus/pages/flow/bpmapproveref/bpmopenbill.js',
 		'./meta.js', 'css!./workorder.css', 'css!../../style/style.css',
-        '../../config/sys_const.js', '../../config/iuap-util.js',
+        '../../config/sys_const.js', 
         'css!../../style/widget.css', 'css!../../style/currency.css',
         'uiReferComp', 'uiNewReferComp', 'refer'], function (template, cookie, bpmopenbill) {
 
@@ -176,8 +176,28 @@ define(['text!./workorder.html',
                 	});
                 },
         		
+                //工作流撤回
         		recall: function(){
-        			alert("撤回");
+        			var selectedData = viewModel.gridData.getSimpleData({type: 'select'});
+        			$.ajax({
+                    	type: "post",
+                        url: viewModel.flowEvent.recallUrl,
+                        contentType: 'application/json;charset=utf-8',
+                        data: JSON.stringify(selectedData),
+                        success: function (res) {
+                            if (res) {
+                                if (res.detailMsg.data.success == 'success') {
+                                	message("流程收回成功");
+                                	viewModel.event.initDataGrid();
+                                } else {
+                                    u.messageDialog({msg: res.detailMsg.data.message, title: '操作提示', btnText: '确定'});
+                                }
+                            } else {
+                                u.messageDialog({msg: '无返回数据', title: '操作提示', btnText: '确定'});
+                            }
+                        }
+        			});
+        			
         		},
         		
         		
@@ -388,7 +408,6 @@ define(['text!./workorder.html',
                     viewModel.formData.setRowSelect(0);
                     
                     //设置业务操作逻辑
-                    //viewModel.event.clearDa(viewModel.subGridData);
                     var row = viewModel.formData.getCurrentRow();
                     
                     //显示操作卡片
@@ -400,9 +419,35 @@ define(['text!./workorder.html',
                     viewModel.event.initTableHeight();
                 },
                 
+                viewClick: function(){
+        			var selectArray = viewModel.gridData.selectedIndices();
+        			if (selectArray.length < 1) {
+        				u.messageDialog({
+        	            	msg: "请选择要提交的记录!",
+        	            	title: "提示",
+        	            	btnText: "OK"
+        				});
+        				return;
+        			}
+
+        	        if (selectArray.length > 1) {
+        	        	u.messageDialog({
+        	            	msg: "一次只能查看一条记录!",
+        	            	title: "提示",
+        	            	btnText: "OK"
+        	        	});
+        	        	return;
+        	        }
+
+        	        var selectedData = viewModel.gridData.getSimpleData({
+        	        	type: "select"
+        	        });
+
+        	        viewModel.flowEvent.doView(selectedData[0]);
+                },
+                
                 //主表行——双击事件
                 dbClickRow:function(gridObj){
-                    //viewModel.event.doEdit(gridObj.rowObj.value);
                 	viewModel.flowEvent.doView(gridObj.rowObj.value);
                 },
                 
