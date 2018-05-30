@@ -1,5 +1,6 @@
 
 /*************示例应用：档案-字典（单表）***************/
+DROP TABLE IF EXISTS `example_dictionary`;
 CREATE TABLE example_dictionary (
   id VARCHAR(36) NOT NULL,
   code VARCHAR(50) DEFAULT NULL,
@@ -14,6 +15,7 @@ CREATE TABLE example_dictionary (
 
 
 /*************示例应用：联系人（树表）***************/
+DROP TABLE IF EXISTS `example_contacts`;
 CREATE TABLE example_contacts (
   id CHAR(36) NOT NULL,
   peocode VARCHAR(100) NOT NULL,
@@ -34,6 +36,7 @@ CREATE TABLE example_contacts (
 
 
 /*************示例应用：组织机构（树表---树）***************/
+DROP TABLE IF EXISTS `example_organization`;
 CREATE TABLE example_organization (
   institid CHAR(36) NOT NULL,
   instit_code VARCHAR(200) NOT NULL,
@@ -52,29 +55,37 @@ CREATE TABLE example_organization (
 
 
 /*************示例应用：商品管理（单表+参照使用）***************/
+DROP TABLE IF EXISTS `example_goods`;
 CREATE TABLE example_goods (
-  id VARCHAR(64) NOT NULL COMMENT '主键ID',
-  goodsCode VARCHAR(20) NOT NULL COMMENT '商品编码',
-  goodsName VARCHAR(64) NOT NULL COMMENT '商品名称',
-  model VARCHAR(64) DEFAULT NULL COMMENT '型号',
-  price DECIMAL(10,0) DEFAULT NULL COMMENT '单价',
-  currency VARCHAR(64) DEFAULT NULL COMMENT '币种',
-  manufacturer VARCHAR(64) DEFAULT NULL COMMENT '制造商',
-  linkman VARCHAR(64) DEFAULT NULL COMMENT '联系人',
-  remark VARCHAR(1024) DEFAULT NULL COMMENT '备注',
-  version INT(11) DEFAULT '0' COMMENT '版本',
-  createTime TIMESTAMP NULL DEFAULT NULL COMMENT '创建时间',
-  createUser VARCHAR(64) DEFAULT NULL COMMENT '创建人',
-  lastModified TIMESTAMP NULL DEFAULT NULL COMMENT '修改时间',
-  lastModifyUser VARCHAR(64) DEFAULT NULL COMMENT '修改人',
-  ts TIMESTAMP NULL DEFAULT NULL COMMENT '数据时间',
-  dr INT(11) DEFAULT NULL COMMENT '删除标志：0-可用；1-已删除',
-   tenant_id VARCHAR(32) DEFAULT 'tenant',
+  id varchar(64) NOT NULL COMMENT '主键ID',
+  goodsCode varchar(20) NOT NULL COMMENT '商品编码',
+  goodsName varchar(64) NOT NULL COMMENT '商品名称',
+  model varchar(64) DEFAULT NULL COMMENT '型号',
+  price decimal(10,0) DEFAULT NULL COMMENT '单价',
+  currency varchar(64) DEFAULT NULL COMMENT '币种',
+  manufacturer varchar(64) DEFAULT NULL COMMENT '制造商',
+  remark varchar(1024) DEFAULT NULL COMMENT '备注',
+  version int(11) DEFAULT '0' COMMENT '版本',
+  createTime timestamp NULL DEFAULT NULL COMMENT '创建人',
+  createUser varchar(64) DEFAULT NULL COMMENT '创建时间',
+  lastModified timestamp NULL DEFAULT NULL COMMENT '修改人',
+  lastModifyUser varchar(64) DEFAULT NULL COMMENT '修改时间',
+  ts timestamp NULL DEFAULT NULL COMMENT '数据创建时间',
+  dr int(11) DEFAULT NULL COMMENT '删除标志：0-可用；1-已删除',
+  tenant_id varchar(50) DEFAULT NULL,
+  director varchar(50) DEFAULT NULL COMMENT '业务负责人',
+  supplier varchar(100) DEFAULT NULL COMMENT '供应商',
+  linkman varchar(64) DEFAULT NULL COMMENT '供应商联系人',
+  linkmanMobile varchar(20) DEFAULT NULL COMMENT '联系人电话',
+  supplierTel varchar(20) DEFAULT NULL COMMENT '供应商电话',
+  supplierFax varchar(20) DEFAULT NULL COMMENT '供应商传真',
+  supplierAddr varchar(128) DEFAULT NULL COMMENT '供应商地址',
   PRIMARY KEY (id)
 );
 
 
 /*************示例应用：订单管理（主子表+航编辑+行编辑参照使用）***************/
+DROP TABLE IF EXISTS `example_order_bill`;
 CREATE TABLE example_order_bill (
   id CHAR(36) NOT NULL COMMENT '主键ID',
   orderCode VARCHAR(50) DEFAULT NULL COMMENT '订单编号',
@@ -100,6 +111,7 @@ CREATE TABLE example_order_bill (
 
 
 /*************示例应用：订单管理（子表）***************/
+DROP TABLE IF EXISTS `example_order_detail`;
 CREATE TABLE example_order_detail (
   id CHAR(36) NOT NULL COMMENT '订单明细ID',
   orderId CHAR(36) DEFAULT NULL COMMENT '订单ID',
@@ -117,7 +129,8 @@ CREATE TABLE example_order_detail (
   PRIMARY KEY (id)
 );
 
-/*************示例应用：附件上传、下载、删除***************/
+/*************示例应用：附件***************/
+DROP TABLE IF EXISTS `example_attachment`;
 CREATE TABLE `example_attachment` (
   `id` varchar(36) COLLATE utf8_unicode_ci NOT NULL,
   `code` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
@@ -126,7 +139,9 @@ CREATE TABLE `example_attachment` (
   UNIQUE KEY `idx_code` (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-/*************示例应用：模板下载、导入、导出***************/
+
+/*************示例应用：导入、导出***************/
+DROP TABLE IF EXISTS `example_template`;
 CREATE TABLE `example_template` (
   `id` varchar(36) COLLATE utf8_unicode_ci NOT NULL,
   `code` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -134,6 +149,20 @@ CREATE TABLE `example_template` (
   `remark` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+/*************示例应用：导入、导出***************/
+DROP TABLE IF EXISTS `example_print`;
+CREATE TABLE `example_print` (
+  `id` varchar(36) COLLATE utf8_unicode_ci NOT NULL,
+  `code` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `remark` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
 
 DROP TABLE IF EXISTS `example_customer`;
 CREATE TABLE `example_customer` (
