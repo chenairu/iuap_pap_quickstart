@@ -1,27 +1,32 @@
-define(["text!./exampleEquip.html","cookieOperation","./meta.js",
-        "../../../config/sever.js",
-        "../../../config/sys_const.js",
-        "css!./sysRefer.css",
-        "css!../../../style/style.css",
-        "css!../../../style/widget.css", "css!../../../style/currency.css",
-        'uiReferComp', 'uiNewReferComp', 'refer'],
+define(["text!./asval.html","cookieOperation","./meta.js", "css!./asval.css",
+                "css!../../style/style.css", "../../config/sys_const.js",
+                "css!../../style/widget.css",
+                "css!../../style/currency.css"],
 
-    function (html) {
-        var init = function (element,cookie) {
-            var ctx = cookie.appCtx + "/exampleEquip";
+            function (html) {
+                var init = function (element,cookie) {
+
+            var ctx = cookie.appCtx + "/exampleAsVal";
             var viewModel = {
                 draw: 1,
                 //页数(第几页)
                 pageSize: 5,
 
                 listRowUrl: ctx + "/list",					//列表查询URL
-                insertRowUrl: ctx + "/insert",					//新增和修改URL， 有id为修改 无id为新增
-                updateRowUrl:ctx+"/update",
+                saveRowUrl: ctx + "/save",					//新增和修改URL， 有id为修改 无id为新增
                 delRowUrl: ctx + "/delete",				   //刪除URL
 
                 gridData: new u.DataTable(meta),
                 formData: new u.DataTable(meta),
-
+                yesOrNo: [{
+                    name: "是",
+                    value: "Y"
+                },
+                    {
+                        name: "否",
+                        value: "N"
+                    }
+                ],
                 event: {
                     //新增或修改的保存或取消按钮
                     saveClick: function () {
@@ -187,10 +192,41 @@ define(["text!./exampleEquip.html","cookieOperation","./meta.js",
                         var arr = [];
                         for (var i = 0; i < data.length; i++) {
                             arr.push({
-                                "id": data[i].id
+                                "id": data[i].id,
+                                "code":data[i].code
                             });
                         }
-                        $ajax(viewModel.delRowUrl, JSON.stringify(arr), viewModel.event.initGridDataList(), viewModel.event.showErr, "DELETE", "json");
+                        $.ajax({
+                            type: "POST",
+                            url: viewModel.delRowUrl,
+                            datatype: "json",
+                            data: JSON.stringify(arr),
+                            contentType: "application/json;charset=utf-8",
+                            success: function (res) {
+                                if (res) {
+                                    if (res.success == "success") {
+                                        // TODO 增加调用初始化页面接口
+                                        viewModel.event.initGridDataList();
+                                    } else {
+                                        var msg = "";
+                                        for (var key in res.detailMsg) {
+                                            msg += res.detailMsg[key] + "<br/>";
+                                        }
+                                        u.messageDialog({
+                                            msg: msg,
+                                            title: "请求错误",
+                                            btnText: "确定"
+                                        });
+                                    }
+                                } else {
+                                    u.messageDialog({
+                                        msg: "后台返回数据格式有误，请联系管理员",
+                                        title: "数据错误",
+                                        btnText: "确定"
+                                    });
+                                }
+                            }
+                        });
                     },
                     delRows: function (data) {
                         let num = viewModel.gridData.selectedIndices();
@@ -243,7 +279,7 @@ define(["text!./exampleEquip.html","cookieOperation","./meta.js",
                         ele[0].style.display = "block";
                     },
 
-                    //鼠标离开事件
+                    //鼠标离开事件						
                     mouseoutFunc: function () {
                         $(".editTable").hide();
                     },
@@ -257,17 +293,12 @@ define(["text!./exampleEquip.html","cookieOperation","./meta.js",
                             ko.applyBindings(viewModel, obj.element);
                         }
                     },
-                    showErr:function(res){
-                        u.messageDialog({
-                            msg: "操作失败",
-                            title: "请求错误",
-                            btnText: "确定"
-                        });
-                    },
+
                     //提示框
                     showInfo: function (obj) {
                         viewModel.md.dGo("addPage");
                     },
+
                     //新增数据
                     addNewData: function () {
                         viewModel.formData.setRowSelect(0);
@@ -277,14 +308,34 @@ define(["text!./exampleEquip.html","cookieOperation","./meta.js",
                                 delete data.operate;
                             }
                         }
-
                         var jsonData = viewModel.event.genDataList(data);
-                        if(data.id == null){
-                            $ajax(viewModel.insertRowUrl, JSON.stringify(jsonData[0]), viewModel.event.initGridDataList(), viewModel.event.showErr, "POST", "json");
-                        }else{
-                            $ajax(viewModel.updateRowUrl, JSON.stringify(jsonData[0]), viewModel.event.initGridDataList(), viewModel.event.showErr, "PUT", "json");
-                        }
-
+                        $.ajax({
+                            type: "post",
+                            url: viewModel.saveRowUrl,
+                            datatype: "json",
+                            data: JSON.stringify(jsonData),
+                            contentType: "application/json;charset=utf-8",
+                            success: function (res) {
+                                if (res) {
+                                    if (res.success == "success") {
+                                        viewModel.event.initGridDataList();
+                                    } else {
+                                        var msg = res.message;
+                                        u.messageDialog({
+                                            msg: msg,
+                                            title: "请求错误",
+                                            btnText: "确定"
+                                        });
+                                    }
+                                } else {
+                                    u.messageDialog({
+                                        msg: "后台返回数据格式有误，请联系管理员",
+                                        title: "数据错误",
+                                        btnText: "确定"
+                                    });
+                                }
+                            }
+                        });
                     },
 
                     //组装list
@@ -293,7 +344,6 @@ define(["text!./exampleEquip.html","cookieOperation","./meta.js",
                         datalist.push(data);
                         return datalist;
                     }
-
                 },
 
                 //列表行内操作-按钮定义
@@ -318,13 +368,6 @@ define(["text!./exampleEquip.html","cookieOperation","./meta.js",
                         //添加操作
                         viewModel.formData.removeAllRows();
                         var r = viewModel.formData.createEmptyRow();
-
-                        // var combo1Obj = document.getElementById("province")['u.Combo'];
-                        //
-                        // combo1Obj.selectItem(0);
-                        // var data = initUserId("city");
-                        // console.log(data);
-                        // viewModel.formData.setSimpleData({city:data})
                     }
 
                     //显示模态框，如果模态框不存在创建模态框，存在则直接显示
@@ -344,13 +387,7 @@ define(["text!./exampleEquip.html","cookieOperation","./meta.js",
                 },
 
             };
-            //参照联动
-            viewModel.formData.on("orgId.valueChange",function (e) {
-                var jsonData = {};
-                jsonData["pk_org"] = viewModel.formData.getCurrentRow().getSimpleData().orgId;
-                console.log(jsonData);
-                $("#equip_dept").attr("data-refparam",JSON.stringify(jsonData));
-            });
+
             //加载Html页面
             $(element).html(html);
             viewModel.event.pageinit();
@@ -373,7 +410,45 @@ define(["text!./exampleEquip.html","cookieOperation","./meta.js",
                     }
                 });
 
-
+            //存在问题，需要调整：涉及死循环
+            var inputDom = document.querySelectorAll("input");
+            var searchbtn = document.querySelector('[data-role="searchbtn"]');
+            var clearbtn = document.querySelector('[data-role="clearbtn"]');
+            var inputlen = inputDom.length;
+            var ifuse = false; //是否可用
+            var domshasvalue = function () {
+                for (var i = 0; i < inputlen; i++) {
+                    if (inputDom[i].value.length > 0) {
+                        return true;
+                    }
+                }
+                return false;
+            };
+            if (inputlen > 0) {
+                for (var i = 0; i < inputlen; i++) {
+                    u.on(inputDom[i], "blur",
+                        function () {
+                            ifuse = false;
+                            if (this.value && this.value.length > 0) {
+                                //如果本元素失去焦点时有value则按钮直接可用，
+                                ifuse = true;
+                            }
+                            if (!ifuse) {
+                                //如果离开时无value则查看其它框是否有值
+                                ifuse = domshasvalue();
+                            }
+                            if (ifuse) {
+                                //有值时去除不可用样式
+                                u.removeClass(searchbtn, "disable");
+                                u.removeClass(clearbtn, "disable");
+                            } else {
+                                //没值时添加不可用样式
+                                u.addClass(searchbtn, "disable");
+                                u.addClass(clearbtn, "disable");
+                            }
+                        });
+                }
+            }
         };
 
         return {

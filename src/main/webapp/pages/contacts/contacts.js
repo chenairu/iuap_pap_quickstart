@@ -1,5 +1,5 @@
 define(
-	["text!./contacts.html", "css!./contacts.css", "./meta.js",
+	["text!./asyncOrg.html", "css!./contacts.css", "./meta.js",
 		"css!../../style/style.css", "../../config/sys_const.js",
 		"css!../../style/widget.css", "../sever.js",
 		"css!../../style/currency.css"],

@@ -1,14 +1,14 @@
-define(["text!./exampleEquip.html","cookieOperation","./meta.js",
+define(["text!./exampleBill.html","cookieOperation","./meta.js",
         "../../../config/sever.js",
         "../../../config/sys_const.js",
-        "css!./sysRefer.css",
+        "css!./userDefRef.css",
         "css!../../../style/style.css",
         "css!../../../style/widget.css", "css!../../../style/currency.css",
         'uiReferComp', 'uiNewReferComp', 'refer'],
 
     function (html) {
         var init = function (element,cookie) {
-            var ctx = cookie.appCtx + "/exampleEquip";
+            var ctx = cookie.appCtx + "/exampleBill";
             var viewModel = {
                 draw: 1,
                 //页数(第几页)
@@ -318,13 +318,6 @@ define(["text!./exampleEquip.html","cookieOperation","./meta.js",
                         //添加操作
                         viewModel.formData.removeAllRows();
                         var r = viewModel.formData.createEmptyRow();
-
-                        // var combo1Obj = document.getElementById("province")['u.Combo'];
-                        //
-                        // combo1Obj.selectItem(0);
-                        // var data = initUserId("city");
-                        // console.log(data);
-                        // viewModel.formData.setSimpleData({city:data})
                     }
 
                     //显示模态框，如果模态框不存在创建模态框，存在则直接显示
@@ -344,13 +337,7 @@ define(["text!./exampleEquip.html","cookieOperation","./meta.js",
                 },
 
             };
-            //参照联动
-            viewModel.formData.on("orgId.valueChange",function (e) {
-                var jsonData = {};
-                jsonData["pk_org"] = viewModel.formData.getCurrentRow().getSimpleData().orgId;
-                console.log(jsonData);
-                $("#equip_dept").attr("data-refparam",JSON.stringify(jsonData));
-            });
+
             //加载Html页面
             $(element).html(html);
             viewModel.event.pageinit();

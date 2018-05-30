@@ -1,4 +1,4 @@
-define(["text!./customer.html","cookieOperation","./meta.js", "css!./customer.css",
+define(["text!./asval.html","cookieOperation","./meta.js", "css!./customer.css",
                 "css!../../style/style.css", "../../config/sys_const.js",
                 "css!../../style/widget.css",
                 "css!../../style/currency.css",'uiReferComp', 'uiNewReferComp', 'refer'],

@@ -7,21 +7,21 @@ import com.alibaba.fastjson.JSONObject;
 import com.yonyou.iuap.base.web.BaseController;
 import com.yonyou.iuap.example.asval.entity.ExampleAsVal;
 import com.yonyou.iuap.example.asval.service.ExampleAsValService;
+import com.yonyou.iuap.mvc.type.SearchParams;
 import com.yonyou.iuap.persistence.vo.pub.util.StringUtil;
 import com.yonyou.uap.wb.process.org.OrganizationBrief;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/exampleAsVal")
 public class ExampleAsValController extends BaseController {
 
@@ -29,14 +29,22 @@ public class ExampleAsValController extends BaseController {
     private ExampleAsValService exampleAsValService;
 
     @RequestMapping(value={"/list"},method = {RequestMethod.GET})
-    public @ResponseBody Object list(HttpServletRequest request,@RequestParam(value="code") String code) {
+    public Object list(PageRequest pageRequest, SearchParams searchParams) {
 
-        List<ExampleAsVal> list = exampleAsValService.findProvince(code);
-        return buildSuccess(list);
+        Page<ExampleAsVal> tmpdata = exampleAsValService.selectAllByPage(pageRequest,searchParams);
+        return buildSuccess(tmpdata);
     }
-
+    @RequestMapping(value={"/save"},method = {RequestMethod.POST})
+    public Object insert(@RequestBody  List<ExampleAsVal> exampleAsVals){
+        exampleAsValService.batchAddOrUpdate(exampleAsVals);
+        return buildSuccess();
+    }
+    @RequestMapping(value={"/delete"},method = {RequestMethod.POST})
+    public Object delete(@RequestBody List<ExampleAsVal> exampleAsVals){
+        exampleAsValService.batchDelete(exampleAsVals);
+        return buildSuccess();
+    }
     @RequestMapping(value={"/getByIds"},method={RequestMethod.POST})
-    @ResponseBody
     public JSONObject getIds(HttpServletRequest request){
         JSONObject result = new JSONObject();
         String data = request.getParameter("data");
@@ -48,7 +56,7 @@ public class ExampleAsValController extends BaseController {
         List<ExampleAsVal> asValList = new ArrayList<>();
         if(!CollectionUtils.isEmpty(arr)){
             String[] strArray = arr.toArray(new String[arr.size()]);
-            asValList = this.exampleAsValService.getCurrtypeByIds(strArray);
+            asValList = this.exampleAsValService.getpeByIds(strArray);
         }
         result.put("data",transformTOBriefEntity(asValList));
         return result;

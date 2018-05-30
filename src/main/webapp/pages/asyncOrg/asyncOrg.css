@@ -1,0 +1,432 @@
+
+.u-grid-header-link {
+    padding-right: 0;
+}
+
+.dt {
+    color: #007DC4;	
+    padding: 8px 13px 5px;
+}
+
+.p1 {
+    float: left;
+}
+
+/*加入分割线 左树*/
+#treeT {
+	font-family: "Open Sans", "Helvetica Neue", Arial, "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+
+.lefttree {
+    background-color: #fafafa;
+    padding: 10px 0;
+    position: absolute;
+    top: 46px;
+    bottom: 0;
+    width: 250px;
+    height: 100%;
+}
+
+.ztree li a.focusNode {
+    background-color: #1E7BE2 !important;
+}
+
+#tree2Around {
+    /* border-top: 1px solid #cecece; */
+}
+#searchdiv{
+	margin-top: 4px;
+}
+.ec-search {
+    padding: 10px 15px 0 15px;
+    width: 100%;
+    position: relative;
+}
+
+.ec-search #searchBtn {
+    line-height: 30px;
+}
+
+.ec-search .u-button-group {
+    float: left;
+    margin-bottom: auto;
+}
+
+.u-button-change {
+    border-radius: 0 ! important;
+}
+
+.u-button-white {
+    color: #C5C5C5 ! important;
+    border: 1px #C5C5C5 solid ! important;
+    border-radius: 0.25rem;
+}
+.lefttree .u-button-group button{
+    height: 26px;
+}
+
+.ztree li span.button {
+    width: 0;
+}
+
+.u-input-group .u-form-control:first-child {
+    /*height: 26px;
+    padding: 4px 12px;
+    border-radius: 0;*/
+    border-radius: 4px;
+}
+
+.control-label {
+    padding-top: 7px;
+    margin-bottom: 0;
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: 30px;
+}
+
+#Dialg_depart {
+    width: 30% !important;
+    height: 60%;
+}
+
+#Dialg_man {
+    width: 50%;
+    height: 80%;
+}
+
+.u-msg-dialog .u-msg-footer {
+    margin-top: -21px;
+}
+
+.u-widget-body {
+    padding: 0 0 !important;
+    position: relative;
+    background-color: #fff;
+}
+
+.treefrom {
+    background-color: #fff;
+    min-height: 570px;
+}
+
+table th {
+    width: auto;
+}
+
+.glyphicon {
+    color: #26C6DA;
+}
+
+.table-list tr:hover .pro_oper {
+    visibility: visible;
+}
+
+.table-list .pro_oper {
+    visibility: hidden;
+}
+
+/*ue统一调节风格*/
+
+/*outside frame*/
+
+div#content {
+    background: #ECEFF1;
+    font-family: 'Open Sans', 'Helvetica Neue', Arial, 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+}
+
+.u-navlayout-fixed-drawer .u-navlayout-content {
+    margin-left: 200px;
+}
+
+header>.u-container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+header>.u-container>.u-row {
+    margin-left: 0;
+    margin-right: 15px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.u-col-xs-12.u-col-sm-12.text-right {
+    padding-right: 0;
+}
+
+.hr-table .u-table {
+    position: static;
+}
+
+/*z左树上面的按钮*/
+.lefttree .lefttree-action-area {
+    width: 75%;
+    float: right;
+	padding-left: 74px;
+}
+.lefttree button{
+	background-color: #fafafa;
+	border:none;
+	border-radius: 4px;
+	width: 30px;
+    height: 26px;
+	background-color: transparent;
+}  
+
+.lefttree #addinstitBtn:hover,
+.lefttree #editinstitBtn:hover,
+.lefttree #delinstitBtn:hover{
+	background-color: rgb(238,238,238);
+}
+
+.lefttree .lefttreeNav{
+    margin-left: 4%;
+    width: 92%;
+    margin-right: 4%;
+}
+
+.lefttree div.u-button-group{
+	margin-bottom: 0;
+}
+
+input#deletetree {
+    border-radius: 0.25rem;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.group-spec .u-button {
+    border-radius: 0;
+    background-color: white;
+    border: none;
+}
+
+.group-spec .u-button:hover {
+    background-color: #F7F7F7;
+}
+
+.group-spec .u-button-floating {
+    height: 32px;
+    width: 32px;
+    min-width: 32px;
+}
+
+.group-spec .u-button-floating .uf {
+    font-size: 14px;
+}
+
+/*表格上面详细信息*/
+
+.infoPanel {
+	text-align: center;
+    line-height: 44px;
+    height: 44px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(26, 26, 26, .1);
+    margin-bottom: 3px;
+}
+.u-table thead tr, .u-table thead tr th{
+    height: 0;
+}
+
+/*表格*/
+
+thead#gridaddress_header_thead .u-grid-header-link {
+    font-family: 'Open Sans', 'Helvetica Neue', Arial, 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    display: block;
+    padding: 0 18px 0 18px;
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 12px !important;
+    height: 32px !important;
+    line-height: 32px !important;
+}
+
+.u-grid{
+	border-width: 0;
+	border-style:inherit;
+	border-color:none;
+}
+
+/* 表行修改删除按钮*/
+.contacts-container .u-button-border {
+    border: 1px solid var(--button_bd_color);
+}
+
+.contacts-container .u-button{
+    padding: 0 15px;
+    height: 26px;
+    line-height: 26px;
+    border-radius: 3px;
+    float: left;
+    color: var(--button_bg_color);
+}
+
+.editTable button {
+    top: 7px;
+    border: none !important;
+    font-size: 12px;
+}
+
+.contacts-container .u-button:hover {
+    background-color: var(--button_hover_bd_color) !important;
+    color: #fff;
+}
+/*分页*/
+
+.contacts-container {
+    text-align: center;
+}
+
+.contacts-container .pagination {
+    display: inline-block !important;
+}
+
+/*测试模态框尺寸*/
+
+@media (min-width: 800px) {
+    .u-msg-dialog {
+        max-width: 600px;
+    }
+}
+@media (max-width: 800px) {
+    .u-msg-dialog {
+        max-width: 500px;
+    }
+}
+
+@media (max-width: 500px) {
+    .u-msg-dialog {
+        width: 300px;
+    }
+}
+
+/* 模态框 */
+
+.u-msg-title h4 {
+    font-size: 16px;
+}
+
+.u-msg-dialog .u-msg-title {
+    padding: 15px;
+}
+
+hr {
+    margin: 0;
+}
+
+#add_man .u-msg-content,
+#add_depart .u-msg-content,
+#edit_depart .u-msg-content,
+#edit_man .u-msg-content {
+    padding: 30px 0 50px 0;
+}
+
+#add_man .u-msg-content .u-col-md-12,
+#add_depart .u-msg-content .u-col-md-12,
+#edit_depart .u-msg-content .u-col-md-12,
+#edit_man .u-msg-content .u-col-md-12 {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+#add_man .form-group .u-col-md-3,
+#add_depart .form-group .u-col-md-3,
+#edit_depart .form-group .u-col-md-3,
+#edit_man .form-group .u-col-md-3 {
+    padding-right: 0;
+}
+
+#add_man .u-msg-footer,
+#add_depart .u-msg-footer,
+#edit_man .u-msg-footer {
+    height: 65px;
+    padding: 15px;
+}
+
+#add_man .u-msg-footer .u-msg-cancel,
+#add_depart .u-msg-footer .u-msg-cancel,
+#edit_depart .u-msg-footer .u-msg-cancel,
+#edit_man .u-msg-footer .u-msg-cancel {
+    margin-right: 15px;
+}
+
+.ie8-bg {
+    position: absolute;
+    top: -10px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+/*兼容ie9输入框*/
+
+#search {
+    padding: 0 0 0 5px \9;
+}
+
+/*  新增样式
+    房帅中修改
+*/
+
+.u-link {
+    cursor: pointer;
+    color: var(--button_bg_color);
+    background-color: transparent;
+    text-decoration: none;
+}
+
+.u-button-primary,
+.u-button.primary {
+    color: var(--button_fc_color) !important;
+    background-color: var(--button_bd_color) !important;
+}
+
+.u-button-primary:hover {
+    background-color: var(--button_hover_color) !important;
+}
+
+.u-grid-content-sel-row {
+    background-color: var(--table_tr_select_color) !important;
+}
+
+.u-pagination>li>a:focus,
+.u-pagination>li>a:hover,
+.u-pagination>li>span:focus,
+.u-pagination>li>span:hover {
+    color: var(--page_fs_color);
+    background-color: var(--page_hover_color);
+    border-color: var(--page_bd_color);
+    cursor: pointer;
+}
+
+.u-pagination>.active>a,
+.u-pagination>.active>span,
+.u-pagination>.active>a:hover,
+.u-pagination>.active>span:hover,
+.u-pagination>.active>a:focus,
+.u-pagination>.active>span:focus {
+    z-index: 2;
+    color: #fff;
+    cursor: default;
+    background-color: var(--page_bg_color);
+    border-color: var(--page_bg_color);
+}
+
+.u-button-group .u-button {
+    padding: 0 10px !important;
+}
+
+.u-button-container {
+    color: var(--button_fc_color);
+}
+
+.u-button .uf,
+.u-button .fa {
+    color: var(--button_fc_color);
+}
