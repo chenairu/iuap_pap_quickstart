@@ -1,5 +1,6 @@
 
 /*************示例应用：档案-字典（单表）***************/
+DROP TABLE IF EXISTS `example_dictionary`;
 CREATE TABLE example_dictionary (
   id VARCHAR(36) NOT NULL,
   code VARCHAR(50) DEFAULT NULL,
@@ -14,6 +15,7 @@ CREATE TABLE example_dictionary (
 
 
 /*************示例应用：联系人（树表）***************/
+DROP TABLE IF EXISTS `example_contacts`;
 CREATE TABLE example_contacts (
   id CHAR(36) NOT NULL,
   peocode VARCHAR(100) NOT NULL,
@@ -34,6 +36,7 @@ CREATE TABLE example_contacts (
 
 
 /*************示例应用：组织机构（树表---树）***************/
+DROP TABLE IF EXISTS `example_organization`;
 CREATE TABLE example_organization (
   institid CHAR(36) NOT NULL,
   instit_code VARCHAR(200) NOT NULL,
@@ -52,6 +55,7 @@ CREATE TABLE example_organization (
 
 
 /*************示例应用：商品管理（单表+参照使用）***************/
+DROP TABLE IF EXISTS `example_goods`;
 CREATE TABLE example_goods (
   id varchar(64) NOT NULL COMMENT '主键ID',
   goodsCode varchar(20) NOT NULL COMMENT '商品编码',
@@ -81,6 +85,7 @@ CREATE TABLE example_goods (
 
 
 /*************示例应用：订单管理（主子表+航编辑+行编辑参照使用）***************/
+DROP TABLE IF EXISTS `example_order_bill`;
 CREATE TABLE example_order_bill (
   id CHAR(36) NOT NULL COMMENT '主键ID',
   orderCode VARCHAR(50) DEFAULT NULL COMMENT '订单编号',
@@ -106,6 +111,7 @@ CREATE TABLE example_order_bill (
 
 
 /*************示例应用：订单管理（子表）***************/
+DROP TABLE IF EXISTS `example_order_detail`;
 CREATE TABLE example_order_detail (
   id CHAR(36) NOT NULL COMMENT '订单明细ID',
   orderId CHAR(36) DEFAULT NULL COMMENT '订单ID',
@@ -123,7 +129,8 @@ CREATE TABLE example_order_detail (
   PRIMARY KEY (id)
 );
 
-/*************示例应用：附件上传、下载、删除***************/
+/*************示例应用：附件***************/
+DROP TABLE IF EXISTS `example_attachment`;
 CREATE TABLE `example_attachment` (
   `id` varchar(36) COLLATE utf8_unicode_ci NOT NULL,
   `code` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
@@ -132,7 +139,9 @@ CREATE TABLE `example_attachment` (
   UNIQUE KEY `idx_code` (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-/*************示例应用：模板下载、导入、导出***************/
+
+/*************示例应用：导入、导出***************/
+DROP TABLE IF EXISTS `example_template`;
 CREATE TABLE `example_template` (
   `id` varchar(36) COLLATE utf8_unicode_ci NOT NULL,
   `code` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -140,6 +149,20 @@ CREATE TABLE `example_template` (
   `remark` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+/*************示例应用：导入、导出***************/
+DROP TABLE IF EXISTS `example_print`;
+CREATE TABLE `example_print` (
+  `id` varchar(36) COLLATE utf8_unicode_ci NOT NULL,
+  `code` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `remark` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
 
 DROP TABLE IF EXISTS `example_customer`;
 CREATE TABLE `example_customer` (
