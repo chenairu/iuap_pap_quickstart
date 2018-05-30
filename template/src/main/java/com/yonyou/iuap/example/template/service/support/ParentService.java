@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.yonyou.uap.ieop.security.entity.DataPermission;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -17,7 +18,6 @@ import com.yonyou.iuap.context.InvocationInfoProxy;
 import com.yonyou.iuap.mvc.type.SearchParams;
 import com.yonyou.iuap.persistence.jdbc.framework.util.FastBeanHelper;
 import com.yonyou.iuap.persistence.vo.BaseEntity;
-import com.yonyou.uap.ieop.security.entity.DataPermission;
 import com.yonyou.uap.ieop.security.sdk.AuthRbacClient;
 
 public abstract class ParentService<TEntity extends BaseEntity> {
