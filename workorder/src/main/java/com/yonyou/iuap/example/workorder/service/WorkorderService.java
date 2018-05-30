@@ -61,9 +61,19 @@ public class WorkorderService extends GenericService<Workorder>{
 	 * 审批通过
 	 * @param workorder
 	 */
-	public void doApprove(String id) {
+	public void doApprove(String id, Integer status) {
 		Workorder workorder = this.findById(id);
-		workorder.setStatus(2);
+		workorder.setStatus(status);
+		this.save(workorder);
+	}
+	
+	/**
+	 * 未提交
+	 * @param id
+	 */
+	public void doReject(String id) {
+		Workorder workorder = this.findById(id);
+		workorder.setStatus(0);
 		this.save(workorder);
 	}
 	
