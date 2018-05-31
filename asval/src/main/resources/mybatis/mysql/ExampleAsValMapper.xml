@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.yonyou.iuap.example.asval.entity.ExampleAsVal">
     <id column="ID" jdbcType="VARCHAR" property="id" />
     <result column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="PID" jdbcType="VARCHAR" property="pid" />
     <result column="NAME" jdbcType="VARCHAR" property="name" />
     <result column="VALUE" jdbcType="VARCHAR" property="value" />
     <result column="ORD_INDEX" jdbcType="INTEGER" property="ordIndex" />
@@ -11,7 +12,7 @@
     <result column="IS_SYSTEM" jdbcType="CHAR" property="isSystem" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID,CODE,NAME,VALUE,ORD_INDEX,LSTDATE,IS_SYSTEM
+    ID,PID,CODE,NAME,VALUE,ORD_INDEX,LSTDATE,IS_SYSTEM
   </sql>
   <select id="selectByPrimaryKey" parameterType="com.yonyou.iuap.example.asval.entity.ExampleAsVal" resultMap="BaseResultMap">
     select
@@ -24,10 +25,10 @@
     where ID = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.yonyou.iuap.example.asval.entity.ExampleAsVal">
-    insert into example_as_val (ID, CODE, NAME,VALUE,
+    insert into example_as_val (ID,PID, CODE, NAME,VALUE,
       ORD_INDEX, LSTDATE, IS_SYSTEM
       )
-    values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},#{value,jdbcType=VARCHAR},
+    values (#{id,jdbcType=VARCHAR},#{pid,jdbcType=VARCHAR},#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},#{value,jdbcType=VARCHAR},
       #{ordIndex,jdbcType=INTEGER}, #{lstdate,jdbcType=TIMESTAMP}, #{isSystem,jdbcType=CHAR}
       )
   </insert>
@@ -35,6 +36,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.yonyou.iuap.example.asval.entity.ExampleAsVal">
     update example_as_val
     <set>
+      <if test="pid != null">
+        PID = #{pid,jdbcType=VARCHAR},
+      </if>
       <if test="code != null">
         CODE = #{code,jdbcType=VARCHAR},
       </if>
@@ -58,7 +62,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yonyou.iuap.example.asval.entity.ExampleAsVal">
     update example_as_val
-    set CODE = #{code,jdbcType=VARCHAR},
+    set PID = #{pid,jdbcType=VARCHAR},
+      CODE = #{code,jdbcType=VARCHAR},
       NAME = #{name,jdbcType=VARCHAR},
       VALUE = #{value,jdbcType=VARCHAR},
       ORD_INDEX = #{ordIndex,jdbcType=INTEGER},
@@ -66,7 +71,10 @@
       IS_SYSTEM = #{isSystem,jdbcType=CHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
-
+  <delete id="deleteByPrimayKey" parameterType="java.lang.String">
+    delete from example_as_val
+      where id = #{id,jdbcType=VARCHAR}
+  </delete>
   <select id="findAll" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
@@ -83,7 +91,7 @@
 
   <select id="getByIds" parameterType="java.lang.String" resultMap="BaseResultMap">
     select *
-    from example_as_val where code = "SSSFM_ITEM_CODE_ID" and NAME in
+    from example_as_val where  1=1  and NAME in
     <foreach collection="list" item="item" index="index"
              separator="," open="(" close=")">
       #{item,jdbcType=VARCHAR}
@@ -91,11 +99,19 @@
   </select>
 
   <!--参照配置-->
-  <select id="queryByClause" parameterType="java.lang.String" resultType="com.yonyou.iuap.example.asval.entity.ExampleAsVal">
+  <select id="queryByClause" resultMap="BaseResultMap"
+          resultType="java.util.List">
     select
     <include refid="Base_Column_List" />
     from example_as_val
-    where  NAME like CONCAT(CONCAT('%', #{1}),'%') or VAL like CONCAT(CONCAT('%', #{1}),'%')
+
+    where 1=1
+   <!-- <if test="params != null">
+      <if test="params.pid != null and params.pid != ''">
+        and pid = #{params.code,jdbcType=VARCHAR}
+      </if>
+    </if>-->
+    AND (NAME like CONCAT(CONCAT('%', #{keyword}),'%') or VALUE like CONCAT(CONCAT('%', #{keyword}),'%'))
   </select>
 
   <select id="selectAllByPage" resultMap="BaseResultMap"
@@ -103,11 +119,17 @@
     SELECT
     <include refid="Base_Column_List" />
     from example_as_val where 1=1
+   <!-- <if test="params != null">
+      <if test="params.pid != null and params.pid != ''">
+        and pid = #{params.code,jdbcType=VARCHAR}
+      </if>
+    </if>-->
     <if test="search != null">
-      <if
-              test="search.searchMap.searchParam!=null and search.searchMap.searchParam!='' ">
-        and
-        NAME like CONCAT(CONCAT('%', #{search.searchMap.searchParam}),'%')
+      <if test="search.searchMap.searchParam!=null and search.searchMap.searchParam!='' ">
+        and (NAME like CONCAT(CONCAT('%', #{search.searchMap.searchParam}),'%')
+        or
+        VALUE like CONCAT(CONCAT('%', #{search.searchMap.searchParam}),'%')
+        )
       </if>
     </if>
     <if test="page != null">

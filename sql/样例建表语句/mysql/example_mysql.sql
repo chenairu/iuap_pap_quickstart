@@ -171,14 +171,15 @@ CREATE TABLE `example_customer` (
   `customer_name` varchar(255) DEFAULT NULL COMMENT '客户名称',
   `province` varchar(255) DEFAULT NULL COMMENT '省份',
   `city` varchar(255) DEFAULT NULL COMMENT '城市',
-  `corpSize` tinyint(1) DEFAULT NULL COMMENT '企业规模',
-  `status` tinyint(1) DEFAULT NULL COMMENT '状态',
+  `corpSize` varchar(1) DEFAULT NULL COMMENT '企业规模',
+  `status` varchar(1) DEFAULT NULL COMMENT '状态',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `example_as_val`;
 create table `example_as_val`(
 	`id` varchar(36) not null,
+	`pid` varchar(36) not null,
 	`code` varchar(36) not NULL COMMENT '编码',
 	`name` varchar(255) not null COMMENT '下拉框NAME',
 	`value` varchar(255) not null COMMENT '下拉框VALUE',
@@ -187,3 +188,48 @@ create table `example_as_val`(
 	`is_system` tinyint DEFAULT NULL COMMENT '是否系统预置',
 	PRIMARY KEY(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `example_equip`;
+CREATE TABLE `example_equip` (
+  `id` varchar(36) COLLATE utf8_unicode_ci NOT NULL,
+  `code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `org_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `org_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `dept_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `dept_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `create_user_id` varchar(36) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `create_user_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `update_user_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `update_user_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `update_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `version` int(11) DEFAULT NULL,
+  `tenant_id` varchar(36) COLLATE utf8_unicode_ci DEFAULT 'tenant',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `example_bill`;
+CREATE TABLE `example_bill` (
+  `id` varchar(36) COLLATE utf8_unicode_ci NOT NULL,
+  `code` varchar(255) COLLATE utf8_unicode_ci DEFAULT '' COMMENT '编码',
+  `bill_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT '' COMMENT '单据类型',
+  `is_valid` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '是否有效',
+  `fiscal` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '年度',
+  `busi_date` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '业务时间',
+  `pay_code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '付款单位code',
+  `pay_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '付款单位',
+  `in_code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '收款单位code',
+  `in_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '收款单位',
+  `amount` decimal(10,0) DEFAULT NULL COMMENT '金额',
+  `bill_status` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '单据状态',
+  `create_user_id` varchar(36) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '创建人ID',
+  `create_user_name` varchar(36) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_user_id` varchar(36) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '更新人ID',
+  `update_user_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '更新人',
+  `update_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `version` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '版本',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
+

@@ -7,6 +7,8 @@ public class ExampleAsVal implements Serializable {
 
     private String id;
 
+    private String pid;
+
     private String code;
 
     private String name;
@@ -27,6 +29,14 @@ public class ExampleAsVal implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
     }
 
     public String getCode() {

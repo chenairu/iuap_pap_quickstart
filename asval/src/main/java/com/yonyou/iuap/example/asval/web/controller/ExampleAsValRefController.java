@@ -1,5 +1,7 @@
 package com.yonyou.iuap.example.asval.web.controller;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.yonyou.iuap.context.InvocationInfoProxy;
 import com.yonyou.iuap.example.asval.entity.ExampleAsVal;
 import com.yonyou.iuap.example.asval.service.ExampleAsValService;
@@ -40,6 +42,10 @@ public class ExampleAsValRefController extends AbstractGridRefModel {
     @Override
     public List<Map<String, String>> filterRefJSON(@RequestBody RefViewModelVO refViewModelVO) {
         List<Map<String,String>> result = new ArrayList<>();
+
+        /*String clientParam = refViewModelVO.getClientParam();
+        Map<String,Object> clientMap = (Map<String, Object>) JSONObject.parse(clientParam);*/
+
         List<ExampleAsVal> rtnVal = this.exampleAsValService.likeSarch(refViewModelVO.getContent());
         result = buildRtnValsOfRef(rtnVal,isUserDataPower(refViewModelVO));
         return result;
@@ -53,6 +59,9 @@ public class ExampleAsValRefController extends AbstractGridRefModel {
          * tenantId 根据数据库表中的配置来决定,如果tenant未配置,则传 null,如果配置了,则选择该值
          */
         try{
+            /*String clientParam = refViewModelVO.getClientParam();
+            Map<String,Object> clientMap = (Map<String, Object>) JSONObject.parse(clientParam);*/
+
             List<ExampleAsVal> rtnVal = this.exampleAsValService.getByIds(null,Arrays.asList(refViewModelVO.getPk_val()));
             result = buildRtnValsOfRef(rtnVal,isUserDataPower(refViewModelVO));
         }catch(Exception e){
@@ -82,8 +91,11 @@ public class ExampleAsValRefController extends AbstractGridRefModel {
         int pageSize = refViewModelVo.getRefClientPageInfo().getPageSize();
 
         PageRequest request = buildPageRequest(pageNum,pageSize,null);
-
         String searchParam = StringUtils.isEmpty(refViewModelVo.getContent()) ? null: refViewModelVo.getContent();
+
+        //自定义过滤条件后台配置
+        /*String clientParam = refViewModelVo.getClientParam();
+        Map<String,Object> clientMap = (Map<String, Object>) JSONObject.parse(clientParam);*/
 
         Page<ExampleAsVal> pages = this.exampleAsValService.selectAllByPage(request,buildSearchParam(searchParam));
         List<ExampleAsVal> list =pages.getContent();
@@ -94,7 +106,7 @@ public class ExampleAsValRefController extends AbstractGridRefModel {
             refClientPageInfo.setPageSize(50);
             refViewModelVo.setRefClientPageInfo(refClientPageInfo);
 
-            results.put("dataList",list);
+            results.put("dataList",tmpList);
             results.put("refViewModel",refViewModelVo);
         }
 
@@ -144,16 +156,17 @@ public class ExampleAsValRefController extends AbstractGridRefModel {
 
         if(list != null && !list.isEmpty()){
             for(ExampleAsVal asVal:list){
-                if(isUserDataPower || (isUserDataPower&&set.contains(asVal.getId()))){
+        //        if(isUserDataPower || (isUserDataPower&&set.contains(asVal.getId()))){
                     Map<String,String> refDataMap = new HashMap<>();
                     refDataMap.put("id",asVal.getId());
                     refDataMap.put("refname",asVal.getName());
-                    refDataMap.put("refcode",asVal.getCode());
+                    refDataMap.put("refcode",asVal.getValue());
                     refDataMap.put("refpk",asVal.getId());
 
                     results.add(refDataMap);
-                }
+       //         }
             }
+
         }
         return results;
     }

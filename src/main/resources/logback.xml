@@ -9,7 +9,7 @@
 		</encoder>
 	</appender>
 
-	<appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	<!--<appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${catalina.base}/logs/${log_name}.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>${catalina.base}/logs/${log_name}.%d{yyyy-MM-dd}.log</fileNamePattern>
@@ -18,11 +18,11 @@
 		<encoder>
 			<pattern>%date{HH:mm:ss.SSS} [%X{call_thread_id}] [%X{current_user_name}] [%thread] %-5level %logger{36} - %msg%n</pattern>
 		</encoder>
-	</appender>
+	</appender>-->
 
 	<!-- 自定义特殊包的日志级别 -->
-	<logger name="com.yonyou.iuap" level="ERROR" />
-	<logger name="com.yonyou.uap.ieop.busilog.writer.BusiLogRestWriter" level="ERROR" />
+	<logger name="com.yonyou.iuap" level="debug" />
+	<logger name="com.yonyou.uap.ieop.busilog.writer.BusiLogRestWriter" level="debug" />
 	
 	<!--
 	log4j.logger.com.ibatis=DEBUG

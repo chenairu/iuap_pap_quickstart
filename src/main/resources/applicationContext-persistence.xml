@@ -84,7 +84,7 @@
                       class="com.yonyou.iuap.mybatis.plugins.PaginationInterceptor">
                     <property name="properties">
                         <props>
-<!--                         	修改数据库类型后，dbms的属性需要修改，如oracle、postgresql、mysql -->
+<!--                         	修改数据库类型后，dbms的属性需要修改，如oracle、postgresql、mybatis -->
                             <prop key="dbms">${jdbc.type}</prop>
                             <prop key="sqlRegex">.*selectAllByPage</prop>
                         </props>

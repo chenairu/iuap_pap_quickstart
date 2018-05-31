@@ -62,7 +62,7 @@
         <dependency>
             <groupId>com.yonyou.iuap.pap.authrbac</groupId>
             <artifactId>iuap-authrbac-sdk</artifactId>
-            <version>${module.version}</version>
+            <version>3.3.0-SNAPSHOT</version>
         </dependency>
         <!-- 元数据相关 -->
         <dependency>
@@ -278,6 +278,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>com.yonyou.iuap.pap.authrbac</groupId>
+            <artifactId>iuap-authrbac-common</artifactId>
+            <version>3.3.0-SNAPSHOT</version>
+        </dependency>
 
     </dependencies>
 
@@ -373,48 +378,7 @@
                 </webAppConfig> <connectors> <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
                 <port>8080</port> <maxIdleTime>60000</maxIdleTime> </connector> </connectors>
                 </configuration> </plugin> -->
-            <plugin>
-                <groupId>org.mybatis.generator</groupId>
-                <artifactId>mybatis-generator-maven-plugin</artifactId>
-                <version>1.3.2</version>
-                <configuration>
-                    <!--配置文件的路径-->
-                    <configurationFile>${basedir}/src/main/resources/generatorConfig.xml</configurationFile>
-                    <verbose>true</verbose>
-                    <overwrite>true</overwrite>
-                </configuration>
-                <!--<executions>
-                    <execution>
-                        <id>Generate MyBatis Files</id>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <phase>generate</phase>
-                        <configuration>
-                            <verbose>true</verbose>
-                            <overwrite>true</overwrite>
-                        </configuration>
-                    </execution>
-                </executions>-->
-                <dependencies>
-                    <dependency>
-                        <groupId>mysql</groupId>
-                        <artifactId>mysql-connector-java</artifactId>
-                        <version>5.1.38</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.mybatis.generator</groupId>
-                        <artifactId>mybatis-generator-core</artifactId>
-                        <version>1.3.5</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.mybatis</groupId>
-                        <artifactId>mybatis</artifactId>
-                        <version>3.4.2</version>
-                    </dependency>
-                </dependencies>
-
-            </plugin>
+            
         </plugins>
 
 
@@ -472,7 +436,7 @@
                 <!-- fastDFS -->
                 <pom.fdfs.tracker_server>172.20.18.16:22122</pom.fdfs.tracker_server>
 
-                <!-- mysql -->
+                <!-- mybatis -->
                 <pom.jdbc.url>
                     <![CDATA[jdbc:mysql://172.20.14.148:3306/tenant?useUnicode=true&characterEncoding=utf-8]]></pom.jdbc.url>
                 <pom.jdbc.username>6eLJVbeWA/E=</pom.jdbc.username>
@@ -508,7 +472,7 @@
                 </pom.event.manager.url>
 
 
-                <!-- mysql -->
+                <!-- mybatis -->
                 <pom.jdbc.url>
                     <![CDATA[jdbc:mysql://172.20.14.148:3306/tenant?useUnicode=true&characterEncoding=utf-8]]></pom.jdbc.url>
                 <pom.jdbc.username>6eLJVbeWA/E=</pom.jdbc.username>

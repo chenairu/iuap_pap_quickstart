@@ -13,10 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.yonyou.iuap.example.dictionary.entity.Dictionary;
 import com.yonyou.iuap.example.dictionary.service.DictionaryService;
@@ -201,6 +198,25 @@ public class DictionaryRefController extends AbstractGridRefModel {
 			return true;
 		}
 		return false;
+	}
+	/**
+	 * 实现在grid根据id显示name值操作
+	 * @param id
+	 * @param isUseDataPower
+	 * @return
+	 */
+	@RequestMapping("/filterData")
+	public String filterData(@RequestParam String id, @RequestParam boolean isUseDataPower){
+		StringBuilder refName = new StringBuilder("");
+		String[] ids = id.split(",");
+		List<Dictionary> rtnVal = this.dictionaryService.getByIds(null,Arrays.asList(ids));
+		List<Map<String,String>> list = buildRtnValsOfRef(rtnVal,isUseDataPower);
+		if(list != null && list.size()>0){
+			for(Map<String,String> map : list){
+				refName.append(map.get("refname")).append(",");
+			}
+		}
+		return refName.substring(0,refName.length()-1);
 	}
 	/****************************************************************/
 	@Autowired

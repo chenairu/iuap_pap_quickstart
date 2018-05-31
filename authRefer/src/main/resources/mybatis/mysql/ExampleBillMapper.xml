@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yonyou.iuap.example.userDefRef.dao.ExampleBillMapper">
+  <resultMap id="BaseResultMap" type="com.yonyou.iuap.example.userDefRef.entity.ExampleBill">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="bill_type" jdbcType="VARCHAR" property="billType" />
+    <result column="is_valid" jdbcType="VARCHAR" property="isValid" />
+    <result column="fiscal" jdbcType="VARCHAR" property="fiscal" />
+    <result column="busi_date" jdbcType="TIMESTAMP" property="busiDate" />
+    <result column="pay_code" jdbcType="VARCHAR" property="payCode" />
+    <result column="pay_name" jdbcType="VARCHAR" property="payName" />
+    <result column="in_code" jdbcType="VARCHAR" property="inCode" />
+    <result column="in_name" jdbcType="VARCHAR" property="inName" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="bill_status" jdbcType="VARCHAR" property="billStatus" />
+    <result column="create_user_id" jdbcType="VARCHAR" property="createUserId" />
+    <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_user_id" jdbcType="VARCHAR" property="updateUserId" />
+    <result column="update_user_name" jdbcType="VARCHAR" property="updateUserName" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, code, bill_type, is_valid, fiscal, busi_date, pay_code, pay_name, in_code, in_name, 
+    amount, bill_status, create_user_id, create_user_name, create_time, update_user_id, 
+    update_user_name, update_time, version
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from example_bill
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from example_bill
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yonyou.iuap.example.userDefRef.entity.ExampleBill">
+    insert into example_bill (id, code, bill_type, 
+      is_valid, fiscal, busi_date, 
+      pay_code, pay_name, in_code, 
+      in_name, amount, bill_status, 
+      create_user_id, create_user_name, create_time, 
+      update_user_id, update_user_name, update_time, 
+      version)
+    values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{billType,jdbcType=VARCHAR}, 
+      #{isValid,jdbcType=VARCHAR}, #{fiscal,jdbcType=VARCHAR}, #{busiDate,jdbcType=TIMESTAMP}, 
+      #{payCode,jdbcType=VARCHAR}, #{payName,jdbcType=VARCHAR}, #{inCode,jdbcType=VARCHAR}, 
+      #{inName,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, #{billStatus,jdbcType=VARCHAR}, 
+      #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateUserId,jdbcType=VARCHAR}, #{updateUserName,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{version,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yonyou.iuap.example.userDefRef.entity.ExampleBill">
+    insert into example_bill
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="billType != null">
+        bill_type,
+      </if>
+      <if test="isValid != null">
+        is_valid,
+      </if>
+      <if test="fiscal != null">
+        fiscal,
+      </if>
+      <if test="busiDate != null">
+        busi_date,
+      </if>
+      <if test="payCode != null">
+        pay_code,
+      </if>
+      <if test="payName != null">
+        pay_name,
+      </if>
+      <if test="inCode != null">
+        in_code,
+      </if>
+      <if test="inName != null">
+        in_name,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="billStatus != null">
+        bill_status,
+      </if>
+      <if test="createUserId != null">
+        create_user_id,
+      </if>
+      <if test="createUserName != null">
+        create_user_name,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateUserId != null">
+        update_user_id,
+      </if>
+      <if test="updateUserName != null">
+        update_user_name,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="billType != null">
+        #{billType,jdbcType=VARCHAR},
+      </if>
+      <if test="isValid != null">
+        #{isValid,jdbcType=VARCHAR},
+      </if>
+      <if test="fiscal != null">
+        #{fiscal,jdbcType=VARCHAR},
+      </if>
+      <if test="busiDate != null">
+        #{busiDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payCode != null">
+        #{payCode,jdbcType=VARCHAR},
+      </if>
+      <if test="payName != null">
+        #{payName,jdbcType=VARCHAR},
+      </if>
+      <if test="inCode != null">
+        #{inCode,jdbcType=VARCHAR},
+      </if>
+      <if test="inName != null">
+        #{inName,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="billStatus != null">
+        #{billStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null">
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null">
+        #{updateUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserName != null">
+        #{updateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yonyou.iuap.example.userDefRef.entity.ExampleBill">
+    update example_bill
+    <set>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="billType != null">
+        bill_type = #{billType,jdbcType=VARCHAR},
+      </if>
+      <if test="isValid != null">
+        is_valid = #{isValid,jdbcType=VARCHAR},
+      </if>
+      <if test="fiscal != null">
+        fiscal = #{fiscal,jdbcType=VARCHAR},
+      </if>
+      <if test="busiDate != null">
+        busi_date = #{busiDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payCode != null">
+        pay_code = #{payCode,jdbcType=VARCHAR},
+      </if>
+      <if test="payName != null">
+        pay_name = #{payName,jdbcType=VARCHAR},
+      </if>
+      <if test="inCode != null">
+        in_code = #{inCode,jdbcType=VARCHAR},
+      </if>
+      <if test="inName != null">
+        in_name = #{inName,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="billStatus != null">
+        bill_status = #{billStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null">
+        create_user_id = #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null">
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null">
+        update_user_id = #{updateUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserName != null">
+        update_user_name = #{updateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yonyou.iuap.example.userDefRef.entity.ExampleBill">
+    update example_bill
+    set code = #{code,jdbcType=VARCHAR},
+      bill_type = #{billType,jdbcType=VARCHAR},
+      is_valid = #{isValid,jdbcType=VARCHAR},
+      fiscal = #{fiscal,jdbcType=VARCHAR},
+      busi_date = #{busiDate,jdbcType=TIMESTAMP},
+      pay_code = #{payCode,jdbcType=VARCHAR},
+      pay_name = #{payName,jdbcType=VARCHAR},
+      in_code = #{inCode,jdbcType=VARCHAR},
+      in_name = #{inName,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=DECIMAL},
+      bill_status = #{billStatus,jdbcType=VARCHAR},
+      create_user_id = #{createUserId,jdbcType=VARCHAR},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_user_id = #{updateUserId,jdbcType=VARCHAR},
+      update_user_name = #{updateUserName,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      version = #{version,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectAllByPage" resultMap="BaseResultMap"
+          resultType="java.util.List">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from example_bill where 1=1
+   <!-- <if test="sql != null">
+      ${sql}
+    </if>-->
+    <if test="search != null">
+      <if
+              test="search.code!=null and search.code!='' ">
+        and  code like CONCAT(CONCAT('%', #{search.code}),'%')
+      </if>
+      <if
+              test="search.name!=null and search.name!='' ">
+        and name like CONCAT(CONCAT('%', #{search.name}),'%')
+      </if>
+    </if>
+  </select>
+
+  <select id="findByCode" resultMap="BaseResultMap"
+          parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List"/>
+    from example_bill
+    where code= #{code,jdbcType=VARCHAR}
+  </select>
+</mapper>

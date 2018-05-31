@@ -56,9 +56,6 @@ public class ExampleCustomerService {
         for(ExampleCustomer customer : list){
             if(customer.getId() == null){
                 customer.setId(UUID.randomUUID().toString());
-                //编码规则
-                String customerCode = this.getCustomerCode("customer","",customer);
-                customer.setCustomerCode(customerCode);
                 addList.add(customer);
             }else{
                 updateList.add(customer);
@@ -76,9 +73,7 @@ public class ExampleCustomerService {
     public void save(ExampleCustomer entity){
         if(entity.getId() == null){
             entity.setId(UUID.randomUUID().toString());
-            //编码规则
-            String customerCode = this.getCustomerCode("customer","",entity);
-            entity.setCustomerCode(customerCode);
+
             exampleCustomerMapper.insert(entity);
             //发送消息
             sendMessage(entity);
@@ -89,72 +84,6 @@ public class ExampleCustomerService {
     @Transactional(rollbackFor = Exception.class)
     public void batchDeleteByPrimaryKey(List<ExampleCustomer> list){
         exampleCustomerMapper.batchDelete(list);
-        for(ExampleCustomer customer : list){
-            this.returnCustomerCode("customer","",customer,customer.getCustomerCode());
-        }
-    }
-    /**
-     * 获取编码规则
-     *
-     * @param billObjCode 编码对象code
-     * @param pkAssign 分配关系
-     * @param customer
-     * @return
-     */
-    private String getCustomerCode(String billObjCode,String pkAssign,ExampleCustomer customer){
-        String billvo = JSONObject.toJSONString(customer);
-
-        String getCodeUrl = PropertyUtil.getPropertyByKey("billcodeservice.base.url")+"/billcoderest/getBillCode";
-
-        Map<String,String> data = new HashMap<String,String>();
-        data.put("billObjCode",billObjCode);
-        data.put("pkAssign",pkAssign);
-        data.put("billVo",billvo);
-
-        JSONObject getBillCodeInfo = RestUtils.getInstance().doPost(getCodeUrl,data,JSONObject.class);
-        logger.debug(getBillCodeInfo.toJSONString());
-
-        String getFlag = getBillCodeInfo.getString("status");
-        String billCode = getBillCodeInfo.getString("billcode");
-
-        if ("failed".equalsIgnoreCase(getFlag)){
-            String errMsg = getBillCodeInfo.getString("msg");
-            logger.error("{billObjCode:" + billObjCode + ",pkAssign:" + pkAssign + ",billvo:" + billvo + "},错误信息:" + errMsg);
-            throw new BusinessException("获取编码规则发生错误",errMsg);
-        }
-        return billCode;
-    }
-    /**
-     * 回退单据号，以保证单据号连号的业务需要
-     *
-     * @param billObjCode
-     *            编码对象code
-     * @param pkAssign
-     *            分配关系
-     * @param customer
-     * @param customerCode 编码字段
-     * @return
-     */
-    private void returnCustomerCode(String billObjCode,String pkAssign,ExampleCustomer customer,String customerCode){
-        String billVo = JSONObject.toJSONString(customer);
-        String returnUrl = PropertyUtil.getPropertyByKey("billcodeservice.base.url")+"/billcoderest/returnBillCode";
-        Map<String,String> data = new HashMap<String,String>();
-        data.put("billObjCode",billObjCode);
-        data.put("pkAssign",pkAssign);
-        data.put("billVo",billVo);
-        data.put("billCode",customerCode);
-
-        JSONObject returnBillCodeInfo = RestUtils.getInstance().doPost(returnUrl,data,JSONObject.class);
-
-        logger.debug(returnBillCodeInfo.toJSONString());
-        String returnFlag = returnBillCodeInfo.getString("status");
-
-        if("failed".equalsIgnoreCase(returnFlag)){
-            String errMsg = returnBillCodeInfo.getString("msg");
-            logger.error("{billObjCode:" + billObjCode + ",pkAssign:" + pkAssign + ",billvo:" + billVo + "},错误信息:" + errMsg);
-            throw new BusinessException("返回单据号失败",errMsg);
-        }
-
     }
 
     private void sendMessage(ExampleCustomer customer){

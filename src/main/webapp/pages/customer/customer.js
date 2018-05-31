@@ -1,10 +1,10 @@
-define(["text!./customer.html","cookieOperation","./meta.js", "css!./customer.css",
-	"css!../../style/style.css", "../../config/sys_const.js",
-	"css!../../style/widget.css",
-	"css!../../style/currency.css",'uiReferComp', 'uiNewReferComp', 'refer'],
+define(["text!./asval.html","cookieOperation","./meta.js", "css!./customer.css",
+                "css!../../style/style.css", "../../config/sys_const.js",
+                "css!../../style/widget.css",
+                "css!../../style/currency.css",'uiReferComp', 'uiNewReferComp', 'refer'],
 
-    function (html) {
-        var init = function (element,cookie) {
+            function (html) {
+                var init = function (element,cookie) {
 
             console.log($.cookie("userId"));
             var ctx = cookie.appCtx + "/customer";
@@ -392,9 +392,9 @@ define(["text!./customer.html","cookieOperation","./meta.js", "css!./customer.cs
                         // var combo1Obj = document.getElementById("province")['u.Combo'];
                         //
                         // combo1Obj.selectItem(0);
-                        var data = initUserId("city");
-                        console.log(data);
-                        viewModel.formData.setSimpleData({city:data})
+                        // var data = initUserId("city");
+                        // console.log(data);
+                        // viewModel.formData.setSimpleData({city:data})
                     }
 
                     //显示模态框，如果模态框不存在创建模态框，存在则直接显示

@@ -20,12 +20,15 @@ var meta = {
         },
         //城市
         city: {
-            enable:false
+            default:function(){
+                    value:$.cookie("userId")
+            }
 
         },
         //企业规模
         corpsize:{
             type: 'string'
+
         },
         //状态
         status: {
