@@ -19,4 +19,6 @@ public interface ExampleArticleMapper {
     int deleteByPrimaryKey(String id);
 
     int updateByPrimaryKey(ExampleArticle exampleArticle);
+
+    int updateSelectiveByPrimaryKey(ExampleArticle exampleArticle);
 }

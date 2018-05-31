@@ -1,7 +1,7 @@
 <div class="u-mdlayout" id="user-mdlayout">
 	<!-- 标题区域 -->
 	<div class="aline-center b-margin">
-		<h4>编码规则</h4>
+		<h4>按钮权限</h4>
 	</div>
 	<!-- 搜索区域begin -->
 	<div class="form-search">
@@ -45,8 +45,10 @@
 		<div class="u-mdlayout-page u-navlayout-fixed-header" id="list">
 			<div id="dicttype_list_button_2" class="b-margin">
 				<div class="b-edit">
-					<button class="u-button" data-bind="click:event.btnAddClicked.bind($data,-1)">增加</button>
-					<button class="u-button" id="user-action-del" disabled=true data-bind="click: event.delRows">删除</button>
+					<button class="u-button" data-bind="click:event.btnAddClicked.bind($data,-1),visible:buttonShowGroup['add']">增加</button>
+					<button class="u-button" id="user-action-del" disabled=true data-bind="click: event.delRows,visible:buttonShowGroup['del']">删除</button>
+					<button class="u-button" id="user-action-pub" disabled=true data-bind="click: event.pub,visible:buttonShowGroup['pub']">发布</button>
+					<button class="u-button" id="user-action-stop" disabled=true data-bind="click: event.stop,visible:buttonShowGroup['stop']">停用</button>
 				</div>
 			</div>
 			<div class="u-mdlayout-page-section">
@@ -110,7 +112,7 @@
 			<div class="u-col-md-6">
 				<div class="u-form-group width100">
 					<label class="u-col-2">创建时间</label>
-					<div class="u-col-10" u-meta='{"id":"createTime","type":"u-text","data":"formData","field":"createTime"}'>
+					<div class="u-col-10" u-meta='{"id":"createTime","type":"u-date","data":"formData","field":"createTime"}'>
 						<div class="u-input-group-before">*</div>
 						<input type="text" class="u-form-control" placeholder="">
 					</div>
@@ -129,7 +131,7 @@
 			<div class="u-col-md-6">
 				<div class="u-form-group width100">
 					<label class="u-col-2">发布时间</label>
-					<div class="u-col-10" u-meta='{"id":"publishTime","type":"u-combobox","data":"formData","field":"publishTime"}'>
+					<div class="u-col-10" u-meta='{"id":"publishTime","type":"u-date","data":"formData","field":"publishTime"}'>
 						<input type="text" class="u-form-control" placeholder="">
 					</div>
 				</div>
@@ -138,9 +140,9 @@
 		<div class="u-row">
 			<div class="u-col-md-12">
 				<div class="u-form-group width100">
-					<label class="u-col-2">内容</label>
-					<div class="u-col-10" u-meta='{"id":"content","type":"u-text","data":"formData","field":"content"}'>
-						<input type="text" class="u-form-control" placeholder="">
+					<label class="u-col-1">内容</label>
+					<div class="u-col-11" id="txtWrap">
+						<textarea u-meta='{"id":"content","data":"formData","field":"content","type":"textarea"}'></textarea>
 					</div>
 				</div>
 			</div>

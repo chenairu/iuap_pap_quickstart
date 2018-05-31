@@ -10,14 +10,15 @@ define(['text!./asval.html',
         function init(element, cookie) {
             element = element;
             $(element).html(template);
-            ctx = cookie.appCtx + "/exampleArticle";
+            ctx = cookie.appCtx + "/exampleAsVal";
             listRowUrl = ctx + "/list"; //列表查询URL
             saveRowUrl = ctx + "/save"; //新增和修改URL， 有id为修改 无id为新增
             delRowUrl = ctx + "/delete"; //刪除URL
             getUrl = ctx + "/get",
             window.csrfDefense();									//跨站请求伪造防御
-            $(element).html(template);
             event.formDivShow(false);
+            $(element).html(template);
+
             event.pageinit(element);
         }
         event = {

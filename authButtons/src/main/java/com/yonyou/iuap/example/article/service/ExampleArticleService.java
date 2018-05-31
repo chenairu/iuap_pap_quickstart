@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * com.yonyou.iuap.example.article.service
@@ -39,8 +40,17 @@ public class ExampleArticleService {
             }
         }
     }
-
+    public void updateSeletive(List<ExampleArticle> list){
+        for(ExampleArticle article : list){
+            this.updateData(article);
+        }
+    }
+    public void updateData(ExampleArticle article){
+        exampleArticleMapper.updateSelectiveByPrimaryKey(article);
+    }
     public int insert(ExampleArticle article){
+        String id = UUID.randomUUID().toString();
+        article.setId(id);
         return exampleArticleMapper.insert(article);
     }
     public int update(ExampleArticle article){
