@@ -72,8 +72,8 @@ fabric.properties
 */application.properties
 */rebel.xml
 */rebel-remote.xml
-src/main/resources
-pom.xml
+#src/main/resources
+#pom.xml
 */pom.xml
 overlays
 
