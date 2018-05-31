@@ -234,3 +234,98 @@ ALTER TABLE example_order_detail ADD PRIMARY KEY (id);
 -- Primary Key structure for table example_organization
 -- ----------------------------
 ALTER TABLE example_organization ADD PRIMARY KEY (institid);
+
+CREATE TABLE example_equip (
+id VARCHAR2(36) NOT NULL ,
+code VARCHAR2(255) NULL ,
+name VARCHAR2(255) NULL ,
+org_id VARCHAR2(255) NULL ,
+org_name VARCHAR2(255) NULL ,
+dept_id VARCHAR2(255) NULL ,
+dept_name VARCHAR2(255) NULL ,
+create_user_id VARCHAR2(36) NULL ,
+create_user_name VARCHAR2(255) NULL ,
+update_user_id VARCHAR2(255) NULL ,
+update_user_name VARCHAR2(255) NULL ,
+create_time DATE NULL ,
+update_time DATE NULL ,
+version NUMBER(11) NULL ,
+tenant_id VARCHAR2(36) NULL
+);
+ALTER TABLE example_equip ADD PRIMARY KEY (id);
+
+CREATE TABLE example_bill (
+id VARCHAR2(36) NOT NULL ,
+code VARCHAR2(255) NULL ,
+bill_type VARCHAR2(255) NULL ,
+is_valid VARCHAR2(10) NULL ,
+fiscal VARCHAR2(10) NULL ,
+busi_date DATE NULL ,
+pay_code VARCHAR2(255) NULL ,
+pay_name VARCHAR2(255) NULL ,
+in_code VARCHAR2(255) NULL ,
+in_name VARCHAR2(255) NULL ,
+amount NUMBER NULL ,
+bill_status VARCHAR2(10) NULL ,
+create_user_id VARCHAR2(36) NULL ,
+create_user_name VARCHAR2(36) NULL ,
+create_time DATE NULL ,
+update_user_id VARCHAR2(36) NULL ,
+update_user_name VARCHAR2(255) NULL ,
+update_time DATE NULL ,
+version VARCHAR2(255) NULL
+);
+ALTER TABLE example_bill ADD PRIMARY KEY (id);
+COMMENT ON COLUMN example_bill.code IS '编码';
+COMMENT ON COLUMN example_bill.bill_type IS '单据类型';
+COMMENT ON COLUMN example_bill.is_valid IS '是否有效';
+COMMENT ON COLUMN example_bill.fiscal IS '年度';
+COMMENT ON COLUMN example_bill.busi_date IS '业务时间';
+COMMENT ON COLUMN example_bill.pay_code IS '付款单位code';
+COMMENT ON COLUMN example_bill.pay_name IS '付款单位';
+COMMENT ON COLUMN example_bill.in_code IS '收款单位code';
+COMMENT ON COLUMN example_bill.in_name IS '收款单位';
+COMMENT ON COLUMN example_bill.amount IS '金额';
+COMMENT ON COLUMN example_bill.bill_status IS '单据状态';
+COMMENT ON COLUMN example_bill.create_user_id IS '创建人ID';
+COMMENT ON COLUMN example_bill.create_user_name IS '创建人';
+COMMENT ON COLUMN example_bill.create_time IS '创建时间';
+COMMENT ON COLUMN example_bill.update_user_id IS '更新人ID';
+COMMENT ON COLUMN example_bill.update_user_name IS '更新人';
+COMMENT ON COLUMN example_bill.update_time IS '更新时间';
+COMMENT ON COLUMN example_bill.version IS '版本';
+
+CREATE TABLE example_customer (
+id VARCHAR2(36) NOT NULL ,
+customer_code VARCHAR2(255) NULL ,
+customer_name VARCHAR2(255) NULL ,
+province VARCHAR2(255) NULL ,
+city VARCHAR2(255) NULL ,
+corpSize NUMBER(4) NULL ,
+status NUMBER(4) NULL
+);
+ALTER TABLE example_customer ADD PRIMARY KEY (id);
+COMMENT ON COLUMN example_customer.customer_code IS '客户编码';
+COMMENT ON COLUMN example_customer.customer_name IS '客户名称';
+COMMENT ON COLUMN example_customer.province IS '省份';
+COMMENT ON COLUMN example_customer.city IS '城市';
+COMMENT ON COLUMN example_customer.corpSize IS '企业规模';
+COMMENT ON COLUMN example_customer.status IS '状态';
+
+CREATE TABLE example_as_val (
+id VARCHAR2(36) NOT NULL ,
+pid VARCHAR2(36) NOT NULL ,
+code VARCHAR2(255) NULL ,
+name VARCHAR2(255) NOT NULL ,
+value VARCHAR2(255) NOT NULL ,
+ord_index NUMBER(4) NULL ,
+lstdate DATE NULL ,
+is_system NUMBER(4) NULL
+);
+ALTER TABLE example_as_val ADD PRIMARY KEY (id);
+COMMENT ON COLUMN example_as_val.pid IS '编码';
+COMMENT ON COLUMN example_as_val.name IS '下拉框NAME';
+COMMENT ON COLUMN example_as_val.value IS '下拉框VALUE';
+COMMENT ON COLUMN example_as_val.ord_index IS '顺序';
+COMMENT ON COLUMN example_as_val.lstdate IS '最后更新时间';
+COMMENT ON COLUMN example_as_val.is_system IS '是否系统预置';

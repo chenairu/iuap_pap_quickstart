@@ -1,6 +1,6 @@
-define(['text!./asval.html',
+define(['text!./exampleArticle.html',
     "css!../../style/common.css",
-    "css!./asval.css",
+    "css!./exampleArticle.css",
     "../../config/sys_const.js",
     "../../utils/utils.js",
     "../../utils/ajax.js",
@@ -10,7 +10,7 @@ define(['text!./asval.html',
         function init(element, cookie) {
             element = element;
             $(element).html(template);
-            ctx = cookie.appCtx + "/exampleArticle";
+            ctx = cookie.appCtx + "/exampleAsVal";
             listRowUrl = ctx + "/list"; //列表查询URL
             saveRowUrl = ctx + "/save"; //新增和修改URL， 有id为修改 无id为新增
             delRowUrl = ctx + "/delete"; //刪除URL

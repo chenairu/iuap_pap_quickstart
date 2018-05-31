@@ -108,9 +108,9 @@
                         <div class="u-col-12 u-msg-dialog-input">
                             <div class="u-input-group-before padding-left-10 " style="color: red;">*
                             </div>
-                            <div u-meta='{"type":"uiRefer","data":"formData","field":"billType","display":"billType"}'>
+                            <div id="billtypeRef" u-meta='{"type":"uiRefer","data":"formData","field":"billType","display":"billType"}'>
                                 <div class="u-input-group u-has-feedback">
-                                    <input class="u-form-control" readonly="readonly" />
+                                    <input class="u-form-control" id="bill_type" readonly="readonly" />
                                     <span class="u-form-control-feedback fa fa-list-ul refer"></span>
                                 </div>
                             </div>
@@ -124,7 +124,7 @@
                             <label class="u-input-label left">年度</label>
                         </div>
                         <div class="u-col-12 u-msg-dialog-input ">
-                           <!-- <div id="equip_org" u-meta={"type":"uiRefer","data":"formData","field":"orgId","display":"orgName"}>
+                           <!-- <div id="equip_org" u-viewModel={"type":"uiRefer","data":"formData","field":"orgId","display":"orgName"}>
                                 <div class="u-input-group u-has-feedback">
                                     <input class="u-form-control" readonly="readonly" />
                                     <span class="u-form-control-feedback fa fa-list-ul refer"></span>
@@ -142,7 +142,7 @@
                         </div>
                         <div class="u-col-12 u-msg-dialog-input ">
 
-                           <!-- <div id="equip_dept" u-meta={"type":"uiRefer","data":"formData","field":"deptId","display":"deptName"}>
+                           <!-- <div id="equip_dept" u-viewModel={"type":"uiRefer","data":"formData","field":"deptId","display":"deptName"}>
                                 <div class="u-input-group u-has-feedback">
                                     <input class="u-form-control" readonly="readonly" />
                                     <span class="u-form-control-feedback fa fa-list-ul refer"></span>
@@ -158,9 +158,9 @@
 
                 <!--第三行-->
                 <div class="u-row margin-top-20">
-                    <div class="u-msg-dialog-lable-out u-col-6">
+                    <div class="u-msg-dialog-lable-out u-col-3">
                         <div class="u-msg-dialog-lable ">
-                            <label class="u-input-label left">付款单位</label>
+                            <label class="u-input-label left">付款单位code</label>
                         </div>
                         <div class="u-col-12 u-msg-dialog-input ">
                             <div id="pay_code" u-meta={"type":"uiRefer","data":"formData","field":"payCode","display":"payName"}>
@@ -171,15 +171,37 @@
                             </div>
                         </div>
                     </div>
-                    <div class="u-msg-dialog-lable-out u-col-6">
+                    <div class="u-msg-dialog-lable-out u-col-3">
                         <div class="u-msg-dialog-lable ">
-                            <label class="u-input-label left">收款单位</label>
+                            <label class="u-input-label left">付款单位</label>
+                        </div>
+                        <div class="u-col-12 u-msg-dialog-input ">
+                            <div u-meta='{"id":"code","type":"u-text","data":"formData","field":"payName"}'>
+                                <input type="text" id="pay_name" class="u-form-control " placeholder="" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="u-msg-dialog-lable-out u-col-3">
+                        <div class="u-msg-dialog-lable ">
+                            <label class="u-input-label left">收款单位code</label>
                         </div>
                         <div class="u-col-12 u-msg-dialog-input ">
                             <div id="in_code" u-meta={"type":"uiRefer","data":"formData","field":"inCode","display":"inName"}>
                                 <div class="u-input-group u-has-feedback">
                                     <input class="u-form-control" readonly="readonly" />
                                     <span class="u-form-control-feedback fa fa-list-ul refer"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="u-msg-dialog-lable-out u-col-3">
+                        <div class="u-msg-dialog-lable ">
+                            <label class="u-input-label left">付款单位</label>
+                        </div>
+                        <div class="u-col-12 u-msg-dialog-input ">
+                            <div class="u-col-12 u-msg-dialog-input ">
+                                <div u-meta='{"id":"code","type":"u-text","data":"formData","field":"inName"}'>
+                                    <input type="text" id="in_name" class="u-form-control " placeholder="" >
                                 </div>
                             </div>
                         </div>

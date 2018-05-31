@@ -5,7 +5,8 @@ var meta = {
         //编码
         customerCode: {
             type: 'string',
-            enable:false
+            required: true,
+            nullMsg: '编码不能为空!'
         },
         //名称
         customerName: {
@@ -15,28 +16,38 @@ var meta = {
         },
         //省份
         province: {
-            /*'refmodel' : JSON.stringify(refinfo['wbUser']),
-            'refcfg' : '{"ctx":"/uitemplate_web"}'*/
+
         },
         //城市
         city: {
-            default:function(){
-                    value:$.cookie("userId")
-            }
 
         },
         //企业规模
         corpsize:{
-            type: 'string'
 
         },
         //状态
         status: {
-            type: 'string'
+
         }
     },
     
     pageSize: 5,
     //启用前端缓存
     pageCache: false
-}
+};
+var viewModel = {
+    draw: 1,
+    pageSize: 5,
+    gridData: new u.DataTable(meta),
+    formData: new u.DataTable(meta),
+    yesOrNo: [{
+        name: "启用",
+        value: "1"
+    },
+        {
+            name: "停用",
+            value: "0"
+        }
+    ]
+};

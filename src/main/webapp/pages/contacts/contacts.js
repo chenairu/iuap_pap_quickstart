@@ -1,5 +1,5 @@
 define(
-	["text!./asyncOrg.html", "css!./contacts.css", "./meta.js",
+	["text!./contacts.html", "css!./contacts.css", "./meta.js",
 		"css!../../style/style.css", "../../config/sys_const.js",
 		"css!../../style/widget.css", "../sever.js",
 		"css!../../style/currency.css"],
@@ -25,10 +25,10 @@ define(
 				totalCount: 0,
 
 				/* 树数据 */
-				institdata: new u.DataTable(meta),
+				institdata: new u.DataTable(viewModel),
 
 				/* 编辑框树数据 */
-				institdatanew: new u.DataTable(meta),
+				institdatanew: new u.DataTable(viewModel),
 
 				/* 电话本数据 */
 				telbookdata: new u.DataTable(metaTelbook),
@@ -201,7 +201,7 @@ define(
 														{
 															unSelect: true
 														});
-												$("#tree2")[0]["u-meta"].tree.expandAll(true);
+												$("#tree2")[0]["u-viewModel"].tree.expandAll(true);
 											}
 										} else {
 											var msg = "";
@@ -514,7 +514,7 @@ define(
 								row
 									.setValue(
 										"parentname",
-										$("#tree2")[0]["u-meta"].tree
+										$("#tree2")[0]["u-viewModel"].tree
 											.getNodeByParam(
 												"id",
 												row

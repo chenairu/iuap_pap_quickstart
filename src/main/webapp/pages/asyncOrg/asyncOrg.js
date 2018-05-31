@@ -187,7 +187,7 @@ define([
                                         viewModel.institdata.setSimpleData(arr, {
                                             unSelect: true
                                         });
-                                        $("#tree2")[0]["u-meta"].tree.expandAll(true);
+                                        $("#tree2")[0]["u-viewModel"].tree.expandAll(true);
                                     }
                                 } else {
                                     var msg = "";
@@ -471,7 +471,7 @@ define([
                         if (row.data.parentid.value) {
                             row.setValue(
                                 "parentname",
-                                $("#tree2")[0]["u-meta"].tree.getNodeByParam(
+                                $("#tree2")[0]["u-viewModel"].tree.getNodeByParam(
                                     "id",
                                     row.getValue("parentid")
                                 ).name

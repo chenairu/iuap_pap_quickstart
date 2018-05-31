@@ -1,6 +1,6 @@
-package com.yonyou.iuap.example.billcode.dao;
+package com.yonyou.iuap.example.customer.dao;
 
-import com.yonyou.iuap.example.billcode.entity.ExampleCustomer;
+import com.yonyou.iuap.example.customer.entity.ExampleCustomer;
 import com.yonyou.iuap.mybatis.type.PageResult;
 import com.yonyou.iuap.persistence.mybatis.anotation.MyBatisRepository;
 import org.apache.ibatis.annotations.Param;

@@ -34,19 +34,14 @@ public class ExampleEquipController extends BaseController {
         return buildSuccess(list);
     }
 
-    @RequestMapping(value={"/insert"},method = RequestMethod.POST)
+    @RequestMapping(value={"/save"},method = RequestMethod.POST)
     public Object insert(@RequestBody ExampleEquip exampleEquip){
         exampleEquipService.save(exampleEquip);
         return buildSuccess();
     }
 
-    @RequestMapping(value={"/update"},method = RequestMethod.PUT)
-    public Object update(@RequestBody ExampleEquip exampleEquip){
-        exampleEquipService.save(exampleEquip);
-        return buildSuccess();
-    }
 
-    @RequestMapping(value={"/delete"},method = RequestMethod.DELETE)
+    @RequestMapping(value={"/delete"},method = RequestMethod.POST)
     public Object delete(@RequestBody List<ExampleEquip> exampleEquips){
         exampleEquipService.delete(exampleEquips);
         return buildSuccess();

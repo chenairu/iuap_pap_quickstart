@@ -1,7 +1,7 @@
-package com.yonyou.iuap.example.billcode.validator;
+package com.yonyou.iuap.example.customer.validator;
 
-import com.yonyou.iuap.example.billcode.entity.ExampleCustomer;
-import com.yonyou.iuap.example.billcode.service.ExampleCustomerService;
+import com.yonyou.iuap.example.customer.entity.ExampleCustomer;
+import com.yonyou.iuap.example.customer.service.ExampleCustomerService;
 import com.yonyou.iuap.iweb.exception.ValidException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

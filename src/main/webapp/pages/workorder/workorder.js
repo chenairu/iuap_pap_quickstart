@@ -23,8 +23,8 @@ define(['text!./workorder.html',
             //根据单据主键获得单据
             formStatus: _CONST.FORM_STATUS_ADD,
 
-            gridData: new u.DataTable(meta),
-            formData: new u.DataTable(meta),
+            gridData: new u.DataTable(viewModel),
+            formData: new u.DataTable(viewModel),
 
             //流程事件定义
         	flowEvent:{

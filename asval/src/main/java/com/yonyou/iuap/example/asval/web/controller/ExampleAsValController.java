@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.yonyou.iuap.base.web.BaseController;
 import com.yonyou.iuap.example.asval.entity.ExampleAsVal;
 import com.yonyou.iuap.example.asval.service.ExampleAsValService;
+import com.yonyou.iuap.example.asval.validator.ExampleAsValValidator;
 import com.yonyou.iuap.mvc.type.SearchParams;
 import com.yonyou.iuap.persistence.vo.pub.util.StringUtil;
 import com.yonyou.uap.wb.process.org.OrganizationBrief;
@@ -27,7 +28,8 @@ public class ExampleAsValController extends BaseController {
 
     @Autowired
     private ExampleAsValService exampleAsValService;
-
+    @Autowired
+    private ExampleAsValValidator exampleAsValValidator;
     @RequestMapping(value={"/list"},method = {RequestMethod.GET})
     public Object list(PageRequest pageRequest, SearchParams searchParams) {
 
@@ -36,6 +38,7 @@ public class ExampleAsValController extends BaseController {
     }
     @RequestMapping(value={"/save"},method = {RequestMethod.POST})
     public Object insert(@RequestBody  List<ExampleAsVal> exampleAsVals){
+        exampleAsValValidator.validator(exampleAsVals);
         exampleAsValService.batchAddOrUpdate(exampleAsVals);
         return buildSuccess();
     }
@@ -56,7 +59,7 @@ public class ExampleAsValController extends BaseController {
         List<ExampleAsVal> asValList = new ArrayList<>();
         if(!CollectionUtils.isEmpty(arr)){
             String[] strArray = arr.toArray(new String[arr.size()]);
-            asValList = this.exampleAsValService.getpeByIds(strArray);
+            asValList = this.exampleAsValService.getByIds(strArray);
         }
         result.put("data",transformTOBriefEntity(asValList));
         return result;

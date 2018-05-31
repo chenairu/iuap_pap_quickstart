@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yonyou.iuap.example.billcode.dao.ExampleCustomerMapper">
-    <resultMap id="BaseResultMap" type="com.yonyou.iuap.example.billcode.entity.ExampleCustomer">
+<mapper namespace="com.yonyou.iuap.example.customer.dao.ExampleCustomerMapper">
+    <resultMap id="BaseResultMap" type="com.yonyou.iuap.example.customer.entity.ExampleCustomer">
         <id column="id" jdbcType="VARCHAR" property="id"/>
         <result column="customer_code" jdbcType="VARCHAR" property="customerCode"/>
         <result column="customer_name" jdbcType="VARCHAR" property="customerName"/>
@@ -24,7 +24,7 @@
     delete from example_customer
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-    <insert id="insert" parameterType="com.yonyou.iuap.example.billcode.entity.ExampleCustomer">
+    <insert id="insert" parameterType="com.yonyou.iuap.example.customer.entity.ExampleCustomer">
     insert into example_customer (id, customer_code, customer_name, 
       province, city, corpSize, 
       status)
@@ -32,7 +32,7 @@
       #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{corpsize,jdbcType=VARCHAR},
       #{status,jdbcType=VARCHAR})
   </insert>
-    <insert id="insertSelective" parameterType="com.yonyou.iuap.example.billcode.entity.ExampleCustomer">
+    <insert id="insertSelective" parameterType="com.yonyou.iuap.example.customer.entity.ExampleCustomer">
         insert into example_customer
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -81,7 +81,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.yonyou.iuap.example.billcode.entity.ExampleCustomer">
+    <update id="updateByPrimaryKeySelective" parameterType="com.yonyou.iuap.example.customer.entity.ExampleCustomer">
         update example_customer
         <set>
             <if test="customerCode != null">
@@ -105,7 +105,7 @@
         </set>
         where id = #{id,jdbcType=VARCHAR}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.yonyou.iuap.example.billcode.entity.ExampleCustomer">
+    <update id="updateByPrimaryKey" parameterType="com.yonyou.iuap.example.customer.entity.ExampleCustomer">
     update example_customer
     set customer_code = #{customerCode,jdbcType=VARCHAR},
       customer_name = #{customerName,jdbcType=VARCHAR},
