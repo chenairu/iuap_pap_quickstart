@@ -16,37 +16,40 @@ import com.yonyou.iuap.example.dictionary.service.DictionaryService;
 @Component
 public class CodeCache {
 
+	/**
+	 * 启动时自动加载字典
+	 */
 	@PostConstruct
 	public void loadAllCodes() {
 		List<Dictionary> list = service.findAll();
 		for(Dictionary entity: list) {
-			Code code = new Code();
-			code.setCode(entity.getCode());
-			code.setName(entity.getName());
-			code.setType("code_test_001");
-			this.setCode("code_test_001", entity.getCode(), code);
+			this.setCode("code_test_001", entity.getCode(), entity);
 		}
 	}
 	
-	public void loadCode(String codeType, String code) {
-		
+	/**
+	 * 将字典数据加载至redis缓存
+	 * @param codeType
+	 * @param code
+	 * @param entity
+	 */
+	public void setCode(String codeType, String code, Dictionary entity) {
+		cacheManager.hset(codeType, code, JSON.toJSONString(entity));
 	}
 	
-	public void setCode(String codeType, String code, Code codeVo) {
-		cacheManager.hset(codeType, code, JSON.toJSONString(codeVo));
-	}
-	
-	public Code getCode(String codeType, String code) {
+	/**
+	 * 从redis缓存中获取字典数据
+	 * @param codeType
+	 * @param code
+	 * @return
+	 */
+	public Dictionary getCode(String codeType, String code) {
 		String strCode = cacheManager.hget(codeType, code);
 		if(!StringUtils.isEmpty(strCode)) {
-			return JSON.parseObject(strCode, Code.class);
+			return JSON.parseObject(strCode, Dictionary.class);
 		}else {
 			return null;
 		}
-	}
-	
-	public List<Code> getCodes(String codeType){
-		return null;
 	}
 	
 	/***************************************************/
