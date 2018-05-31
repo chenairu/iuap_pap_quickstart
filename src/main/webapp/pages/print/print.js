@@ -335,7 +335,7 @@ define(['text!./print.html',
 			printPage: function () {
 				$.ajax({
 					type: 'GET',
-					url: '/eiap-plus/appResAllocate/queryPrintTemplateAllocate?funccode=testFun_print&nodekey=func_print2',
+					url: '/eiap-plus/appResAllocate/queryPrintTemplateAllocate?funccode=testFun_print&nodekey=test_print2',
 					datatype: 'json',
 					contentType: 'application/json;charset=utf-8',
 					success: function (result) {
