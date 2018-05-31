@@ -13,6 +13,12 @@
     <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime" />
     <result column="status" jdbcType="VARCHAR" property="status" />
   </resultMap>
+  <sql id="Base_Column_List">
+    id, title, content,
+      create_user_id, create_user_name, publish_user_id,
+      publish_user_name, create_time, publish_time,
+      status
+  </sql>
   <insert id="insert" parameterType="com.yonyou.iuap.example.article.entity.ExampleArticle">
     insert into example_article (id, title, content, 
       create_user_id, create_user_name, publish_user_id, 
