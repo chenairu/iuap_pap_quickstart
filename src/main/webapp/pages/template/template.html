@@ -1,139 +1,151 @@
-<div class="u-mdlayout " id="user-mdlayout">
-    <div class="u-mdlayout-btn">
-        <div class="center-title">
-            <span>测试模板</span>
-        </div>
+<div class="u-mdlayout" id="user-mdlayout">
+    <div class="aline-center b-margin">
+        <h4>模板测试</h4>
     </div>
-
-    <div id="dicttype_list_button_2" class="user-actions">
-        <div class="margin-0 padding-0">
-            <button class="u-button  u-button-primary raised gray-btn u-button-pa margin-right-20" id="user-action-add" data-bind="click:beforeEdit.bind($data,-1)">增加
-            </button>
-            <button class="u-button  u-button-primary raised gray-btn u-button-pa margin-right-20" id="user-action-del" data-bind="click: event.delRows">删除
-            </button>
-            <button class="u-button  u-button-primary raised gray-btn u-button-pa margin-right-20" id="user-action-down" data-bind="click: event.onTempletExcel">模板下载
-            </button>
-            <button class="u-button  u-button-primary raised gray-btn u-button-pa margin-right-20" id="user-action-impot" data-bind="click: event.onUploadFile">导入
-            </button>
-            <button class="u-button  u-button-primary raised gray-btn u-button-pa margin-right-20" id="user-action-export" data-bind="click: event.onDownloadExcel">导出
-            </button>
-            <button class="u-button  u-button-primary raised gray-btn u-button-pa margin-right-20" id="user-action-print" data-bind="click: event.printPage">打印
-            </button>
-
+    <!-- 搜索模块 -->
+    <div class=" form-search b-margin">
+        <div class="u-panel-heading  u-collapse-updown">
+            <div id='condition-toggle' class="u-col-12">查询与筛选
+                <div class="float-right">
+                    <span id="condition-text">展开</span>
+                    <i id="condition-icon" class="uf uf-arrow-down"></i>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="u-mdlayout-detail width-full">
-        <!-- list -->
-        <div class="u-mdlayout-page u-navlayout-fixed-header current" id="list">
-            <div class="u-mdlayout-page-section">
-                <div class="user-page-content">
-                    <div class="user-datagrid ">
-                        <div class="table-container">
-                            <div type="text" id="dicttype" u-meta='{"id":"grid_dicttype","data":"gridData","type":"grid","editable":false,"editType":"default","rowHeight":"40px","multiSelect":true,"canDrag":false,"canSwap":false,"onRowSelected":"event.selectRow","onRowUnSelected":"event.selectRow","onRowHover":"event.rowHoverHandel"}'
-                                data-bind="event: { mouseout: event.mouseoutFunc  }">
-                                <div options='{"field":"code","dataType":"String","title":"编码","editType":"string","editOptions":{"validType":"string","required":true}}'></div>
-                                <div options='{"field":"name","dataType":"String","title":"名称","editType":"string","editOptions":{"validType":"string","required":true},"renderType":"event.renderName"}'></div>
-                                <div options='{"field":"remark","dataType":"String","title":"备注","editType":"string"}'></div>
-                                <div options='{"field":"operate","dataType":"String","title":"","renderType":"optFun","editable":true}'></div>
-                            </div>
-                            <div id='pagination' class='pagination u-pagination pagination-sm'></div>
-                        </div>
+        <div class="u-row" id="search-modul" style="display:none;">
+            <div class="u-col-12 u-col-sm-12 b-margin">
+                <div class="u-col-4 u-col-sm-6">
+                    <div class="u-col-3 aline-right">
+                        <label>编码</label>
+                    </div>
+                    <div class="u-col-9 u-col-sm-12">
+                        <input class="u-form-control search-enter" name="search_code" />
                     </div>
                 </div>
+                <div class="u-col-4 u-col-sm-6">
+                    <div class="u-col-3 aline-right">名称
+                    </div>
+                    <div class="u-col-9 u-col-sm-12">
+                        <input class="u-form-control search-enter" id="search_name" name="search_name" />
+                    </div>
+                </div>
+                <div class="u-col-4 u-col-sm-6">
+                    <div class=" float-right">
+                        <button class="u-button" data-bind="click: event.cleanSearch">清空</button>
+                        <button class="u-button" data-bind="click: event.search">搜索</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="u-mdlayout-detail width-full">
+        <!-- list -->
+        <div class="u-mdlayout-page u-navlayout-fixed-header" id="list">
+            <div id="dicttype_list_button_2" class="b-margin">
+                <div class="b-edit">
+                    <button class="u-button" data-bind="click:event.btnAddClicked.bind($data,-1)">增加</button>
+                    <button class="u-button" id="user-action-del" disabled=true data-bind="click: event.delRows">删除</button>
+                    <button class="u-button" data-bind="click: event.onTempletExcel">模板下载</button>
+                    <button class="u-button" data-bind="click: event.onUploadFile">导入</button>
+                    <button class="u-button" data-bind="click: event.onDownloadExcel">导出</button>
+                </div>
+            </div>
+            <div class="u-mdlayout-page-section">
+                <div type="text" id="dicttype" u-meta='{"id":"grid_dicttype","data":"gridData","type":"grid","editable":false,"editType":"default","rowHeight":"40px","multiSelect":true,"canDrag":false,"canSwap":false,"onRowSelected":"event.selectRow","onRowUnSelected":"event.selectRow","onRowHover":"event.rowHoverHandel"}'
+                    data-bind="event: { mouseout: event.mouseoutFunc  }">
+                    <div options='{"field":"code","dataType":"String","title":"编码","editType":"string","editOptions":{"validType":"string","required":true}}'></div>
+                    <div options='{"field":"name","dataType":"String","title":"名称","editType":"string","editOptions":{"validType":"string","required":true},"renderType":"event.renderName"}'></div>
+                    <div options='{"field":"remark","dataType":"String","title":"备注","editType":"string"}'></div>
+                    <div options='{"field":"operate","dataType":"String","title":"","renderType":"event.optFun","editable":true}'></div>
+                </div>
+                <div class="aline-center">
+                    <div id='pagination' class='pagination u-pagination pagination-sm'></div>
+                </div>
+
             </div>
         </div>
         <!-- end list -->
-        <div id="divForm" style="display:none;max-width:900px;">
-            <div class="u-msg-title">
-                <h4>基本信息</h4>
-            </div>
-            <div class="u-msg-content u-msg-date-content">
-                <div class=" u-row ">
-                    <div class="u-msg-dialog-lable-out u-col-6">
-                        <div class=" u-msg-dialog-lable">
-                            <label class="u-input-label left">编码</label>
-                        </div>
-                        <div class="u-col-12 u-msg-dialog-input">
-                            <div class="u-input-group-before padding-left-10 " style="color: red;">*
-                            </div>
-                            <div u-meta='{"id":"code","type":"u-text","data":"formData","field":"code"}'>
-                                <input type="text" class="u-form-control padding-left-20" placeholder="编码不能为空">
-                            </div>
-                        </div>
+    </div>
+    <!-- 表单 -->
+    <div id="dialogContent" style="display:none;">
+        <div class="u-msg-title">
+            <h4>基本信息</h4>
+        </div>
+        <div class="u-msg-content u-msg-date-content">
+            <div class=" u-row ">
+                <div class="u-col-12">
+                    <div class="u-col-3 aline-right">
+                        编码
                     </div>
-                    <div class="u-msg-dialog-lable-out u-col-6">
-                        <div class="u-msg-dialog-lable">
-                            <label class="u-input-label left">名称</label>
+                    <div class="u-col-9">
+                        <div class="u-input-group-before padding-left-10 ">*
                         </div>
-                        <div class="u-col-12 u-msg-dialog-input ">
-                            <div u-meta='{"id":"name","type":"u-text","data":"formData","field":"name"}'>
-                                <input type="text" class="u-form-control padding-left-20" placeholder="名称">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--第二行-->
-
-                <div class="u-row margin-top-20">
-                    <div class="u-msg-dialog-lable-out u-col-6">
-
-                    </div>
-                    <div class="u-msg-dialog-lable-out u-col-6">
-                        <div class="u-msg-dialog-lable ">
-                            <label class="u-input-label left">备注</label>
-                        </div>
-                        <div class="u-col-12 u-msg-dialog-input ">
-                            <div u-meta='{"id":"remark","type":"u-text","data":"formData","field":"remark"}'>
-                                <input type="text" class="u-form-control padding-left-20" placeholder="备注">
-                            </div>
+                        <div u-meta='{"id":"code","type":"u-text","data":"formData","field":"code"}'>
+                            <input type="text" class="u-form-control padding-left-20" placeholder="编码不能为空">
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="u-msg-footer u-msg-date-footer">
-                <button class="u-msg-ok u-button primary" data-bind="click: event.saveClick">保存
-                    <span class="u-button-container">
-                        <span class="u-ripple"></span>
-                    </span>
+            <div class="u-row margin-top-20">
+                <div class="u-col-12">
+                    <div class="u-col-3 aline-right">
+                        名称
+                    </div>
+                    <div class="u-col-9 ">
+                        <div class="u-input-group-before padding-left-10 ">*
+                        </div>
+                        <div u-meta='{"id":"name","type":"u-text","data":"formData","field":"name"}'>
+                            <input type="text" class="u-form-control padding-left-20" placeholder="名称">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="u-row margin-top-20">
+                <div class="u-col-12">
+                    <div class="u-col-3 aline-right">备注</div>
+                    <div class="u-col-9">
+                        <div u-meta='{"id":"remark","type":"u-text","data":"formData","field":"remark"}'>
+                            <input type="text" class="u-form-control padding-left-20" placeholder="备注">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="u-msg-footer u-msg-date-footer">
+            <div class=" float-right">
+                <button class="u-button" data-bind="click: event.saveClick">保存
                 </button>
-                <button class="u-msg-cancel u-button  u-grey" data-bind="click: event.cancelClick">取消
-                    <span class="u-button-container">
-                        <span class="u-ripple"></span>
-                    </span>
+                <button class="u-button u-grey" data-bind="click: event.cancelClick">取消
                 </button>
             </div>
         </div>
     </div>
 
 
-
-
-
-	<div id="dialog_content">
-            <div class="u-msg-title">
-                <h4>导入</h4>
-            </div>
-            <div class="u-msg-content">
-                <div class ="u-msg-uplode-content" >
-                    <div class="choosefile">
-                        <div class="choosefileImg">
-                            <img src="../example/static/beforeUpload.svg" id="uploadingIMG2">
-                        </div>
-                        <div id="uploadingMsg2" class="uploadingMsg"></div>
-                        <button class="u-button u-button-border uploadBtn "title="选择上传文件" id="choosefileBtn2" onclick="document.getElementById('fileName').click()">选择上传文件</button>
-                        <input class="u-input"  type="file" name="fileName" id="fileName"   />
+    <div id="dialog_content" style="display: none">
+        <div class="u-msg-title">
+            <h4>导入</h4>
+        </div>
+        <div class="u-msg-content">
+            <div class="u-msg-uplode-content">
+                <div class="choosefile">
+                    <div class="choosefileImg">
+                        <img src="../example/static/beforeUpload.svg" id="uploadingIMG2">
                     </div>
-                    <div class="filenamediv" id="filenamediv2"></div>
-                    <div class="file-loding">
-                        <div class="file-lodedPart"></div>
-                    </div>
+                    <div id="uploadingMsg2" class="uploadingMsg"></div>
+                    <button class="u-button u-button-border uploadBtn " title="选择上传文件" id="choosefileBtn2" onclick="document.getElementById('fileName').click()">选择上传文件</button>
+                    <input  style="display: none" type="file" name="fileName" id="fileName" />
+                </div>
+                <div class="filenamediv" id="filenamediv2"></div>
+                <div class="file-loding">
+                    <div class="file-lodedPart"></div>
                 </div>
             </div>
-            <div class="u-msg-footer u-msg-date-footer">
-            </div>
         </div>
-    
-
-
-
+        <div class="u-msg-footer u-msg-date-footer">
+        </div>
+    </div>
 </div>
+
+

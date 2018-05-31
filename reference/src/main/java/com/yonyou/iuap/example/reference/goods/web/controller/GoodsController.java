@@ -1,6 +1,7 @@
 package com.yonyou.iuap.example.reference.goods.web.controller;
 
 import com.yonyou.iuap.base.web.BaseController;
+import com.yonyou.iuap.context.InvocationInfoProxy;
 import com.yonyou.iuap.example.common.utils.CommonUtils;
 import com.yonyou.iuap.example.reference.goods.entity.Goods;
 import com.yonyou.iuap.example.reference.goods.service.GoodsService;
@@ -31,6 +32,15 @@ public class GoodsController extends BaseController {
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public @ResponseBody Object page(PageRequest pageRequest, SearchParams searchParams) {
+    	
+    	InvocationInfoProxy.getUserid();
+    	InvocationInfoProxy.getUsername();
+    	
+    	System.out.println("aaaaaaaa");
+    	System.out.println(InvocationInfoProxy.getUsername());
+    	System.out.println("aaaaaaaa");
+    	
+    	
     	CommonUtils.decode(searchParams);
         Page<Goods> tmpdata = goodsService.selectAllByPage(pageRequest, searchParams);
         return buildSuccess(tmpdata);

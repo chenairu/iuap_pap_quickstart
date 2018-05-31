@@ -25,7 +25,11 @@ var meta = {
     },
     //创建者
     creator: {
-      type: "string"
+      type: "string",
+      // 'refmodel' : JSON.stringify(refinfo['wbUser']),
+      // 'refcfg' : '{"ctx":"/uitemplate_web"}'
+      'refmodel' : JSON.stringify(refinfo['organization']),
+			'refcfg' : '{"ctx":"/uitemplate_web"}'
     },
     createtime: {
       type: "string"

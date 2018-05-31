@@ -107,3 +107,10 @@ var meta = {
 	}
 
 };
+
+var viewModel = {
+    draw: 1,
+    pageSize: 5,
+    gridData: new u.DataTable(meta),
+    formData: new u.DataTable(meta),
+};

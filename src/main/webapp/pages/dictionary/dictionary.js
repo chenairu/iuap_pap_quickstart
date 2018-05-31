@@ -6,7 +6,8 @@ define([
   "../../utils/utils.js",
   "../../utils/ajax.js",
   "../../utils/tips.js",
-  "./viewModel.js"
+  "./viewModel.js",
+  'uiReferComp', 'uiNewReferComp', 'refer'
 ], function (html) {
   var ctx, listRowUrl, saveRowUrl, delRowUrl, element;
   function init(element, cookie) {
@@ -183,6 +184,8 @@ define([
         .each(function () {
           queryData[this.name] = removeSpace(this.value);
         });
+
+      console.log("queryData:", queryData);
       viewModel.gridData.addParams(queryData);
       event.initGridDataList();
     },

@@ -112,7 +112,14 @@
 .b-edit {
     padding: 0 15px;
 }
-
+.b-ref{
+    position: relative;
+}
+.goback{
+    border: none;
+    color: #039BE5;
+	background: none;
+}
 #form-div {
     position: absolute;
     left: 0px;
@@ -121,7 +128,11 @@
     height: 100%;
     z-index: 10;
     background-color: #fff;
-    padding: 15px 30px;
+}
+#form-div #form-div-header{
+    border-bottom: 4px solid #f4f4f4;
+    padding: 0 15px;
+    line-height: 39px;
 }
 #form-div #form-div-body{
     margin: 15px 0;
