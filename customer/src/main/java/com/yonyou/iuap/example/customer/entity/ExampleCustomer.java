@@ -1,4 +1,4 @@
-package com.yonyou.iuap.example.billcode.entity;
+package com.yonyou.iuap.example.customer.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

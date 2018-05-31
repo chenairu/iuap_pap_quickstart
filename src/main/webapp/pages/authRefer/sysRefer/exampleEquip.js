@@ -15,12 +15,11 @@ define(["text!./exampleEquip.html","cookieOperation","./meta.js",
                 pageSize: 5,
 
                 listRowUrl: ctx + "/list",					//列表查询URL
-                insertRowUrl: ctx + "/insert",					//新增和修改URL， 有id为修改 无id为新增
-                updateRowUrl:ctx+"/update",
+                saveRowUrl: ctx + "/insert",					//新增和修改URL， 有id为修改 无id为新增
                 delRowUrl: ctx + "/delete",				   //刪除URL
 
-                gridData: new u.DataTable(meta),
-                formData: new u.DataTable(meta),
+                gridData: new u.DataTable(viewModel),
+                formData: new u.DataTable(viewModel),
 
                 event: {
                     //新增或修改的保存或取消按钮
@@ -190,7 +189,7 @@ define(["text!./exampleEquip.html","cookieOperation","./meta.js",
                                 "id": data[i].id
                             });
                         }
-                        $ajax(viewModel.delRowUrl, JSON.stringify(arr), viewModel.event.initGridDataList(), viewModel.event.showErr, "DELETE", "json");
+                        $ajax(viewModel.delRowUrl, JSON.stringify(arr), viewModel.event.initGridDataList(), viewModel.event.showErr, "POST", "json");
                     },
                     delRows: function (data) {
                         let num = viewModel.gridData.selectedIndices();
@@ -279,11 +278,8 @@ define(["text!./exampleEquip.html","cookieOperation","./meta.js",
                         }
 
                         var jsonData = viewModel.event.genDataList(data);
-                        if(data.id == null){
-                            $ajax(viewModel.insertRowUrl, JSON.stringify(jsonData[0]), viewModel.event.initGridDataList(), viewModel.event.showErr, "POST", "json");
-                        }else{
-                            $ajax(viewModel.updateRowUrl, JSON.stringify(jsonData[0]), viewModel.event.initGridDataList(), viewModel.event.showErr, "PUT", "json");
-                        }
+                        $ajax(viewModel.insertRowUrl, JSON.stringify(jsonData[0]), viewModel.event.initGridDataList(), viewModel.event.showErr, "POST", "json");
+
 
                     },
 

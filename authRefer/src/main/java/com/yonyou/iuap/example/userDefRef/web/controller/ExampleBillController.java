@@ -1,4 +1,4 @@
-package com.yonyou.iuap.example.userDefRef.controller;
+package com.yonyou.iuap.example.userDefRef.web.controller;
 
 import com.yonyou.iuap.base.web.BaseController;
 import com.yonyou.iuap.example.userDefRef.entity.ExampleBill;
@@ -32,17 +32,13 @@ public class ExampleBillController extends BaseController {
         return buildSuccess(tmpdata);
     }
 
-    @RequestMapping(value = {"/insert"},method={RequestMethod.POST})
-    public Object insert(){
+    @RequestMapping(value = {"/save"},method={RequestMethod.POST})
+    public Object save(){
 
         return buildSuccess();
     }
-    @RequestMapping(value = {"/update"},method={RequestMethod.PUT})
-    public Object update(){
 
-        return buildSuccess();
-    }
-    @RequestMapping(value = {"/delete"},method={RequestMethod.DELETE})
+    @RequestMapping(value = {"/delete"},method={RequestMethod.POST})
     public Object delete(){
 
         return buildSuccess();

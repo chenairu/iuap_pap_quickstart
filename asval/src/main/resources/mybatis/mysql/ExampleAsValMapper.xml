@@ -71,22 +71,19 @@
       IS_SYSTEM = #{isSystem,jdbcType=CHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
-  <delete id="deleteByPrimayKey" parameterType="java.lang.String">
-    delete from example_as_val
-      where id = #{id,jdbcType=VARCHAR}
-  </delete>
   <select id="findAll" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from example_as_val
   </select>
 
-  <select id="findProvince" resultMap="BaseResultMap">
+  <select id="findByClause" resultMap="BaseResultMap" parameterType="com.yonyou.iuap.example.asval.entity.ExampleAsVal">
     select
     <include refid="Base_Column_List" />
     from example_as_val
     where 1=1
-      AND code=#{code,jdbcType=VARCHAR}
+      AND pid=#{pid,jdbcType=VARCHAR}
+      AND value=#{value,jdbcType=VARCHAR}
   </select>
 
   <select id="getByIds" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -119,17 +116,12 @@
     SELECT
     <include refid="Base_Column_List" />
     from example_as_val where 1=1
-   <!-- <if test="params != null">
-      <if test="params.pid != null and params.pid != ''">
-        and pid = #{params.code,jdbcType=VARCHAR}
-      </if>
-    </if>-->
     <if test="search != null">
-      <if test="search.searchMap.searchParam!=null and search.searchMap.searchParam!='' ">
-        and (NAME like CONCAT(CONCAT('%', #{search.searchMap.searchParam}),'%')
-        or
-        VALUE like CONCAT(CONCAT('%', #{search.searchMap.searchParam}),'%')
-        )
+      <if test="search.value!=null and search.value!='' ">
+        and value like CONCAT(CONCAT('%', #{search.value}),'%')
+      </if>
+      <if test="search.name!=null and search.name!='' ">
+        and name like CONCAT(CONCAT('%', #{search.name}),'%')
       </if>
     </if>
     <if test="page != null">

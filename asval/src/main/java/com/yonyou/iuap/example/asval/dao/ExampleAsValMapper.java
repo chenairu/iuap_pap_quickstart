@@ -16,19 +16,18 @@ public interface ExampleAsValMapper {
 
     int insertSelective(ExampleAsVal record);
 
-    int updateByPrimayKey(ExampleAsVal exampleAsVal);
+    int updateByPrimaryKey(ExampleAsVal exampleAsVal);
 
-    int deleteByPrimayKey(String id);
+    int deleteByPrimaryKey(String id);
 
     ExampleAsVal selectByPrimaryKey(ExampleAsVal exampleAsVal);
 
     List<ExampleAsVal> findAll();
 
-    List<ExampleAsVal> findProvince(String valsetId);
-
     List<ExampleAsVal> getByIds(String tenantId,@Param("list") List<String> ids);
 
     List<ExampleAsVal> queryByClause(@Param("keyword") String keyword);
 
-    PageResult<ExampleAsVal> selectAllByPage(@Param("page")PageRequest pageRequest, @Param("search") SearchParams searchParams);
+    List<ExampleAsVal> findByClause(ExampleAsVal asVal);
+    PageResult<ExampleAsVal> selectAllByPage(@Param("page")PageRequest pageRequest, @Param("search") Map<String, Object> searchParams);
 }

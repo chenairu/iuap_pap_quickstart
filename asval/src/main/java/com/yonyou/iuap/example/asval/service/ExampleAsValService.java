@@ -28,11 +28,12 @@ public class ExampleAsValService {
         return exampleAsValMapper.findAll();
     }
 
-    public List<ExampleAsVal> findProvince(String code){
-        return exampleAsValMapper.findProvince(code);
+    public List<ExampleAsVal> findByClause(ExampleAsVal exampleAsVal){
+
+        return exampleAsValMapper.findByClause(exampleAsVal);
     }
 
-    public List<ExampleAsVal> getpeByIds(String[] strArray) {
+    public List<ExampleAsVal> getByIds(String[] strArray) {
         String tenantId = InvocationInfoProxy.getTenantid();
         ArrayList<String> ids = new ArrayList<String>();
         for (String key : strArray) {
@@ -52,7 +53,7 @@ public class ExampleAsValService {
     }
 
     public Page<ExampleAsVal> selectAllByPage(PageRequest pageRequest, SearchParams searchParams){
-        return exampleAsValMapper.selectAllByPage(pageRequest,searchParams).getPage();
+        return exampleAsValMapper.selectAllByPage(pageRequest,searchParams.getSearchMap()).getPage();
     }
     @Transactional(rollbackFor = Exception.class)
     public void batchAddOrUpdate(List<ExampleAsVal> list){
@@ -79,14 +80,16 @@ public class ExampleAsValService {
             //编码规则 获取编码
             String code = this.getCode("asval","",exampleAsVal);
             exampleAsVal.setCode(code);
+            exampleAsVal.setLstdate(new Date());
             exampleAsValMapper.insert(exampleAsVal);
         }else{
-            exampleAsValMapper.updateByPrimayKey(exampleAsVal);
+            exampleAsVal.setLstdate(new Date());
+            exampleAsValMapper.updateByPrimaryKey(exampleAsVal);
         }
     }
     public void delete(ExampleAsVal exampleAsVal){
 
-        exampleAsValMapper.deleteByPrimayKey(exampleAsVal.getId());
+        exampleAsValMapper.deleteByPrimaryKey(exampleAsVal.getId());
         //编码规则退号
         this.returnCode("asval","",exampleAsVal,exampleAsVal.getCode());
     }
@@ -130,17 +133,17 @@ public class ExampleAsValService {
      * @param pkAssign
      *            分配关系
      * @param entity
-     * @param customerCode 编码字段
+     * @param code 编码字段
      * @return
      */
-    private void returnCode(String billObjCode,String pkAssign,ExampleAsVal entity,String customerCode){
+    private void returnCode(String billObjCode,String pkAssign,ExampleAsVal entity,String code){
         String billVo = JSONObject.toJSONString(entity);
         String returnUrl = PropertyUtil.getPropertyByKey("billcodeservice.base.url")+"/billcoderest/returnBillCode";
         Map<String,String> data = new HashMap<String,String>();
         data.put("billObjCode",billObjCode);
         data.put("pkAssign",pkAssign);
         data.put("billVo",billVo);
-        data.put("billCode",customerCode);
+        data.put("billCode",code);
 
         JSONObject returnBillCodeInfo = RestUtils.getInstance().doPost(returnUrl,data,JSONObject.class);
 

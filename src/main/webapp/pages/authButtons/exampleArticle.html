@@ -17,19 +17,19 @@
 			<div class="u-col-12 u-col-sm-12 b-margin">
 				<div class="u-col-4 u-col-sm-6">
 					<div class="u-col-4 aline-right">
-						<label>编码</label>
+						<label>标题</label>
 					</div>
 					<div class="u-col-8 u-col-sm-12">
-						<input class="u-form-control search-enter" id="search_value" name="search_value" />
+						<input class="u-form-control search-enter" id="search_title" name="search_title" />
 					</div>
 				</div>
-				<div class="u-col-4 u-col-sm-6">
+				<!--<div class="u-col-4 u-col-sm-6">
 					<div class="u-col-4 aline-right">名称
 					</div>
 					<div class="u-col-8 u-col-sm-12">
 						<input class="u-form-control search-enter" id="search_name" name="search_name" />
 					</div>
-				</div>
+				</div> -->
 				<div class="u-col-4 u-col-sm-6">
 					<div class=" float-right">
 						<button class="u-button" data-bind="click: event.cleanSearch">清空</button>
@@ -51,13 +51,12 @@
 			</div>
 			<div class="u-mdlayout-page-section">
 				<div id="grid" u-meta='{"id":"dataGrid","type":"grid","data":"gridData","columnMenu":false,"onDblClickFun":"event.dbClickRow","onRowSelected":"event.selectRow","onRowUnSelected":"event.selectRow","onRowHover":"event.rowHoverHandel","fixedFloat":"right","canDrag":false,"sortable":true,"canSwap":false,"columnWidth":"150px","rowHeight":"40" ,"sumRowHeight":"40","multiSelect":true}'>
-					<div options='{"field":"pid","dataType":"String","title":"父节点","editType":"string"}'></div>
-					<div options='{"field":"code","width":"250","dataType":"String","title":"编号","editType":"string"}'></div>
-                    <div options='{"field":"value","dataType":"String","title":"编码","editType":"string"}'></div>
-					<div options='{"field":"name","dataType":"String","title":"名称","editType":"string"}'></div>
-					<div options='{"field":"ordIndex","dataType":"String","title":"顺序","editType":"string"}'></div>
-					<div options='{"field":"lstdate","dataType":"date","title":"更新时间","renderType":"dateRender","format":"YYYY-MM-DD"}'></div>
-					<div options='{"field":"isSystem","dataType":"String","title":"是否系统预置","renderType":"event.showValue"}'></div>
+					<div options='{"field":"title","dataType":"String","title":"标题","editType":"string"}'></div>
+					<div options='{"field":"createUserName","width":"250","dataType":"String","title":"创建人","editType":"string"}'></div>
+                    <div options='{"field":"createTime","dataType":"String","title":"创建时间","renderType":"dateRender","format":"YYYY-MM-DD"}'></div>
+					<div options='{"field":"publishUserName","dataType":"String","title":"发布人","editType":"string"}'></div>
+					<div options='{"field":"publishTime","dataType":"String","title":"发布时间","renderType":"dateRender","format":"YYYY-MM-DD"}'></div>
+					<div options='{"field":"status","dataType":"String","title":"状态","renderType":"event.showValue"}'></div>
 					<div options='{"field":"operate","dataType":"String","title":"","renderType":"event.optFun","editable":true}'></div>
 				</div>
 				<div class="aline-center">
@@ -77,7 +76,7 @@
 				<button type="button " class="goback" data-bind="click:event.formDivShow(false)"><i class="uf uf-arrow-left"></i>返回</button>
 			</div>
 			<div class="u-col-md-4 aline-center">
-				<h4>编码规则编辑页</h4>
+				<h4>编辑页</h4>
 			</div>
 			<div class="u-col-md-4 aline-right paddingR30 ">
 				<button id="save" type="button" class="u-button" data-bind="click:event.saveClick">保存</button>
@@ -87,32 +86,22 @@
 
 	<div id="form-div-body">
 		<div class="u-row">
-			<div class="u-col-md-6">
+			<div class="u-col-md-12">
 				<div class="u-form-group width100">
-					<label class="u-col-2">父节点</label>
-					<div class="u-col-10" u-meta='{"id":"pid","type":"u-text","data":"formData","field":"pid"}'>
+					<label class="u-col-1">标题</label>
+					<div class="u-col-11" u-meta='{"id":"title","type":"u-text","data":"formData","field":"title"}'>
 						<div class="u-input-group-before">*</div>
-						<input type="text" class="u-form-control" placeholder="请输入父节点">
+						<input type="text" class="u-form-control" placeholder="请输入标题">
 					</div>
 				</div>
 			</div>
-
-			<div class="u-col-md-6">
-				<div class="u-form-group width100">
-					<label class="u-col-2">编号</label>
-					<div class="u-col-10" u-meta='{"id":"code","type":"u-text","data":"formData","field":"code"}'>
-						<input type="text" class="u-form-control readonlyinput" placeholder="" readonly>
-					</div>
-				</div>
-			</div>
-
 		</div>
 		
         <div class="u-row">
 			<div class="u-col-md-6">
                 <div class="u-form-group width100">
-                    <label class="u-col-2">名称</label>
-                    <div class="u-col-10" u-meta='{"id":"name","type":"u-text","data":"formData","field":"name"}'>
+                    <label class="u-col-2">创建人</label>
+                    <div class="u-col-10" u-meta='{"id":"createUserName","type":"u-text","data":"formData","field":"createUserName"}'>
 						<div class="u-input-group-before">*</div>
                         <input type="text" class="u-form-control" placeholder="请输入名称">
                     </div>
@@ -120,8 +109,8 @@
             </div>
 			<div class="u-col-md-6">
 				<div class="u-form-group width100">
-					<label class="u-col-2">VALUE值</label>
-					<div class="u-col-10" u-meta='{"id":"value","type":"u-text","data":"formData","field":"value"}'>
+					<label class="u-col-2">创建时间</label>
+					<div class="u-col-10" u-meta='{"id":"createTime","type":"u-text","data":"formData","field":"createTime"}'>
 						<div class="u-input-group-before">*</div>
 						<input type="text" class="u-form-control" placeholder="">
 					</div>
@@ -131,16 +120,26 @@
 		<div class="u-row">
 			<div class="u-col-md-6">
 				<div class="u-form-group width100">
-					<label class="u-col-2">顺序</label>
-					<div class="u-col-10" u-meta='{"id":"ordIndex","type":"u-text","data":"formData","field":"ordIndex"}'>
+					<label class="u-col-2">发布人</label>
+					<div class="u-col-10" u-meta='{"id":"publishUserName","type":"u-text","data":"formData","field":"publishUserName"}'>
 						<input type="text" class="u-form-control" placeholder="">
 					</div>
 				</div>
 			</div>
 			<div class="u-col-md-6">
 				<div class="u-form-group width100">
-					<label class="u-col-2">是否系统预置</label>
-					<div class="u-col-10" u-meta='{"id":"isSystem","type":"u-combobox","data":"formData","field":"isSystem","datasource":"yesOrNo"}'>
+					<label class="u-col-2">发布时间</label>
+					<div class="u-col-10" u-meta='{"id":"publishTime","type":"u-combobox","data":"formData","field":"publishTime"}'>
+						<input type="text" class="u-form-control" placeholder="">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="u-row">
+			<div class="u-col-md-12">
+				<div class="u-form-group width100">
+					<label class="u-col-2">内容</label>
+					<div class="u-col-10" u-meta='{"id":"content","type":"u-text","data":"formData","field":"content"}'>
 						<input type="text" class="u-form-control" placeholder="">
 					</div>
 				</div>

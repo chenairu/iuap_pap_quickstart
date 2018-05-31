@@ -26,8 +26,8 @@ define(['text!./order.html','./meta.js', 'css!./order.css',
             formStatus: _CONST.FORM_STATUS_ADD,
 
             ygdemo_searchFormDa:new u.DataTable(searchData),
-            gridData: new u.DataTable(meta),
-            formData: new u.DataTable(meta),
+            gridData: new u.DataTable(viewModel),
+            formData: new u.DataTable(viewModel),
             subGridData: new u.DataTable(meta_sub),
             
             //orderState_refers : [{value:'0', name:'待确认'},{value:'1', name:'执行中'},{value:'2', name:'已办结'},{value:'3', name:'终止'}],
