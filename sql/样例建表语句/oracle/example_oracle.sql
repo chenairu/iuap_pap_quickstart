@@ -329,3 +329,17 @@ COMMENT ON COLUMN example_as_val.value IS '下拉框VALUE';
 COMMENT ON COLUMN example_as_val.ord_index IS '顺序';
 COMMENT ON COLUMN example_as_val.lstdate IS '最后更新时间';
 COMMENT ON COLUMN example_as_val.is_system IS '是否系统预置';
+
+CREATE TABLE example_article (
+id VARCHAR2(255) NULL ,
+title VARCHAR2(255) NULL ,
+content VARCHAR2(255) NULL ,
+create_user_id VARCHAR2(36) NULL ,
+create_user_name VARCHAR2(255) NULL ,
+publish_user_id VARCHAR2(255) NULL ,
+publish_user_name VARCHAR2(255) NULL ,
+create_time DATE NULL ,
+publish_time DATE NULL ,
+status VARCHAR2(255) NULL
+);
+ALTER TABLE example_article ADD PRIMARY KEY (id);

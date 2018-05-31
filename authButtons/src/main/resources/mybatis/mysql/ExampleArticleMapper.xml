@@ -97,6 +97,37 @@
     </trim>
   </insert>
 
+  <update id="updateSelectiveByPrimaryKey" parameterType="com.yonyou.iuap.example.article.entity.ExampleArticle">
+    update example_article set
+    <if test="title != null">
+      title =  #{title,jdbcType=VARCHAR},
+    </if>
+    <if test="content != null">
+      content = #{content,jdbcType=VARCHAR},
+    </if>
+    <if test="createUserId != null">
+      create_user_id = #{createUserId,jdbcType=VARCHAR},
+    </if>
+    <if test="createUserName != null">
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+    </if>
+    <if test="publishUserId != null">
+      publish_user_id = #{publishUserId,jdbcType=VARCHAR},
+    </if>
+    <if test="publishUserName != null">
+      publish_user_name = #{publishUserName,jdbcType=VARCHAR},
+    </if>
+    <if test="createTime != null">
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+    </if>
+    <if test="publishTime != null">
+      publish_time = #{publishTime,jdbcType=TIMESTAMP},
+    </if>
+    <if test="status != null">
+      status = #{status,jdbcType=VARCHAR}
+    </if>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
   <update id="updateByPrimaryKey" parameterType="com.yonyou.iuap.example.article.entity.ExampleArticle">
     update example_article set
       #{title,jdbcType=VARCHAR},
@@ -110,6 +141,7 @@
       #{status,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from example_article where id = #{id,jdbcType=VARCHAR}
   </delete>
@@ -121,9 +153,6 @@
   <if test="search != null">
     <if test="search.code!=null and search.code!='' ">
       and title like CONCAT(CONCAT('%', #{search.title}),'%')
-    </if>
-    <if  test="search.content!=null and search.content!='' ">
-      and content like CONCAT(CONCAT('%', #{search.content}),'%')
     </if>
   </if>
 </select>

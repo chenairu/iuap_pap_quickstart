@@ -7,6 +7,7 @@ import com.yonyou.iuap.mvc.type.SearchParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,13 +35,19 @@ public class ExampleArticleController extends BaseController {
         return buildSuccess(list);
     }
     @RequestMapping(value = {"/save"},method = {RequestMethod.POST})
-    public Object save(List<ExampleArticle> exampleArticles){
+    public Object save(@RequestBody  List<ExampleArticle> exampleArticles){
         exampleArticleService.save(exampleArticles);
         return buildSuccess();
     }
     @RequestMapping(value = {"/delete"},method = {RequestMethod.POST})
-    public Object delete(List<ExampleArticle> exampleArticles){
+    public Object delete(@RequestBody List<ExampleArticle> exampleArticles){
         exampleArticleService.batchDelete(exampleArticles);
+        return buildSuccess();
+    }
+
+    @RequestMapping(value = "/updateStatus",method = RequestMethod.POST)
+    public Object updateStatus(@RequestBody List<ExampleArticle> exampleArticles){
+        exampleArticleService.updateSeletive(exampleArticles);
         return buildSuccess();
     }
 }

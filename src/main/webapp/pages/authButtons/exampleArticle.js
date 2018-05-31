@@ -6,17 +6,22 @@ define(['text!./exampleArticle.html',
     "../../utils/ajax.js",
     "../../utils/tips.js",
     "./viewModel.js"], function (template, cookie, bpmopenbill) {
-        var ctx, listRowUrl, saveRowUrl, delRowUrl, getUrl, element;
+        var ctx, listRowUrl, saveRowUrl, delRowUrl, updateStatusUrl, element;
         function init(element, cookie) {
             element = element;
             $(element).html(template);
-            ctx = cookie.appCtx + "/exampleAsVal";
+            ctx = cookie.appCtx + "/exampleArticle";
             listRowUrl = ctx + "/list"; //列表查询URL
             saveRowUrl = ctx + "/save"; //新增和修改URL， 有id为修改 无id为新增
             delRowUrl = ctx + "/delete"; //刪除URL
-            getUrl = ctx + "/get",
+            updateStatusUrl = ctx + "/updateStatus",
             window.csrfDefense();									//跨站请求伪造防御
+
+            window.initButton(viewModel,element);
+            //加载Html页面
             $(element).html(template);
+            ko.cleanNode(element);
+
             event.formDivShow(false);
             event.pageinit(element);
         }
@@ -64,8 +69,8 @@ define(['text!./exampleArticle.html',
                 var jsonData = {
                     pageIndex: viewModel.draw - 1,
                     pageSize: viewModel.pageSize,
-                    sortField: "ORD_INDEX",
-                    sortDirection: "asc"
+                    sortField: "",
+                    sortDirection: ""
                 };
 
                 var searchinfo = viewModel.gridData.params;
@@ -194,6 +199,21 @@ define(['text!./exampleArticle.html',
                         .attr("disabled", true)
                         .addClass("disable");
                 }
+                if (num.length > 0) {
+                    $("#user-action-pub")
+                        .attr("disabled", false)
+                        .removeClass("disable");
+                    $("#user-action-stop")
+                        .attr("disabled", false)
+                        .removeClass("disable");
+                } else {
+                    $("#uuser-action-pub")
+                        .attr("disabled", true)
+                        .addClass("disable");
+                    $("#uuser-action-stop")
+                        .attr("disabled", true)
+                        .addClass("disable");
+                }
             },
 
             //删除多行
@@ -264,9 +284,11 @@ define(['text!./exampleArticle.html',
             showValue: function (obj) {
                 var showValue = "";
                 if (obj.value === "1") {
-                    showValue = "是";
-                } else if (obj.value === "0"){
-                    showValue = "否";
+                    showValue = "已停用";
+                } else if (obj.value === "2"){
+                    showValue = "已发布";
+                } else {
+                    showValue = "未发布";
                 }
                 obj.element.innerHTML = showValue;
             },
@@ -326,8 +348,53 @@ define(['text!./exampleArticle.html',
                 } else {
                     $('#form-div').hide();
                 }
+            },
+            pub:function(){
+                // 获取所有选中的数据
+                var seldatas = viewModel.gridData.getSimpleData({
+                    type: "select"
+                });
+                event.updateStatus(seldatas,"2");
+            },
+            stop:function(){
+                // 获取所有选中的数据
+                var seldatas = viewModel.gridData.getSimpleData({
+                    type: "select"
+                });
+                event.updateStatus(seldatas,"1");
+            },
+            updateStatus:function(data,status){
+                var arr = [];
+                for (var i = 0; i < data.length; i++) {
+                    arr.push({
+                        id: data[i].id,
+                        status:status
+                    });
+                }
+                $ajax(
+                    updateStatusUrl,
+                    JSON.stringify(arr),
+                    function (res) {
+                        if (res && res.success == "success") {
+                            event.initGridDataList();
+                            event.formDivShow(false);
+                        } else {
+                            var msg = "";
+                            for (var key in res.detailMsg) {
+                                msg += res.detailMsg[key] + "<br/>";
+                            }
+                            u.messageDialog({
+                                msg: msg,
+                                title: "请求错误",
+                                btnText: "确定"
+                            });
+                        }
+                    },
+                    function (params) {
+                        u.messageDialog(errTips);
+                    }
+                );
             }
-
         }
 
         return {
