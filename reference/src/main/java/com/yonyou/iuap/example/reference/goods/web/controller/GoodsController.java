@@ -1,6 +1,4 @@
-
 package com.yonyou.iuap.example.reference.goods.web.controller;
-
 import com.yonyou.iuap.base.web.BaseController;
 import com.yonyou.iuap.example.common.utils.CommonUtils;
 import com.yonyou.iuap.example.reference.goods.entity.Goods;
@@ -83,4 +81,5 @@ public class GoodsController extends BaseController {
     /**********************************************************************/
     @Autowired
     private GoodsService goodsService;
- }
+    
+}
