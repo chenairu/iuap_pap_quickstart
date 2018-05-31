@@ -5,6 +5,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +17,8 @@ import com.yonyou.iuap.example.dictionary.service.DictionaryService;
 
 @Component
 public class CodeCache {
+	
+	private Logger logger = LoggerFactory.getLogger(CodeCache.class);
 
 	/**
 	 * 启动时自动加载字典
@@ -25,6 +29,7 @@ public class CodeCache {
 		for(Dictionary entity: list) {
 			this.setCode("code_test_001", entity.getCode(), entity);
 		}
+		logger.info("加载数据字典缓存，共计："+list.size());
 	}
 	
 	/**
