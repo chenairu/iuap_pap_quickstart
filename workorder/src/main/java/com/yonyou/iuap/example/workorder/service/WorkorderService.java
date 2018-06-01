@@ -2,8 +2,11 @@ package com.yonyou.iuap.example.workorder.service;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +21,7 @@ import com.yonyou.iuap.example.workorder.entity.Workorder;
 import com.yonyou.iuap.persistence.vo.pub.BusinessException;
 import com.yonyou.uap.ieop.busilog.config.annotation.BusiLogConfig;
 
+import yonyou.bpm.rest.ex.util.DateUtil;
 import yonyou.bpm.rest.request.RestVariable;
 
 @Component
@@ -25,6 +29,9 @@ public class WorkorderService extends GenericService<Workorder>{
 	
 	@BusiLogConfig("workorder_info_save")
 	public Workorder save(Workorder workorder) {
+		if(StringUtils.isEmpty(workorder.getId())) {
+			workorder.setCode(DateUtil.toDateString(new Date(), "yyyyMMddHHmmss"+new Random().nextInt(10)));
+		}
 		return super.save(workorder);
 	}
 
