@@ -17,7 +17,7 @@
 				t.createUser,
 				t.lastModified,
 				t.lastModified,
-				t.ts,
+				t.ts, 
 				t.dr
 		FROM  example_workorder t
 		WHERE 1=1
