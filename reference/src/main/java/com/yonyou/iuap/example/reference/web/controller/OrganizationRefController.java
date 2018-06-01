@@ -16,6 +16,10 @@ import com.yonyou.iuap.example.contacts.service.OrganizationService;
 import iuap.ref.sdk.refmodel.model.AbstractTreeRefModel;
 import iuap.ref.sdk.refmodel.vo.RefViewModelVO;
 
+/**
+ * 树形参照
+ * @author Aton
+ */
 @RestController
 @RequestMapping({"/reference/organization"})
 public class OrganizationRefController extends AbstractTreeRefModel{

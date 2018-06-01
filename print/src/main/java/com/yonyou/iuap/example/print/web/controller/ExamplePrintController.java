@@ -66,7 +66,7 @@ public class ExamplePrintController extends BaseController {
      * @param list
      * @return
      */
-    @RequestMapping(value = "/del", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public @ResponseBody Object del(@RequestBody List<ExamplePrint> list) {
     	service.batchDeleteByPrimaryKey(list);
         return buildSuccess();

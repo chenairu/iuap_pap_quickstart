@@ -25,6 +25,10 @@ import iuap.ref.ref.RefClientPageInfo;
 import iuap.ref.sdk.refmodel.model.AbstractCommonRefModel;
 import iuap.ref.sdk.refmodel.vo.RefViewModelVO;
 
+/**
+ * 自定义表头表格参照
+ * @author Aton
+ */
 @Controller
 @RequestMapping(value = "/reference/director")
 public class ContactsRefController extends AbstractCommonRefModel {
@@ -36,7 +40,7 @@ public class ContactsRefController extends AbstractCommonRefModel {
 		refViewVo = super.getRefModelInfo(refViewVo);
 		refViewVo.setRefName("业务负责人");
 		refViewVo.setRootName("业务负责人列表");
-		refViewVo.setStrFieldName(new String[] { "联系人编码", "联系人名称", "所属机构" });
+		refViewVo.setStrFieldName(new String[] { "负责人编码", "负责人名称", "所属机构" });
 		refViewVo.setStrFieldCode(new String[] { "refcode", "refname", "organization" });
 		refViewVo.setDefaultFieldCount(3);
 		refViewVo.setIsMultiSelectedEnabled(false);

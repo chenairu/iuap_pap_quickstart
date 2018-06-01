@@ -143,6 +143,7 @@ define(['text!./template.html',
                     JSON.stringify(jsonData),
                     function (res) {
                         if (res && res.success == "success") {
+                            viewModel.event.formDivShow(false);
                             viewModel.event.initGridDataList();
                         } else {
                             u.messageDialog({
@@ -203,7 +204,7 @@ define(['text!./template.html',
                 if (num.length > 1) {
                     // 获取所有选中的数据
                     var seldatas = viewModel.gridData.getSimpleData({
-                        type: "select"
+                        type: "current"
                     });
                     viewModel.event.del(seldatas);
                 }
@@ -341,7 +342,7 @@ define(['text!./template.html',
                 input2.attr('value', window.x_xsrf_token);
                 form.append(input2);
                 form.submit();
-            },uploadingshow: function () {
+            }, uploadingshow: function () {
                 $("#uploadingIMG").attr("src", "../example/static/uploading.svg");
                 $("#uploadingIMG2").attr("src", "../example/static/uploading.svg");
                 $("#uploadingMsg").html("文件上传中").addClass("uploading").removeClass("success").removeClass("fail");
@@ -363,11 +364,9 @@ define(['text!./template.html',
                     $('.file-lodedPart').width(0);
                 }, 1000);
             },
-    
-    
-    
-    
-    
+
+
+
             //任务信息导入
             onUploadFile: function () {
                 window.md = u.dialog({ id: 'testDialg2', content: "#dialog_content", hasCloseMenu: true });
@@ -378,23 +377,19 @@ define(['text!./template.html',
                 $("#fileName").remove();
                 $("#dialog_content").find(".choosefile").append('<input class="u-input" style="display: none;text-align: center;"  type="file" name="fileName" id="fileName"/>');
                 var demoInput = document.getElementById('fileName');
-                demoInput.addviewModel.eventListener('change', viewModel.event.onUploadExcel);
+                demoInput.addEventListener('change', viewModel.event.onUploadExcel);
             },
-    
+
             onUploadExcel: function () {
                 var filevalue = document.getElementById("fileName").files;
-    
-                console.log("filevalue:", filevalue);
                 if (!filevalue || filevalue.length < 1) {
                     var demoInput = document.getElementById('fileName');
-                    demoInput.removeviewModel.eventListener('change', viewModel.event.onUploadExcel);
-                    demoInput.addviewModel.eventListener('change', viewModel.event.onUploadExcel);
+                    demoInput.removeEventListener('change', viewModel.event.onUploadExcel);
+                    demoInput.addEventListener('change', viewModel.event.onUploadExcel);
                     return;
                 } else {
                     $("#filenamediv2").html(filevalue[0].name);
                 }
-    
-    
                 viewModel.event.uploadingshow();
                 $.ajaxFileUpload({
                     url: ctx + "/excelDataImport",
@@ -406,8 +401,8 @@ define(['text!./template.html',
                         $("#fileName").remove();
                         $("#dialog_content").find(".choosefile").append('<input class="u-input" style="display: none; text-align: center;"  type="file" name="fileName" id="fileName"/>');
                         var demoInput = document.getElementById('fileName');
-                        demoInput.removeviewModel.eventListener('change', viewModel.event.onUploadExcel);
-                        demoInput.addviewModel.eventListener('change', viewModel.event.onUploadExcel);
+                        demoInput.removeEventListener('change', viewModel.event.onUploadExcel);
+                        demoInput.addEventListener('change', viewModel.event.onUploadExcel);
                         window.clearInterval(viewModel.loadingTimer);
                         $('.file-lodedPart').width(200);
                         viewModel.event.uploadingHide();
@@ -420,8 +415,8 @@ define(['text!./template.html',
                         $("#fileName").remove();
                         $("#dialog_content").find(".choosefile").append('<input class="u-input" style="display: none;text-align: center;"  type="file" name="fileName" id="fileName"/>');
                         var demoInput = document.getElementById('fileName');
-                        demoInput.removeviewModel.eventListener('change', viewModel.event.onUploadExcel);
-                        demoInput.addviewModel.eventListener('change', viewModel.event.onUploadExcel);
+                        demoInput.removeEventListener('change', viewModel.event.onUploadExcel);
+                        demoInput.addEventListener('change', viewModel.event.onUploadExcel);
                         $("#uploadingIMG2").attr("src", "../example/static/fail.svg");
                         $("#uploadingMsg2").html("导入失败" + data.message).addClass("fail").removeClass("uploading").removeClass("success");
                         window.clearInterval(viewModel.loadingTimer);
@@ -437,7 +432,7 @@ define(['text!./template.html',
                     u.messageDialog({ msg: "请选择要导出的数据", title: "提示", btnText: "确定" });
                     return;
                 }
-    
+
                 if (row != null && row.length != 0) {
                     for (var i = 0; i < row.length; i++) {
                         var pkItem = row[i].getValue("id");
@@ -449,7 +444,7 @@ define(['text!./template.html',
                         }
                     }
                 }
-    
+
                 var form = $("<form>");   //定义一个form表单
                 form.attr('style', 'display:none');   //在form表单中添加查询参数
                 form.attr('target', '');
@@ -468,7 +463,6 @@ define(['text!./template.html',
                 form.append(input2);
                 form.submit();
             }
-
         }
 
         return {

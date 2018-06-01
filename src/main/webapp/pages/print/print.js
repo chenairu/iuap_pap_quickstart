@@ -140,6 +140,7 @@ define(['text!./print.html',
 					JSON.stringify(jsonData),
 					function (res) {
 						if (res && res.success == "success") {
+							viewModel.event.formDivShow(false);
 							viewModel.event.initGridDataList();
 						} else {
 							u.messageDialog({
@@ -200,7 +201,7 @@ define(['text!./print.html',
 				if (num.length > 1) {
 					// 获取所有选中的数据
 					var seldatas = viewModel.gridData.getSimpleData({
-						type: "select"
+						type: "current"
 					});
 					viewModel.event.del(seldatas);
 				}
