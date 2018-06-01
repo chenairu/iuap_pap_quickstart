@@ -27,7 +27,7 @@ var meta = {
         deptId: {
             'refmodel' : JSON.stringify(refinfo['dept']),
             'refcfg' : '{"ctx":"/uitemplate_web"}'
-           // ,'refparam':'{"isUseDataPower":"true"}'
+             ,'refparam':'{"isUseDataPower":"true"}'
         },
         //部门
         deptName:{
@@ -58,3 +58,9 @@ var meta = {
     //启用前端缓存
     pageCache: false
 }
+var viewModel = {
+    draw: 1,
+    pageSize: 5,
+    gridData: new u.DataTable(meta),
+    formData: new u.DataTable(meta)
+};

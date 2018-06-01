@@ -42,6 +42,8 @@ public class ExampleBill implements Serializable {
 
     private String version;
 
+    private String tenantId;
+
     private static final long serialVersionUID = 1L;
 
     public String getId() {
@@ -194,5 +196,13 @@ public class ExampleBill implements Serializable {
 
     public void setVersion(String version) {
         this.version = version == null ? null : version.trim();
+    }
+
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId == null ? null : tenantId.trim();
     }
 }

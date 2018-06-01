@@ -25,7 +25,7 @@
   <sql id="Base_Column_List">
     id, code, bill_type, is_valid, fiscal, busi_date, pay_code, pay_name, in_code, in_name, 
     amount, bill_status, create_user_id, create_user_name, create_time, update_user_id, 
-    update_user_name, update_time, version
+    update_user_name, update_time, version,tenant_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -44,14 +44,14 @@
       in_name, amount, bill_status, 
       create_user_id, create_user_name, create_time, 
       update_user_id, update_user_name, update_time, 
-      version)
+      version,tenant_id)
     values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{billType,jdbcType=VARCHAR}, 
       #{isValid,jdbcType=VARCHAR}, #{fiscal,jdbcType=VARCHAR}, #{busiDate,jdbcType=TIMESTAMP}, 
       #{payCode,jdbcType=VARCHAR}, #{payName,jdbcType=VARCHAR}, #{inCode,jdbcType=VARCHAR}, 
       #{inName,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, #{billStatus,jdbcType=VARCHAR}, 
       #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateUserId,jdbcType=VARCHAR}, #{updateUserName,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{version,jdbcType=VARCHAR})
+      #{version,jdbcType=VARCHAR},#{tenantId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yonyou.iuap.example.userDefRef.entity.ExampleBill">
     insert into example_bill
@@ -113,6 +113,10 @@
       <if test="version != null">
         version,
       </if>
+      <if test="tenant_id != null">
+        tenant_id,
+      </if>
+
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -171,6 +175,9 @@
       </if>
       <if test="version != null">
         #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantId != null">
+        #{tenantId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -231,6 +238,9 @@
       <if test="version != null">
         version = #{version,jdbcType=VARCHAR},
       </if>
+      <if test="tenantId != null">
+        tenantId = #{tenantId,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -253,7 +263,8 @@
       update_user_id = #{updateUserId,jdbcType=VARCHAR},
       update_user_name = #{updateUserName,jdbcType=VARCHAR},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      version = #{version,jdbcType=VARCHAR}
+      version = #{version,jdbcType=VARCHAR},
+      tenantId = #{tenantId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 
@@ -262,9 +273,9 @@
     SELECT
     <include refid="Base_Column_List"/>
     from example_bill where 1=1
-   <!-- <if test="sql != null">
+   <if test="sql != null">
       ${sql}
-    </if>-->
+    </if>
     <if test="search != null">
       <if
               test="search.code!=null and search.code!='' ">

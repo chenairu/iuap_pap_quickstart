@@ -24,5 +24,6 @@ public interface ExampleBillMapper {
 
     PageResult<ExampleBill> selectAllByPage(
             @Param("page") PageRequest pageRequest,
-            @Param("search") Map<String, Object> searchParams);
+            @Param("search") Map<String, Object> searchParams,
+            @Param("sql") String sql);
 }

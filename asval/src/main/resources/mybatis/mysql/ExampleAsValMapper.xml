@@ -88,7 +88,7 @@
 
   <select id="getByIds" parameterType="java.lang.String" resultMap="BaseResultMap">
     select *
-    from example_as_val where  1=1  and NAME in
+    from example_as_val where  1=1  and id in
     <foreach collection="list" item="item" index="index"
              separator="," open="(" close=")">
       #{item,jdbcType=VARCHAR}

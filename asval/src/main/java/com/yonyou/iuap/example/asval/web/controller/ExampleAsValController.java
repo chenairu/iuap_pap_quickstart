@@ -47,6 +47,10 @@ public class ExampleAsValController extends BaseController {
         exampleAsValService.batchDelete(exampleAsVals);
         return buildSuccess();
     }
+    /**
+     * 根据ID查找对应的结果集
+     * 在数据权限分配后数据回显时会调用到该方法
+     */
     @RequestMapping(value={"/getByIds"},method={RequestMethod.POST})
     public JSONObject getIds(HttpServletRequest request){
         JSONObject result = new JSONObject();
@@ -64,11 +68,12 @@ public class ExampleAsValController extends BaseController {
         result.put("data",transformTOBriefEntity(asValList));
         return result;
     }
+
     private List<OrganizationBrief> transformTOBriefEntity(List<ExampleAsVal> asValList){
         List<OrganizationBrief> results = new ArrayList<>();
         if(!CollectionUtils.isEmpty(asValList)){
             for (ExampleAsVal entity:asValList){
-                results.add(new OrganizationBrief(entity.getId(),entity.getValue(),entity.getCode()));
+                results.add(new OrganizationBrief(entity.getId(),entity.getName(),entity.getValue()));
             }
         }
 

@@ -51,13 +51,14 @@
 			</div>
 			<div class="u-mdlayout-page-section">
 				<div id="grid" u-meta='{"id":"dataGrid","type":"grid","data":"gridData","columnMenu":false,"onDblClickFun":"event.dbClickRow","onRowSelected":"event.selectRow","onRowUnSelected":"event.selectRow","onRowHover":"event.rowHoverHandel","fixedFloat":"right","canDrag":false,"sortable":true,"canSwap":false,"columnWidth":"150px","rowHeight":"40" ,"sumRowHeight":"40","multiSelect":true}'>
-					<div options='{"field":"code","dataType":"String","title":"编码","editType":"string"}'></div>
+					<div options='{"field":"pid","dataType":"String","title":"父节点","editType":"string"}'></div>
+					<div options='{"field":"code","width":"250","dataType":"String","title":"编号","editType":"string"}'></div>
+					<div options='{"field":"value","dataType":"String","title":"编码","editType":"string"}'></div>
 					<div options='{"field":"name","dataType":"String","title":"名称","editType":"string"}'></div>
-					<div options='{"field":"orgName","dataType":"String","title":"所属部门","editType":"string"}'></div>
-					<div options='{"field":"deptName","dataType":"String","title":"所属组织","editType":"string"}'></div>
-					<div options='{"field":"createUserName","dataType":"String","title":"创建人","editType":"string"}'></div>
-					<div options='{"field":"createTime","dataType":"date","title":"创建时间","editType":"date","renderType":"dateRender","format":"YYYY-MM-DD"}'></div>
-					<div options='{"field":"operate","dataType":"String","title":"","renderType":"optFun","editable":true}'></div>
+					<div options='{"field":"ordIndex","dataType":"String","title":"顺序","editType":"string"}'></div>
+					<div options='{"field":"lstdate","dataType":"date","title":"更新时间","renderType":"dateRender","format":"YYYY-MM-DD"}'></div>
+					<div options='{"field":"isSystem","dataType":"String","title":"是否系统预置","renderType":"event.showValue"}'></div>
+					<div options='{"field":"operate","dataType":"String","title":"","renderType":"event.optFun","editable":true}'></div>
 				</div>
 				<div class="aline-center">
 					<div id='pagination' class='pagination u-pagination pagination-sm'></div>

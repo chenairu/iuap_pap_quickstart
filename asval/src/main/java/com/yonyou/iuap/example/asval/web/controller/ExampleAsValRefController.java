@@ -53,28 +53,16 @@ public class ExampleAsValRefController extends AbstractGridRefModel {
 
     @Override
     public List<Map<String, String>> matchPKRefJSON(RefViewModelVO refViewModelVO) {
-        List<Map<String,String>> result = new ArrayList<>();
 
-        /**
-         * tenantId 根据数据库表中的配置来决定,如果tenant未配置,则传 null,如果配置了,则选择该值
-         */
-        try{
-            /*String clientParam = refViewModelVO.getClientParam();
-            Map<String,Object> clientMap = (Map<String, Object>) JSONObject.parse(clientParam);*/
-
-            List<ExampleAsVal> rtnVal = this.exampleAsValService.getByIds(null,Arrays.asList(refViewModelVO.getPk_val()));
-            result = buildRtnValsOfRef(rtnVal,isUserDataPower(refViewModelVO));
-        }catch(Exception e){
-            e.printStackTrace();
-            logger.error("服务异常"+e);
-        }
-
-        return result;
+        
+        return filterRefJSON(refViewModelVO);
     }
 
     @Override
     public List<Map<String, String>> matchBlurRefJSON(RefViewModelVO refViewModelVO) {
-        return null;
+
+        return filterRefJSON(refViewModelVO);
+
     }
 
     /**
@@ -101,6 +89,8 @@ public class ExampleAsValRefController extends AbstractGridRefModel {
         List<ExampleAsVal> list =pages.getContent();
         if(CollectionUtils.isNotEmpty(list)){
             List<Map<String, String>> tmpList = buildRtnValsOfRef(list,isUserDataPower(refViewModelVo));
+            //List<Map<String, String>> tmpList = buildRtnValsOfRef(listData);
+
             RefClientPageInfo refClientPageInfo = refViewModelVo.getRefClientPageInfo();
             refClientPageInfo.setPageCount(pages.getTotalPages());
             refClientPageInfo.setPageSize(50);
@@ -124,24 +114,17 @@ public class ExampleAsValRefController extends AbstractGridRefModel {
         return param;
     }
 
-    private boolean isAdmin(){
-        String userId = InvocationInfoProxy.getUserid();
-        if("U001".equals(userId)){
-            return true;
-        }
-        return false;
-    }
-
+    
     /**
      * 参照数据组装
      * @param list
-     * @param isUserDataPower s
+     * @param isUserDataPower
      */
     private List<Map<String,String>> buildRtnValsOfRef(List<ExampleAsVal> list,boolean isUserDataPower){
         String tenantId = InvocationInfoProxy.getTenantid();
         String sysId = InvocationInfoProxy.getSysid();
         String userId = InvocationInfoProxy.getUserid();
-        List<DataPermission> dataPermissions = AuthRbacClient.getInstance().queryDataPerms(tenantId,sysId,userId,"exampleAsVal");
+        List<DataPermission> dataPermissions = AuthRbacClient.getInstance().queryDataPerms(tenantId,sysId,userId,"billType");
 
         Set<String> set = new HashSet<>();
         if(dataPermissions != null && dataPermissions.size()>0){
@@ -156,7 +139,7 @@ public class ExampleAsValRefController extends AbstractGridRefModel {
 
         if(list != null && !list.isEmpty()){
             for(ExampleAsVal asVal:list){
-        //        if(isUserDataPower || (isUserDataPower&&set.contains(asVal.getId()))){
+                if(!isUserDataPower || (isUserDataPower&&set.contains(asVal.getId()))){
                     Map<String,String> refDataMap = new HashMap<>();
                     refDataMap.put("id",asVal.getId());
                     refDataMap.put("refname",asVal.getName());
@@ -164,12 +147,13 @@ public class ExampleAsValRefController extends AbstractGridRefModel {
                     refDataMap.put("refpk",asVal.getId());
 
                     results.add(refDataMap);
-       //         }
+                }
             }
 
         }
         return results;
     }
+   
 
     /**
      * 是否需要启用数据权限,通过当前人角色和前端配置共同判断
@@ -190,6 +174,16 @@ public class ExampleAsValRefController extends AbstractGridRefModel {
             }
         }
         return isUserDataPower;
+    }
+    /**
+     * 判断当前登录人是否为管理员用户
+     */
+    private boolean isAdmin(){
+        String userId = InvocationInfoProxy.getUserid();
+        if("U001".equals(userId)){
+            return true;
+        }
+        return false;
     }
     /**
      * 构造分页参数

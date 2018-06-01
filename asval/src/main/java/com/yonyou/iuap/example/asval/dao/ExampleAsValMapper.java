@@ -24,7 +24,7 @@ public interface ExampleAsValMapper {
 
     List<ExampleAsVal> findAll();
 
-    List<ExampleAsVal> getByIds(String tenantId,@Param("list") List<String> ids);
+    List<ExampleAsVal> getByIds(String tenantId, @Param("list")List<String> ids);
 
     List<ExampleAsVal> queryByClause(@Param("keyword") String keyword);
 

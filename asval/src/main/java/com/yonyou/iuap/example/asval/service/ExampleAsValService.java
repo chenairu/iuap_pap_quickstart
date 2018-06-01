@@ -33,19 +33,21 @@ public class ExampleAsValService {
         return exampleAsValMapper.findByClause(exampleAsVal);
     }
 
-    public List<ExampleAsVal> getByIds(String[] strArray) {
-        String tenantId = InvocationInfoProxy.getTenantid();
-        ArrayList<String> ids = new ArrayList<String>();
-        for (String key : strArray) {
-            ids.add(key);
-        }
-        return exampleAsValMapper.getByIds(tenantId,ids);
-    }
+
 
     public List<ExampleAsVal> likeSarch(String keyword){
         List<ExampleAsVal> list = new ArrayList<>();
         list = exampleAsValMapper.queryByClause(keyword);
         return list;
+    }
+
+    public List<ExampleAsVal> getByIds(String[] strArray) {
+        String tenantId = InvocationInfoProxy.getTenantid();
+        List<String> ids = new ArrayList<String>();
+        for (String key : strArray) {
+            ids.add(key);
+        }
+        return exampleAsValMapper.getByIds(tenantId,ids);
     }
 
     public List<ExampleAsVal> getByIds(String tenantId,List<String> ids){
