@@ -2,20 +2,17 @@ define(
 	["text!./contacts.html", "css!./contacts.css", "./meta.js",
 		"css!../../style/style.css", "../../config/sys_const.js",
 		"css!../../style/widget.css", "../sever.js",
-		"css!../../style/currency.css"],
+		"css!../../style/common.css"],
 
 	function (html) {
 		var init = function (element, cookie) {
 			var ctx = cookie.appCtx;
-			
 			var treeListUrl = ctx + "/instit/list";
 			var treeDelUrl = ctx + "/instit/del/";
 			var treeSaveUrl = ctx + "/instit/save";
-
 			var tableListUrl = ctx + "/telBook/list";
 			var tableDelUrl = ctx + "/telBook/del/";
 			var tableSaveUrl = ctx + "/telBook/save";
-
 			var viewModel = {
 				app: {},
 				/* 数据模型 */
@@ -25,10 +22,10 @@ define(
 				totalCount: 0,
 
 				/* 树数据 */
-				institdata: new u.DataTable(viewModel),
+				institdata: new u.DataTable(meta),
 
 				/* 编辑框树数据 */
-				institdatanew: new u.DataTable(viewModel),
+				institdatanew: new u.DataTable(meta),
 
 				/* 电话本数据 */
 				telbookdata: new u.DataTable(metaTelbook),
@@ -55,7 +52,6 @@ define(
 					//清除datatable数据
 					clearDt: function (dt) {
 						dt.removeAllRows();
-						dt.clear();
 					},
 
 					/* 获得树节点的所有子节点 */
@@ -84,98 +80,91 @@ define(
 
 						$(element).find("#search")
 							.each(
-								function () {
-									if (this.value == undefined
-										|| this.value == ""
-										|| this.value.length == 0) {
-										//不执行操作
-									} else {
-										jsonData["search_searchParam"] = this.value
-											.replace(/(^\s*)|(\s*$)/g, ""); //去掉空格
-									}
-								});
+							function () {
+								if (this.value == undefined
+									|| this.value == ""
+									|| this.value.length == 0) {
+									//不执行操作
+								} else {
+									jsonData["search_searchParam"] = this.value
+										.replace(/(^\s*)|(\s*$)/g, ""); //去掉空格
+								}
+							});
 						if (instit) {
 							if (instit != "" || instit.length != 0) {
 								jsonData["institid"] = instit.join();
 							}
 						}
-						$
-							.ajax({
-								type: "get",
-								url: tableListUrl,
-								dataType: "json",
-								data: jsonData,
-								contentType: "application/json;charset=utf-8",
-								success: function (res) {
-									if (res) {
-										if (res.success == "success") {
-											if (!res.detailMsg.data) {
-												viewModel.totalCount = 0;
-												viewModel.totalPage = 1;
-												viewModel.event.comps
-													.update({
-														totalPages: viewModel.totalPage,
-														pageSize: viewModel.pageSize,
-														currentPage: viewModel.draw,
-														totalCount: viewModel.totalCount
-													});
-												viewModel.telbookdata
-													.removeAllRows();
-												viewModel.telbookdata
-													.clear();
-											} else {
-												viewModel.totalCount = res.detailMsg.data.totalElements;
-												viewModel.totalPage = res.detailMsg.data.totalPages;
-												viewModel.event.comps
-													.update({
-														totalPages: viewModel.totalPage,
-														pageSize: viewModel.pageSize,
-														currentPage: viewModel.draw,
-														totalCount: viewModel.totalCount
-													});
-												viewModel.telbookdata
-													.removeAllRows();
-												viewModel.telbookdata
-													.clear();
-												viewModel.telbookdata
-													.setSimpleData(
-														res.detailMsg.data.content,
-														{
-															unSelect: true
-														});
-											}
+
+						$ajax(
+							tableListUrl,
+							jsonData,
+							function (res) {
+								if (res) {
+									if (res.success == "success") {
+										if (!res.detailMsg.data) {
+											viewModel.totalCount = 0;
+											viewModel.totalPage = 1;
+											viewModel.event.comps
+												.update({
+													totalPages: viewModel.totalPage,
+													pageSize: viewModel.pageSize,
+													currentPage: viewModel.draw,
+													totalCount: viewModel.totalCount
+												});
+											viewModel.telbookdata
+												.removeAllRows();
 										} else {
-											var msg = "";
-											if (res.success == "fail_global") {
-												msg = res.message;
-											} else {
-												for (var key in res.detailMsg) {
-													msg += res.detailMsg[key]
-														+ "<br/>";
-												}
-											}
-											u.messageDialog({
-												msg: msg,
-												title: "请求错误",
-												btnText: "确定"
-											});
+											viewModel.totalCount = res.detailMsg.data.totalElements;
+											viewModel.totalPage = res.detailMsg.data.totalPages;
+											viewModel.event.comps
+												.update({
+													totalPages: viewModel.totalPage,
+													pageSize: viewModel.pageSize,
+													currentPage: viewModel.draw,
+													totalCount: viewModel.totalCount
+												});
+											viewModel.telbookdata
+												.removeAllRows();
+											viewModel.telbookdata
+												.setSimpleData(
+												res.detailMsg.data.content,
+												{
+													unSelect: true
+												});
 										}
 									} else {
+										var msg = "";
+										if (res.success == "fail_global") {
+											msg = res.message;
+										} else {
+											for (var key in res.detailMsg) {
+												msg += res.detailMsg[key]
+													+ "<br/>";
+											}
+										}
 										u.messageDialog({
-											msg: "后台返回数据格式有误，请联系管理员",
-											title: "数据错误",
+											msg: msg,
+											title: "请求错误",
 											btnText: "确定"
 										});
 									}
-								},
-								error: function (er) {
+								} else {
 									u.messageDialog({
-										msg: "请求超时",
-										title: "请求错误",
+										msg: "后台返回数据格式有误，请联系管理员",
+										title: "数据错误",
 										btnText: "确定"
 									});
 								}
-							});
+							}, function () {
+								u.messageDialog({
+									msg: "请求超时",
+									title: "请求错误",
+									btnText: "确定"
+								});
+							},
+							"get"
+						)
 					},
 					loadTree: function () {
 						$
@@ -193,15 +182,15 @@ define(
 													.clear();
 												var arr = viewModel.event
 													.mapKeyAndValues(
-														res.detailMsg.data,
-														true);
+													res.detailMsg.data,
+													true);
 												viewModel.institdata
 													.setSimpleData(
-														arr,
-														{
-															unSelect: true
-														});
-												$("#tree2")[0]["u-viewModel"].tree.expandAll(true);
+													arr,
+													{
+														unSelect: true
+													});
+												$("#tree2")[0]["u-meta"].tree.expandAll(true);
 											}
 										} else {
 											var msg = "";
@@ -513,12 +502,12 @@ define(
 							if (row.data.parentid.value) {
 								row
 									.setValue(
-										"parentname",
-										$("#tree2")[0]["u-viewModel"].tree
-											.getNodeByParam(
-												"id",
-												row
-													.getValue("parentid")).name);
+									"parentname",
+									$("#tree2")[0]["u-meta"].tree
+										.getNodeByParam(
+										"id",
+										row
+											.getValue("parentid")).name);
 							}
 
 							viewModel.institdatanew
@@ -532,6 +521,7 @@ define(
 								content: "#dialog_content_instit",
 								hasCloseMenu: true
 							});
+							$('.u-msg-dialog').css('width','800px')
 						} else {
 							u.messageDialog({
 								msg: "请选择要编辑的数据！",
@@ -577,6 +567,7 @@ define(
 					addManClick: function () {
 						$("#dialog_content_man").find(".u-msg-title").html(
 							"<h4>新增人员</h4>");
+							
 						viewModel.event.clearDt(viewModel.telbookdatanew);
 						var row = viewModel.institdata.getSelectedRows()[0];
 						if (row) {
@@ -595,6 +586,7 @@ define(
 								content: "#dialog_content_man",
 								hasCloseMenu: true
 							});
+							$('.u-msg-dialog').css('width','800px');
 						} else {
 							u.messageDialog({
 								msg: "请选择部门！",
@@ -622,6 +614,7 @@ define(
 								content: "#dialog_content_man",
 								hasCloseMenu: true
 							});
+							$('.u-msg-dialog').css('width','800px');
 						} else {
 							u.messageDialog({
 								msg: "请选择要编辑的数据！",
@@ -752,6 +745,7 @@ define(
 				}
 
 			};
+
 			$(element).html(html);
 			viewModel.event.pageInit();
 			if (u.isIE8) {
