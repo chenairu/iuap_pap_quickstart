@@ -16,7 +16,7 @@ define(['text!./workorder.html',
             
             listUrl: appCtx + '/example_workorder/list',
             saveUrl: appCtx + "/example_workorder/save",
-            deleteUrl: appCtx + "/example_workorder/delete",
+            deleteUrl: appCtx + "/example_workorder/deleteByIds",
             getUrl: appCtx + "/example_workorder/get",
             
             

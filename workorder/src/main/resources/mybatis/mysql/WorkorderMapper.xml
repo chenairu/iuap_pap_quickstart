@@ -17,7 +17,7 @@
 				t.createUser,
 				t.lastModified,
 				t.lastModified,
-				t.ts,
+				t.ts, 
 				t.dr
 		FROM  example_workorder t
 		WHERE 1=1
@@ -124,7 +124,14 @@
 			</if>
 			<if test="condition!=null">
 				<if test="condition.id!=null and condition.id!=''">
-					and id = #{id}
+					and id = #{condition.id}
+				</if>
+				<if test="condition.ids!=null and condition.ids.size>0">
+					and id in (
+						<foreach collection="condition.ids" item="item" separator="," open="(" close=")">
+							#{item,jdbcType=VARCHAR}
+						</foreach>
+					)
 				</if>
 			</if>
 	</delete>

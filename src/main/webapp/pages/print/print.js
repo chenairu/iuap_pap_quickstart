@@ -5,10 +5,7 @@ define(['text!./print.html',
 	"../../utils/utils.js",
 	"../../utils/ajax.js",
 	"../../utils/tips.js",
-	"./viewModel.js",
-	'/iuap-saas-filesystem-service/resources/js/ajaxfileupload.js',
-	'/iuap-saas-filesystem-service/resources/js/ossupload.js',
-	'interfaceFileImpl'], function (template, cookie, bpmopenbill) {
+	"./viewModel.js"], function (template, cookie, bpmopenbill) {
 		var ctx, listRowUrl, saveRowUrl, delRowUrl, getUrl, element;
 		function init(element, cookie) {
 			element = element;
@@ -20,46 +17,46 @@ define(['text!./print.html',
 			getUrl = ctx + "/get",
 				window.csrfDefense();									//跨站请求伪造防御
 			$(element).html(template);
-			event.formDivShow(false);
-			event.pageinit(element);
+			viewModel.event.formDivShow(false);
+			viewModel.event.pageinit(element);
 		}
-		event = {
+		viewModel.event = {
 			pageinit: function (element) {
 				viewModel.app = u.createApp({
 					el: element,
 					model: viewModel
 				});
 				var paginationDiv = $(element).find("#pagination")[0];
-				event.comps = new u.pagination({
+				viewModel.event.comps = new u.pagination({
 					el: paginationDiv,
 					jumppage: true
 				});
-				event.comps.update({
+				viewModel.event.comps.update({
 					pageSize: 5
 				}); //默认每页显示5条数据
-				event.initGridDataList();
-				event.pageChange();
-				event.sizeChange();
+				viewModel.event.initGridDataList();
+				viewModel.event.pageChange();
+				viewModel.event.sizeChange();
 				$(".search-enter").keydown(function (e) {
 					if (e.keyCode == 13) {
 						$("#user-action-search").trigger("click");
-						u.stopEvent(e);
+						u.stopviewModel.event(e);
 					}
 				});
 			},
 			//换页
 			pageChange: function () {
-				event.comps.on("pageChange", function (pageIndex) {
+				viewModel.event.comps.on("pageChange", function (pageIndex) {
 					viewModel.draw = pageIndex + 1;
-					event.initGridDataList();
+					viewModel.event.initGridDataList();
 				});
 			},
 			//换每页显示数量
 			sizeChange: function (size) {
-				event.comps.on("sizeChange", function (arg) {
+				viewModel.event.comps.on("sizeChange", function (arg) {
 					viewModel.pageSize = parseInt(arg);
 					viewModel.draw = 1;
-					event.initGridDataList();
+					viewModel.event.initGridDataList();
 				});
 			},
 			//grid初始化
@@ -84,13 +81,13 @@ define(['text!./print.html',
 						if ((res && res.success == "success", res.detailMsg.data)) {
 							var totalCount = res.detailMsg.data.totalElements;
 							var totalPage = res.detailMsg.data.totalPages;
-							event.comps.update({
+							viewModel.event.comps.update({
 								totalPages: totalPage,
 								pageSize: viewModel.pageSize,
 								currentPage: viewModel.draw,
 								totalCount: totalCount
 							});
-							event.clearDt(viewModel.gridData);
+							viewModel.event.clearDt(viewModel.gridData);
 							viewModel.gridData.setSimpleData(res.detailMsg.data.content, {
 								unSelect: true
 							});
@@ -117,7 +114,7 @@ define(['text!./print.html',
 					viewModel.formData.removeAllRows();
 					viewModel.formData.createEmptyRow();
 				}
-				event.formDivShow(true);
+				viewModel.event.formDivShow(true);
 			},
 
 			//保存按钮点击
@@ -126,7 +123,7 @@ define(['text!./print.html',
 					u.messageDialog(mustTips);
 					return;
 				}
-				event.addNewData();
+				viewModel.event.addNewData();
 			},
 
 			//新增数据
@@ -137,13 +134,13 @@ define(['text!./print.html',
 						delete data.operate;
 					}
 				}
-				var jsonData = event.genDataList(data);
+				var jsonData = viewModel.event.genDataList(data);
 				$ajax(
 					saveRowUrl,
 					JSON.stringify(jsonData),
 					function (res) {
 						if (res && res.success == "success") {
-							event.initGridDataList();
+							viewModel.event.initGridDataList();
 						} else {
 							u.messageDialog({
 								msg: res.message,
@@ -160,7 +157,7 @@ define(['text!./print.html',
 
 			//取消按钮点击
 			cancelClick: function () {
-				event.formDivShow(false);
+				viewModel.event.formDivShow(false);
 			},
 
 			//查询按钮点击
@@ -173,7 +170,7 @@ define(['text!./print.html',
 						queryData[this.name] = removeSpace(this.value);
 					});
 				viewModel.gridData.addParams(queryData);
-				event.initGridDataList();
+				viewModel.event.initGridDataList();
 			},
 			//清空查询条件
 			cleanSearch: function () {
@@ -205,7 +202,7 @@ define(['text!./print.html',
 					var seldatas = viewModel.gridData.getSimpleData({
 						type: "select"
 					});
-					event.del(seldatas);
+					viewModel.event.del(seldatas);
 				}
 			},
 
@@ -225,7 +222,7 @@ define(['text!./print.html',
 							type: "select"
 						});
 						console.log("del:", seldatas);
-						event.del(seldatas);
+						viewModel.event.del(seldatas);
 					}
 				});
 			},
@@ -243,7 +240,7 @@ define(['text!./print.html',
 					JSON.stringify(arr),
 					function (res) {
 						if (res && res.success == "success") {
-							event.initGridDataList();
+							viewModel.event.initGridDataList();
 						} else {
 							var msg = "";
 							for (var key in res.detailMsg) {
@@ -309,9 +306,9 @@ define(['text!./print.html',
 			optFun: function (obj) {
 				var dataTableRowId = obj.row.value["$_#_@_id"];
 				var delfun =
-					"data-bind=click:event.delRow.bind($data," + dataTableRowId + ")";
+					"data-bind=click:viewModel.event.delRow.bind($data," + dataTableRowId + ")";
 				var editfun =
-					"data-bind=click:event.btnAddClicked.bind($data," +
+					"data-bind=click:viewModel.event.btnAddClicked.bind($data," +
 					dataTableRowId +
 					")";
 				obj.element.innerHTML =
@@ -345,7 +342,7 @@ define(['text!./print.html',
 								var data = result.detailMsg.data;
 								var templateCode = data.res_code;
 								//调用打印
-								event.printPageByTemplateCode(templateCode);
+								viewModel.event.printPageByTemplateCode(templateCode);
 							} else {
 								u.messageDialog({
 									msg: result.detailMsg.msg,

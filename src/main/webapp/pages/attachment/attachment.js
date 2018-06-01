@@ -19,9 +19,9 @@ define([
         listRowUrl = ctx + "/list"; //列表查询URL
         saveRowUrl = ctx + "/save"; //新增和修改URL， 有id为修改 无id为新增
         delRowUrl = ctx + "/delete"; //刪除URL
-        event.pageinit(element);
+        viewModel.event.pageinit(element);
     }
-    event = {
+    viewModel.event = {
 
         //初始化
         pageinit: function (element) {
@@ -31,30 +31,30 @@ define([
             });
             //分页初始化
             var paginationDiv = $(element).find("#pagination")[0];
-            event.comps = new u.pagination({
+            viewModel.event.comps = new u.pagination({
                 el: paginationDiv,
                 jumppage: true
             });
-            event.comps.update({
+            viewModel.event.comps.update({
                 pageSize: 5
             }); //默认每页显示5条数据
-            event.initGridDataList();
-            event.pageChange();
-            event.sizeChange();
+            viewModel.event.initGridDataList();
+            viewModel.event.pageChange();
+            viewModel.event.sizeChange();
         },
         // 分页
         pageChange: function () {
-            event.comps.on("pageChange", function (pageIndex) {
+            viewModel.event.comps.on("pageChange", function (pageIndex) {
                 viewModel.draw = pageIndex + 1;
-                event.initGridDataList();
+                viewModel.event.initGridDataList();
             });
         },
         // 当前页显示数量变更
         sizeChange: function (size) {
-            event.comps.on("sizeChange", function (arg) {
+            viewModel.event.comps.on("sizeChange", function (arg) {
                 viewModel.pageSize = parseInt(arg);
                 viewModel.draw = 1;
-                event.initGridDataList();
+                viewModel.event.initGridDataList();
             });
         },
 
@@ -77,13 +77,13 @@ define([
                     if ((res && res.success == "success", res.detailMsg.data)) {
                         var totalCount = res.detailMsg.data.totalElements;
                         var totalPage = res.detailMsg.data.totalPages;
-                        event.comps.update({
+                        viewModel.event.comps.update({
                             totalPages: totalPage,
                             pageSize: viewModel.pageSize,
                             currentPage: viewModel.draw,
                             totalCount: totalCount
                         });
-                        event.clearDt(viewModel.gridData);
+                        viewModel.event.clearDt(viewModel.gridData);
                         viewModel.gridData.setSimpleData(res.detailMsg.data.content, {
                             unSelect: true
                         });
@@ -122,7 +122,7 @@ define([
             } else {
                 viewModel.dialog.show();
             }
-            u.stopEvent(e);
+            u.stopviewModel.event(e);
         },
 
         //save按钮
@@ -131,7 +131,7 @@ define([
                 u.messageDialog(mustTips);
                 return;
             }
-            event.addNewData();
+            viewModel.event.addNewData();
             viewModel.dialog.close();
         },
 
@@ -143,13 +143,13 @@ define([
                     delete data.operate;
                 }
             }
-            var jsonData = event.genDataList(data);
+            var jsonData = viewModel.event.genDataList(data);
             $ajax(
                 saveRowUrl,
                 JSON.stringify(jsonData),
                 function (res) {
                     if (res && res.success == "success") {
-                        event.initGridDataList();
+                        viewModel.event.initGridDataList();
                     } else {
                         u.messageDialog({
                             msg: res.message,
@@ -187,7 +187,7 @@ define([
 
             console.log("queryData:", queryData);
             viewModel.gridData.addParams(queryData);
-            event.initGridDataList();
+            viewModel.event.initGridDataList();
         },
         // 清除搜索
         cleanSearch: function () {
@@ -209,7 +209,7 @@ define([
                 JSON.stringify(arr),
                 function (res) {
                     if (res && res.success == "success") {
-                        event.initGridDataList();
+                        viewModel.event.initGridDataList();
                     } else {
                         var msg = "";
                         for (var key in res.detailMsg) {
@@ -235,7 +235,7 @@ define([
                 var seldatas = viewModel.gridData.getSimpleData({
                     type: "select"
                 });
-                event.del(seldatas);
+                viewModel.event.del(seldatas);
             }
         },
         // 删除单行
@@ -249,7 +249,7 @@ define([
                     var seldatas = viewModel.gridData.getSimpleData({
                         type: "select"
                     });
-                    event.del(seldatas);
+                    viewModel.event.del(seldatas);
                 }
             });
         },
@@ -311,9 +311,9 @@ define([
         optFun: function (obj) {
             var dataTableRowId = obj.row.value["$_#_@_id"];
             var delfun =
-                "data-bind=click:event.delRow.bind($data," + dataTableRowId + ")";
+                "data-bind=click:viewModel.event.delRow.bind($data," + dataTableRowId + ")";
             var editfun =
-                "data-bind=click:event.btnAddClicked.bind($data," +
+                "data-bind=click:viewModel.event.btnAddClicked.bind($data," +
                 dataTableRowId +
                 ")";
             obj.element.innerHTML =

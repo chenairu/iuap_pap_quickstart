@@ -17,7 +17,8 @@ var meta = {
     //是否固定(系统预置)
     sys: {
       type: "string",
-      default: "N"
+      required: true,
+      default: "否"
     },
     //备注信息
     remark: {
@@ -25,11 +26,7 @@ var meta = {
     },
     //创建者
     creator: {
-      type: "string",
-      // 'refmodel' : JSON.stringify(refinfo['wbUser']),
-      // 'refcfg' : '{"ctx":"/uitemplate_web"}'
-      'refmodel' : JSON.stringify(refinfo['organization']),
-			'refcfg' : '{"ctx":"/uitemplate_web"}'
+      type: "string"
     },
     createtime: {
       type: "string"
@@ -42,4 +39,5 @@ var viewModel = {
   pageSize: 5,
   gridData: new u.DataTable(meta),
   formData: new u.DataTable(meta),
+  yesOrNo: [{name: "是", value: "是"}, {name: "否", value: "否"}]
 };

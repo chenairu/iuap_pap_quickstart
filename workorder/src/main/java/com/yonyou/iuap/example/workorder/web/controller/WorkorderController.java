@@ -1,5 +1,6 @@
 package com.yonyou.iuap.example.workorder.web.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +66,25 @@ public class WorkorderController extends BaseController{
 			jsonResp = this.buildError("msg", exp.getMessage(), RequestStatusEnum.FAIL_FIELD);
 		}
 		return jsonResp;
+	}
+	
+	@RequestMapping(value = "/deleteByIds", method = RequestMethod.POST)
+	@ResponseBody
+	public Object deleteByIds(@RequestBody List<String> ids, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		for(int i=0; i<ids.size(); i++) {
+			this.workorderService.delete(ids.get(i));
+		}
+		return super.buildSuccess(ids);
+	}
+	
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	@ResponseBody
+	public Object deleteBatch(@RequestBody List<Workorder> listWorkorders, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		for(int i=0; i<listWorkorders.size(); i++) {
+			this.workorderService.delete(listWorkorders.get(i));
+		}
+		return super.buildSuccess(listWorkorders);
 	}
 	
 	/**
