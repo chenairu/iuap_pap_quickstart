@@ -24,6 +24,12 @@
 		<result column="supplierFax" property="supplierFax" jdbcType="VARCHAR" />
 		<result column="linkmanMobile" property="linkmanMobile" jdbcType="VARCHAR" />
 		<result column="supplierAddr" property="supplierAddr" jdbcType="VARCHAR" />
+		<result column="currency_name" property="currency_name" jdbcType="VARCHAR" />
+		<result column="manufacturer_name" property="manufacturer_name" jdbcType="VARCHAR" />
+		<result column="linkman_name" property="linkman_name" jdbcType="VARCHAR" />
+		<result column="director_name" property="director_name" jdbcType="VARCHAR" />
+		<result column="lastModifyUser_name" property="lastModifyUser_name" jdbcType="VARCHAR" />
+		<result column="createUser_name" property="createUser_name" jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<sql id="Base_Column_List">
@@ -52,18 +58,45 @@
 	</sql>
 	
 	<select id="selectAllByPage" resultMap="BaseResultMap" resultType="java.util.List">
-		SELECT
-			<include refid="Base_Column_List"/>
-		FROM	example_goods
+		SELECT	t.id,
+				t.goodsCode,
+				t.goodsName,
+				t.model,
+				t.price,
+				t.currency,
+				ed.name AS currency_name,
+				t.manufacturer,
+				eo.instit_name AS manufacturer_name,
+				t.linkman,
+				ec.peoname AS linkman_name,
+				t.remark,
+				t.version,
+				t.createUser,
+				t.createTime,
+				t.lastModified,
+				t.lastModifyUser,
+				t.tenant_id,
+				t.director,
+				ec2.peoname AS director_name,
+				t.supplier,
+				t.supplierTel,
+				t.supplierFax,
+				t.linkmanMobile,
+				t.supplierAddr,
+				tu.name AS lastModifyUser_name,
+				tu2.name AS createUser_name
+		FROM	example_goods t LEFT OUTER JOIN example_dictionary ed ON t.currency=ed.id
+								LEFT OUTER JOIN example_organization eo ON t.manufacturer=eo.institid
+								LEFT OUTER JOIN example_contacts ec ON t.linkman=ec.id
+								LEFT OUTER JOIN example_contacts ec2 ON t.director=ec2.id
+								LEFT OUTER JOIN app_user tu ON t.lastModifyUser=tu.id
+								LEFT OUTER JOIN app_user tu2 ON t.createUser=tu2.id
 		WHERE	1=1
-		<if test="sql != null">
-			${sql}
-		</if>
-		<if test="condition!=null">
-		<if test="condition.searchMap.goodsCode!=null">
-			and goodsCode = #{condition.searchMap.goodsCode}
-		</if>
-	</if>
+			<if test="condition!=null">
+				<if test="condition.searchMap.goodsCode!=null">
+					and goodsCode = #{condition.searchMap.goodsCode}
+				</if>
+			</if>
 	</select>
 	
 	<select id="queryList" resultMap="BaseResultMap" resultType="java.util.List">
@@ -91,11 +124,15 @@
 				t.supplierTel,
 				t.supplierFax,
 				t.linkmanMobile,
-				t.supplierAddr
+				t.supplierAddr,
+				tu.name AS lastModifyUser_name,
+				tu2.name AS createUser_name
 		FROM	example_goods t LEFT OUTER JOIN example_dictionary ed ON t.currency=ed.id
 								LEFT OUTER JOIN example_organization eo ON t.manufacturer=eo.institid
 								LEFT OUTER JOIN example_contacts ec ON t.linkman=ec.id
 								LEFT OUTER JOIN example_contacts ec2 ON t.director=ec2.id
+								LEFT OUTER JOIN app_user tu ON t.lastModifyUser=tu.id
+								LEFT OUTER JOIN app_user tu2 ON t.createUser=tu2.id
 		WHERE	1=1
 			<if test="condition!=null">
 				<if test="condition.id!=null and condition.id!=''">
