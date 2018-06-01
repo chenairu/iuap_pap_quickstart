@@ -222,6 +222,13 @@
 				<if test="condition.id!=null and condition.id!=''">
 					and id = #{id}
 				</if>
+				<if test="condition.ids!=null and condition.ids.size>0">
+					and id in 
+					<foreach collection="condition.ids" item="item"
+			            	open="(" close=")" separator=",">
+			            #{item,jdbcType=VARCHAR}
+			        </foreach>
+				</if>
 			</if>
 			<if test="condition==null">
 				and 1=2
