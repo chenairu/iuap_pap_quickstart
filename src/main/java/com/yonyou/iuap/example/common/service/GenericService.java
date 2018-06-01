@@ -85,10 +85,7 @@ public abstract class GenericService<T extends GenericEntity> {
 	}
 
 	public int delete(T entity) {
-		entity.setDr(1);
-		entity.setLastModified(new Date());
-		entity.setLastModifyUser(InvocationInfoProxy.getUserid());
-		return ibatisMapper.update(entity);
+		return this.delete(entity.getId());
 	}
 
 	/***************************************************/
