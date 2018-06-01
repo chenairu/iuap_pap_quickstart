@@ -137,10 +137,11 @@ define(['text!./goods.html',
                         delete data.operate;
                     }
                 }
-                var jsonData = viewModel.event.genDataList(data);
+                //var jsonData = viewModel.event.genDataList(data);
+               // console.log("data:",data);
                 $ajax(
                     saveRowUrl,
-                    JSON.stringify(jsonData),
+                    JSON.stringify(data),
                     function (res) {
                         if (res && res.success == "success") {
                             viewModel.event.formDivShow(false);
@@ -235,6 +236,7 @@ define(['text!./goods.html',
                         id: data[i].id
                     });
                 }
+                console.log("shanss:",arr);
                 $ajax(
                     delRowUrl,
                     JSON.stringify(arr),

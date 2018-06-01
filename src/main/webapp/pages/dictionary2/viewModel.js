@@ -17,7 +17,7 @@ var meta = {
     //是否固定(系统预置)
     sys: {
       type: "string",
-      default: "N"
+      default: "否"
     },
     //备注信息
     remark: {
