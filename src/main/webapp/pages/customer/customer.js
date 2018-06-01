@@ -1,6 +1,6 @@
 define(['text!./customer.html',
     "css!../../style/common.css",
-    "css!./exampleArticle.css",
+    "css!./customer.css",
     "../../config/sys_const.js",
     "../../utils/utils.js",
     "../../utils/ajax.js",
