@@ -29,8 +29,6 @@ var meta = {
 							"rootName": "币种列表"
 					}),
 			'refcfg' : '{"ctx":"/uitemplate_web"}'
-            // 'refparam':'{"isUseDataPower":"true"}',
-
 		},
 		currency_name : {},
 		remark : {},
@@ -85,7 +83,7 @@ var meta = {
 										"currentPageIndex":0,
 										"pageCount":0,
 										"pageSize":100},
-							"refCode":'currency',
+							"refCode":'director',
 							"refModelUrl":"http://127.0.0.1:8088/iuap-example/reference/director/",
 							"rootName": "业务负责人",
 							"refName": "业务负责人列表",
@@ -103,7 +101,10 @@ var meta = {
 		linkmanMobile : {},
 		supplierTel : {},
 		supplierFax : {},
-		supplierAddr : {}
+		supplierAddr : {},
+		
+		goodsType : {},
+		goodsSubType : {}
 	}
 
 };
@@ -113,4 +114,10 @@ var viewModel = {
     pageSize: 5,
     gridData: new u.DataTable(meta),
     formData: new u.DataTable(meta),
+    goodsStatus_list:[{value:"0",name:"未上架"},{value:"1",name:"已上架"},{value:"2",name:"已下架"}],
+	goodsType_list:[{value:"0",name:"食品类"},{value:"1",name:"日用品类"},{value:"2",name:"鞋帽服饰类"}],
+	goodsSubType_list:[],
+	goodsFoods_list:[{value:"0",name:"牛奶"},{value:"1",name:"酸奶"}],
+	goodsLives_list:[{value:"0",name:"刷子"},{value:"1",name:"衣架"}],
+	goodsDress_list:[{value:"0",name:"大衣"},{value:"1",name:"裙子"}]
 };

@@ -23,6 +23,10 @@ import iuap.ref.ref.RefClientPageInfo;
 import iuap.ref.sdk.refmodel.model.AbstractGridRefModel;
 import iuap.ref.sdk.refmodel.vo.RefViewModelVO;
 
+/**
+ * 固定表头表格参照
+ * @author Aton
+ */
 @RestController
 @RequestMapping({"/reference/dictionary"})
 public class DictionaryRefController extends AbstractGridRefModel {
@@ -30,13 +34,13 @@ public class DictionaryRefController extends AbstractGridRefModel {
 	private Logger logger = LoggerFactory.getLogger(DictionaryRefController.class);
 
 	@Override
-	public RefViewModelVO getRefModelInfo(
-			@RequestBody RefViewModelVO refViewModel) {
+	public RefViewModelVO getRefModelInfo(@RequestBody RefViewModelVO refViewModel) {
 		RefViewModelVO retinfo = super.getRefModelInfo(refViewModel);
 		refViewModel.setRefName("币种");
 		refViewModel.setRootName("币种列表");
 		return retinfo;
 	}
+	
 	@Override
 	public @ResponseBody
 	Map<String, Object> getCommonRefData(@RequestBody RefViewModelVO refViewVo) {
@@ -51,9 +55,7 @@ public class DictionaryRefController extends AbstractGridRefModel {
 		Page<Dictionary> pageData = dictionaryService.selectAllByPage(request, this.buildSearchParams(searchParams));
 		List<Dictionary> listData = pageData.getContent();
 		if(CollectionUtils.isNotEmpty(listData)) {
-			List<Map<String, String>> list = buildRtnValsOfRef(listData,isUserDataPower(refViewVo));
-//			List<Map<String, String>> listRefer = buildRtnValsOfRef(listData);
-			
+			List<Map<String, String>> list = buildRtnValsOfRef(listData);
 			RefClientPageInfo refPageInfo = refViewVo.getRefClientPageInfo();
 			refPageInfo.setPageCount(pageData.getTotalPages());
 			refPageInfo.setCurrPageIndex(pageData.getNumber());
@@ -76,7 +78,7 @@ public class DictionaryRefController extends AbstractGridRefModel {
 	public List<Map<String, String>> filterRefJSON(@RequestBody RefViewModelVO refViewVo) {
 		List<Map<String, String>> results = new ArrayList<Map<String,String>>();		
 		List<Dictionary> rtnVal = this.dictionaryService.query4Refer(refViewVo.getContent());
-		results = buildRtnValsOfRef(rtnVal,isUserDataPower(refViewVo));
+		results = buildRtnValsOfRef(rtnVal);
 		return results;
 	}
 
@@ -101,7 +103,7 @@ public class DictionaryRefController extends AbstractGridRefModel {
 
 		try {
 			List<Dictionary> rtnVal = this.dictionaryService.query4Refer(refViewVo.getContent());
-			results = buildRtnValsOfRef(rtnVal,isUserDataPower(refViewVo));
+			results = buildRtnValsOfRef(rtnVal);
 		} catch (Exception e) {
 			logger.error("服务异常：", e);
 		}
@@ -140,7 +142,8 @@ public class DictionaryRefController extends AbstractGridRefModel {
 		return new PageRequest(pageNum-1, pageSize, sort);
 	}
 	
-	private List<Map<String,String>> buildRtnValsOfRef(List<Dictionary> listDictionary, boolean isUserDataPower){
+	
+	private List<Map<String,String>> buildRtnValsOfRef(List<Dictionary> listDictionary){
 		// 数据权限集合set
 		String tenantId = InvocationInfoProxy.getTenantid();
 		String sysId = InvocationInfoProxy.getSysid();
@@ -153,71 +156,24 @@ public class DictionaryRefController extends AbstractGridRefModel {
 				if(temp != null){
 					set.add(temp.getResourceId());
 				}
-
 			}
 		}
 
 		List<Map<String, String>> results = new ArrayList<Map<String,String>>();
-
 		if ((listDictionary != null) && (!listDictionary.isEmpty())) {
 			for (Dictionary entity : listDictionary) {
-				if (!isUserDataPower || (isUserDataPower && set.contains(entity.getId()))) {
-					Map<String, String> refDataMap = new HashMap<String, String>();
-					refDataMap.put("id", entity.getId());
-					refDataMap.put("refname", entity.getName());
-					refDataMap.put("refcode", entity.getCode());
-					refDataMap.put("refpk", entity.getId());
+				Map<String, String> refDataMap = new HashMap<String, String>();
+				refDataMap.put("id", entity.getId());
+				refDataMap.put("refname", entity.getName());
+				refDataMap.put("refcode", entity.getCode());
+				refDataMap.put("refpk", entity.getId());
 
-					results.add(refDataMap);
-				}
+				results.add(refDataMap);
 			}
 		}
 		return results;
 	}
-	private boolean isUserDataPower(RefViewModelVO refViewModelVo) {
-		if (isAdmin()) {
-			return false;
-		}
 
-		boolean isUserDataPower = false;
-
-		String clientParam = refViewModelVo.getClientParam();
-		if ((clientParam != null) && (clientParam.trim().length() > 0)) {
-			net.sf.json.JSONObject json = net.sf.json.JSONObject
-					.fromObject(clientParam);
-			if (json.containsKey("isUseDataPower")) {
-				isUserDataPower = json.getBoolean("isUseDataPower");
-			}
-		}
-
-		return isUserDataPower;
-	}
-	private boolean isAdmin() {
-		String userId = InvocationInfoProxy.getUserid();
-		if (userId.equals("U001")) {
-			return true;
-		}
-		return false;
-	}
-	/**
-	 * 实现在grid根据id显示name值操作
-	 * @param id
-	 * @param isUseDataPower
-	 * @return
-	 */
-	@RequestMapping("/filterData")
-	public String filterData(@RequestParam String id, @RequestParam boolean isUseDataPower){
-		StringBuilder refName = new StringBuilder("");
-		String[] ids = id.split(",");
-		List<Dictionary> rtnVal = this.dictionaryService.getByIds(null,Arrays.asList(ids));
-		List<Map<String,String>> list = buildRtnValsOfRef(rtnVal,isUseDataPower);
-		if(list != null && list.size()>0){
-			for(Map<String,String> map : list){
-				refName.append(map.get("refname")).append(",");
-			}
-		}
-		return refName.substring(0,refName.length()-1);
-	}
 	/****************************************************************/
 	@Autowired
 	private DictionaryService dictionaryService;
