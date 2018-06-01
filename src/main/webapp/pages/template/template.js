@@ -143,6 +143,7 @@ define(['text!./template.html',
                     JSON.stringify(jsonData),
                     function (res) {
                         if (res && res.success == "success") {
+                            viewModel.event.formDivShow(false);
                             viewModel.event.initGridDataList();
                         } else {
                             u.messageDialog({
