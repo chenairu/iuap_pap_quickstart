@@ -22,7 +22,35 @@ define(['text!./goods.html',
             $(element).html(template);
             viewModel.event.formDivShow(false);
             viewModel.event.pageinit(element);
+            
+        	viewModel.control.changeGoodsType();
         }
+        
+        viewModel.control={
+        	changeGoodsType:function(){
+                //商品分类、商品小类：下拉框级联设置
+            	viewModel.formData.on('goodsType.valueChange', function(e){
+            		//清空商品小类值
+            		viewModel.formData.getCurrentRow().setValue("goodsSubType","");
+            		//根据商品分类动态设置商品小类下拉列表 和 商品型号是否可见
+            		var curType = viewModel.formData.getCurrentRow().getSimpleData().goodsType;
+            		if(curType=="0"){
+            			viewModel.app.getComp("goodsSubType").setComboData(viewModel.goodsFoods_list);
+            			document.getElementById('frmGoodsModel').style.visibility="visible";
+            		}
+            		if(curType=="1"){
+            			viewModel.app.getComp("goodsSubType").setComboData(viewModel.goodsLives_list);
+            			document.getElementById('frmGoodsModel').style.visibility="visible";
+            		}
+            		if(curType=="2"){
+            			viewModel.app.getComp("goodsSubType").setComboData(viewModel.goodsDress_list);
+            			document.getElementById('frmGoodsModel').style.visibility="hidden";
+            		}
+                });
+        	}
+        }
+        
+        
         viewModel.event = {
             pageinit: function (element) {
                 viewModel.app = u.createApp({
@@ -47,6 +75,8 @@ define(['text!./goods.html',
                     }
                 });
             },
+            
+            
             //换页
             pageChange: function () {
                 viewModel.event.comps.on("pageChange", function (pageIndex) {
@@ -67,7 +97,7 @@ define(['text!./goods.html',
                 var jsonData = {
                     pageIndex: viewModel.draw - 1,
                     pageSize: viewModel.pageSize,
-                    sortField: "ts",
+                    sortField: "t.ts",
                     sortDirection: "desc"
                 };
 
