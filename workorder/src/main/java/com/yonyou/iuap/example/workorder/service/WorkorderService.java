@@ -8,7 +8,7 @@ import java.util.Random;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.yonyou.iuap.bpm.pojo.BPMFormJSON;
@@ -18,43 +18,63 @@ import com.yonyou.iuap.context.InvocationInfoProxy;
 import com.yonyou.iuap.example.common.service.GenericService;
 import com.yonyou.iuap.example.workorder.dao.WorkorderMapper;
 import com.yonyou.iuap.example.workorder.entity.Workorder;
+import com.yonyou.iuap.example.workorder.util.WorkFlowUtils;
 import com.yonyou.iuap.persistence.vo.pub.BusinessException;
 import com.yonyou.uap.ieop.busilog.config.annotation.BusiLogConfig;
 
 import yonyou.bpm.rest.ex.util.DateUtil;
 import yonyou.bpm.rest.request.RestVariable;
 
-@Component
+@Service
 public class WorkorderService extends GenericService<Workorder>{
 	
-	@BusiLogConfig("workorder_info_save")
-	public Workorder save(Workorder workorder) {
+	public void batchSave(List<Workorder> listWorkorder) {
+		for(int i=0; i<listWorkorder.size(); i++) {
+			this.save(listWorkorder.get(i));
+		}
+	}
+	
+
+	/**
+	 * 新增保存工单信息
+	 */
+	@Override
+	public Workorder insert(Workorder workorder) {
 		if(StringUtils.isEmpty(workorder.getId())) {
 			workorder.setCode(DateUtil.toDateString(new Date(), "yyyyMMddHHmmss"+new Random().nextInt(10)));
 		}
-		return super.save(workorder);
+		return super.insert(workorder);
 	}
+	
 
 	/**
 	 * 工单申请提交（批量）
 	 * @param listWorkorder
 	 * @param processDefineCode
 	 */
-	public void batchSubmit(List<Workorder> listWorkorder, String processDefineCode) {
+	@BusiLogConfig("workorder_bmp_submit")
+	public String batchSubmit(List<Workorder> listWorkorder, String processDefineCode) {
+		StringBuffer errorMsg = new StringBuffer("");
 		for(Workorder workorder : listWorkorder) {
-			this.doSubmit(workorder, processDefineCode);
+			Workorder curInfo = this.findById(workorder.getId());
+			if(curInfo.getStatus() == 0) {							//当前单据状态：未提交
+				this.doSubmit(workorder, processDefineCode);
+			}else {
+				errorMsg.append("工单["+curInfo.getCode()+"]状态不合法，无法提交!\r\n");
+			}
 		}
+		return errorMsg.toString();
 	}
 	
-	public void doSubmit(Workorder workorder, String processDefineCode) {
+	private void doSubmit(Workorder workorder, String processDefineCode) {
 		BPMFormJSON submitJson = this.buildBPMFormJSON(processDefineCode, workorder);		
 		JSONObject resultJson = bpmSubmitBasicService.submit(submitJson);
-		if (isSuccess(resultJson)) {
+		if (WorkFlowUtils.isSuccess(resultJson)) {
 			workorder.setStatus(1);									// 从未提交状态改为已提交状态;
 			this.save(workorder);
-		} else if (isFail(resultJson)) {
-			String msg = resultJson.get("msg").toString();
-			throw new BusinessException("提交启动流程实例发生错误，请联系管理员！错误原因：" + msg);
+		} else {
+			Object msg = resultJson.get("message")!=null ? resultJson.get("message"):resultJson.get("msg");
+			throw new BusinessException("提交启动流程实例发生错误，请联系管理员！错误原因：" + msg.toString());
 		}
 	}
 	
@@ -62,16 +82,32 @@ public class WorkorderService extends GenericService<Workorder>{
 	 * 工单申请撤回
 	 * @param listWorkorder
 	 */
-	public JSONObject batchRecall(List<Workorder> listWorkorder) {
-		Workorder entity = listWorkorder.get(0);
-		entity.setStatus(0);							// 从已提交状态改为未提交状态;
-		this.save(entity);
-		
-		return bpmSubmitBasicService.unsubmit(entity.getId());
+	public String batchRecall(List<Workorder> listWorkorder) {
+		StringBuffer errorMsg = new StringBuffer("");
+		for(Workorder workorder : listWorkorder) {
+			Workorder curInfo = this.findById(workorder.getId());
+			if(curInfo.getStatus() == 1) {							//当前单据状态：已提交
+				this.doRecall(workorder);
+			}else {
+				errorMsg.append("工单["+curInfo.getCode()+"]状态不合法，无法撤回!\r\n");
+			}
+		}
+		return errorMsg.toString();
+	}
+	
+	private void doRecall(Workorder workorder) {
+		JSONObject resultJson = bpmSubmitBasicService.unsubmit(workorder.getId());
+		if (WorkFlowUtils.isSuccess(resultJson)) {
+			workorder.setStatus(0);									// 从已提交状态改为未提交状态;
+			this.save(workorder);
+		} else {
+			Object msg = resultJson.get("message")!=null ? resultJson.get("message"):resultJson.get("msg");
+			throw new BusinessException("提交启动流程实例发生错误，请联系管理员！错误原因：" + msg.toString());
+		}
 	}
 	
 	/**
-	 * 审批通过
+	 * 审批通过——更新工单状态
 	 * @param workorder
 	 */
 	public void doApprove(String id, Integer status) {
@@ -81,7 +117,7 @@ public class WorkorderService extends GenericService<Workorder>{
 	}
 	
 	/**
-	 * 未提交
+	 * 驳回：更新工单状态——未提交
 	 * @param id
 	 */
 	public void doReject(String id) {
@@ -90,23 +126,15 @@ public class WorkorderService extends GenericService<Workorder>{
 		this.save(workorder);
 	}
 	
-	private boolean isSuccess(JSONObject resultJson){
-		return resultJson.get("flag").equals("success");
-	}
-	private boolean isFail(JSONObject resultJson){
-		return resultJson.get("flag").equals("fail");
-	}
-	
 	/**
-	 * 设置BPMFormJSON
+	 * 构建BPMFormJSON
 	 * @param processDefineCode
 	 * @param Workorder
 	 * @return
 	 * @throws  
 	 */
 	public BPMFormJSON buildBPMFormJSON(String processDefineCode, Workorder workorder){
-		try
-		{
+		try{
 			BPMFormJSON bpmform = new BPMFormJSON();
 			bpmform.setProcessDefinitionKey(processDefineCode);
 			String userName = InvocationInfoProxy.getUsername();
@@ -126,9 +154,7 @@ public class WorkorderService extends GenericService<Workorder>{
 			String url = "/iuap-example/example_workorder";								// 流程审批后，执行的业务处理类(controller对应URI前缀)
 			bpmform.setServiceClass(url);
 			return bpmform;
-		}
-		catch(Exception ex)
-		{
+		}catch(Exception ex){
 			throw new RuntimeException(ex.getMessage());
 		}
 	}

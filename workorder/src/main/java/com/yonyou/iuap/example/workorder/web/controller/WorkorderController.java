@@ -1,6 +1,5 @@
 package com.yonyou.iuap.example.workorder.web.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,13 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSONObject;
 import com.yonyou.iuap.base.web.BaseController;
 import com.yonyou.iuap.example.workorder.entity.Workorder;
 import com.yonyou.iuap.example.workorder.service.WorkorderService;
@@ -39,7 +38,6 @@ public class WorkorderController extends BaseController{
 	@ResponseBody
 	public Object list(PageRequest pageRequest,
 			@FrontModelExchange(modelType = Workorder.class) SearchParams searchParams) {
-		logger.debug("execute data search.");
 		Page<Workorder> page = workorderService.selectAllByPage(pageRequest, searchParams);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("data", page);
@@ -53,6 +51,19 @@ public class WorkorderController extends BaseController{
 		return this.buildSuccess(workorder);
 	}
 	
+	@RequestMapping(value = "/batchSave", method = RequestMethod.POST)
+	@ResponseBody
+	public Object batchSave(@RequestBody List<Workorder> listWorkorder, HttpServletRequest request, HttpServletResponse response) {
+		JsonResponse jsonResp;
+		try {
+			workorderService.batchSave(listWorkorder);
+			jsonResp = this.buildSuccess(listWorkorder);
+		}catch(Exception exp) {
+			logger.error("工单信息保存出错!", exp);
+			jsonResp = this.buildError("msg", exp.getMessage(), RequestStatusEnum.FAIL_FIELD);
+		}
+		return jsonResp;
+	}
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody
@@ -97,14 +108,18 @@ public class WorkorderController extends BaseController{
 	@RequestMapping(value = "/submit", method = RequestMethod.POST)
 	@ResponseBody
 	public Object submit(@RequestBody List<Workorder> listWorkorder, HttpServletRequest request, HttpServletResponse response) {
-		logger.info("提交工单......");
 		String processDefineCode = request.getParameter("processDefineCode");
 		try{
-			workorderService.batchSubmit(listWorkorder, processDefineCode);
+			String resultMsg = workorderService.batchSubmit(listWorkorder, processDefineCode);
+			if(StringUtils.isEmpty(resultMsg)) {
+				return this.buildSuccess("工单撤回操作成功!");
+			}else {
+				return this.buildGlobalError(resultMsg);
+			}
 		}catch(Exception exp) {
-			exp.printStackTrace();
+			logger.info("工单提交出错!", exp);
+			return this.buildGlobalError(exp.getMessage());
 		}
-		return this.buildSuccess();
 	}
 
 	/**
@@ -118,8 +133,12 @@ public class WorkorderController extends BaseController{
 	@ResponseBody
 	public Object recall(@RequestBody List<Workorder> listWorkorder, HttpServletRequest request, HttpServletResponse response) {
 		logger.debug("execute recall operate.");
-		JSONObject recallResult = workorderService.batchRecall(listWorkorder);
-		return super.buildSuccess(recallResult);
+		String resultMsg = workorderService.batchRecall(listWorkorder);
+		if(StringUtils.isEmpty(resultMsg)) {
+			return this.buildSuccess("工单撤回操作成功!");
+		}else {
+			return this.buildGlobalError(resultMsg);
+		}
 	}
 	
 	/*************************************************************/
