@@ -233,3 +233,25 @@ CREATE TABLE `example_bill` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
 
+DROP TABLE IF EXISTS `example_workorder`;
+
+CREATE TABLE `example_workorder` (
+  `id` varchar(64) NOT NULL COMMENT '主键ID',
+  `code` varchar(20) NOT NULL COMMENT '工单编码',
+  `name` varchar(64) NOT NULL COMMENT '工单名称',
+  `type` varchar(64) DEFAULT NULL COMMENT '工单类型',
+  `content` varchar(1024) DEFAULT NULL COMMENT '工单内容',
+  `status` varchar(10) DEFAULT NULL COMMENT '工单状态: 0-未提交；1:已提交; 2:审批中; 3:已办结',
+  `applicant` varchar(64) DEFAULT NULL COMMENT '申请人',
+  `applyTime` datetime DEFAULT NULL COMMENT '申请时间',
+  `finishTime` datetime DEFAULT NULL COMMENT '办结时间',
+  `remark` varchar(1024) DEFAULT NULL COMMENT '备注',
+  `version` int(11) DEFAULT '0' COMMENT '版本',
+  `createTime` timestamp NULL DEFAULT NULL COMMENT '创建人',
+  `createUser` varchar(64) DEFAULT NULL COMMENT '创建时间',
+  `lastModified` timestamp NULL DEFAULT NULL COMMENT '修改人',
+  `lastModifyUser` varchar(64) DEFAULT NULL COMMENT '修改时间',
+  `ts` timestamp NULL DEFAULT NULL COMMENT '数据创建时间',
+  `dr` int(11) DEFAULT NULL COMMENT '删除标志：0-可用；1-已删除',
+  PRIMARY KEY (`id`)
+);
