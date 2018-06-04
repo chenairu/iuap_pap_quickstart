@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yonyou.iuap.example.asyncOrg.dao.ExampleTreeMapper">
+    <resultMap id="BaseResultMap" type="com.yonyou.iuap.example.asyncOrg.entity.ExampleTree">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="pid" jdbcType="VARCHAR" property="pid" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="flag" jdbcType="VARCHAR" property="flag" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,pid,name,flag
+    </sql>
+    <select id="selectAllByPage" resultMap="BaseResultMap"
+            resultType="java.util.List">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from example_tree where 1=1
+        <if test="search != null">
+            <if  test="search.code!=null and search.code!='' ">
+                and  code like CONCAT(CONCAT('%', #{search.code}),'%')
+            </if>
+            <if test="search.name!=null and search.name!='' ">
+                and name like CONCAT(CONCAT('%', #{search.name}),'%')
+            </if>
+            <if test="search.pid!=null and search.pid!='' ">
+                and pid = #{search.pid,jdbcType=VARCHAR}
+            </if>
+        </if>
+    </select>
+
+</mapper>
