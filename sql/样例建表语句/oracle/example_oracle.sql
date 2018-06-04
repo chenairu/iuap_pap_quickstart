@@ -343,3 +343,27 @@ publish_time DATE NULL ,
 status VARCHAR2(255) NULL
 );
 ALTER TABLE example_article ADD PRIMARY KEY (id);
+
+
+
+create table example_template(
+id VARCHAR2(36) NOT NULL ,
+code VARCHAR2(50) NULL,
+name VARCHAR2(50) NULL,
+remark VARCHAR2(50) NULL
+);
+ALTER TABLE example_template ADD PRIMARY KEY (id);
+
+create table example_print(
+id VARCHAR2(36) NOT NULL ,
+code VARCHAR2(50) NULL,
+name VARCHAR2(50) NULL,
+remark VARCHAR2(50) NULL
+);
+ALTER TABLE example_print ADD PRIMARY KEY (id);
+
+
+
+
+
+

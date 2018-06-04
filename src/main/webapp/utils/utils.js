@@ -1,5 +1,5 @@
 //搜索导航（查询、筛选）展开/收起
-$("body").on("click", "#condition-toggle", function() {
+$("body").on("click", "#condition-toggle", function () {
   var text = $("#condition-text").html();
   if (text === "展开") {
     $("#search-modul").show();
@@ -9,13 +9,41 @@ $("body").on("click", "#condition-toggle", function() {
     $("#condition-text").html("展开");
   }
 });
+
+
+
+
+$("body").on("click", "#collapse", function () {
+  if ($("#collapse-body").css("display") == "none") {
+    $("#collapse-body").show();
+  }
+  else {
+    $("#collapse-body").hide();
+  }
+});
+
+
+function divShow(name) {
+  var divObj = "#" + name;
+  $(divObj).show();
+};
+
+function divHide(name) {
+  var divObj = "#" + name;
+  $(divObj).hide();
+}
+
+
+
+
+
 //存在问题，需要调整：涉及死循环
 var inputDom = document.querySelectorAll("input");
 var searchbtn = document.querySelector('[data-role="searchbtn"]');
 var clearbtn = document.querySelector('[data-role="clearbtn"]');
 var inputlen = inputDom.length;
 var ifuse = false; //是否可用
-var domshasvalue = function() {
+var domshasvalue = function () {
   for (var i = 0; i < inputlen; i++) {
     if (inputDom[i].value.length > 0) {
       return true;
@@ -25,7 +53,7 @@ var domshasvalue = function() {
 };
 if (inputlen > 0) {
   for (var i = 0; i < inputlen; i++) {
-    u.on(inputDom[i], "blur", function() {
+    u.on(inputDom[i], "blur", function () {
       ifuse = false;
       if (this.value && this.value.length > 0) {
         //如果本元素失去焦点时有value则按钮直接可用，
