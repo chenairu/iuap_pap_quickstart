@@ -15,8 +15,12 @@ public class Workorder extends AbsGenericEntity implements GenericEntity {
 
 	private String code;
 	private String name;
+	
 	private String type;
+	private String type_name;
 	private Integer status;
+	private String status_name;
+
 	private String remark;
 	
 	private String content;
@@ -63,79 +67,21 @@ public class Workorder extends AbsGenericEntity implements GenericEntity {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	
-	protected String id;
-	
-	protected int version;
-	protected int dr;
-	protected Date ts;
-	protected Date lastModified;
-	protected String lastModifyUser;
-	protected Date createTime;
-	protected String createUser;
-	
-	public String getId() {
-		return id;
+
+	public String getType_name() {
+		return type_name;
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-	
-	public int getVersion() {
-		return version;
+	public void setType_name(String type_name) {
+		this.type_name = type_name;
 	}
 
-	public void setVersion(int version) {
-		this.version = version;
+	public String getStatus_name() {
+		return status_name;
 	}
 
-	public int getDr() {
-		return dr;
-	}
-
-	public void setDr(int dr) {
-		this.dr = dr;
-	}
-
-	public Date getTs() {
-		return ts;
-	}
-
-	public void setTs(Date ts) {
-		this.ts = ts;
-	}
-
-	public Date getLastModified() {
-		return lastModified;
-	}
-
-	public void setLastModified(Date lastModified) {
-		this.lastModified = lastModified;
-	}
-
-	public String getLastModifyUser() {
-		return lastModifyUser;
-	}
-
-	public void setLastModifyUser(String lastModifyUser) {
-		this.lastModifyUser = lastModifyUser;
-	}
-
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-
-	public String getCreateUser() {
-		return createUser;
-	}
-
-	public void setCreateUser(String createUser) {
-		this.createUser = createUser;
+	public void setStatus_name(String status_name) {
+		this.status_name = status_name;
 	}
 
 	public String getContent() {
@@ -169,5 +115,5 @@ public class Workorder extends AbsGenericEntity implements GenericEntity {
 	public void setFinishTime(Date finishTime) {
 		this.finishTime = finishTime;
 	}
-	
+
 }

@@ -8,6 +8,7 @@ define(['text!./exampleArticle.html',
     "./viewModel.js"], function (template, cookie, bpmopenbill) {
         var ctx, listRowUrl, saveRowUrl, delRowUrl, updateStatusUrl, element;
         function init(element, cookie) {
+
             element = element;
             $(element).html(template);
             ctx = cookie.appCtx + "/exampleArticle";
@@ -26,6 +27,48 @@ define(['text!./exampleArticle.html',
             viewModel.event.pageinit(element);
         }
         viewModel.event = {
+            add1 : function(element,cookie) {
+
+                //window.location.href = "#manage/auth_after_rolemgrwidget";
+                    //跳转页面,无法返回
+                   /* window.registerRouter("123", "/iuap-example/pages/asVal/asval.js");
+                    window.location.href = "#/123";*/
+
+
+                   u.refer({
+                        // 模式 弹出层
+                        isPOPMode: true,
+                        // 弹出层id
+                        contentId: 'testitemid_ref',
+                        // 设定参照层标题
+                        title:'测试项目',
+                        // 设置而参照层高度
+                        height:'300px',
+                        // 设置参照层内容
+                        module:{
+                            template: "#manage/auth_after_rolemgrwidget"
+                        },
+                        // 点击确认后回调事件
+                        onOk: function(){
+                            alert('ok');
+                        },
+                        // 点击取消后回调事件
+                        onCancel: function(){
+                            alert('cancel');
+                        }
+                });
+                /*console.log(cookie);
+                var model;
+                var content = document.getElementById("tenant_dialog_content");
+                require(["/iuap-example/pages/asVal/asval.js","/iuap-example/pages/asVal/viewModel.js"], function(module) {
+                    ko.cleanNode(content);
+                    $("#tenant_dialog_content").html(module.template);
+                    module.init(viewModel);
+
+                })
+                window.md = u.dialog({id: 'tenant_testDialg', content: "#tenant_dialog_content",
+                    hasCloseMenu: true,width:"740px",height:"310px"});*/
+            },
             pageinit: function (element) {
                 viewModel.app = u.createApp({
                     el: element,

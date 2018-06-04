@@ -5,11 +5,11 @@ define(['text!./asval.html',
     "../../utils/utils.js",
     "../../utils/ajax.js",
     "../../utils/tips.js",
-    "./viewModel.js"], function (template, cookie, bpmopenbill) {
+    "./viewModel.js"], function (template) {
         var ctx, listRowUrl, saveRowUrl, delRowUrl, getUrl, element;
         function init(element, cookie) {
             element = element;
-            $(element).html(template);
+            //$(element).html(template);
             ctx = cookie.appCtx + "/exampleAsVal";
             listRowUrl = ctx + "/list"; //列表查询URL
             saveRowUrl = ctx + "/save"; //新增和修改URL， 有id为修改 无id为新增

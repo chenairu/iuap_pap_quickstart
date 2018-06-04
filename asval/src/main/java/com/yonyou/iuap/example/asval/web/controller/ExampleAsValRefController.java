@@ -42,26 +42,47 @@ public class ExampleAsValRefController extends AbstractGridRefModel {
     @Override
     public List<Map<String, String>> filterRefJSON(@RequestBody RefViewModelVO refViewModelVO) {
         List<Map<String,String>> result = new ArrayList<>();
-
-        /*String clientParam = refViewModelVO.getClientParam();
-        Map<String,Object> clientMap = (Map<String, Object>) JSONObject.parse(clientParam);*/
-
-        List<ExampleAsVal> rtnVal = this.exampleAsValService.likeSarch(refViewModelVO.getContent());
-        result = buildRtnValsOfRef(rtnVal,isUserDataPower(refViewModelVO));
+        try{
+            /*String clientParam = refViewModelVO.getClientParam();
+            Map<String,Object> clientMap = (Map<String, Object>) JSONObject.parse(clientParam);*/
+            List<ExampleAsVal> rtnVal = this.exampleAsValService.likeSarch(refViewModelVO.getContent());
+            result = buildRtnValsOfRef(rtnVal,isUserDataPower(refViewModelVO));
+        }catch(Exception e){
+            e.printStackTrace();
+            logger.error("服务异常"+e);
+        }
         return result;
     }
 
     @Override
     public List<Map<String, String>> matchPKRefJSON(RefViewModelVO refViewModelVO) {
-
-        
-        return filterRefJSON(refViewModelVO);
+        List<Map<String,String>> result = new ArrayList<>();
+        try{
+            /*String clientParam = refViewModelVO.getClientParam();
+            Map<String,Object> clientMap = (Map<String, Object>) JSONObject.parse(clientParam);*/
+            List<ExampleAsVal> rtnVal = this.exampleAsValService.likeSarch(refViewModelVO.getContent());
+            result = buildRtnValsOfRef(rtnVal,isUserDataPower(refViewModelVO));
+        }catch(Exception e){
+            e.printStackTrace();
+            logger.error("服务异常"+e);
+        }
+        return result;
     }
-
     @Override
     public List<Map<String, String>> matchBlurRefJSON(RefViewModelVO refViewModelVO) {
+        List<Map<String,String>> result = new ArrayList<>();
+        try{
+            /*String clientParam = refViewModelVO.getClientParam();
+            Map<String,Object> clientMap = (Map<String, Object>) JSONObject.parse(clientParam);*/
 
-        return filterRefJSON(refViewModelVO);
+            List<ExampleAsVal> rtnVal = this.exampleAsValService.likeSarch(refViewModelVO.getContent());
+            result = buildRtnValsOfRef(rtnVal,isUserDataPower(refViewModelVO));
+        }catch(Exception e){
+            e.printStackTrace();
+            logger.error("服务异常"+e);
+        }
+
+        return result;
 
     }
 
