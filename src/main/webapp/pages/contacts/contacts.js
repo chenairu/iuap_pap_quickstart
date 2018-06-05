@@ -1,7 +1,7 @@
 define(
 	["text!./contacts.html", "css!./contacts.css", "./meta.js",
-		"css!../../style/style.css", "../../config/sys_const.js",
-		"css!../../style/widget.css", "../sever.js",
+		"../../config/sys_const.js",
+		"../sever.js",
 		"css!../../style/common.css"],
 
 	function (html) {

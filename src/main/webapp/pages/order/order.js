@@ -26,13 +26,14 @@ define(['text!./order.html',
                 getUrl: appCtx + "/demo_order/get",
                 subGridListUrl: appCtx + "/demo_order_detail/list",
                 subGridDeleteUrl: appCtx + "/demo_order_detail/delete",
-                //根据单据主键获得单据
-                formStatus: _CONST.FORM_STATUS_ADD,
+
                 comboData:[{name:'新订单',value:'01'},{name:'已完成',value:'02'},{name:'已取消',value:'03'}],
                 ygdemo_searchFormDa: new u.DataTable(searchData),
-                gridData: new u.DataTable(viewModel),
-                formData: new u.DataTable(viewModel),
+                gridData: new u.DataTable(meta),
+                formData: new u.DataTable(meta),
                 subGridData: new u.DataTable(meta_sub),
+
+
                 event: {
                     //列表初始化
                     initDataGrid: function () {
@@ -48,7 +49,6 @@ define(['text!./order.html',
                                 jsonData['search_' + key] = encodeURI(removeSpace(searchObj[key]));
                             }
                         }
-
                         $.ajax({
                             type: 'get',
                             url: viewModel.listUrl,
@@ -235,7 +235,7 @@ define(['text!./order.html',
                                     if (result) {
                                         if (result.success == 'success') {
                                             if (result.detailMsg.data) {
-                                                viewModel.formStatus = _CONST.FORM_STATUS_EDIT;
+                                              
                                                 //表单数据
                                         
                                                 var curFormData = [result.detailMsg.data.data];
@@ -434,16 +434,16 @@ define(['text!./order.html',
 
                     /**子表列表 */
                     initTableHeight: function () {
-                        var Total = $('.duban').height();
-                        var topPart = $(".topPart").height();
-                        var bottom = $("#pagination").height() + 20;
-                        var hh = $('#dubanMainGrid_header').height();
-                        if (!hh || hh == null) {
-                            hh = 33;
-                        }
-                        var h = Total - topPart - bottom - hh;
-                        $("#dubanMainGrid_content").css("max-height", h);
-                        $("#addPage").css("max-height", Total - topPart - 10);
+                        // var Total = $('.duban').height();
+                        // var topPart = $(".topPart").height();
+                        // var bottom = $("#pagination").height() + 20;
+                        // var hh = $('#dubanMainGrid_header').height();
+                        // if (!hh || hh == null) {
+                        //     hh = 33;
+                        // }
+                        // var h = Total - topPart - bottom - hh;
+                        // $("#dubanMainGrid_content").css("max-height", h);
+                        // $("#addPage").css("max-height", Total - topPart - 10);
                     },
                 }, // end  event
 

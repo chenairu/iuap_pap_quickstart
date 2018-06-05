@@ -161,24 +161,25 @@ define(['text!./print.html',
 				viewModel.event.formDivShow(false);
 			},
 
-			//查询按钮点击
-			search: function () {
-				viewModel.gridData.clear();
-				var queryData = {};
-				$(".form-search")
-					.find("input")
-					.each(function () {
-						queryData[this.name] = removeSpace(this.value);
-					});
-				viewModel.gridData.addParams(queryData);
-				viewModel.event.initGridDataList();
-			},
-			//清空查询条件
-			cleanSearch: function () {
-				$(".form-search")
-					.find("input")
-					.val("");
-			},
+
+            // 搜索
+            search: function () {
+                viewModel.gridData.clear();
+                var queryData = {};
+                $(".u-container-fluid")//注意这里需要用整个Search区域的来找
+                    .find("input")
+                    .each(function () {
+                        queryData[this.name] = removeSpace(this.value);
+                    });
+                viewModel.gridData.addParams(queryData);
+                viewModel.event.initGridDataList();
+            },
+            // 清除搜索
+            cleanSearch: function () {
+                $(".u-container-fluid")
+                    .find("input")
+                    .val("");
+            },
 
 
 			//页面绑定的，判定多行删除是否可用

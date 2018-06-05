@@ -19,10 +19,10 @@
 						<div class="u-row">
 							<div class="u-col-3">
 								<div class="u-col-4 u-col-sm-4">
-									订单编码:
+									订单编号:
 								</div>
 								<div class="u-col-8 u-col-sm-8">
-									<input class="u-form-control sm input_search search-enter" id="search_orderCode" name="search_orderName" />
+									<input class="u-form-control  input_search search-enter" id="search_orderCode" name="search_orderName" />
 								</div>
 							</div>
 							<div class="u-col-3">
@@ -31,7 +31,10 @@
 										订单日期:
 									</div>
 									<div class="u-col-8 u-col-sm-8">
-										<input class="u-form-control sm input_search search-enter" id="search_orderDate_start" name="search_orderDate_end" />
+										<!-- <input class="u-form-control sm input_search search-enter" id="search_orderDate_start" name="search_orderDate_end" /> -->
+										<div u-meta='{"type":"u-date","data":"formData","field":"orderDate"}'>
+											<input type="text" class="u-form-control" placeholder="">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -41,16 +44,15 @@
 								</div>
 								<div class="u-col-8 u-combo u-col-8" u-meta='{"type":"u-combobox","datasource":"comboData","data":"ygdemo_searchFormDa","field":"ly_code","onlySelect":true}'>
 									<span class="u-form-control-feedback fa fa-angle-down" data-role="combo-button" style="padding: 5px 30px 5px 0px;"></span>
-									<input class="u-form-control sm input_search search-enter" placeholder="订单状态" name="search_orderState" readonly/>
+									<input class="u-form-control  input_search search-enter" placeholder="订单状态" name="search_orderState" readonly/>
 								</div>
 							</div>
-
 							<div class="u-col-3">
 								<button class="u-button u-button-border raised gray-btn margin-right-20" id="user-action-cleanSearch" data-bind="click: event.cleanSearch">清空
 								</button>
 								<button class="u-button u-button-primary raised gray-btn" id="user-action-search" data-bind="click: event.search">搜索
 								</button>
-							</div>
+							</div>			
 						</div>
 					</div>
 				</div>
@@ -64,6 +66,7 @@
 		<button class="u-button u-button-primary pull-right font-size-14 " data-bind="click:event.deleteClick">删除</button>
 	</div>
 
+	<!-- 这里的 class="u-mdlayout-detail必须加上，不然报错 -->
 	<div class="u-mdlayout-detail width-full">
 		<!-- 表格区域 -->
 		<div class="user-datagrid">
@@ -77,7 +80,9 @@
 					<div options='{"field":"operate","dataType":"String","title":"操作","renderType":"optFunc","editable":true,"fixed":true,"width":"180px"}'></div>
 				</div>
 			</div>
-			<div id='pagination' class='pagination u-pagination pagination-sm'></div>
+			<div class="aline-center">
+				<div id='pagination' class='pagination u-pagination pagination-sm'></div>
+			</div>
 		</div>
 	</div>
 
@@ -148,7 +153,7 @@
 						<div class="u-col-9">
 							<div class="u-input-group-before padding-left-10 ">*
 							</div>
-							<div u-meta='{"type":"u-text","data":"formData","field":"customer"}'>
+							<div u-meta='{"type":"u-text","data":"formData","field":"customer","required":true}'>
 								<input type="text" class="u-form-control" placeholder="">
 							</div>
 						</div>
@@ -159,16 +164,9 @@
 						<div class="u-col-3 aline-right">
 							<label>所属组织</label>
 						</div>
-						<!-- <div class="u-col-9">
-							<div class="u-input-group-before padding-left-10 ">*
-							</div>
-							<div u-meta='{"type":"uiRefer","data":"formData","field":"dept"}'>
-								<input type="text" class="u-form-control" placeholder="">
-							</div>
-						</div> -->
-
-						<div class="u-col-9 u-combo" u-meta='{"type":"uiRefer","data":"formData","field":"dept","display":"dept"}'>
+						<div class="u-col-9 u-combo" u-meta='{"type":"uiRefer","data":"formData","field":"depta","display":"dept_name"}'>
 							<div class="u-input-group u-has-feedback">
+								<div class="u-input-group-before">*</div>
 								<input class="u-form-control" readonly="readonly" />
 								<span class="u-form-control-feedback fa fa-list-ul refer"></span>
 							</div>
@@ -176,15 +174,15 @@
 					</div>
 				</div>
 				<div class="u-col-md-4">
-					<div class="u-row ">
+					<div class="u-row">
 						<div class="u-col-3 aline-right">
 							<label>业务负责人</label>
 						</div>
-						<div class="u-col-9">
-							<div class="u-input-group-before padding-left-10 ">*
-							</div>
-							<div u-meta='{"type":"u-text","data":"formData","field":"dept"}'>
-								<input type="text" class="u-form-control" placeholder="">
+						<div class="u-col-9 u-combo" u-meta='{"type":"uiRefer","data":"formData","field":"busiman","display":"busiman_name"}'>
+							<div class="u-input-group u-has-feedback">
+								<div class="u-input-group-before">*</div>
+								<input class="u-form-control" readonly="readonly" />
+								<span class="u-form-control-feedback fa fa-list-ul refer"></span>
 							</div>
 						</div>
 					</div>
@@ -192,31 +190,22 @@
 			</div>
 			<div class="u-row margin-top-20">
 				<div class="u-col-md-4">
-
 					<div class="u-row ">
 						<div class="u-col-3 aline-right">
 							<label>订单状态</label>
 						</div>
-						<div class="u-col-9">
-							<div class="u-input-group-before padding-left-10 ">*
-							</div>
-							<div u-meta='{"type":"u-text","data":"formData","field":"orderState"}'>
-								<input type="text" class="u-form-control" placeholder="">
-							</div>
+						<div class="u-col-9 u-combo u-col-8" u-meta='{"type":"u-combobox","datasource":"comboData","data":"ygdemo_searchFormDa","field":"ly_code","onlySelect":true}'>
+							<span class="u-form-control-feedback fa fa-angle-down" data-role="combo-button" style="padding: 5px 30px 5px 0px;"></span>
+							<input class="u-form-control input_search search-enter" placeholder="订单状态" name="search_orderState" readonly/>
 						</div>
 					</div>
-
-
 				</div>
 				<div class="u-col-md-4">
-
 					<div class="u-row ">
 						<div class="u-col-3 aline-right">
 							<label>订单总金额</label>
 						</div>
 						<div class="u-col-9">
-							<div class="u-input-group-before padding-left-10 ">*
-							</div>
 							<div u-meta='{"type":"u-text","data":"formData","field":"amount"}'>
 								<input type="text" class="u-form-control" placeholder="">
 							</div>
@@ -230,8 +219,6 @@
 							<label>币种</label>
 						</div>
 						<div class="u-col-9">
-							<div class="u-input-group-before padding-left-10 ">*
-							</div>
 							<div u-meta='{"type":"u-text","data":"formData","field":"currency"}'>
 								<input type="text" class="u-form-control" placeholder="">
 							</div>
@@ -285,5 +272,4 @@
 
 
 	</div>
-</div>
 </div>

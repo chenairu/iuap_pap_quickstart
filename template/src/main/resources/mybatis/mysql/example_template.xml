@@ -18,6 +18,7 @@
 		where id = #{id}
 	</select>
 
+<!--  
 	<select id="selectAllByPage" resultMap="BaseResultMap"
 		resultType="java.util.List">
 		SELECT
@@ -37,6 +38,25 @@
 				</foreach>
 			</if>
 		</if>
+	</select>
+	-->
+	
+		<select id="selectAllByPage" resultMap="BaseResultMap"
+		resultType="java.util.List">
+		SELECT
+			<include refid="Base_Column_List" />
+		FROM example_template where 1=1
+			<if test="condition != null">
+				<if test="condition.code!=null and condition.code!='' ">
+					and code like CONCAT(CONCAT('%', #{condition.code}),'%')
+				</if>
+				<if test="condition.name!=null and condition.name!='' ">
+					and name like CONCAT(CONCAT('%', #{condition.name}),'%')
+				</if>
+				<if test="condition.refParam!=null and condition.refParam!='' ">
+					and ( code like CONCAT(CONCAT('%', #{condition.refParam}),'%') or name like CONCAT(CONCAT('%', #{condition.refParam}),'%') )
+				</if>
+			</if>
 	</select>
 	
 	

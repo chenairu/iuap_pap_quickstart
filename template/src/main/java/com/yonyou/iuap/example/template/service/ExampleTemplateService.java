@@ -40,7 +40,7 @@ public class ExampleTemplateService extends ParentService<ExampleTemplate> {
      * @param str
      */
     public Page<ExampleTemplate> selectAllByPage(PageRequest pageRequest, SearchParams searchParams) {
-        return mapper.selectAllByPage(pageRequest, searchParams).getPage();
+        return mapper.selectAllByPage(pageRequest, searchParams.getSearchMap()).getPage();
     }
     
     

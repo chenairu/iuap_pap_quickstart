@@ -4,41 +4,43 @@
         <h4>档案管理</h4>
     </div>
     <!-- 搜索区域 -->
-    <div class=" form-search b-margin">
-        <div class="u-panel-heading  u-collapse-updown">
-            <div id='condition-toggle' class="u-col-12">查询与筛选
-                <div class="float-right">
-                    <span id="condition-text">展开</span>
-                    <i id="condition-icon" class="uf uf-arrow-down"></i>
-                </div>
-            </div>
-        </div>
-        <div class="u-row" id="search-modul" style="display:none;">
-            <div class="u-col-12 u-col-sm-12 b-margin">
-                <div class="u-col-4 u-col-sm-6">
-                    <div class="u-col-3 aline-right">
-                        <label>编码</label>
+    <div class="u-container-fluid" style="background-color:#f5f5f5">
+        <div class="u-row">
+            <div class="u-col-md-12">
+                <div class="u-widget-fluid">
+                    <div class="u-widget-heading" id="collapse">
+                        <h3 class="u-widget-title">查询与筛选
+                            <a class="u-link u-widget-more">
+                                <i class="icon uf uf-2arrow-down" id="icon"></i>
+                            </a>
                     </div>
-                    <div class="u-col-9 u-col-sm-12">
-                        <input class="u-form-control search-enter" name="search_code" />
-                    </div>
-                </div>
-                <div class="u-col-4 u-col-sm-6">
-                    <div class="u-col-3 aline-right">名称
-                    </div>
-                    <div class="u-col-9 u-col-sm-12">
-                        <input class="u-form-control search-enter" id="search_name" name="search_name" />
-                    </div>
-                </div>
-                <div class="u-col-4 u-col-sm-6">
-                    <div class=" float-right">
-                        <button class="u-button" data-bind="click: event.cleanSearch">清空</button>
-                        <button class="u-button" data-bind="click: event.search">搜索</button>
+                    <div class="u-widget-body" id="collapse-body" style="display:none;">
+                        <div class="u-row">
+                            <div class="u-col-4">
+                                <div class="u-col-4 u-col-sm-4">编码:</div>
+                                <div class="u-col-8 u-col-sm-8">
+                                    <input class="u-form-control search-enter" name="search_code" />
+                                </div>
+                            </div>
+                            <div class="u-col-4">
+                                <div class="u-col-4 u-col-sm-4">名称:</div>
+                                <div class="u-col-8 u-col-sm-8">
+                                    <input class="u-form-control search-enter" id="search_name" name="search_name" />
+                                </div>
+                            </div>
+                            <div class="u-col-4">
+                                <div class=" float-right">
+                                    <button class="u-button" data-bind="click: event.cleanSearch">清空</button>
+                                    <button class="u-button" data-bind="click: event.search">搜索</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- 列表区域（按钮区域，表格区域，分页区域） -->
     <div class="u-mdlayout-detail width-full">
         <!-- list -->
@@ -109,8 +111,12 @@
                     创建日期
                 </div>
                 <div class="u-col-9">
-                    <div u-meta='{"id":"createtime","type":"u-date","data":"formData","field":"createtime"}'>
+                    <!-- <div u-meta='{"id":"createtime","type":"u-date","data":"formData","field":"createtime"}'>
                         <input type="text" id="dic-date" class="u-form-control padding-left-20" placeholder="请输入日期">
+                    </div> -->
+
+                    <div u-meta='{"type":"u-date","data":"formData","field":"createtime"}'>
+                        <input type="text" class="u-form-control" placeholder="">
                     </div>
                 </div>
             </div>
@@ -134,14 +140,14 @@
                     <!-- <div u-meta='{"id":"sys","type":"u-combobox","data":"formData","field":"sys","datasource":"yesOrNo"}'>
                         <input type="text" class="u-form-control padding-left-20" placeholder="系统预置">
                     </div> -->
-                                        <div class="u-combo" id="combo1">
-                            <div class="u-input-group ">
-                                <div u-meta='{"id":"sys","type":"u-combobox","data":"formData","field":"sys","datasource":"yesOrNo"}'>
-                                    <input class="u-form-control" />
-                                    <span class="u-form-control-feedback uf uf-arrow-down" data-role="combo-button"></span>
-                                </div>
+                    <div class="u-combo" id="combo1">
+                        <div class="u-input-group ">
+                            <div u-meta='{"id":"sys","type":"u-combobox","data":"formData","field":"sys","datasource":"yesOrNo"}'>
+                                <input class="u-form-control" />
+                                <span class="u-form-control-feedback uf uf-arrow-down" data-role="combo-button"></span>
                             </div>
                         </div>
+                    </div>
                 </div>
             </div>
             <div class="u-col-md-4">

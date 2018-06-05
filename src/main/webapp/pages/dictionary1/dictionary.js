@@ -177,23 +177,20 @@ define([
     search: function () {
       viewModel.gridData.clear();
       var queryData = {};
-      $(".form-search")
+      $(".u-container-fluid")//注意这里需要用整个Search区域的来找
         .find("input")
         .each(function () {
           queryData[this.name] = removeSpace(this.value);
         });
-
-      console.log("queryData:", queryData);
       viewModel.gridData.addParams(queryData);
       viewModel.event.initGridDataList();
     },
     // 清除搜索
     cleanSearch: function () {
-      $(".form-search")
+      $(".u-container-fluid")
         .find("input")
         .val("");
     },
-
     // 真正删除数据
     del: function (data) {
       var arr = [];

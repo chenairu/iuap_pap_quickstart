@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.yonyou.iuap.base.web.BaseController;
 import com.yonyou.iuap.common.BaseEntityUtils;
+import com.yonyou.iuap.example.common.utils.CommonUtils;
 import com.yonyou.iuap.example.print.entity.ExamplePrint;
 import com.yonyou.iuap.example.print.service.ExamplePrintService;
 
@@ -43,6 +44,7 @@ public class ExamplePrintController extends BaseController {
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public @ResponseBody Object page(PageRequest pageRequest, SearchParams searchParams) {
+    	CommonUtils.decode(searchParams);
         Page<ExamplePrint> data = service.selectAllByPage(pageRequest, searchParams);
         return buildSuccess(data);
     }

@@ -15,7 +15,7 @@ define(['text!./dictionary.html',
             saveRowUrl = ctx + "/save"; //新增和修改URL， 有id为修改 无id为新增
             delRowUrl = ctx + "/delete"; //刪除URL
             getUrl = ctx + "/get",
-            window.csrfDefense();									//跨站请求伪造防御
+                window.csrfDefense();									//跨站请求伪造防御
             $(element).html(template);
             viewModel.event.formDivShow(false);
             viewModel.event.pageinit(element);
@@ -161,11 +161,11 @@ define(['text!./dictionary.html',
                 viewModel.event.formDivShow(false);
             },
 
-            //查询按钮点击
+            // 搜索
             search: function () {
                 viewModel.gridData.clear();
                 var queryData = {};
-                $(".form-search")
+                $(".u-container-fluid")//注意这里需要用整个Search区域的来找
                     .find("input")
                     .each(function () {
                         queryData[this.name] = removeSpace(this.value);
@@ -173,9 +173,9 @@ define(['text!./dictionary.html',
                 viewModel.gridData.addParams(queryData);
                 viewModel.event.initGridDataList();
             },
-            //清空查询条件
+            // 清除搜索
             cleanSearch: function () {
-                $(".form-search")
+                $(".u-container-fluid")
                     .find("input")
                     .val("");
             },
@@ -218,7 +218,7 @@ define(['text!./dictionary.html',
                         var seldatas = viewModel.gridData.getSimpleData({
                             type: "select"
                         });
-                        console.log("del:",seldatas);
+                        console.log("del:", seldatas);
                         viewModel.event.del(seldatas);
                     }
                 });

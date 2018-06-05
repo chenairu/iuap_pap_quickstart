@@ -13,15 +13,13 @@ var meta = {
 			required: true,
 			nullMsg: "不能为空"
 		},
-		dept: {
-			required: true,
-			nullMsg: "不能为空",
-			'refmodel': JSON.stringify(refinfo['organization']),
-			'refcfg': '{"ctx":"/uitemplate_web"}'
+		depta: {
+			'refmodel' : JSON.stringify(refinfo['organization']),
+			'refcfg' : '{"ctx":"/uitemplate_web"}'
 		},
 		dept_name: {},
 		busiman: {
-			'refmodel': JSON.stringify(refinfo['people']),
+			'refmodel': JSON.stringify(refinfo['wbUser']),
 			'refcfg': '{"ctx":"/uitemplate_web"}'
 		},
 		busiman_name: {},
@@ -33,7 +31,8 @@ var meta = {
 		orderState: {
 			enable: true,
 			required: true,
-			nullMsg: "不能为空"
+			nullMsg: "不能为空",
+			default: "新订单"
 		},
 		createTime: {},
 		createUser: {
