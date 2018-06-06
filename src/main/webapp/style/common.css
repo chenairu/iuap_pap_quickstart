@@ -128,7 +128,7 @@
     height: 100%;
     z-index: 1;
     background-color: #fff;
-    overflow-y: auto;
+    /* overflow-y: auto; */
 }
 #form-div #form-div-header{
     border-bottom: 4px solid #f4f4f4;

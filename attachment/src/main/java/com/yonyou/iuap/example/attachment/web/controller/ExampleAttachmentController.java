@@ -3,6 +3,7 @@ package com.yonyou.iuap.example.attachment.web.controller;
 import com.yonyou.iuap.base.web.BaseController;
 import com.yonyou.iuap.example.attachment.entity.ExampleAttachment;
 import com.yonyou.iuap.example.attachment.service.ExampleAttachmentService;
+import com.yonyou.iuap.example.common.utils.CommonUtils;
 import com.yonyou.iuap.mvc.type.SearchParams;
 
 
@@ -36,6 +37,7 @@ public class ExampleAttachmentController extends BaseController {
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public @ResponseBody Object page(PageRequest pageRequest, SearchParams searchParams) {
+    	CommonUtils.decode(searchParams);
         Page<ExampleAttachment> data = service.selectAllByPage(pageRequest, searchParams);
         return buildSuccess(data);
     }

@@ -32,9 +32,10 @@ var fileDataMeta = {
 };
 
 var viewModel = {
-  draw: 1,
-  //页数(第几页)
-  pageSize: 5,
-  gridData: new u.DataTable(meta),
-  formData: new u.DataTable(meta),
+	draw: 1,
+	//页数(第几页)
+	pageSize: 5,
+	gridData: new u.DataTable(meta),
+	formData: new u.DataTable(meta),
+	fileData: new u.DataTable(fileDataMeta)
 };

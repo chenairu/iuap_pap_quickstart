@@ -7,10 +7,10 @@
         <version>3.6.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>iuap-example</artifactId>
+    <artifactId>iuap_pap_quickstart</artifactId>
     <packaging>war</packaging>
     <version>0.0.1-SNAPSHOT</version>
-    <name>iuap-example</name>
+    <name>iuap_pap_quickstart</name>
     <url>http://maven.apache.org</url>
 
     <dependencies>

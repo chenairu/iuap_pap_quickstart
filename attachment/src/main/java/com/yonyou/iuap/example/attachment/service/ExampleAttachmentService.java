@@ -26,7 +26,7 @@ public class ExampleAttachmentService {
      * @param str
      */
     public Page<ExampleAttachment> selectAllByPage(PageRequest pageRequest, SearchParams searchParams) {
-        return mapper.selectAllByPage(pageRequest, searchParams).getPage();
+        return mapper.selectAllByPage(pageRequest, searchParams.getSearchMap()).getPage();
     }
     
     
