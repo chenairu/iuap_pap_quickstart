@@ -203,7 +203,7 @@ define(['text!./template.html',
                 if (num.length > 1) {
                     // 获取所有选中的数据
                     var seldatas = viewModel.gridData.getSimpleData({
-                        type: "current"
+                        type: "select"
                     });
                     viewModel.event.del(seldatas);
                 }

@@ -362,6 +362,12 @@ remark VARCHAR2(50) NULL
 );
 ALTER TABLE example_print ADD PRIMARY KEY (id);
 
+create table example_attachment(
+id VARCHAR2(36) NOT NULL ,
+code VARCHAR2(50) NULL,
+name VARCHAR2(50) NULL,
+);
+ALTER TABLE example_attachment ADD PRIMARY KEY (id);
 
 
 

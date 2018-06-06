@@ -12,6 +12,7 @@ define([
     'interfaceFileImpl'
 ], function (html) {
     var ctx, listRowUrl, saveRowUrl, delRowUrl, element;
+
     window.ctxfilemng = '/iuap-saas-filesystem-service/';
 
     function init(element, cookie) {
@@ -321,11 +322,10 @@ define([
                 '<button class="u-button u-button-border" title="附件" ' +
                 openAttFun +
                 ">附件</button></div>"
-
             ko.applyBindings(viewModel, obj.element);
         },
 
-
+        // 打开附件列表区域并查询选中行的附件
         openAttachementList: function (rowId, s, e) {
             viewModel.rowId = rowId;
             if (rowId && rowId != -1) {
@@ -392,8 +392,6 @@ define([
                     }
                 }
             }
-
-
             var rows = viewModel.gridData.getSelectedRows();
             var fdata = rows[0].getSimpleData();
             var pk = fdata.id;//"attachementTest";//可以填写附件关联的表单的ID，这里测试写死。
@@ -521,13 +519,11 @@ define([
             form.attr('action', window.ctxfilemng + "file/download?permission=read&stream=false&id=" + pk);
             $('#user-mdlayout').append(form);  //将表单放置在web中
             form.submit();
-
         },
 
         //附件删除
         fileDelete: function (rowId) {
             var rows = viewModel.fileData.getSelectedRows();
-
             if (rows == null || rows.length == 0) {
                 u.messageDialog({ msg: "请选择要删除的附件", title: "提示", btnText: "OK" });
                 return
@@ -574,7 +570,6 @@ define([
                 return
             }
             var url = rows[0].getValue("url");
-            console.log("url:", url);
             if (url.indexOf("http://") >= 0 || url.indexOf("https://") >= 0) {
                 parent.open(url);
             } else {
