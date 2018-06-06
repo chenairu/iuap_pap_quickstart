@@ -135,7 +135,7 @@ define(['text!./workorder.html',
     	        	  return;
     	        }
 
-    	        var checkUrl = "/eiap-plus/appResAllocate/queryBpmTemplateAllocate?funccode=" + getAppCode() + "&nodekey=work_001";
+    	        var checkUrl = "/eiap-plus/appResAllocate/queryBpmTemplateAllocate?funccode=" + getAppCode() + "&nodekey=workorder_001";
     	        $.ajax({
                     type: "get",
                     url: checkUrl,
