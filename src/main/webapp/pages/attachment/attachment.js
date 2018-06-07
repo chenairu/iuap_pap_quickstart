@@ -12,9 +12,7 @@ define([
     'interfaceFileImpl'
 ], function (html) {
     var ctx, listRowUrl, saveRowUrl, delRowUrl, element;
-
     window.ctxfilemng = '/iuap-saas-filesystem-service/';
-
     function init(element, cookie) {
         element = element;
         $(element).html(html);
@@ -23,7 +21,6 @@ define([
         saveRowUrl = ctx + "/save"; //新增和修改URL， 有id为修改 无id为新增
         delRowUrl = ctx + "/delete"; //刪除URL
         viewModel.event.pageinit(element);
-
     }
     viewModel.event = {
         //初始化
