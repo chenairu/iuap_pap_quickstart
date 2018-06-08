@@ -1,4 +1,5 @@
 define(['text!./workorder.html',
+    'cookieOperation',
     '/eiap-plus/pages/flow/bpmapproveref/bpmopenbill.js',
     "css!../../style/common.css",
     'css!./workorder.css',
@@ -18,7 +19,7 @@ define(['text!./workorder.html',
             saveRowUrl = ctx + "/batchSave"; 				//新增和修改URL， 有id为修改 无id为新增
             delRowUrl = ctx + "/delete"; 					//刪除URL
             getUrl = ctx + "/get",
-            window.csrfDefense();							//跨站请求伪造防御
+                window.csrfDefense();							//跨站请求伪造防御
             $(element).html(template);
 
             //合并bpm model 和 viewModel
@@ -82,7 +83,7 @@ define(['text!./workorder.html',
                     type: "select"
                 });
 
-                var rowData=rows[0];
+                var rowData = rows[0];
                 viewModel.flowEvent.entityId = rowData.id;
                 if (rowData) {
                     $.ajax({
