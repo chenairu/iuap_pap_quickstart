@@ -1,14 +1,14 @@
 define(['text!./workorder.html',
-		'cookieOperation',
-		'/eiap-plus/pages/flow/bpmapproveref/bpmopenbill.js',
-		"css!../../style/common.css",
-		'css!./workorder.css',
-		'../../config/sys_const.js',
-		"../../utils/utils.js",
-		"../../utils/ajax.js",
-		"../../utils/tips.js",
-		"./viewModel.js",
-		'uiReferComp','uiNewReferComp','refer'], function (template, cookie, bpmopenbill) {
+    'cookieOperation',
+    '/eiap-plus/pages/flow/bpmapproveref/bpmopenbill.js',
+    "css!../../style/common.css",
+    'css!./workorder.css',
+    '../../config/sys_const.js',
+    "../../utils/utils.js",
+    "../../utils/ajax.js",
+    "../../utils/tips.js",
+    "./viewModel.js",
+    'uiReferComp', 'uiNewReferComp', 'refer'], function (template, cookie, bpmopenbill) {
         var ctx, listRowUrl, saveRowUrl, delRowUrl, getUrl, element;
 
         function init(element, cookie) {
@@ -19,276 +19,301 @@ define(['text!./workorder.html',
             saveRowUrl = ctx + "/batchSave"; 				//新增和修改URL， 有id为修改 无id为新增
             delRowUrl = ctx + "/delete"; 					//刪除URL
             getUrl = ctx + "/get",
-            window.csrfDefense();							//跨站请求伪造防御
+                window.csrfDefense();							//跨站请求伪造防御
             $(element).html(template);
-            
+
             //合并bpm model 和 viewModel
             viewModel = $.extend({}, viewModel, bpmopenbill.model); //扩展viewModel
-            if(cookie && cookie.vtype && cookie.vtype=='bpm'){
-            	viewModel.flowEvent.initAuditPage(element, cookie);
-            }else{
+            if (cookie && cookie.vtype && cookie.vtype == 'bpm') {
+                viewModel.flowEvent.initAuditPage(element, cookie);
+            } else {
                 viewModel.event.formDivShow(false);
                 viewModel.event.pageinit(element);
             }
         }
-        
+
         //列表事件
         viewModel.gridEvent = {
-        	//行双击事件
-    		dbClickRow:function(gridObj){
-    			viewModel.flowEvent.doView(gridObj.rowObj.value);
-    		},
-    		convertName:function(obj){
-    			var sourcelist = eval("viewModel."+obj.gridCompColumn.options.source);
-    			for(var i=0; i<sourcelist.length; i++){
-    				if(sourcelist[i].value==obj.value){
-    					console.log(sourcelist[i].name);
-    					return sourcelist[i].name;
-    				}
-    			}
-    		}
+            //行双击事件
+            dbClickRow: function (gridObj) {
+                viewModel.flowEvent.doView(gridObj.rowObj.value);
+            },
+            convertName: function (obj) {
+                var sourcelist = eval("viewModel." + obj.gridCompColumn.options.source);
+                for (var i = 0; i < sourcelist.length; i++) {
+                    if (sourcelist[i].value == obj.value) {
+                        console.log(sourcelist[i].name);
+                        return sourcelist[i].name;
+                    }
+                }
+            }
 
         }
-        
+
         //流程事件定义
         viewModel.flowEvent = {
-    		submitUrl : appCtx + '/example_workorder/submit',
-        	recallUrl : appCtx + '/example_workorder/recall',
-			auditUrl : appCtx + '/example_workorder/audit',
-			
-			entityId: "",
-			
-			//查看工作
-			doView: function(rowData){
-				viewModel.flowEvent.entityId = rowData.id;
-				if(rowData){
+            submitUrl: appCtx + '/example_workorder/submit',
+            recallUrl: appCtx + '/example_workorder/recall',
+            auditUrl: appCtx + '/example_workorder/audit',
+
+            entityId: "",
+
+            //查看工作
+            doView: function () {
+
+                var selectArray = viewModel.gridData.selectedIndices();
+                if (selectArray.length < 1) {
+                    u.messageDialog({
+                        msg: "请选择要查看的记录!",
+                        title: "提示",
+                        btnText: "OK"
+                    });
+                    return;
+                }
+
+                if (selectArray.length > 1) {
+                    u.messageDialog({
+                        msg: "一次只能查看一条记录，请选择要查看的记录!",
+                        title: "提示",
+                        btnText: "OK"
+                    });
+                    return;
+                }
+
+                var rows = viewModel.gridData.getSimpleData({
+                    type: "select"
+                });
+
+                var rowData=rows[0];
+                viewModel.flowEvent.entityId = rowData.id;
+                if (rowData) {
                     $.ajax({
                         type: 'POST',
-                        url: getUrl + "?id="+rowData.id,
+                        url: getUrl + "?id=" + rowData.id,
                         contentType: 'application/json;charset=utf-8',
-                        success: function(result){
+                        success: function (result) {
                             if (result) {
                                 if (result.success == 'success') {
-                                	if (result.detailMsg.data) {
+                                    if (result.detailMsg.data) {
                                         viewModel.formStatus = _CONST.FORM_STATUS_VIEW;
                                         //表单数据
-                                        var curFormData =[result.detailMsg.data];
+                                        var curFormData = [result.detailMsg.data];
                                         viewModel.formData.clear();
                                         viewModel.formData.setSimpleData(curFormData);
 
                                         // 把卡片页面变成不能编辑
-                                        $('#form-div-body').each(function(index,element){
-                                        	$(element).find('input[type!="radio"]').attr('disabled',true);
+                                        $('#form-div-body').each(function (index, element) {
+                                            $(element).find('input[type!="radio"]').attr('disabled', true);
                                         });
-                                        
+
                                         //显示操作卡片
                                         viewModel.event.formDivShow(true);
-                                        
+
                                         //加入bpm按钮
                                         viewModel.initBPMFromBill(viewModel.flowEvent.entityId, viewModel);
-                                	}else {
+                                    } else {
                                         var msg = "";
                                         for (var key in result.message) {
                                             msg += result.message[key] + "<br/>";
                                         }
-                                        u.messageDialog({msg: msg, title: '请求错误', btnText: '确定'});
+                                        u.messageDialog({ msg: msg, title: '请求错误', btnText: '确定' });
                                     }
                                 } else {
-                                    u.messageDialog({msg: '后台返回数据格式有误，请联系管理员', title: '数据错误', btnText: '确定'});
+                                    u.messageDialog({ msg: '后台返回数据格式有误，请联系管理员', title: '数据错误', btnText: '确定' });
                                 }
-                        	}
+                            }
                         }
                     });
-            	}else{
-                    u.messageDialog({msg: '请选择一条记录！', title: '提示信息', btnText: '确定'});
-            	}    				
-			},
-    		
-			//提交工作流
-    		submit: function(){
-    			var selectArray = viewModel.gridData.selectedIndices();
-    			if (selectArray.length < 1) {
-    				u.messageDialog({
-    	            	msg: "请选择要提交的记录!",
-    	            	title: "提示",
-    	            	btnText: "OK"
-    				});
-    				return;
-    			}
+                } else {
+                    u.messageDialog({ msg: '请选择一条记录！', title: '提示信息', btnText: '确定' });
+                }
+            },
 
-    	        if (selectArray.length > 1) {
-    	        	u.messageDialog({
-    	            	msg: "一次只能提交一条记录，请选择要提交的记录!",
-    	            	title: "提示",
-    	            	btnText: "OK"
-    	        	});
-    	        	return;
-    	        }
+            //提交工作流
+            submit: function () {
+                var selectArray = viewModel.gridData.selectedIndices();
+                if (selectArray.length < 1) {
+                    u.messageDialog({
+                        msg: "请选择要提交的记录!",
+                        title: "提示",
+                        btnText: "OK"
+                    });
+                    return;
+                }
 
-    	        var selectedData = viewModel.gridData.getSimpleData({
-    	        	type: "select"
-    	        });
+                if (selectArray.length > 1) {
+                    u.messageDialog({
+                        msg: "一次只能提交一条记录，请选择要提交的记录!",
+                        title: "提示",
+                        btnText: "OK"
+                    });
+                    return;
+                }
 
-    	        if (selectedData[0].state && selectedData[0].state != "0") {
-    	        	  //状态不为"未提交"
-    	        	  message("该单据已经使用关联流程，不能启动", "error");
-    	        	  return;
-    	        }
+                var selectedData = viewModel.gridData.getSimpleData({
+                    type: "select"
+                });
 
-    	        var checkUrl = "/eiap-plus/appResAllocate/queryBpmTemplateAllocate?funccode=" + getAppCode() + "&nodekey=workorder_001";
-    	        $.ajax({
+                if (selectedData[0].state && selectedData[0].state != "0") {
+                    //状态不为"未提交"
+                    message("该单据已经使用关联流程，不能启动", "error");
+                    return;
+                }
+
+                var checkUrl = "/eiap-plus/appResAllocate/queryBpmTemplateAllocate?funccode=" + getAppCode() + "&nodekey=workorder_001";
+                $.ajax({
                     type: "get",
                     url: checkUrl,
                     contentType: "application/json;charset=utf-8",
                     data: {},
-                    success: function(result){
-	        	        	if (result) {
-	        	            	if (result.success == "success") {
-	        	            		var data = result.detailMsg.data;
-	        	            		if (data == null) {
-		        	                    u.messageDialog({
-		        	                    	msg: "此数据在“资源分配”中未分配流程！",
-		        	                    	title: "操作有误",
-		        	                    	btnText: "确定"
-		        	                    });
-		        	            	} else {
-		        	                	var processDefineCode = data.res_code;
-		        	                	viewModel.flowEvent.submitBPMByProcessDefineCode(selectedData, processDefineCode);
-	        	            		}
-	        	                } else {
-	        	                	u.messageDialog({
-	        	                		msg: data.detailMsg.msg,
-	        	                		title: "提示",
-	        	                		btnText: "OK"
-	        	                	});
-	        	                }
-	        	        	} else {
-	        	            	u.messageDialog({
-	        	                	msg: "无返回数据",
-	        	                	title: "操作提示",
-	        	                	btnText: "确定"
-	        	            	});
-	        	        	}
-                    	}
-                  });
-    		},
-            submitBPMByProcessDefineCode: function(selectedData, processDefineCode) {
-            	$.ajax({
-                		type: "post",
-                		url:this.submitUrl + "?processDefineCode=" + processDefineCode,
-                		contentType: "application/json;charset=utf-8",
-                		data: JSON.stringify(selectedData),
-                		success: function(result) {
-                					if (result) {
-                						if (result.success == "success") {
-                							message("流程启动成功");
-                							viewModel.event.initGridDataList();
-                						} else {
-                							u.messageDialog({
-                								msg: result.message,
-                								title: "操作提示",
-                								btnText: "确定"
-                							});
-                						}
-                					} else {
-                						u.messageDialog({
-                							msg: "无返回数据",
-                							title: "操作提示",
-                							btnText: "确定"
-                						});
-                					}
-                		}
-            	});
+                    success: function (result) {
+                        if (result) {
+                            if (result.success == "success") {
+                                var data = result.detailMsg.data;
+                                if (data == null) {
+                                    u.messageDialog({
+                                        msg: "此数据在“资源分配”中未分配流程！",
+                                        title: "操作有误",
+                                        btnText: "确定"
+                                    });
+                                } else {
+                                    var processDefineCode = data.res_code;
+                                    viewModel.flowEvent.submitBPMByProcessDefineCode(selectedData, processDefineCode);
+                                }
+                            } else {
+                                u.messageDialog({
+                                    msg: data.detailMsg.msg,
+                                    title: "提示",
+                                    btnText: "OK"
+                                });
+                            }
+                        } else {
+                            u.messageDialog({
+                                msg: "无返回数据",
+                                title: "操作提示",
+                                btnText: "确定"
+                            });
+                        }
+                    }
+                });
             },
-    		
+            submitBPMByProcessDefineCode: function (selectedData, processDefineCode) {
+                $.ajax({
+                    type: "post",
+                    url: this.submitUrl + "?processDefineCode=" + processDefineCode,
+                    contentType: "application/json;charset=utf-8",
+                    data: JSON.stringify(selectedData),
+                    success: function (result) {
+                        if (result) {
+                            if (result.success == "success") {
+                                message("流程启动成功");
+                                viewModel.event.initGridDataList();
+                            } else {
+                                u.messageDialog({
+                                    msg: result.message,
+                                    title: "操作提示",
+                                    btnText: "确定"
+                                });
+                            }
+                        } else {
+                            u.messageDialog({
+                                msg: "无返回数据",
+                                title: "操作提示",
+                                btnText: "确定"
+                            });
+                        }
+                    }
+                });
+            },
+
             //工作流撤回
-    		recall: function(){
-    			var selectedData = viewModel.gridData.getSimpleData({type: 'select'});
-    			$.ajax({
-                	type: "post",
+            recall: function () {
+                var selectedData = viewModel.gridData.getSimpleData({ type: 'select' });
+                $.ajax({
+                    type: "post",
                     url: viewModel.flowEvent.recallUrl,
                     contentType: 'application/json;charset=utf-8',
                     data: JSON.stringify(selectedData),
                     success: function (result) {
                         if (result) {
-    						if (result.success == "success") {
-                            	message("流程收回成功");
-                            	viewModel.event.initGridDataList();
-    						} else {
-                                u.messageDialog({msg: result.message, title: '操作提示', btnText: '确定'});
-    						}
+                            if (result.success == "success") {
+                                message("流程收回成功");
+                                viewModel.event.initGridDataList();
+                            } else {
+                                u.messageDialog({ msg: result.message, title: '操作提示', btnText: '确定' });
+                            }
                         } else {
-                            u.messageDialog({msg: '无返回数据', title: '操作提示', btnText: '确定'});
+                            u.messageDialog({ msg: '无返回数据', title: '操作提示', btnText: '确定' });
                         }
                     }
-    			});
-    		},
-    		
-    		//审批单据打开页面
-    		initAuditPage: function(element, arg) {
+                });
+            },
+
+            //审批单据打开页面
+            initAuditPage: function (element, arg) {
                 var app = u.createApp({
                     el: element,
                     model: viewModel
                 });
 
                 viewModel.initBpmFromTask(arg, viewModel);					//初始化BPM相关内容(添加审批操作头部和审批相关弹出框的代码片段)
-            	
+
                 var jsonData = { id: arg.id };
                 $.ajax({
-                	type: "post",
-                	url: getUrl+"?id="+arg.id,
-                	datatype: "text",
-                	data: JSON.stringify(jsonData),
-                	contentType: "application/json;charset=utf-8",
-                	success: function(resultData) {
-                		if (resultData) {
-                			if (resultData.success == "success") {
-                				if (resultData.detailMsg.data) {
-                					
+                    type: "post",
+                    url: getUrl + "?id=" + arg.id,
+                    datatype: "text",
+                    data: JSON.stringify(jsonData),
+                    contentType: "application/json;charset=utf-8",
+                    success: function (resultData) {
+                        if (resultData) {
+                            if (resultData.success == "success") {
+                                if (resultData.detailMsg.data) {
+
                                     //表单数据
-                                    var curFormData =[resultData.detailMsg.data];
+                                    var curFormData = [resultData.detailMsg.data];
                                     viewModel.formData.clear();
                                     viewModel.formData.setSimpleData(curFormData);
 
                                     // 把卡片页面变成不能编辑
-                                    $('#form-div-body').each(function(index,element){
-                                    	$(element).find('input[type!="radio"]').attr('disabled',true);
+                                    $('#form-div-body').each(function (index, element) {
+                                        $(element).find('input[type!="radio"]').attr('disabled', true);
                                     });
-                                    
+
                                     //显示操作卡片
                                     viewModel.event.formDivShow(true);
                                     $("#form-div-header").hide();
-                				} else {
-                					u.messageDialog({
-                						msg: "后台返回数据格式有误，请联系管理员",
-                						title: "数据错误",
-                						btnText: "确定"
-                					});
-                				}
-                			} else {
-                				u.messageDialog({
-                					msg: resultData.message,
-                					title: "请求错误",
-                					btnText: "确定"
-                				});
-                			}
-                			//viewModel.event.pageChange();
-                			//viewModel.event.sizeChange();
-                		} else {
-                			u.messageDialog({
-                				msg: "后台返回数据格式有误，请联系管理员",
-                				title: "数据错误",
-                				btnText: "确定"
-                			});
-                		}
-                	},
-                	error: function(er) {
-                		u.messageDialog({ msg: er, title: "请求错误", btnText: "确定" });
-                	}
+                                } else {
+                                    u.messageDialog({
+                                        msg: "后台返回数据格式有误，请联系管理员",
+                                        title: "数据错误",
+                                        btnText: "确定"
+                                    });
+                                }
+                            } else {
+                                u.messageDialog({
+                                    msg: resultData.message,
+                                    title: "请求错误",
+                                    btnText: "确定"
+                                });
+                            }
+                            //viewModel.event.pageChange();
+                            //viewModel.event.sizeChange();
+                        } else {
+                            u.messageDialog({
+                                msg: "后台返回数据格式有误，请联系管理员",
+                                title: "数据错误",
+                                btnText: "确定"
+                            });
+                        }
+                    },
+                    error: function (er) {
+                        u.messageDialog({ msg: er, title: "请求错误", btnText: "确定" });
+                    }
                 });
-    		}
-    	}
-        
+            }
+        }
+
         viewModel.event = {
             pageinit: function (element) {
                 viewModel.app = u.createApp({
@@ -487,7 +512,7 @@ define(['text!./workorder.html',
                         var seldatas = viewModel.gridData.getSimpleData({
                             type: "select"
                         });
-                        console.log("del:",seldatas);
+                        console.log("del:", seldatas);
                         viewModel.event.del(seldatas);
                     }
                 });

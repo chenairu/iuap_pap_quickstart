@@ -5,13 +5,13 @@
 	<resultMap id="BaseResultMap" type="com.yonyou.iuap.example.contacts.entity.Organization">
 		<id column="institid" property="institid" jdbcType="VARCHAR" />
 		<result column="creationtime" property="creationtime" jdbcType="TIMESTAMP" />
-		<result column="short_name" property="short_name" jdbcType="VARCHAR" />
-		<result column="instit_name" property="instit_name" jdbcType="VARCHAR" />
+		<result column="short_name" property="shortname" jdbcType="VARCHAR" />
+		<result column="instit_name" property="institname" jdbcType="VARCHAR" />
 		<result column="email" property="email" jdbcType="VARCHAR" />
 		<result column="creator" property="creator" jdbcType="VARCHAR" />
-		<result column="instit_type" property="instit_type" jdbcType="VARCHAR" />
-		<result column="instit_code" property="instit_code" jdbcType="VARCHAR" />
-		<result column="parent_id" property="parent_id" jdbcType="VARCHAR" />
+		<result column="instit_type" property="instittype" jdbcType="VARCHAR" />
+		<result column="instit_code" property="institcode" jdbcType="VARCHAR" />
+		<result column="parent_id" property="parentid" jdbcType="VARCHAR" />
 		<result column="ts" property="ts" jdbcType="TIMESTAMP" />
 		<result column="dr" property="dr" jdbcType="NUMERIC" />
 	</resultMap>
@@ -88,14 +88,14 @@
 	<update id="update">
 		UPDATE 	example_organization
 		SET		creationtime=#{item.creationtime,jdbcType=TIMESTAMP}, 
-				short_name=#{item.short_name,jdbcType=VARCHAR},
-				instit_name=#{item.instit_name,jdbcType=VARCHAR},
+				short_name=#{item.shortname,jdbcType=VARCHAR},
+				instit_name=#{item.institname,jdbcType=VARCHAR},
 				email=#{item.email,jdbcType=VARCHAR}, 
 				institid=#{item.institid,jdbcType=VARCHAR},
 				creator= #{item.creator,jdbcType=VARCHAR},
-				instit_type=#{item.instit_type,jdbcType=VARCHAR},
-				parent_id=#{item.parent_id,jdbcType=VARCHAR}, 
-				instit_code=#{item.instit_code,jdbcType=VARCHAR},
+				instit_type=#{item.instittype,jdbcType=VARCHAR},
+				parent_id=#{item.parentid,jdbcType=VARCHAR}, 
+				instit_code=#{item.institcode,jdbcType=VARCHAR},
 				ts=#{item.ts,jdbcType=TIMESTAMP},
 				dr=#{item.dr,jdbcType=NUMERIC}
 		WHERE institid = #{item.institid,jdbcType=VARCHAR}
@@ -131,14 +131,14 @@
 		 <foreach collection="list" item="item" index="index" separator="union" open="(" close=")">
 			select
 			#{item.creationtime,jdbcType=TIMESTAMP},
-			#{item.short_name,jdbcType=VARCHAR},
-			#{item.instit_name,jdbcType=VARCHAR},
+			#{item.shortname,jdbcType=VARCHAR},
+			#{item.institname,jdbcType=VARCHAR},
 			#{item.email,jdbcType=VARCHAR}, 
 			#{item.institid,jdbcType=VARCHAR}, 
 			#{item.creator,jdbcType=VARCHAR},
-			#{item.instit_type,jdbcType=VARCHAR},
-			#{item.parent_id,jdbcType=VARCHAR},
-			#{item.instit_code,jdbcType=VARCHAR},
+			#{item.instittype,jdbcType=VARCHAR},
+			#{item.parentid,jdbcType=VARCHAR},
+			#{item.institcode,jdbcType=VARCHAR},
 			#{item.ts,jdbcType=TIMESTAMP},
 			#{item.dr,jdbcType=NUMERIC}
 			from dual
@@ -151,14 +151,14 @@
 			update example_organization
 			<set>
 				creationtime=#{item.creationtime,jdbcType=TIMESTAMP}, 
-				short_name=#{item.short_name,jdbcType=VARCHAR},
-				instit_name=#{item.instit_name,jdbcType=VARCHAR},
+				short_name=#{item.shortname,jdbcType=VARCHAR},
+				instit_name=#{item.institname,jdbcType=VARCHAR},
 				email=#{item.email,jdbcType=VARCHAR}, 
 				institid=#{item.institid,jdbcType=VARCHAR},
 				creator= #{item.creator,jdbcType=VARCHAR},
-				instit_type=#{item.instit_type,jdbcType=VARCHAR},
-				parent_id=#{item.parent_id,jdbcType=VARCHAR}, 
-				instit_code=#{item.instit_code,jdbcType=VARCHAR},
+				instit_type=#{item.instittype,jdbcType=VARCHAR},
+				parent_id=#{item.parentid,jdbcType=VARCHAR}, 
+				instit_code=#{item.institcode,jdbcType=VARCHAR},
 				ts=#{item.ts,jdbcType=TIMESTAMP},
 				dr=#{item.dr,jdbcType=NUMERIC}
 			</set>

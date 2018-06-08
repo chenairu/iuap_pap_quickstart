@@ -374,7 +374,6 @@ define(['text!./print.html',
 					var url = '/print_service/print/preview?tenantId='
 						+ tenantId + '&printcode=' + templateCode + '&serverUrl=' + serverUrl
 						+ '&params=' + params + '&sendType=post';
-					console.log("url22222222222:", url);
 					window.open(url);
 				}
 				else {

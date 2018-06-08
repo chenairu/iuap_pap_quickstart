@@ -11,6 +11,7 @@ $("body").on("click", "#condition-toggle", function () {
 });
 
 
+// 搜索区域展开与收叠
 $("body").on("click", "#collapse", function () {
   if ($("#collapse-body").css("display") == "none") {
     $("#collapse-body").show();

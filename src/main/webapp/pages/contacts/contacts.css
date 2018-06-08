@@ -1,0 +1,5 @@
+/* 重写表格左边的行高 */
+.u-grid-content-num{
+    width: 40px;
+    height: 44px !important;
+}

@@ -23,8 +23,8 @@ public class OrganizationValidator {
         StringBuilder builder = new StringBuilder();
         for (Organization instit : institList) {
             if (StringUtils.isEmpty(instit.getInstitid())) {
-                if (!service.queryList("institCode", instit.getInstit_code()).isEmpty()) {
-                    builder.append(instit.getInstit_code()).append(",");
+                if (!service.queryList("institCode", instit.getInstitcode()).isEmpty()) {
+                    builder.append(instit.getInstitcode()).append(",");
                 }
             }
         }

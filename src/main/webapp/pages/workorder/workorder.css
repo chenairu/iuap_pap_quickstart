@@ -1,0 +1,6 @@
+
+/* 覆盖应用平台里的样式解决错乱问题 */
+#imgHistory_list{
+    padding-left: 0 !important;
+    height: 200% !important;
+}

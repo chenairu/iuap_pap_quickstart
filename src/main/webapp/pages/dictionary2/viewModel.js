@@ -6,13 +6,13 @@ var meta = {
     code: {
       type: "string",
       required: true,
-      nullMsg: "字典类型编码不能为空!"
+      nullMsg: "编码不能为空!"
     },
     //名称
     name: {
       type: "string",
       required: true,
-      nullMsg: "字典类型名称不能为空!"
+      nullMsg: "名称不能为空!"
     },
     //是否固定(系统预置)
     sys: {
@@ -40,3 +40,4 @@ var viewModel = {
   formData: new u.DataTable(meta),
   yesOrNo: [{name: "是", value: "是"}, {name: "否", value: "否"}]
 };
+

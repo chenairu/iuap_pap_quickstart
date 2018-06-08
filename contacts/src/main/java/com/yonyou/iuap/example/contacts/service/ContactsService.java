@@ -101,7 +101,7 @@ public class ContactsService extends GenericService<Contacts>{
             for (Contacts TelBook : list) {
                 for (Organization instit : instits) {
                     if (TelBook.getInstitid() != null && TelBook.getInstitid().equalsIgnoreCase(instit.getInstitid())) {
-                        TelBook.setInstitname(instit.getInstit_name());
+                        TelBook.setInstitname(instit.getInstitname());
                     }
                 }
             }

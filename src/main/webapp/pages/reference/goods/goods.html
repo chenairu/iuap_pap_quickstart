@@ -4,7 +4,7 @@
 		<h4>商品管理</h4>
 	</div>
 	<!-- 搜索区域begin -->
-	<div class="form-search">
+	<!-- <div class="form-search">
 		<div class="u-panel-heading  u-collapse-updown">
 			<div id='condition-toggle' class="u-col-12">查询与筛选
 				<div class="float-right">
@@ -38,7 +38,46 @@
 				</div>
 			</div>
 		</div>
+	</div> -->
+
+
+	<div class="u-container-fluid" style="background-color:#f5f5f5">
+		<div class="u-row">
+			<div class="u-col-md-12">
+				<div class="u-widget-fluid">
+					<div class="u-widget-heading" id="collapse">
+						<h3 class="u-widget-title">查询筛选
+							<a class="u-link u-widget-more">
+								<i class="icon uf uf-2arrow-down" id="icon"></i>
+							</a>
+					</div>
+					<div class="u-widget-body" id="collapse-body" style="display:none;">
+						<div class="u-row">
+							<div class="u-col-4">
+								<div class="u-col-4 u-col-sm-4">编码:</div>
+								<div class="u-col-8 u-col-sm-8">
+									<input class="u-form-control search-enter" name="search_code" />
+								</div>
+							</div>
+							<div class="u-col-4">
+								<div class="u-col-4 u-col-sm-4">名称:</div>
+								<div class="u-col-8 u-col-sm-8">
+									<input class="u-form-control search-enter" id="search_name" name="search_name" />
+								</div>
+							</div>
+							<div class="u-col-4">
+								<div class=" float-right">
+									<button class="u-button" data-bind="click: event.cleanSearch">清空</button>
+									<button class="u-button" data-bind="click: event.search">搜索</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
+
 
 	<!-- 表格区域（按钮、表格、分页）begin  -->
 	<div class="u-mdlayout-detail width-full" style="height:600px;">
@@ -95,132 +134,115 @@
 			<div class="u-tabs__panel is-active" id="tab-panel-1" style="padding:10px">
 				<div class="u-row">
 					<div class="u-col-md-4">
-						<div class="u-form-group">
-							<label class="u-col-3">商品编码</label>
-							<div class="u-col-9" u-meta='{"id":"code","type":"u-text","data":"formData","field":"goodsCode"}'>
-								<input type="text" class="u-form-control readonlyinput" placeholder="" readonly>
-							</div>
+						<label class="u-col-3">商品编码</label>
+						<div class="u-col-9" u-meta='{"id":"code","type":"u-text","data":"formData","field":"goodsCode"}'>
+							<input type="text" class="u-form-control readonlyinput" placeholder="" readonly>
 						</div>
 					</div>
 					<div class="u-col-md-4">
-						<div class="u-form-group width100">
-							<label class="u-col-3">商品名称</label>
-							<div class="u-col-9" u-meta='{"id":"name","type":"u-text","data":"formData","field":"goodsName"}'>
-								<div class="u-input-group-before">*</div>
-								<input type="text" class="u-form-control" placeholder="">
-							</div>
+						<label class="u-col-3">商品名称</label>
+						<div class="u-col-9" u-meta='{"id":"name","type":"u-text","data":"formData","field":"goodsName"}'>
+							<div class="u-input-group-before">*</div>
+							<input type="text" class="u-form-control" placeholder="">
 						</div>
 					</div>
 					<div class="u-col-md-4">
-						<div class="u-form-group width100">
-							<label class="u-col-3">单价</label>
-							<div class="u-col-9" u-meta='{"id":"sys","type":"u-combobox","data":"formData","field":"price"}'>
-								<div class="u-input-group-before">*</div>
-								<input type="text" class="u-form-control" placeholder="">
-							</div>
+						<label class="u-col-3">单价</label>
+						<div class="u-col-9" u-meta='{"id":"sys","type":"u-combobox","data":"formData","field":"price"}'>
+							<div class="u-input-group-before">*</div>
+							<input type="text" class="u-form-control" placeholder="">
 						</div>
 					</div>
-		
+				</div>
+				<div class="u-row margin-top-20">
 					<!-- 下拉框 -->
 					<div class="u-col-md-4">
-						<div class="u-form-group width100">
-							<label class="u-col-3">商品状态</label>
-							<div class="u-col-9" u-meta='{"id":"status","type":"u-combobox","data":"formData","field":"status", "datasource":"goodsStatus_list"}'>
-								<input class="u-form-control" />
-		                        <span class="u-form-control-feedback uf uf-arrow-down" data-role="combo-button"></span>
-							</div>
+						<label class="u-col-3">商品状态</label>
+						<div class="u-col-9" u-meta='{"id":"status","type":"u-combobox","data":"formData","field":"status", "datasource":"goodsStatus_list","onlySelect":true}'>
+							<input class="u-form-control" />
+							<span class="u-form-control-feedback uf uf-arrow-down padding-right-40" data-role="combo-button"></span>
 						</div>
 					</div>
-		
 					<!-- 级联下拉框 -->
 					<div class="u-col-md-4">
-						<div class="u-form-group width100">
-							<label class="u-col-3">商品分类</label>
-							<div class="u-col-9" u-meta='{"id":"goodsType","type":"u-combobox","data":"formData","field":"goodsType", "datasource":"goodsType_list"}'>
-								<input class="u-form-control" />
-		                        <span class="u-form-control-feedback uf uf-arrow-down" data-role="combo-button"></span>
-							</div>
+						<label class="u-col-3">商品分类</label>
+						<div class="u-col-9" u-meta='{"id":"goodsType","type":"u-combobox","data":"formData","field":"goodsType", "datasource":"goodsType_list","onlySelect":true}'>
+							<input class="u-form-control" />
+							<span class="u-form-control-feedback uf uf-arrow-down  padding-right-40" data-role="combo-button"></span>
 						</div>
 					</div>
 					<div class="u-col-md-4">
-						<div class="u-form-group width100">
-							<label class="u-col-3">商品小类</label>
-							<div class="u-col-9" u-meta='{"id":"goodsSubType","type":"u-combobox","data":"formData","field":"goodsSubType", "datasource":"goodsSubType_list"}'>
-								<input class="u-form-control" />
-		                        <span class="u-form-control-feedback uf uf-arrow-down" data-role="combo-button"></span>
-							</div>
+						<label class="u-col-3">商品小类</label>
+						<div class="u-col-9" u-meta='{"id":"goodsSubType","type":"u-combobox","data":"formData","field":"goodsSubType", "datasource":"goodsSubType_list","onlySelect":true}'>
+							<input class="u-form-control" />
+							<span class="u-form-control-feedback uf uf-arrow-down  padding-right-40" data-role="combo-button"></span>
 						</div>
 					</div>
+				</div>
+
+				<div class="u-row margin-top-20">
 					<div class="u-col-md-4">
-						<div class="u-form-group width100" id="frmGoodsModel">
+						<div id="frmGoodsModel">
 							<label class="u-col-3">商品型号</label>
 							<div class="u-col-9" u-meta='{"id":"model","type":"u-text","data":"formData","field":"model"}'>
 								<input type="text" class="u-form-control" placeholder="">
 							</div>
 						</div>
 					</div>
-				</div>
-				
-				<!-- 各类参照示例 -->
-				<div class="u-row">
 					<div class="u-col-md-4">
-						<div class="u-form-group width100">
-							<label class="u-col-3">币种</label>
-							<div class="u-col-9 u-combo" u-meta='{"type":"uiRefer","data":"formData","field":"currency","display":"currency_name"}'>
-								<div class="u-input-group u-has-feedback">
-									<input class="u-form-control" readonly="readonly" />
-									<span class="u-form-control-feedback fa fa-list-ul refer"></span>
-								</div>
+						<label class="u-col-3">币种</label>
+						<div class="u-col-9 u-combo" u-meta='{"type":"uiRefer","data":"formData","field":"currency","display":"currency_name"}'>
+							<div class="u-input-group u-has-feedback">
+								<input class="u-form-control" readonly="readonly" />
+								<span class="u-form-control-feedback fa fa-list-ul refer"></span>
 							</div>
 						</div>
 					</div>
 					<div class="u-col-md-4">
-						<div class="u-form-group width100">
-							<label class="u-col-3">生产厂商</label>
-							<div class="u-col-9 u-combo" u-meta='{"type":"uiRefer","data":"formData","field":"manufacturer","display":"manufacturer_name"}'>
-								<div class="u-input-group u-has-feedback">
-									<input class="u-form-control" readonly="readonly" />
-									<span class="u-form-control-feedback fa fa-list-ul refer"></span>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="u-col-md-4">
-						<div class="u-form-group width100">
-							<label class="u-col-3">联系人</label>
-							<div class="u-col-9 u-combo" u-meta='{"type":"uiRefer","data":"formData","field":"linkman","display":"linkman_name"}'>
-								<div class="u-input-group u-has-feedback">
-									<input class="u-form-control" readonly="readonly" />
-									<span class="u-form-control-feedback fa fa-list-ul refer"></span>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="u-col-md-4">
-						<div class="u-form-group width100">
-							<label class="u-col-3">创建人</label>
-							<div class="u-col-9 u-combo" u-meta='{"type":"uiRefer","data":"formData","field":"createUser","display":"createUser_name"}'>
-								<div class="u-input-group u-has-feedback">
-									<input class="u-form-control" readonly=true />
-									<span class="u-form-control-feedback fa fa-list-ul refer"></span>
-								</div>
+						<label class="u-col-3">生产厂商</label>
+						<div class="u-col-9 u-combo" u-meta='{"type":"uiRefer","data":"formData","field":"manufacturer","display":"manufacturer_name"}'>
+							<div class="u-input-group u-has-feedback">
+								<input class="u-form-control" readonly="readonly" />
+								<span class="u-form-control-feedback fa fa-list-ul refer"></span>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="u-row">
+
+
+				<div class="u-row margin-top-20">
+					<div class="u-col-md-4">
+						<label class="u-col-3">联系人</label>
+						<div class="u-col-9 u-combo" u-meta='{"type":"uiRefer","data":"formData","field":"linkman","display":"linkman_name"}'>
+							<div class="u-input-group u-has-feedback">
+								<input class="u-form-control" readonly="readonly" />
+								<span class="u-form-control-feedback fa fa-list-ul refer"></span>
+							</div>
+						</div>
+					</div>
+					<div class="u-col-md-4">
+						<label class="u-col-3">创建人</label>
+						<div class="u-col-9 u-combo" u-meta='{"type":"uiRefer","data":"formData","field":"createUser","display":"createUser_name"}'>
+							<div class="u-input-group u-has-feedback">
+								<input class="u-form-control" readonly=true />
+								<span class="u-form-control-feedback fa fa-list-ul refer"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="u-row margin-top-20">
 					<div class="u-col-md-12">
-						<div class="u-form-group width100">
-							<label class="u-col-1">备注</label>
-							<textarea u-meta='{"type":"textarea","data":"formData","field":"remark"}' placeholder="" style="width:90%"></textarea>
-						</div>
+						<label class="u-col-1">备注</label>
+						<textarea class="u-col-11" u-meta='{"type":"textarea","data":"formData","field":"remark"}' placeholder=""></textarea>
 					</div>
 				</div>
 			</div>
+
+
 			<div class="u-tabs__panel is-active" id="tab-panel-2" style="padding:10px">
-				
+
 			</div>
 		</div>
-	
+
 	</div>
 </div>
