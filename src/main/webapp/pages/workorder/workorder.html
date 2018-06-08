@@ -1,74 +1,73 @@
 <div class="u-mdlayout">
     <!-- 标题区域 -->
-    <div class="aline-center b-margin">
+    <div class="text-center">
         <h4>工单管理</h4>
     </div>
     <!-- 搜索区域 -->
-    <div class=" form-search b-margin">
-        <div class="u-panel-heading  u-collapse-updown">
-            <div id='condition-toggle' class="u-col-12">查询与筛选
-                <div class="float-right">
-                    <span id="condition-text">展开</span>
-                    <i id="condition-icon" class="uf uf-arrow-down"></i>
-                </div>
-            </div>
-        </div>
-        <div class="u-row" id="search-modul" style="display:none;">
-            <div class="u-col-12 u-col-sm-12 b-margin">
-                <div class="u-col-4 u-col-sm-6">
-                    <div class="u-col-3 aline-right">工单编码</div>
-                    <div class="u-col-9 u-col-sm-12">
-                        <input class="u-form-control search-enter" name="search_code" />
+    <div class="u-container-fluid">
+        <div class="u-row">
+            <div class="u-col-md-12">
+                <div class="u-widget-fluid">
+                    <div class="u-widget-heading" id="collapse">
+                        <h3 class="u-widget-title">查询与筛选
+                            <a class="u-link u-widget-more">
+                                <i class="icon uf uf-2arrow-down"></i>
+                            </a>
+                        </h3>
                     </div>
-                </div>
-                <div class="u-col-4 u-col-sm-6">
-                    <div class="u-col-3 aline-right">工单名称</div>
-                    <div class="u-col-9 u-col-sm-12">
-                        <input class="u-form-control search-enter" id="search_name" name="search_name" />
-                    </div>
-                </div>
-                <div class="u-col-4 u-col-sm-6">
-                    <div class=" float-right">
-                        <button class="u-button" data-bind="click: event.cleanSearch">清空</button>
-                        <button class="u-button" data-bind="click: event.search">搜索</button>
+                    <div class="u-widget-body" id="collapse-body">
+                        <div class="u-row">
+                            <div class="u-col-4">
+                                <div class="u-col-4 u-col-sm-4">工单编码:</div>
+                                <div class="u-col-8 u-col-sm-8">
+                                    <input class="u-form-control search-enter" name="search_code" />
+                                </div>
+                            </div>
+                            <div class="u-col-4">
+                                <div class="u-col-4 u-col-sm-4">工单名称:</div>
+                                <div class="u-col-8 u-col-sm-8">
+                                    <input class="u-form-control search-enter" id="search_name" name="search_name" />
+                                </div>
+                            </div>
+                            <div class="u-col-4">
+                                <div class=" float-right">
+                                    <button class="u-button" data-bind="click: event.cleanSearch">清空</button>
+                                    <button class="u-button" data-bind="click: event.search">搜索</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- 列表区域（按钮区域，表格区域，分页区域） -->
-    <div class="u-mdlayout-detail width-full">
-        <!-- list -->
-        <div class="u-mdlayout-page u-navlayout-fixed-header" id="list">
-            <div id="dicttype_list_button_2" class="b-margin">
-                <div class="b-edit">
-                    <button class="u-button" data-bind="click:event.btnAddClicked.bind($data,-1)">增加</button>
-                    <button class="u-button u-button-primary raised gray-btn margin-right-20" id="viewbtn-main" data-bind="click: flowEvent.doView">查看</button>
-                    <button class="u-button" id="user-action-del" disabled=true data-bind="click: event.delRows">删除</button>
-                    <button class="u-button u-button-primary raised gray-btn margin-right-20" id="submitbtn-main" data-bind="click: flowEvent.submit">提交</button>
-                    <button class="u-button u-button-primary raised gray-btn margin-right-20" id="recallbtn-main" data-bind="click: flowEvent.recall">撤回</button>
-                </div>
-            </div>
-            <div class="u-mdlayout-page-section">
-                <div type="text" id="dicttype" data-bind="event: { mouseout: event.mouseoutFunc }" u-meta='{"id":"gridData","data":"gridData","type":"grid","editable":false,"editType":"default","rowHeight":"40px",
+
+    <!-- 按钮区域 -->
+    <div class="tool-button">
+        <button class="u-button" data-bind="click:event.btnAddClicked.bind($data,-1)">增加</button>
+        <button class="u-button u-button-primary raised gray-btn margin-right-20" id="viewbtn-main" data-bind="click: flowEvent.doView">查看</button>
+        <button class="u-button" id="user-action-del" disabled=true data-bind="click: event.delRows">删除</button>
+        <button class="u-button u-button-primary raised gray-btn margin-right-20" id="submitbtn-main" data-bind="click: flowEvent.submit">提交</button>
+        <button class="u-button u-button-primary raised gray-btn margin-right-20" id="recallbtn-main" data-bind="click: flowEvent.recall">撤回</button>
+    </div>
+
+    <div class="u-mdlayout-detail width-full padding-5">
+        <div type="text" id="dicttype" data-bind="event: { mouseout: event.mouseoutFunc }" u-meta='{"id":"gridData","data":"gridData","type":"grid","editable":false,"editType":"default","rowHeight":"40px",
                 				 "multiSelect":true,"canDrag":false,"canSwap":false,"onRowSelected":"event.selectRow", "onDblClickFun":"gridEvent.dbClickRow",
                 				 "onRowUnSelected":"event.selectRow","onRowHover":"event.rowHoverHandel"}'>
-                    <div options='{"field":"code","dataType":"String","title":"工单编码","editType":"string", "width":"10%"}'></div>
-                    <div options='{"field":"name","dataType":"String","title":"工单名称","editType":"string", "width":"15%"}'></div>
-                    <div options='{"field":"type_name","dataType":"String","title":"工单类型","editType":"string", "width":"10%"}'></div>
-                    <div options='{"field":"applicant","dataType":"String","title":"申请人","editType":"string", "width":"10%"}'></div>
-                    <div options='{"field":"applyTime","dataType":"String","title":"申请时间","editType":"string", "width":"10%","renderType":"dateRender","format":"YYYY-MM-DD"}'></div>
-                    <div options='{"field":"finishTime","dataType":"String","title":"完成时间","editType":"string", "width":"10%","renderType":"dateRender","format":"YYYY-MM-DD"}'></div>
-                    <div options='{"field":"status_name","dataType":"String","title":"工单状态","editType":"string", "width":"10%"}'></div>
-                    <div options='{"field":"lastModified","dataType":"date","title":"最后修改时间", "editType":"date","width":"10%","renderType":"dateRender","format":"YYYY-MM-DD"}'></div>
-                    <div options='{"field":"operate","dataType":"String","title":"操作","renderType":"event.optFun","editable":true}'></div>
-                </div>
-                <div class="aline-center">
-                    <div id='pagination' class='pagination u-pagination pagination-sm'></div>
-                </div>
-            </div>
+            <div options='{"field":"code","dataType":"String","title":"工单编码","editType":"string", "width":"10%"}'></div>
+            <div options='{"field":"name","dataType":"String","title":"工单名称","editType":"string", "width":"15%"}'></div>
+            <div options='{"field":"type_name","dataType":"String","title":"工单类型","editType":"string", "width":"10%"}'></div>
+            <div options='{"field":"applicant","dataType":"String","title":"申请人","editType":"string", "width":"10%"}'></div>
+            <div options='{"field":"applyTime","dataType":"String","title":"申请时间","editType":"string", "width":"10%","renderType":"dateRender","format":"YYYY-MM-DD"}'></div>
+            <div options='{"field":"finishTime","dataType":"String","title":"完成时间","editType":"string", "width":"10%","renderType":"dateRender","format":"YYYY-MM-DD"}'></div>
+            <div options='{"field":"status_name","dataType":"String","title":"工单状态","editType":"string", "width":"10%"}'></div>
+            <div options='{"field":"lastModified","dataType":"date","title":"最后修改时间", "editType":"date","width":"10%","renderType":"dateRender","format":"YYYY-MM-DD"}'></div>
+            <div options='{"field":"operate","dataType":"String","title":"操作","renderType":"event.optFun","editable":true}'></div>
         </div>
-        <!-- end list -->
+        <div class="aline-center">
+            <div id='pagination' class='pagination u-pagination pagination-sm'></div>
+        </div>
     </div>
 </div>
 
@@ -77,14 +76,14 @@
 <div id="form-div">
     <div id="form-div-header">
         <div class="u-row">
-            <div class="u-col-md-4 aline-let paddingL30 ">
+            <div class="u-col-md-4 padding-left-30 text-left">
                 <button type="button " class="goback" data-bind="click:event.formDivShow(false)">
                     <i class="uf uf-arrow-left"></i>返回</button>
             </div>
-            <div class="u-col-md-4 aline-center">
+            <div class="u-col-md-4 text-center">
                 <h4>新增</h4>
             </div>
-            <div class="u-col-md-4 aline-right paddingR30 ">
+            <div class="u-col-md-4 padding-right-30 text-right">
                 <button id="save" type="button" class="u-button" data-bind="click:event.saveClick">保存</button>
             </div>
         </div>
@@ -144,7 +143,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="u-col-md-4">
                 <div class="u-col-3">工单状态</div>
                 <div class="u-col-9" u-meta='{"id":"status","type":"u-combobox","data":"formData","field":"status", "datasource":"workorderStatus_list"}'>
