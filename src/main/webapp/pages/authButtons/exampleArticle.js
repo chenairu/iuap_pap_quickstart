@@ -1,13 +1,16 @@
-define(['text!./exampleArticle.html',
+define(['text!./exampleArticle.html','require',
     "css!../../style/common.css",
     "css!./exampleArticle.css",
     "../../config/sys_const.js",
     "../../utils/utils.js",
     "../../utils/ajax.js",
     "../../utils/tips.js",
-    "./viewModel.js"], function (template, cookie, bpmopenbill) {
+    "./viewModel.js",
+    "dialogmin"
+], function (template, require) {
         var ctx, listRowUrl, saveRowUrl, delRowUrl, updateStatusUrl, element;
-        function init(element, cookie) {
+        var dialogmin = require("dialogmin");
+        function init(element, cookie,dialogmin) {
 
             element = element;
             $(element).html(template);
@@ -27,48 +30,46 @@ define(['text!./exampleArticle.html',
             viewModel.event.pageinit(element);
         }
         viewModel.event = {
-            add1 : function(element,cookie) {
+            add1 : function() {
+                var href = window.location.href;
+                var protocol = window.location.protocol;
+                var host = window.location.host;
+                var port = window.location.port;
 
-                //window.location.href = "#manage/auth_after_rolemgrwidget";
-                    //跳转页面,无法返回
-                   /* window.registerRouter("123", "/iuap-example/pages/asVal/asval.js");
-                    window.location.href = "#/123";*/
+                var url = protocol+"//"+host+"/wbalone/index-view.html#/01code?billtype=1";
+                var content = '<iframe  id="iframepage" src="' + url + '" width="100%" height="500px;" frameborder="0" scrolling="no"></iframe>';
+                u.refer({
+                    // 模式 弹出层
+                    isPOPMode: true,
+                    // 弹出层id
+                    //contentId: 'testitemid_ref',
+                    // 设定参照层标题
+                    title:'测试项目',
+                    // 设置而参照层高度
+                    height:'500px',
+                    width:"700px",
+                    // 设置参照层内容
+                    module:{
+                        template: content
+                    },
+                    // 点击确认后回调事件
+                    onOk: function(){
+                        if(document.getElementById("iframepage").contentWindow.document.getElementById("grid")["u-meta"].type == "grid"){
+                            var selectRows = document.getElementById("iframepage").contentWindow.document.getElementById("grid")["u-meta"].grid.selectRows;
+                            console.log(selectRows);
+                            var data = viewModel.formData.getSimpleData()[0];
+                            data.content = selectRows[0].name;
+                            viewModel.formData.setSimpleData(data);
 
-
-                   u.refer({
-                        // 模式 弹出层
-                        isPOPMode: true,
-                        // 弹出层id
-                        contentId: 'testitemid_ref',
-                        // 设定参照层标题
-                        title:'测试项目',
-                        // 设置而参照层高度
-                        height:'300px',
-                        // 设置参照层内容
-                        module:{
-                            template: "#manage/auth_after_rolemgrwidget"
-                        },
-                        // 点击确认后回调事件
-                        onOk: function(){
-                            alert('ok');
-                        },
-                        // 点击取消后回调事件
-                        onCancel: function(){
-                            alert('cancel');
+                            console.log(data);
                         }
+                    },
+                    // 点击取消后回调事件
+                    onCancel: function(){
+                    }
                 });
-                /*console.log(cookie);
-                var model;
-                var content = document.getElementById("tenant_dialog_content");
-                require(["/iuap-example/pages/asVal/asval.js","/iuap-example/pages/asVal/viewModel.js"], function(module) {
-                    ko.cleanNode(content);
-                    $("#tenant_dialog_content").html(module.template);
-                    module.init(viewModel);
-
-                })
-                window.md = u.dialog({id: 'tenant_testDialg', content: "#tenant_dialog_content",
-                    hasCloseMenu: true,width:"740px",height:"310px"});*/
             },
+
             pageinit: function (element) {
                 viewModel.app = u.createApp({
                     el: element,
@@ -221,6 +222,7 @@ define(['text!./exampleArticle.html',
                     });
                 viewModel.gridData.addParams(queryData);
                 viewModel.event.initGridDataList();
+                dialogmin("查询成功~", "tip-suc");
             },
             //清空查询条件
             cleanSearch: function () {
