@@ -65,9 +65,9 @@ public class Contacts2RefController extends AbstractTreeGridRefModel {
 				HashMap<String,String> ret = new HashMap<String,String>();
 				
 				ret.put(REFPK, org.getInstitid());
-				ret.put(REFCODE, org.getInstit_code());
-				ret.put(REFNAME, org.getInstit_name());
-				ret.put(PID, org.getParent_id());
+				ret.put(REFCODE, org.getInstitcode());
+				ret.put(REFNAME, org.getInstitname());
+				ret.put(PID, org.getParentid());
 				ret.put(ID, org.getInstitid());
 				list.add(ret);
 			}

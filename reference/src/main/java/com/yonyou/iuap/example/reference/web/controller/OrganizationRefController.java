@@ -31,9 +31,9 @@ public class OrganizationRefController extends AbstractTreeRefModel{
 	    for(Organization organization : listData) {
 		    Map<String, Object> curData = new HashMap<String, Object>();
 		    curData.put("id", organization.getInstitid());
-		    curData.put("pid", organization.getParent_id());
-		    curData.put("refcode", organization.getInstit_code());
-		    curData.put("refname", organization.getInstit_name());
+		    curData.put("pid", organization.getParentid());
+		    curData.put("refcode", organization.getInstitcode());
+		    curData.put("refname", organization.getInstitname());
 		    curData.put("refpk", organization.getInstitid());
 		    
 		    //isLeaf
@@ -53,9 +53,9 @@ public class OrganizationRefController extends AbstractTreeRefModel{
 	    for(Organization organization : listData) {
 		    Map<String, String> curData = new HashMap<String, String>();
 		    curData.put("id", organization.getInstitid());
-		    curData.put("pid", organization.getParent_id());
-		    curData.put("refcode", organization.getInstit_code());
-		    curData.put("refname", organization.getInstit_name());
+		    curData.put("pid", organization.getParentid());
+		    curData.put("refcode", organization.getInstitcode());
+		    curData.put("refname", organization.getInstitname());
 		    curData.put("refpk", organization.getInstitid());
 		    
 		    //isLeaf
@@ -71,9 +71,9 @@ public class OrganizationRefController extends AbstractTreeRefModel{
 	    for(Organization organization : listData) {
 		    Map<String, String> curData = new HashMap<String, String>();
 		    curData.put("id", organization.getInstitid());
-		    curData.put("pid", organization.getParent_id());
-		    curData.put("refcode", organization.getInstit_code());
-		    curData.put("refname", organization.getInstit_name());
+		    curData.put("pid", organization.getParentid());
+		    curData.put("refcode", organization.getInstitcode());
+		    curData.put("refname", organization.getInstitname());
 		    curData.put("refpk", organization.getInstitid());
 		    
 		    //isLeaf

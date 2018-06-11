@@ -1,191 +1,186 @@
 <div class="u-mdlayout" id="myLayout">
     <div class="u-mdlayout-detail">
+        <!-- 标题区域 -->
         <div class="text-center">
             <h4 id="infoPanel">树表示例</h4>
         </div>
-
         <div class="u-row margin-left-0 margin-right-0">
             <!-- 左侧组织机构树 -->
-            <div class="u-col-md-3 height-full">
-                <!-- 树上的标题和按钮区域 -->
-                <div class="u-row">
-                    <span class="u-col-6">组织机构</span>
-                    <div class="u-col-6">
-                        <button type="button" class="u-col-4 edit-button tree-tool-btn" title="添加" data-bind="click: event.addinstitClick">
-                            <i class="iconfont icon-plus"></i>
-                        </button>
-                        <button type="button" class="u-col-4 edit-button tree-tool-btn" title="编辑" data-bind="click:event.editinstitClick">
-                            <i class="iconfont icon-input"></i>
-                        </button>
-                        <button type="button" class="u-col-4 edit-button tree-tool-btn" title="删除" data-bind="click:event.delinstitClick">
-                            <i class="iconfont icon-dustbin"></i>
-                        </button>
+            <div id="orgNode">
+                <div class="u-col-md-3 height-full">
+                    <!-- 树上的标题和按钮区域 -->
+                    <div class="u-row">
+                        <span class="u-col-6">组织机构</span>
+                        <div class="u-col-6">
+                            <button type="button" class="u-col-4 edit-button tree-tool-btn" title="添加" data-bind="click: event.addinstitClick">
+                                <i class="iconfont icon-plus"></i>
+                            </button>
+                            <button type="button" class="u-col-4 edit-button tree-tool-btn" title="编辑" data-bind="click:event.editinstitClick">
+                                <i class="iconfont icon-input"></i>
+                            </button>
+                            <button type="button" class="u-col-4 edit-button tree-tool-btn" title="删除" data-bind="click:event.delinstitClick">
+                                <i class="iconfont icon-dustbin"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!--组织机构树-->
+                    <div class="ztree" style="overflow-y: auto" u-meta='{"id":"orgTree","data":"orgTreeData","type":"tree","idField":"institid","pidField":"parentid","nameField":"institname","setting":"treeSetting"}'>
                     </div>
                 </div>
-                <!--tree-->
-                <div class="ztree" style="overflow-y: auto" u-meta='{"id":"orgTree","data":"institdata","type":"tree","idField":"institid","pidField":"parentid","nameField":"institname","setting":"treeSetting"}'>
+                <div id="dialog_content_instit" style="display:none;">
+                    <div class="u-msg-title">
+                        <h4>新增部门</h4>
+                    </div>
+                    <div class="u-msg-content">
+                        <div class="u-form">
+                            <div class="u-col-md-6">
+                                <div class="u-form-group width100">
+                                    <label class="u-col-4">编码</label>
+                                    <input type="text" id="institcode" class="u-col-md-8" u-meta='{"type":"string","data":"orgFormData","field":"institcode"}'
+                                        placeholder="请输入编码">
+                                </div>
+                            </div>
+                            <div class="u-col-md-6">
+                                <div class="u-form-group width100">
+                                    <label class="u-col-4">组织名称</label>
+                                    <input type="text" id="institname" class="u-col-md-8" u-meta='{"type":"string","data":"orgFormData","field":"institname"}'
+                                        placeholder="请输入组织名称">
+                                </div>
+                            </div>
+                            <div class="u-col-md-6">
+                                <div class="u-form-group width100">
+                                    <label class="u-col-4">上级</label>
+                                    <input type="text" id="parentname" class="u-col-md-8" u-meta='{"type":"string","data":"orgFormData","field":"parentname"}'
+                                        placeholder="上级" disabled="disabled">
+                                </div>
+                            </div>
+                            <div class="u-col-md-6">
+                                <div class="u-form-group width100" style="display:none">
+                                    <label class="u-col-4">父ID</label>
+                                    <input type="text" id="parentid" class="u-col-md-8" u-meta='{"type":"string","data":"orgFormData","field":"parentid"}' placeholder="请输入父ID">
+                                </div>
+                            </div>
+                            <div class="u-col-md-6">
+                                <div class="u-form-group width100">
+                                    <label class="u-col-md-4 control-label">名称缩写</label>
+                                    <input type="text" id="shortname" class="u-col-md-8" u-meta='{"type":"string","data":"orgFormData","field":"shortname"}'
+                                        placeholder="请输入缩写">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="u-msg-footer">
+                        <div class="pull-right">
+                            <button id="canceltree" class="u-button editCancel raised back" data-bind="click: event.cancelinstitClick">取消
+                                <span class="u-button-container">
+                                    <span class="u-ripple"></span>
+                                </span>
+                            </button>
+                            <button id="savetree" class="u-button margin-right-10" data-bind="click: event.saveinstitClick">
+                                保存
+                                <span class="u-button-container">
+                                    <span class="u-ripple"></span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- 联系人 -->
-            <div class="u-col-md-9">
-                <button class="u-button" data-bind="click: event.addManClick">新增人员</button>
-                <div id="searchdiv" class="u-input-group u-has-feedback pull-right input_enter">
-                    <input type="text" class="u-form-control" id="search" placeholder="姓名/编码/邮件">
-                    <span class="u-form-control-feedback uf uf-search-light-2" id="searchBtn" data-bind="click: event.searchClick"></span>
+            <!-- 右侧表 -->
+            <div id="book">
+                <div class="u-col-md-9">
+                    <button class="u-button" data-bind="click: event.addManClick">新增人员</button>
+                    <div id="searchdiv" class="u-input-group u-has-feedback pull-right input_enter">
+                        <input type="text" class="u-form-control" id="search" placeholder="姓名/编码/邮件">
+                        <span class="u-form-control-feedback uf uf-search-light-2" id="searchBtn" data-bind="click: event.searchClick"></span>
+                    </div>
+                    <!-- 联系人表格 -->
+                    <div class="main-container padding-0 contacts-container">
+                        <div type="text" class="u-table b-table width-full" u-meta='{"id":"gridaddress","type":"grid","data":"telbookdata","showNumCol":false,"rowHeight":"40px","columnWidth":"120px","onRowHover":"event.rowHoverHandel"}'
+                            data-bind="event: { mouseout: event.mouseoverFun  }">
+                            <div options='{"field":"peoname","title":"姓名","dataType":"String","editType":"string"}'></div>
+                            <div options='{"field":"peocode","title":"员工编号","dataType":"String","editType":"string"}'></div>
+                            <div options='{"field":"institname","title":"所属机构","dataType":"String","editType":"string"}'></div>
+                            <div options='{"field":"worktel","title":"办公电话","dataType":"String","editType":"string"}'></div>
+                            <div options='{"field":"email","title":"电子邮箱","dataType":"String","editType":"string"}'></div>
+                            <div options='{"field":"operate","dataType":"String","title":"操作","renderType":"event.optFun","editable":false}'></div>
+                        </div>
+                        <div class="aline-center">
+                            <div id='pagination' class='pagination u-pagination pagination-sm'></div>
+                        </div>
+                    </div>
                 </div>
 
-                <!--telbooktable-->
-                <div class="main-container padding-0 contacts-container">
-                    <div type="text" class="u-table b-table width-full" u-meta='{"id":"gridaddress","type":"grid","data":"telbookdata","showNumCol":false,"rowHeight":"40px","columnWidth":"120px","onRowHover":"event.rowHoverHandel"}'
-                        data-bind="event: { mouseout: event.mouseoverFun  }">
-                        <div options='{"field":"peoname","title":"姓名","dataType":"String","editType":"string"}'></div>
-                        <div options='{"field":"peocode","title":"员工编号","dataType":"String","editType":"string"}'></div>
-                        <div options='{"field":"institname","title":"所属机构","dataType":"String","editType":"string"}'></div>
-                        <div options='{"field":"worktel","title":"办公电话","dataType":"String","editType":"string"}'></div>
-                        <div options='{"field":"email","title":"电子邮箱","dataType":"String","editType":"string"}'></div>
-                        <div options='{"field":"operate","dataType":"String","title":"操作","renderType":"event.optFun","editable":false}'></div>
+                <!--新增编辑联系人form-->
+                <div id="dialog_content_man" style="display:none;">
+                    <div class="u-msg-title">
+                        <h4>新增人员</h4>
                     </div>
-                    <div class="aline-center">
-                        <div id='pagination' class='pagination u-pagination pagination-sm'></div>
+                    <div class="u-msg-content">
+                        <div class="u-form" id="add-form">
+                            <div class="u-col-md-6">
+                                <div class="u-form-group">
+                                    <div class="u-col-md-4">
+                                        <label>*</label>
+                                        <label>姓名</label>
+                                    </div>
+                                    <input class="u-col-md-8 " type="text" id="add_peoname" u-meta='{"type":"string","data":"telbookdatanew","field":"peoname"}'
+                                        placeholder="请输入姓名" />
+                                </div>
+                            </div>
+                            <div class="u-col-md-6">
+                                <div class="u-form-group">
+                                    <div class="u-col-md-4">
+                                        <label>*</label>
+                                        <label>员工编号</label>
+                                    </div>
+                                    <input class="u-col-md-8 " type="text" id="add_peocode" u-meta='{"type":"string","data":"telbookdatanew","field":"peocode"}'
+                                        placeholder="请输入员工编号" />
+                                </div>
+                            </div>
+                            <div class="u-col-md-6">
+                                <div class="u-form-group">
+                                    <div class="u-col-md-4">
+                                        <label>*</label>
+                                        <label>手机号码</label>
+                                    </div>
+                                    <input class="u-col-md-8 " type="text" id="add_worktel" u-meta='{"type":"string","data":"telbookdatanew","field":"worktel"}'
+                                        placeholder="请输入手机号码" />
+                                </div>
+                            </div>
+                            <div class="u-col-md-6">
+                                <div class="u-form-group">
+                                    <div class="u-col-md-4">
+                                        <label>电子邮件</label>
+                                    </div>
+                                    <input class="u-col-md-8 " type="text" id="add_email" u-meta='{"type":"string","data":"telbookdatanew","field":"email"}'
+                                        placeholder="请输入电子邮件" />
+                                </div>
+                            </div>
+                            <div class="u-col-md-6">
+                                <div class="u-form-group">
+                                    <div class="u-col-md-4">
+                                        <label>所属机构</label>
+                                    </div>
+                                    <input class="u-col-md-8 " type="text" id="userinstitname" placeholder="请输入所属机构" disabled="disabled" u-meta='{"type":"string","data":"telbookdatanew","field":"institname"}'
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="u-msg-footer">
+                            <div class="pull-right">
+                                <button id="saveman" class="u-button" data-bind="click: event.saveManClick">保存
+                                    <span class="u-button-container"></span>
+                                </button>
+                                <button id="cancelman" class="u-button" data-bind="click: event.cancelManClick">取消
+                                    <span class="u-button-container"></span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
-        <!-- 新增或修改的form表单 -->
-        <div id="dialog_content_instit" style="display:none;">
-            <div class="u-msg-title">
-                <h4>新增部门</h4>
-            </div>
-            <div class="u-msg-content">
-                <div class="u-form">
-                    <div class="u-col-md-6">
-                        <div class="u-form-group width100">
-                            <label class="u-col-4">编码</label>
-                            <input type="text" id="institcode" class="u-col-md-8" u-meta='{"type":"string","data":"institdatanew","field":"institcode"}'
-                                placeholder="请输入编码">
-                        </div>
-                    </div>
-                    <div class="u-col-md-6">
-                        <div class="u-form-group width100">
-                            <label class="u-col-4">组织名称</label>
-                            <input type="text" id="institname" class="u-col-md-8" u-meta='{"type":"string","data":"institdatanew","field":"institname"}'
-                                placeholder="请输入组织名称">
-                        </div>
-                    </div>
-                    <div class="u-col-md-6">
-                        <div class="u-form-group width100">
-                            <label class="u-col-4">上级</label>
-                            <input type="text" id="parentname" class="u-col-md-8" u-meta='{"type":"string","data":"institdatanew","field":"parentname"}'
-                                placeholder="上级" disabled="disabled">
-                        </div>
-
-                    </div>
-                    <div class="u-col-md-6">
-                        <div class="u-form-group width100" style="display:none">
-                            <label class="u-col-4">父ID</label>
-                            <input type="text" id="parentid" class="u-col-md-8" u-meta='{"type":"string","data":"institdatanew","field":"parentid"}'
-                                placeholder="请输入父ID">
-                        </div>
-                    </div>
-                    <div class="u-col-md-6">
-                        <div class="u-form-group width100">
-                            <label class="u-col-md-4 control-label">名称缩写</label>
-                            <input type="text" id="shortname" class="u-col-md-8" u-meta='{"type":"string","data":"institdatanew","field":"shortname"}'
-                                placeholder="请输入缩写">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="u-msg-footer">
-                <div class="pull-right">
-                    <button id="canceltree" class="u-button editCancel raised back" data-bind="click: event.cancelinstitClick">取消
-                        <span class="u-button-container">
-                            <span class="u-ripple"></span>
-                        </span>
-                    </button>
-
-                    <button id="savetree" class="u-button margin-right-10" data-bind="click: event.saveinstitClick">
-                        保存
-                        <span class="u-button-container">
-                            <span class="u-ripple"></span>
-                        </span>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-
-        <!--telbook编辑对话框-->
-        <div id="dialog_content_man" style="display:none;">
-            <div class="u-msg-title">
-                <h4>新增人员</h4>
-            </div>
-            <div class="u-msg-content">
-                <div class="u-form" id="add-form">
-                    <div class="u-col-md-6">
-                        <div class="u-form-group">
-                            <div class="u-col-md-4">
-                                <label>*</label>
-                                <label>姓名</label>
-                            </div>
-                            <input class="u-col-md-8 " type="text" id="add_peoname" u-meta='{"type":"string","data":"telbookdatanew","field":"peoname"}'
-                                placeholder="请输入姓名" />
-                        </div>
-                    </div>
-                    <div class="u-col-md-6">
-                        <div class="u-form-group">
-                            <div class="u-col-md-4">
-                                <label>*</label>
-                                <label>员工编号</label>
-                            </div>
-                            <input class="u-col-md-8 " type="text" id="add_peocode" u-meta='{"type":"string","data":"telbookdatanew","field":"peocode"}'
-                                placeholder="请输入员工编号" />
-                        </div>
-                    </div>
-                    <div class="u-col-md-6">
-                        <div class="u-form-group">
-                            <div class="u-col-md-4">
-                                <label>*</label>
-                                <label>手机号码</label>
-                            </div>
-                            <input class="u-col-md-8 " type="text" id="add_worktel" u-meta='{"type":"string","data":"telbookdatanew","field":"worktel"}'
-                                placeholder="请输入手机号码" />
-                        </div>
-                    </div>
-                    <div class="u-col-md-6">
-                        <div class="u-form-group">
-                            <div class="u-col-md-4">
-                                <label>电子邮件</label>
-                            </div>
-                            <input class="u-col-md-8 " type="text" id="add_email" u-meta='{"type":"string","data":"telbookdatanew","field":"email"}'
-                                placeholder="请输入电子邮件" />
-                        </div>
-                    </div>
-                    <div class="u-col-md-6">
-                        <div class="u-form-group">
-                            <div class="u-col-md-4">
-                                <label>所属机构</label>
-                            </div>
-                            <input class="u-col-md-8 " type="text" id="userinstitname" placeholder="请输入所属机构" disabled="disabled" u-meta='{"type":"string","data":"telbookdatanew","field":"institname"}'
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div class="u-msg-footer">
-                    <div class="pull-right">
-                        <button id="saveman" class="u-button" data-bind="click: event.saveManClick">保存
-                            <span class="u-button-container"></span>
-                        </button>
-                        <button id="cancelman" class="u-button" data-bind="click: event.cancelManClick">取消
-                            <span class="u-button-container"></span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
 </div>

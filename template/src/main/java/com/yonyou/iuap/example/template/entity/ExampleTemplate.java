@@ -27,7 +27,6 @@ import com.yonyou.iuap.persistence.vo.BaseEntity;
 
 
 public class ExampleTemplate extends BaseEntity{
-	
 
 	private String id;
 	

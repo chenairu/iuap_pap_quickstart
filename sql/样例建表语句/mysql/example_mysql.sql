@@ -151,7 +151,7 @@ CREATE TABLE `example_template` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-/*************示例应用：导入、导出***************/
+/*************示例应用：打印***************/
 DROP TABLE IF EXISTS `example_print`;
 CREATE TABLE `example_print` (
   `id` varchar(36) COLLATE utf8_unicode_ci NOT NULL,
@@ -233,8 +233,9 @@ CREATE TABLE `example_bill` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
 
-DROP TABLE IF EXISTS `example_workorder`;
 
+/*************示例应用：流程***************/
+DROP TABLE IF EXISTS `example_workorder`;
 CREATE TABLE `example_workorder` (
   `id` varchar(64) NOT NULL COMMENT '主键ID',
   `code` varchar(20) NOT NULL COMMENT '工单编码',
@@ -255,3 +256,21 @@ CREATE TABLE `example_workorder` (
   `dr` int(11) DEFAULT NULL COMMENT '删除标志：0-可用；1-已删除',
   PRIMARY KEY (`id`)
 );
+
+
+/*************示例应用：按钮权限***************/
+DROP TABLE IF EXISTS example_article;
+CREATE TABLE example_article (
+id varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+title varchar(255) NULL ,
+content varchar(255) NULL ,
+create_user_id varchar(36) NULL ,
+create_user_name varchar(255) NULL ,
+publish_user_id varchar(255) NULL ,
+publish_user_name varchar(255) NULL ,
+create_time DATE NULL ,
+publish_time DATE NULL ,
+status varchar(255) NULL,
+PRIMARY KEY (`id`)
+);
+ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
