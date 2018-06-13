@@ -1,9 +1,11 @@
 package com.yonyou.iuap.example.contacts.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.yonyou.iuap.example.common.entity.AbsGenericEntity;
 
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Contacts extends AbsGenericEntity{
-	
 	private String peoname;
 	private String peocode;
 	private String institid;

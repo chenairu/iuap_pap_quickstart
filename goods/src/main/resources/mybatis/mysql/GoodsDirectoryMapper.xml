@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yonyou.iuap.example.goods.directory.dao.GoodsDirectoryMapper">
+
+	<select id="selectAllByPage" resultType="com.yonyou.iuap.example.goods.directory.entity.GoodsDirectory">
+		SELECT	t.id,
+				t.code,
+				t.name,
+				t.parentId,
+				t.remark,
+				t.version,
+				t.createTime,
+				t.createUser,
+				t.lastModified,
+				t.lastModified,
+				t.ts,
+				t.dr
+		FROM  example_goods_directory t
+		WHERE 1=1
+			<if test="condition != null">
+				<if test="condition.searchMap.id!=null and condition.searchMap.id!='' ">
+					and id = #{id, jdbcType=VARCHAR}
+				</if>
+			</if>		
+	</select>
+	
+	<select id="queryList" resultType="com.yonyou.iuap.example.goods.directory.entity.GoodsDirectory">
+		SELECT	t.id,
+				t.code,
+				t.name,
+				t.parentId,
+				t.remark,
+				t.level,
+				t.version,
+				t.createTime,
+				t.createUser,
+				t.lastModified,
+				t.lastModified,
+				t.ts,
+				t.dr
+		FROM  example_goods_directory t
+		WHERE 1=1
+			<if test="condition != null">
+				<if test="condition.id!=null and condition.id!=''">
+					and t.id = #{condition.id, jdbcType=VARCHAR}
+				</if>
+				<if test="condition.parentId!=null and condition.parentId!=''">
+					and t.parentId = #{condition.parentId, jdbcType=VARCHAR}
+				</if>
+			</if>
+		<if test="condition != null">
+			<if test="condition.orderDesc!=null and condition.orderKey=='level'">
+				ORDER BY t.level ASC
+			</if>
+		</if>
+	</select>
+	
+	<insert id="insert" parameterType="com.yonyou.iuap.example.goods.directory.entity.GoodsDirectory">
+		insert into example_goods_directory (
+				  id,
+				  code,
+				  name,
+				  parentId,
+				  remark,
+				  version,
+				  createTime,
+				  createUser,
+				  lastModified,
+				  lastModifyUser,
+				  ts,
+				  dr
+		)values(	#{id,jdbcType=VARCHAR},
+					#{code,jdbcType=VARCHAR},
+					#{name,jdbcType=VARCHAR},
+					#{parentId,jdbcType=VARCHAR},
+					#{remark,jdbcType=VARCHAR},
+					#{version,jdbcType=NUMERIC},
+					#{createTime,jdbcType=VARCHAR},
+					#{createUser,jdbcType=VARCHAR},
+					#{lastModified,jdbcType=VARCHAR},
+					#{lastModifyUser,jdbcType=VARCHAR},
+					#{ts,jdbcType=VARCHAR},
+					#{dr,jdbcType=DATE}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.yonyou.iuap.example.goods.directory.entity.GoodsDirectory">
+		update 	example_goods_directory
+		set		code=#{code,jdbcType=VARCHAR},
+				name=#{name,jdbcType=VARCHAR},
+				parentId=#{parentId,jdbcType=VARCHAR},
+				remark=#{remark,jdbcType=VARCHAR},
+				version=#{version,jdbcType=NUMERIC}+1,
+				lastModified=#{lastModified,jdbcType=TIMESTAMP},
+				lastModifyUser=#{lastModifyUser,jdbcType=VARCHAR}
+		where	id=#{id}
+				and version=#{version}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM example_goods_directory
+		WHERE 1=1
+			<if test="condition==null">
+				and 1=2
+			</if>
+			<if test="condition!=null">
+				<if test="condition.id!=null and condition.id!=''">
+					and id = #{condition.id}
+				</if>
+				<if test="condition.ids!=null and condition.ids.size>0">
+					and id in (
+						<foreach collection="condition.ids" item="item" separator="," open="(" close=")">
+							#{item,jdbcType=VARCHAR}
+						</foreach>
+					)
+				</if>
+			</if>
+	</delete>
+	
+</mapper>

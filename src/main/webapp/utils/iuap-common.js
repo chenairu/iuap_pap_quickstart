@@ -16,6 +16,12 @@ iuap.message = function (message) {
 
 
 
+iuap.genDataList = function (data) {
+	var datalist = [];
+	datalist.push(data);
+	return datalist;
+};
+
 
 /**
  * ajax删除数据
@@ -23,16 +29,20 @@ iuap.message = function (message) {
  * @param data	要删除的数据
  * @param succCallBack	成功回调函数
  */
-iuap.ajaxDelData = function (url, data, succCallBack) {
+iuap.ajaxDelData = function (url, data, succCallBack, errorCallBack) {
 	$.ajax({
 		url: appCtx + url,
 		type: 'POST',
 		contentType: 'application/json',
 		data: JSON.stringify(data),
 		success: function (result) {
-			if (result.state == "success") {
+			if (result.state == "success" || result.success == "success") {
 				if (succCallBack) {
-					succCallBack(result);
+					succCallBack(result.detailMsg.data);
+				}
+			} else {
+				if (errorCallBack) {
+					errorCallback(result.message);
 				}
 			}
 		}
@@ -45,16 +55,20 @@ iuap.ajaxDelData = function (url, data, succCallBack) {
  * @param data	要保存的数据
  * @param succCallBack	成功回调函数
  */
-iuap.ajaxSaveData = function (url, data, succCallBack) {
+iuap.ajaxSaveData = function (url, data, succCallBack, errorCallBack) {
 	$.ajax({
 		url: appCtx + url,
 		type: 'POST',
 		contentType: 'application/json',
 		data: JSON.stringify(data),
 		success: function (result) {
-			if (result.state == "success") {
+			if (result.state == "success" || result.success == "success") {
 				if (succCallBack) {
-					succCallBack(result);
+					succCallBack(result.detailMsg.data);
+				}
+			} else {
+				if (errorCallBack) {
+					errorCallback(result.message);
 				}
 			}
 		}
@@ -67,7 +81,7 @@ iuap.ajaxSaveData = function (url, data, succCallBack) {
  * @param data	要查询的数据
  * @param succCallBack	成功回调函数
  */
-iuap.ajaxQueryData = function (url, queryData, succCallBack) {
+iuap.ajaxQueryData = function (url, queryData, succCallBack, errorCallBack) {
 	$.ajax({
 		type: 'GET',
 		url: appCtx + url,
@@ -75,9 +89,13 @@ iuap.ajaxQueryData = function (url, queryData, succCallBack) {
 		contentType: 'application/json;charset=utf-8',
 		dataType: 'json',
 		success: function (result) {
-			if (result.state == "success") {
+			if (result.state == "success" || result.success == "success") {
 				if (succCallBack) {
-					succCallBack(result);
+					succCallBack(result.detailMsg.data);
+				}
+			} else {
+				if (errorCallBack) {
+					errorCallback(result.message);
 				}
 			}
 		}

@@ -1,7 +1,10 @@
 package com.yonyou.iuap.example.dictionary.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.yonyou.iuap.example.common.entity.AbsGenericEntity;
 
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Dictionary extends AbsGenericEntity{
 	private String id;
 

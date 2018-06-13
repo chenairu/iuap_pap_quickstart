@@ -24,7 +24,7 @@
                         </div>
                     </div>
                     <!--组织机构树-->
-                    <div class="ztree" style="overflow-y: auto" u-meta='{"id":"orgTree","data":"orgTreeData","type":"tree","idField":"institid","pidField":"parentid","nameField":"institname","setting":"treeSetting"}'>
+                    <div class="ztree" style="overflow-y: auto" u-meta='{"id":"orgTree","data":"treeData","type":"tree","idField":"institid","pidField":"parentid","nameField":"institname","setting":"treeSetting"}'>
                     </div>
                 </div>
                 <div id="dialog_content_instit" style="display:none;">
@@ -36,34 +36,34 @@
                             <div class="u-col-md-6">
                                 <div class="u-form-group width100">
                                     <label class="u-col-4">编码</label>
-                                    <input type="text" id="institcode" class="u-col-md-8" u-meta='{"type":"string","data":"orgFormData","field":"institcode"}'
+                                    <input type="text" id="institcode" class="u-col-md-8" u-meta='{"type":"string","data":"formData_org","field":"institcode"}'
                                         placeholder="请输入编码">
                                 </div>
                             </div>
                             <div class="u-col-md-6">
                                 <div class="u-form-group width100">
                                     <label class="u-col-4">组织名称</label>
-                                    <input type="text" id="institname" class="u-col-md-8" u-meta='{"type":"string","data":"orgFormData","field":"institname"}'
+                                    <input type="text" id="institname" class="u-col-md-8" u-meta='{"type":"string","data":"formData_org","field":"institname"}'
                                         placeholder="请输入组织名称">
                                 </div>
                             </div>
                             <div class="u-col-md-6">
                                 <div class="u-form-group width100">
                                     <label class="u-col-4">上级</label>
-                                    <input type="text" id="parentname" class="u-col-md-8" u-meta='{"type":"string","data":"orgFormData","field":"parentname"}'
+                                    <input type="text" id="parentname" class="u-col-md-8" u-meta='{"type":"string","data":"formData_org","field":"parentname"}'
                                         placeholder="上级" disabled="disabled">
                                 </div>
                             </div>
                             <div class="u-col-md-6">
                                 <div class="u-form-group width100" style="display:none">
                                     <label class="u-col-4">父ID</label>
-                                    <input type="text" id="parentid" class="u-col-md-8" u-meta='{"type":"string","data":"orgFormData","field":"parentid"}' placeholder="请输入父ID">
+                                    <input type="text" id="parentid" class="u-col-md-8" u-meta='{"type":"string","data":"formData_org","field":"parentid"}' placeholder="请输入父ID">
                                 </div>
                             </div>
                             <div class="u-col-md-6">
                                 <div class="u-form-group width100">
                                     <label class="u-col-md-4 control-label">名称缩写</label>
-                                    <input type="text" id="shortname" class="u-col-md-8" u-meta='{"type":"string","data":"orgFormData","field":"shortname"}'
+                                    <input type="text" id="shortname" class="u-col-md-8" u-meta='{"type":"string","data":"formData_org","field":"shortname"}'
                                         placeholder="请输入缩写">
                                 </div>
                             </div>
@@ -91,13 +91,13 @@
             <div id="book">
                 <div class="u-col-md-9">
                     <button class="u-button" data-bind="click: event.addManClick">新增人员</button>
-                    <div id="searchdiv" class="u-input-group u-has-feedback pull-right input_enter">
-                        <input type="text" class="u-form-control" id="search" placeholder="姓名/编码/邮件">
+                    <div id="searchdiv" class="u-input-group u-has-feedback pull-right input_enter" u-meta='{"id":"search_searchParam","type":"string","data":"condition","field":"search_searchParam"}'>
+                        <input type="text" class="u-form-control" id="search" name="searchParam" placeholder="姓名/编码/邮件">
                         <span class="u-form-control-feedback uf uf-search-light-2" id="searchBtn" data-bind="click: event.searchClick"></span>
                     </div>
                     <!-- 联系人表格 -->
                     <div class="main-container padding-0 contacts-container">
-                        <div type="text" class="u-table b-table width-full" u-meta='{"id":"gridaddress","type":"grid","data":"telbookdata","showNumCol":false,"rowHeight":"40px","columnWidth":"120px","onRowHover":"event.rowHoverHandel"}'
+                        <div type="text" class="u-table b-table width-full" u-meta='{"id":"gridaddress","type":"grid","data":"gridData","showNumCol":false,"rowHeight":"40px","columnWidth":"120px","onRowHover":"event.rowHoverHandel"}'
                             data-bind="event: { mouseout: event.mouseoverFun  }">
                             <div options='{"field":"peoname","title":"姓名","dataType":"String","editType":"string"}'></div>
                             <div options='{"field":"peocode","title":"员工编号","dataType":"String","editType":"string"}'></div>
@@ -107,7 +107,7 @@
                             <div options='{"field":"operate","dataType":"String","title":"操作","renderType":"event.optFun","editable":false}'></div>
                         </div>
                         <div class="aline-center">
-                            <div id='pagination' class='pagination u-pagination pagination-sm'></div>
+                            <div id='mainPagingtion' class='u-pagination pagination' u-meta='{"type":"pagination","data":"gridData","pageChange":"event.pageChange","sizeChange":"event.sizeChange"}'></div>
                         </div>
                     </div>
                 </div>
@@ -125,7 +125,7 @@
                                         <label>*</label>
                                         <label>姓名</label>
                                     </div>
-                                    <input class="u-col-md-8 " type="text" id="add_peoname" u-meta='{"type":"string","data":"telbookdatanew","field":"peoname"}'
+                                    <input class="u-col-md-8 " type="text" id="add_peoname" u-meta='{"type":"string","data":"formData_person","field":"peoname"}'
                                         placeholder="请输入姓名" />
                                 </div>
                             </div>
@@ -135,7 +135,7 @@
                                         <label>*</label>
                                         <label>员工编号</label>
                                     </div>
-                                    <input class="u-col-md-8 " type="text" id="add_peocode" u-meta='{"type":"string","data":"telbookdatanew","field":"peocode"}'
+                                    <input class="u-col-md-8 " type="text" id="add_peocode" u-meta='{"type":"string","data":"formData_person","field":"peocode"}'
                                         placeholder="请输入员工编号" />
                                 </div>
                             </div>
@@ -145,7 +145,7 @@
                                         <label>*</label>
                                         <label>手机号码</label>
                                     </div>
-                                    <input class="u-col-md-8 " type="text" id="add_worktel" u-meta='{"type":"string","data":"telbookdatanew","field":"worktel"}'
+                                    <input class="u-col-md-8 " type="text" id="add_worktel" u-meta='{"type":"string","data":"formData_person","field":"worktel"}'
                                         placeholder="请输入手机号码" />
                                 </div>
                             </div>
@@ -154,7 +154,7 @@
                                     <div class="u-col-md-4">
                                         <label>电子邮件</label>
                                     </div>
-                                    <input class="u-col-md-8 " type="text" id="add_email" u-meta='{"type":"string","data":"telbookdatanew","field":"email"}'
+                                    <input class="u-col-md-8 " type="text" id="add_email" u-meta='{"type":"string","data":"formData_person","field":"email"}'
                                         placeholder="请输入电子邮件" />
                                 </div>
                             </div>
@@ -163,7 +163,7 @@
                                     <div class="u-col-md-4">
                                         <label>所属机构</label>
                                     </div>
-                                    <input class="u-col-md-8 " type="text" id="userinstitname" placeholder="请输入所属机构" disabled="disabled" u-meta='{"type":"string","data":"telbookdatanew","field":"institname"}'
+                                    <input class="u-col-md-8 " type="text" id="userinstitname" placeholder="请输入所属机构" disabled="disabled" u-meta='{"type":"string","data":"formData_person","field":"institname"}'
                                     />
                                 </div>
                             </div>
