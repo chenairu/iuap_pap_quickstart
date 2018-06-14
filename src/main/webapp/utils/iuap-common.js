@@ -1,6 +1,7 @@
 var iuap = iuap || {};
 
 
+
 /**
  * 信息框
  * @param message	显示信息
@@ -15,7 +16,10 @@ iuap.message = function (message) {
 };
 
 
-
+/**
+ * 将对象组装在数组中
+ * @param {*} data 
+ */
 iuap.genDataList = function (data) {
 	var datalist = [];
 	datalist.push(data);
@@ -102,6 +106,38 @@ iuap.ajaxQueryData = function (url, queryData, succCallBack, errorCallBack) {
 	});
 };
 
+
+
+/**
+ * ajax调用iuap提供的第三方服务
+ * @param url	查询URL
+ * @param data	要查询的数据
+ * @param succCallBack	成功回调函数
+ */
+iuap.ajaxQueryThridService = function (url, queryData, succCallBack, errorCallBack) {
+	$.ajax({
+		type: 'GET',
+		url: url,
+		data: queryData,
+		contentType: 'application/json;charset=utf-8',
+		dataType: 'json',
+		success: function (result) {
+			if (result.state == "success" || result.success == "success") {
+				if (succCallBack) {
+					succCallBack(result.detailMsg.data);
+				}
+			} else {
+				if (errorCallBack) {
+					errorCallback(result.message);
+				}
+			}
+		}
+	});
+};
+
+
+
+
 /**
  * html转义
  * @param html	需要转义的html
@@ -126,28 +162,6 @@ iuap.htmlDecode = function (text) {
 	return output;
 };
 
-/**
- * 模板打印
- * @param templateCode	模板编码
- * @param url	取数请求
- * @param businessPk	业务主键
- */
-iuap.printTemplate = function (templateCode, url, businessPk) {
-	if (businessPk != undefined && businessPk.trim() != null) {
-		var tenantId = "tenant";//固定字符串
-		var serverUrl = appCtx + url;//取数据的url地址
-		var params = {//去后台打印数据的参数
-			'id': businessPk
-		};
-		params = encodeURIComponent(JSON.stringify(params));//URL参数部分有特殊字符，必须编码(不同的tomcat对特殊字符的处理不一样)
-		var url = '/print_service/print/preview?tenantId='
-			+ tenantId + '&printcode=' + templateCode + '&serverUrl=' + serverUrl
-			+ '&params=' + params + '&sendType=post';
-		window.open(url);
-	} else {
-		iuap.message('业务主键不能为空！');
-	}
-};
 
 /**
  * 创建导出表单对象
@@ -285,11 +299,45 @@ iuap.excelDataImp = function (mainPage, url) {
 
 
 
-iuap.showDiv=function(strDiv){
+/**
+ * jquery显示Div
+ * @param strDiv div的Id或者class，id需要携带#
+ */
+iuap.showDiv = function (strDiv) {
 	$(strDiv).show();
 }
 
-
-iuap.hideDiv=function(strDiv){
+/**
+ * jquery隐藏Div
+ * @param strDiv div的Id或者class，id需要携带#
+ */
+iuap.hideDiv = function (strDiv) {
 	$(strDiv).hide();
+}
+
+
+/**
+ * 模板打印，通过funCode,nodeKey取到打印模板
+ * @param funCode	业务功能编码
+ * @param nodeKey	打印nodeKey
+ * @param qureyDataURL iuap打印服务获取业务数据的地址
+ * @param businessPk	业务主键
+ */
+iuap.print = function (funCode, nodeKey, qureyDataURL, businessPk) {
+	var getPrintTempUrl = '/eiap-plus/appResAllocate/queryPrintTemplateAllocate?funccode=' + funCode + '&nodekey=' + nodeKey;
+	iuap.ajaxQueryThridService(getPrintTempUrl, '', function (data) {
+		var templateCode = data.res_code;
+		var tenantId = "tenant";//固定字符串
+		var serverUrl = appCtx + qureyDataURL;//取数据的url地址
+		var params = {//去后台打印数据的参数
+			'id': businessPk
+		};
+		params = encodeURIComponent(JSON.stringify(params));//URL参数部分有特殊字符，必须编码(不同的tomcat对特殊字符的处理不一样)
+		var url = '/print_service/print/preview?tenantId='
+			+ tenantId + '&printcode=' + templateCode + '&serverUrl=' + serverUrl
+			+ '&params=' + params + '&sendType=post';
+		window.open(url);
+	}, function (data) {
+		iuap.message('没有找到打印模板');
+	})
 }

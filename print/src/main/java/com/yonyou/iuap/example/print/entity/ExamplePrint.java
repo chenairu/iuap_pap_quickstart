@@ -1,10 +1,9 @@
 package com.yonyou.iuap.example.print.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.yonyou.iuap.persistence.vo.BaseEntity;
 
-/**
- * mybatis方式
- */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ExamplePrint extends BaseEntity {
 	
 	private String id;
