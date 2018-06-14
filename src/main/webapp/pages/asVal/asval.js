@@ -3,331 +3,165 @@ define(['text!./asval.html',
     "css!./asval.css",
     "../../config/sys_const.js",
     "../../utils/utils.js",
-    "../../utils/ajax.js",
-    "../../utils/tips.js",
+    "../../utils/iuap-common.js",
     "./viewModel.js"], function (template) {
-        var ctx, listRowUrl, saveRowUrl, delRowUrl, getUrl, element;
+        var listRowUrl, saveRowUrl, delRowUrl, element;
         function init(element, cookie) {
             element = element;
-            //$(element).html(template);
-            ctx = cookie.appCtx + "/exampleAsVal";
-            listRowUrl = ctx + "/list"; //列表查询URL
-            saveRowUrl = ctx + "/save"; //新增和修改URL， 有id为修改 无id为新增
-            delRowUrl = ctx + "/delete"; //刪除URL
-            getUrl = ctx + "/get",
-            window.csrfDefense();									//跨站请求伪造防御
-            viewModel.event.formDivShow(false);
             $(element).html(template);
-
+            listRowUrl = "/exampleAsVal/list"; //列表查询URL
+            saveRowUrl = "/exampleAsVal/save"; //新增和修改URL， 有id为修改 无id为新增
+            delRowUrl = "/exampleAsVal/delete"; //刪除URL
             viewModel.event.pageinit(element);
+            //撑满高度布局
+            $("#myLayout").height(document.body.scrollHeight);
         }
         viewModel.event = {
             pageinit: function (element) {
-                viewModel.app = u.createApp({
-                    el: element,
-                    model: viewModel
-                });
-                var paginationDiv = $(element).find("#pagination")[0];
-                viewModel.event.comps = new u.pagination({
-                    el: paginationDiv,
-                    jumppage: true
-                });
-                viewModel.event.comps.update({
-                    pageSize: 5
-                }); //默认每页显示5条数据
-                viewModel.event.initGridDataList();
-                viewModel.event.pageChange();
-                viewModel.event.sizeChange();
-                $(".search-enter").keydown(function (e) {
-                    if (e.keyCode == 13) {
-                        $("#user-action-search").trigger("click");
-                        u.stopviewModel.event(e);
-                    }
-                });
-            },
-            //换页
-            pageChange: function () {
-                viewModel.event.comps.on("pageChange", function (pageIndex) {
-                    viewModel.draw = pageIndex + 1;
-                    viewModel.event.initGridDataList();
-                });
-            },
-            //换每页显示数量
-            sizeChange: function (size) {
-                viewModel.event.comps.on("sizeChange", function (arg) {
-                    viewModel.pageSize = parseInt(arg);
-                    viewModel.draw = 1;
-                    viewModel.event.initGridDataList();
-                });
-            },
-            //grid初始化
-            initGridDataList: function () {
-                var jsonData = {
-                    pageIndex: viewModel.draw - 1,
-                    pageSize: viewModel.pageSize,
-                    sortField: "ORD_INDEX",
-                    sortDirection: "asc"
-                };
+				viewModel.app = u.createApp({
+					el: element,
+					model: viewModel
+				});
+				viewModel.md = document.querySelector('#u-mdlayout');
+				//清除主表格数据
+				viewModel.gridData.clear();
+				//设置表格每页面数据量
+				viewModel.gridData.pageSize(10);
+				viewModel.condition.clear();
+				viewModel.condition.createEmptyRow();
+				viewModel.condition.setRowSelect(0);
+				viewModel.event.queryData();
+			},
 
-                var searchinfo = viewModel.gridData.params;
-                for (var key in searchinfo) {
-                    if (searchinfo[key] && searchinfo[key] != null) {
-                        jsonData[key] = encodeURI(removeSpace(searchinfo[key]));
-                    }
-                }
-                $ajax(
-                    listRowUrl,
-                    jsonData,
-                    function (res) {
-                        if ((res && res.success == "success", res.detailMsg.data)) {
-                            var totalCount = res.detailMsg.data.totalElements;
-                            var totalPage = res.detailMsg.data.totalPages;
-                            viewModel.event.comps.update({
-                                totalPages: totalPage,
-                                pageSize: viewModel.pageSize,
-                                currentPage: viewModel.draw,
-                                totalCount: totalCount
-                            });
-                            viewModel.event.clearDt(viewModel.gridData);
-                            viewModel.gridData.setSimpleData(res.detailMsg.data.content, {
-                                unSelect: true
-                            });
-                        }
-                    },
-                    function () {
-                        u.messageDialog(errTips);
-                    },
-                    "get"
-                );
-            },
+			//表格分页
+			pageChange: function (index) {
+				viewModel.gridData.pageIndex(index);
+				viewModel.event.queryData();
+			},
 
-            // 新增按钮点击
-            btnAddClicked: function (rowId, s, e) {
-                var self = this;
-                viewModel.rowId = rowId;
-                if (rowId && rowId != -1) {
-                    var datatableRow = viewModel.gridData.getRowByRowId(rowId);
-                    //修改操作
-                    var currentData = datatableRow.getSimpleData();
-                    viewModel.formData.setSimpleData(currentData);
-                } else {
-                    //添加操作
-                    viewModel.formData.removeAllRows();
-                    viewModel.formData.createEmptyRow();
-                }
-                viewModel.event.formDivShow(true);
-            },
+			//当前页显示记录数
+			sizeChange: function (size) {
+				viewModel.gridData.pageSize(size);
+				viewModel.gridData.pageIndex(0);
+				viewModel.event.queryData();
+			},
 
-            //保存按钮点击
-            saveClick: function () {
-                if (!viewModel.app.compsValidate($(element).find("#form-div-body")[0])) {
-                    u.messageDialog(mustTips);
-                    return;
-                }
-                viewModel.event.addNewData();
-            },
+			//查询数据
+			queryData: function () {
+				var queryParameters = {};
+				queryParameters["pageIndex"] = viewModel.gridData.pageIndex();
+				queryParameters["pageSize"] = viewModel.gridData.pageSize();
+				// queryParameters["sortField"] = "create_time";
+				// queryParameters["sortDirection"] = "desc";
+				var searchinfo = viewModel.gridData.params;
+				for (var key in searchinfo) {
+					if (searchinfo[key] && searchinfo[key] != null) {
+						queryParameters[key] = encodeURI(removeSpace(searchinfo[key]));
+					}
+				}
+				iuap.ajaxQueryData(listRowUrl, queryParameters, function (data) {
+					if (data != null) {
+						viewModel.gridData.setSimpleData(data.content, { unSelect: true });
+						viewModel.gridData.totalPages(data.totalPages);
+						viewModel.gridData.totalRow(data.totalElements);
+					}
+				}, function (data) {
+					iuap.message(data);
+				});
+			},
 
-            //新增数据
-            addNewData: function () {
-                var data = viewModel.formData.getSimpleData()[0];
-                for (var key in data) {
-                    if (key === "operate") {
-                        delete data.operate;
-                    }
-                }
-                var jsonData = viewModel.event.genDataList(data);
-                $ajax(
-                    saveRowUrl,
-                    JSON.stringify(jsonData),
-                    function (res) {
-                        if (res && res.success == "success") {
-                            // u.showMessage({showSeconds: 1,msg:"保存成功",position:"center",msgType:"success"});
-                            viewModel.event.initGridDataList();
-                            viewModel.event.formDivShow(false);
-                        } else {
-                            u.messageDialog({
-                                msg: res.message,
-                                title: "请求错误",
-                                btnText: "确定"
-                            });
-                        }
-                    },
-                    function (params) {
-                        u.messageDialog(errTips);
-                    }
-                );
-            },
+			// 新增按钮点击
+			addBtnClicked: function () {
+				viewModel.formData.clear();
+				viewModel.formData.createEmptyRow();
+				viewModel.formData.setRowSelect(0);
+				iuap.showDiv('#form-div');
+				document.getElementById("myTitle").innerHTML = "新增记录";
+			},
 
-            //取消按钮点击
-            cancelClick: function () {
-                viewModel.event.formDivShow(false);
-            },
+			//编辑按钮点击
+			editBtnClicked: function () {
+				var currentData = viewModel.gridData.getSimpleData({ type: 'select' });
+				if (currentData != null && currentData != "") {
+					viewModel.formData.setSimpleData(currentData[0]);
+					viewModel.optType = 1;//编辑状态
+					iuap.showDiv('#form-div');
+					document.getElementById("myTitle").innerHTML = "编辑记录";
+				} else {
+					iuap.message("请选择要编辑的数据！");
+				}
+			},
 
-            //查询按钮点击
-            search: function () {
-                viewModel.gridData.clear();
-                var queryData = {};
-                $(".form-search")
-                    .find("input")
-                    .each(function () {
-                        queryData[this.name] = removeSpace(this.value);
-                    });
-                viewModel.gridData.addParams(queryData);
-                viewModel.event.initGridDataList();
-            },
-            //清空查询条件
-            cleanSearch: function () {
-                $(".form-search")
-                    .find("input")
-                    .val("");
-            },
+			// 返回按钮点击
+			backBtnClick: function () {
+				viewModel.formData.clear();
+				iuap.hideDiv('#form-div');
+			},
 
+			//保存按钮点击
+			saveClick: function () {
+				//form表单校验
+				if (!viewModel.app.compsValidate($(element).find("#addPage")[0])) {
+					u.messageDialog(mustTips);
+					return;
+				}
+				var data = viewModel.formData.getSimpleData()[0];
+				//由于后台要求传递list对象。所以做了list组装，如果后台没有则不需要组装list
+				var listData = iuap.genDataList(data);
+				iuap.ajaxSaveData(saveRowUrl, listData, function (result) {
+					viewModel.formData.clear();
+					viewModel.event.queryData();
+					iuap.hideDiv('#form-div');
+				});
+			},
 
-            //页面绑定的，判定多行删除是否可用
-            selectRow: function () {
-                let num = viewModel.gridData.selectedIndices();
-                if (num.length > 1) {
-                    $("#user-action-del")
-                        .attr("disabled", false)
-                        .removeClass("disable");
-                } else {
-                    $("#user-action-del")
-                        .attr("disabled", true)
-                        .addClass("disable");
-                }
-            },
+			//删除按钮点击
+			delRows: function (data) {
+				var currentData = viewModel.gridData.getSimpleData({ type: 'select' });
+				if (currentData != null && currentData != "") {
+					u.confirmDialog({
+						msg:
+							'<div class="pull-left col-padding u-msg-content-center" >' +
+							'<i class="fa fa-exclamation-triangle margin-r-5 fa-3x red del-icon" style="vertical-align:middle"></i>确认删除这些数据吗？</div>',
+						title: "警告",
+						onOk: function () {
+							viewModel.event.del(currentData)
+						}
+					});
+				} else {
+					iuap.message("请选择要删除的数据！");
+				}
+			},
 
-            //删除多行
-            delRows: function (data) {
-                let num = viewModel.gridData.selectedIndices();
-                if (num.length > 1) {
-                    // 获取所有选中的数据
-                    var seldatas = viewModel.gridData.getSimpleData({
-                        type: "select"
-                    });
-                    viewModel.event.del(seldatas);
-                }
-            },
-
-            //删除单行
-            delRow: function (data, index) {
-                u.confirmDialog({
-                    msg:
-                        '<div class="pull-left col-padding u-msg-content-center" >' +
-                        '<i class="fa fa-exclamation-triangle margin-r-5 fa-3x red del-icon" style="vertical-align:middle"></i>确认删除这些数据吗？</div>',
-                    title: "",
-                    onOk: function () {
-                        var seldatas = viewModel.gridData.getSimpleData({
-                            type: "current"
-                        });
-                        console.log("del:",seldatas);
-                        viewModel.event.del(seldatas);
-                    }
-                });
-            },
-
-            //真正删除逻辑
-            del: function (data) {
-                var arr = [];
-                for (var i = 0; i < data.length; i++) {
-                    arr.push({
-                        id: data[i].id,
-                        code:data[i].code
-                    });
-                }
-                $ajax(
-                    delRowUrl,
-                    JSON.stringify(arr),
-                    function (res) {
-                        if (res && res.success == "success") {
-                            viewModel.event.initGridDataList();
-                        } else {
-                            var msg = "";
-                            for (var key in res.detailMsg) {
-                                msg += res.detailMsg[key] + "<br/>";
-                            }
-                            u.messageDialog({
-                                msg: msg,
-                                title: "请求错误",
-                                btnText: "确定"
-                            });
-                        }
-                    },
-                    function (params) {
-                        u.messageDialog(errTips);
-                    }
-                );
-            },
-            //清除 datatable的数据
-            clearDt: function (dt) {
-                dt.clear();
-            },
-            showValue: function (obj) {
-                var showValue = "";
-                if (obj.value === "1") {
-                    showValue = "是";
-                } else if (obj.value === "0"){
-                    showValue = "否";
-                }
-                obj.element.innerHTML = showValue;
-            },
-
-            //code转name
-            renderName: function (obj) {
-                if (obj["value"] && obj["value"].length > 0) {
-                    var dataTableRowId = obj.row.value["$_#_@_id"];
-                    obj.element.innerHTML = "<div>" + obj["value"] + "</div>";
-                    ko.applyBindings(viewModel, obj.element);
-                }
-            },
-
-            //组装list
-            genDataList: function (data) {
-                var datalist = [];
-                datalist.push(data);
-                return datalist;
-            },
-
-            //列表行悬停（注意里面的grid_dicttype_content_tbody，这是前台grid_dicttype的扩展）
-            rowHoverHandel: function (obj) {
-                $(".editTable").hide();
-                let num = obj["rowIndex"];
-                let a = $("#dataGrid_content_tbody").find("tr")[num];
-                let ele = a.getElementsByClassName("editTable");
-                ele[0].style.display = "block";
-            },
-
-            //鼠标离开事件
-            mouseoutFunc: function () {
-                $(".editTable").hide();
-            },
-
-            //绑定grid操作行
-            optFun: function (obj) {
-                var dataTableRowId = obj.row.value["$_#_@_id"];
-                var delfun =
-                    "data-bind=click:viewModel.event.delRow.bind($data," + dataTableRowId + ")";
-                var editfun =
-                    "data-bind=click:viewModel.event.btnAddClicked.bind($data," +
-                    dataTableRowId +
-                    ")";
-                obj.element.innerHTML =
-                    '<div class="editTable" style="display:none;"><button class="u-button u-button-border" title="修改"' +
-                    editfun +
-                    ">修改</button>" +
-                    '<button class="u-button u-button-border" title="删除" ' +
-                    delfun +
-                    ">删除</button></div>";
-                ko.applyBindings(viewModel, obj.element);
-            },
-
-            formDivShow: function (flag) {
-                if (flag) {
-                    $('#form-div').show();
-                } else {
-                    $('#form-div').hide();
-                }
-            }
+			//真正删除逻辑
+			del: function (data) {
+				var arr = [];
+				for (var i = 0; i < data.length; i++) {
+					arr.push({
+						id: data[i].id
+					});
+				}
+				iuap.ajaxDelData(delRowUrl, arr, function (result) {
+					iuap.message("删除成功！");
+					viewModel.event.queryData();
+				});
+			},
+			// 搜索
+			search: function () {
+				viewModel.gridData.clear();
+				var conditions = viewModel.condition.getSimpleData();
+				if (conditions != null && conditions != "") {
+					viewModel.gridData.addParams(conditions[0]);
+				}
+				viewModel.event.queryData();
+			},
+			// 清除搜索
+			cleanSearch: function () {
+				viewModel.condition.clear();
+				viewModel.condition.createEmptyRow();
+				viewModel.condition.setRowSelect(0);
+				viewModel.gridData.addParams(null);
+			}
 
         }
 
