@@ -25,7 +25,7 @@ import com.yonyou.iuap.persistence.vo.BaseEntity;
 
 
 
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ExampleTemplate extends BaseEntity{
 
 	private String id;

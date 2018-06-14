@@ -123,7 +123,7 @@ public class ExampleTemplateController extends BaseController {
 	 */
 	@RequestMapping(value = "/excelDataImport", method = RequestMethod.POST)
 	public @ResponseBody Map<String, String> excelDataImport(
-			@RequestParam(value = "fileName", required = false) MultipartFile fileName, ModelMap model,
+			@RequestParam(value = "excelImpFile", required = false) MultipartFile fileName, ModelMap model,
 			HttpServletRequest request) throws BusinessException {
 		Map<String, String> result = new HashMap<String, String>();
 		try {

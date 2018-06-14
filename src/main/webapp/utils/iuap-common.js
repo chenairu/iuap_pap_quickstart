@@ -162,6 +162,26 @@ iuap.htmlDecode = function (text) {
 	return output;
 };
 
+/**
+ * 下载excel模板
+ * @param {*} mainPage 外层DIV对象，用来附加表单的
+ * @param {*} url 后台下载模板地址
+ */
+iuap.downloadTemple = function (mainPage, url) {
+	var form = $("<form>");   //定义一个form表单
+	form.attr('style', 'display:none');   //在form表单中添加查询参数
+	form.attr('target', '');
+	form.attr('method', 'post');
+	form.attr('action', appCtx + url);
+	mainPage.append(form);  //将form放置在web中
+	var input2 = $('<input>');
+	input2.attr('type', 'hidden');
+	input2.attr('name', 'x-xsrf-token');
+	input2.attr('value', window.x_xsrf_token);
+	form.append(input2);
+	form.submit();
+}
+
 
 /**
  * 创建导出表单对象
@@ -197,7 +217,8 @@ iuap.createExpForm = function (mainPage, url, ids) {
  * @param mainPage	界面第一层DIV对象
  * @param url	请求URL
  */
-iuap.excelDataImp = function (mainPage, url) {
+
+iuap.excelDataImp = function (mainPage, url,successCallBack) {
 	//生成上传弹出框的hmtl
 	var excelImpHtml = '<div id="excel_imp_dialog" style="display: none;">' +
 		'	<div class="u-msg-title">' +
@@ -210,7 +231,7 @@ iuap.excelDataImp = function (mainPage, url) {
 		'             		<img src="../example/static/beforeUpload.svg" id="excelUploadImg">' +
 		'         		</div>' +
 		'         		<div id="excelUploadMsg" class="uploadingMsg"></div>' +
-		'         		<button class="u-button u-button-border uploadBtn " title="选择上传文件" id="selectFileBtn">选择上传文件</button>' +
+		'         		<button class="u-button u-button-border uploadBtn " title="选择上传文件" id="selectFileBtn" onclick="document.getElementById(\'excelImpFile\').click()">选择上传文件</button>' +
 		'         		<input style="display: none" type="file" name="excelImpFile" id="excelImpFile" />' +
 		'     		</div>' +
 		'     		<div class="filenamediv" id="filenamediv2"></div>' +
@@ -234,17 +255,9 @@ iuap.excelDataImp = function (mainPage, url) {
 		hasCloseMenu: true
 	});
 
-	//绑定文件选择按钮的单击事件，使得调用文件框的文件选择
-	window.setTimeout(function () {
-		document.getElementById('selectFileBtn').addEventListener('click', function () {
-			document.getElementById('excelImpFile').click();
-		}, false);
-	}, 500);
-
 	//移除显示的文件名
 	$("#filenamediv2").html("");
 	$("#excelUploadMsg").html("").addClass("uploading").removeClass("fail").removeClass("success");
-
 	//当文件发生改变，重新获取文件名在div中显示
 	$("#excelImpFile").change(function () {
 		var file = $("#excelImpFile").val();
@@ -257,14 +270,13 @@ iuap.excelDataImp = function (mainPage, url) {
 		//显示文件上传进度条
 		$(".file-loding").show();
 		$('.file-lodedPart').width(0);
-
 		//进度条增加
 		window.loadingTimer = window.setInterval(function () {
 			var loadingpart = $('.file-lodedPart');
 			var width = loadingpart.width();
 			//宽度为360
 			if (width > 360) {
-				window.clearInterval(viewModel.loadingTimer);
+				window.clearInterval(window.loadingTimer);
 			}
 			//每次宽度增加3.6
 			loadingpart.width(width + 3.6);
@@ -276,26 +288,33 @@ iuap.excelDataImp = function (mainPage, url) {
 			//进度条显示数字
 			loadingpart.html(progress + '%');
 		}, 100);
-
 		//发起数据导入请求
 		$.ajaxFileUpload({
 			url: appCtx + url,
+			secureuri: false,
 			timeout: 30000,
 			fileElementId: 'excelImpFile',
-			dataType: 'json',//返回值
+			dataType: 'JSON',//返回值
 			success: function (data) {
+				$("#excelImpFile").remove();
+				$("#excel_imp_dialog").find(".choosefile").append('<input style="display: none" type="file" name="excelImpFile" id="excelImpFile" />');
 				window.clearInterval(window.loadingTimer);
 				md.close();
-				iuap.message('数据导入成功，请重新查询数据！');
+				if(successCallBack){
+					successCallBack();
+				}
 			},
 			error: function (XMLHttpRequest, textStatus, errorThrown) {
+				$("#excelImpFile").remove();
+				$("#excel_imp_dialog").find(".choosefile").append('<input style="display: none" type="file" name="excelImpFile" id="excelImpFile" />');
 				window.clearInterval(window.loadingTimer);
 				md.close();
-				iuap.message('数据导入失败！');
+				iuap.messge('数据导入失败！');
 			}
 		});
 	});
 };
+
 
 
 
