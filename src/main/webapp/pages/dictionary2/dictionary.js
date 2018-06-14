@@ -5,9 +5,9 @@ define(['text!./dictionary.html',
     "../../utils/utils.js",
     "../../utils/iuap-common.js",
     "./viewModel.js"],
-    function (template, cookie) {
-        var ctx, listRowUrl, saveRowUrl, delRowUrl, element;
-        function init(element, cookie) {
+    function (template) {
+        var listRowUrl, saveRowUrl, delRowUrl, element;
+        function init(element) {
             element = element;
             $(element).html(template);
             listRowUrl = "/example_dictionary/list"; //列表查询URL
