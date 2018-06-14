@@ -14,6 +14,8 @@ define(['text!./dictionary.html',
             saveRowUrl = "/example_dictionary/save"; //新增和修改URL， 有id为修改 无id为新增
             delRowUrl = "/example_dictionary/delete"; //刪除URL
             viewModel.event.pageinit(element);
+            //撑满高度布局
+            $("#myLayout").height(document.body.scrollHeight);
         }
 
         viewModel.event = {
@@ -76,7 +78,7 @@ define(['text!./dictionary.html',
                 viewModel.formData.createEmptyRow();
                 viewModel.formData.setRowSelect(0);
                 iuap.showDiv('#form-div');
-                document.getElementById("myTitle").innerHTML="新增记录";
+                document.getElementById("myTitle").innerHTML = "新增记录";
             },
 
             //编辑按钮点击
@@ -86,7 +88,7 @@ define(['text!./dictionary.html',
                     viewModel.formData.setSimpleData(currentData[0]);
                     viewModel.optType = 1;//编辑状态
                     iuap.showDiv('#form-div');
-                    document.getElementById("myTitle").innerHTML="编辑记录";
+                    document.getElementById("myTitle").innerHTML = "编辑记录";
                 } else {
                     iuap.message("请选择要编辑的数据！");
                 }
@@ -130,7 +132,7 @@ define(['text!./dictionary.html',
                     });
                 } else {
                     iuap.message("请选择要删除的数据！");
-       
+
                 }
             },
 

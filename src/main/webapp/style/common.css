@@ -139,6 +139,7 @@
     margin: 15px 0;
     height: 100%;
     overflow-x: hidden;
+    overflow-y: auto;
 }
 /* 重写 U.css 样式 */
 
