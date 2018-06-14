@@ -283,3 +283,13 @@ iuap.excelDataImp = function (mainPage, url) {
 	});
 };
 
+
+
+iuap.showDiv=function(strDiv){
+	$(strDiv).show();
+}
+
+
+iuap.hideDiv=function(strDiv){
+	$(strDiv).hide();
+}

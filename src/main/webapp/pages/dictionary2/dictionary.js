@@ -3,8 +3,6 @@ define(['text!./dictionary.html',
     'css!./dictionary.css',
     '../../config/sys_const.js',
     "../../utils/utils.js",
-    "../../utils/ajax.js",
-    "../../utils/tips.js",
     "../../utils/iuap-common.js",
     "./viewModel.js"],
     function (template, cookie) {
@@ -24,7 +22,7 @@ define(['text!./dictionary.html',
                     el: element,
                     model: viewModel
                 });
-                viewModel.md = document.querySelector('#u-mdlayout');
+
                 //清除主表格数据
                 viewModel.gridData.clear();
                 //设置表格每页面数据量
@@ -77,7 +75,7 @@ define(['text!./dictionary.html',
                 viewModel.formData.clear();
                 viewModel.formData.createEmptyRow();
                 viewModel.formData.setRowSelect(0);
-                viewModel.md['u.MDLayout'].dGo('addPage');
+                iuap.showDiv('#form-div');
                 document.getElementById("myTitle").innerHTML="新增记录";
             },
 
@@ -85,10 +83,9 @@ define(['text!./dictionary.html',
             editBtnClicked: function () {
                 var currentData = viewModel.gridData.getSimpleData({ type: 'select' });
                 if (currentData != null && currentData != "") {
-                    //编辑第一条选择数据
                     viewModel.formData.setSimpleData(currentData[0]);
                     viewModel.optType = 1;//编辑状态
-                    viewModel.md['u.MDLayout'].dGo('addPage');
+                    iuap.showDiv('#form-div');
                     document.getElementById("myTitle").innerHTML="编辑记录";
                 } else {
                     iuap.message("请选择要编辑的数据！");
@@ -98,14 +95,14 @@ define(['text!./dictionary.html',
             // 返回按钮点击
             backBtnClick: function () {
                 viewModel.formData.clear();
-                viewModel.md['u.MDLayout'].dBack();
+                iuap.hideDiv('#form-div');
             },
 
             //保存按钮点击
             saveClick: function () {
                 //form表单校验
                 if (!viewModel.app.compsValidate($(element).find("#addPage")[0])) {
-                    u.messageDialog(mustTips);
+                    iuap.message("请检查必填项");
                     return;
                 }
                 var data = viewModel.formData.getSimpleData()[0];
@@ -113,7 +110,7 @@ define(['text!./dictionary.html',
                 var listData = iuap.genDataList(data);
                 iuap.ajaxSaveData(saveRowUrl, listData, function (result) {
                     viewModel.formData.clear();
-                    viewModel.md['u.MDLayout'].dBack();
+                    iuap.hideDiv('#form-div');
                     viewModel.event.queryData();
                 });
             },
@@ -132,8 +129,8 @@ define(['text!./dictionary.html',
                         }
                     });
                 } else {
-                    // iuap.message("请选择要删除的数据！");
-                    u.messageDialog("请选择要删除的数据！");
+                    iuap.message("请选择要删除的数据！");
+       
                 }
             },
 

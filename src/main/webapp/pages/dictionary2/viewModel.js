@@ -48,10 +48,9 @@ var conditionMeta = {
 };
 
 var viewModel = {
-  md: document.querySelector('#u-mdlayout'),	
-  condition: new u.DataTable(conditionMeta),
-  gridData: new u.DataTable(meta),
-  formData: new u.DataTable(meta),
+  condition: new u.DataTable(conditionMeta),//查询条件
+  gridData: new u.DataTable(meta),  //表格数据
+  formData: new u.DataTable(meta),  //表单数据
   yesOrNo: [{name: "是", value: "是"}, {name: "否", value: "否"}]
 };
 
