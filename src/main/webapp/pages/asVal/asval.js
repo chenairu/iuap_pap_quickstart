@@ -138,7 +138,8 @@ define(['text!./asval.html',
 				var arr = [];
 				for (var i = 0; i < data.length; i++) {
 					arr.push({
-						id: data[i].id
+						id: data[i].id,
+						code:data[i].code
 					});
 				}
 				iuap.ajaxDelData(delRowUrl, arr, function (result) {
