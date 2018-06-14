@@ -49,7 +49,7 @@
             <button class="u-button" data-bind="click: event.delRows">删除</button>
         </div>
         <!-- 表格区域 -->
-        <div type="text" id="gridDiv" u-meta='{"id":"gridData","data":"gridData","type":"grid","editable":false,"editType":"default","rowHeight":"40px","multiSelect":true,"canDrag":false,"canSwap":false}'>
+        <div type="text" id="gridDiv" class="padding-3" u-meta='{"id":"gridData","data":"gridData","type":"grid","editable":false,"editType":"default","rowHeight":"40px","multiSelect":true,"canDrag":false,"canSwap":false}'>
             <div options='{"field":"code","dataType":"String","title":"编码","editType":"string","editOptions":{"validType":"string","required":true}}'></div>
             <div options='{"field":"name","dataType":"String","title":"名称","editType":"string","editOptions":{"validType":"string","required":true},"renderType":"event.renderName"}'></div>
             <div options='{"field":"sys","dataType":"String","title":"系统预置","editType":"combo","editOptions":{"datasource":"yesOrNo","type":"combo","onlySelect":true},"renderType":"event.showValue"}'></div>

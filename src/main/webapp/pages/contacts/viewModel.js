@@ -95,27 +95,21 @@ var conditionMeta = {
 
 var viewModel = {
   app: {},
-  draw: 1,
-  totalPage: 0,
-  pageSize: 5,
-  totalCount: 0,
 
-
-
+  // 查询条件
   condition: new u.DataTable(conditionMeta),
 
-  /* 树数据 */
+  /* 组织机构树数据 */
   treeData: new u.DataTable(meta),
 
-  /* 编辑框树数据 */
+  /* 组织机构表单数据 */
   formData_org: new u.DataTable(meta),
 
   /* 电话本数据 */
   gridData: new u.DataTable(metaTelbook),
 
-  /* 电话本数据 */
+  /* 电话本表单数据 */
   formData_person: new u.DataTable(metaTelbook),
-
 
   /* 树设置 */
   treeSetting: {
