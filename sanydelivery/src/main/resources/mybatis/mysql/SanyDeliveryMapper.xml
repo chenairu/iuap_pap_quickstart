@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yonyou.iuap.example.sanydelivery.dao.SanyDeliveryMapper">
+
+	<select id="selectAllByPage" resultType="com.yonyou.iuap.example.sanydelivery.entity.SanyDelivery">
+SELECT  		t.ID,
+				t.orderCode,
+				t.orderId,
+				t.orderNumber,
+				t.prodbatch,
+				t.materialCode,
+				t.materialName,
+				t.receNumber,
+				t.deliveNumber,
+				t.unit,
+				t.remark,
+				t.version,
+				t.createTime,
+				t.createUser,
+				t.lastModified,
+				t.ts,
+				t.dr FROM SANY_DELIVERY t WHERE 1=1
+			<if test="page != null">
+				<if test="page.sort!=null">
+					order by 
+					<foreach collection="page.sort" item="item" separator=" ">
+						${item.property} ${item.direction}
+					</foreach>
+				</if>
+			</if>	
+	</select>
+	
+	<insert id="insert" parameterType="com.yonyou.iuap.example.sanyrole.entity.SanyRole">
+		insert into SANY_DELIVERY (
+				  id,
+				  orderCode,
+				  orderId,
+				  orderNumber,
+				  prodbatch,
+				  materialCode,
+				  materialName,
+				  receNumber,
+				  deliveNumber,
+				  unit,
+				  remark,
+				  version,
+				  createTime,
+				  createUser,
+				  lastModified,
+				  lastModifyUser,
+				  ts,
+				  dr
+		)values(	#{id,jdbcType=VARCHAR},
+					#{orderCode,jdbcType=VARCHAR},
+					#{orderId,jdbcType=VARCHAR},
+					#{orderNumber,jdbcType=NUMERIC},
+					#{prodbatch,jdbcType=VARCHAR},
+					#{materialCode,jdbcType=VARCHAR},
+					#{materialName,jdbcType=VARCHAR},
+					#{receNumber,jdbcType=NUMERIC},
+					#{deliveNumber,jdbcType=NUMERIC},
+					#{unit,jdbcType=VARCHAR},
+					#{remark,jdbcType=VARCHAR},
+					#{version,jdbcType=NUMERIC},
+					#{createTime,jdbcType=VARCHAR},
+					#{createUser,jdbcType=VARCHAR},
+					#{lastModified,jdbcType=VARCHAR},
+					#{lastModifyUser,jdbcType=VARCHAR},
+					#{ts,jdbcType=VARCHAR},
+					#{dr,jdbcType=DATE}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.yonyou.iuap.example.sanyrole.entity.SanyRole">
+		update 	SANY_DELIVERY
+		set		
+				orderCode=#{orderCode,jdbcType=VARCHAR},
+				orderId=#{orderId,jdbcType=VARCHAR},
+				orderNumber=#{orderNumber,jdbcType=NUMERIC},
+				prodbatch=#{prodbatch,jdbcType=VARCHAR},
+				materialCode=#{materialCode,jdbcType=VARCHAR},
+				materialName=#{materialName,jdbcType=VARCHAR},
+				receNumber=#{receNumber,jdbcType=NUMERIC},
+				deliveNumber=#{deliveNumber,jdbcType=NUMERIC},
+				unit=#{unit,jdbcType=VARCHAR},
+				remark=#{remark,jdbcType=VARCHAR},
+				version=#{version,jdbcType=NUMERIC}+1,
+				lastModified=#{lastModified,jdbcType=TIMESTAMP},
+				lastModifyUser=#{lastModifyUser,jdbcType=VARCHAR}
+		where	id=#{id}
+				and version=#{version}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM SANY_DELIVERY
+		WHERE 1=1
+			<if test="condition==null">
+				and 1=2
+			</if>
+			<if test="condition!=null">
+				<if test="condition.id!=null and condition.id!=''">
+					and id = #{condition.id}
+				</if>
+				<if test="condition.ids!=null and condition.ids.size>0">
+					and id in (
+						<foreach collection="condition.ids" item="item" separator="," open="(" close=")">
+							#{item,jdbcType=VARCHAR}
+						</foreach>
+					)
+				</if>
+			</if>
+	</delete>
+	
+</mapper>

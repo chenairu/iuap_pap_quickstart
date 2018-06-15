@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yonyou.iuap.example.sanydelivery.dao.SanyDeliveryDetailMapper">
+
+	<select id="selectAllByPage" resultType="com.yonyou.iuap.example.sanydelivery.entity.SanyDeliveryDetail">
+SELECT  		
+				t.id,
+				t.arrivalDate,
+				t.deliveryCode,
+				t.deliveryDate,
+				t.consigneeAddress,
+				t.deliveryman,
+				t.ladingId,
+				t.licenseNumber,
+				t.phone,
+				t.station,
+				t.transportCompany,
+				t.transportNumber,
+				t.transportation,
+				t.voucherDate,
+				t.remark,
+				t.version,
+				t.createTime,
+				t.createUser,
+				t.lastModified,
+				t.ts,
+				t.dr FROM SANY_DELIVERYDETAIL t WHERE 1=1
+			<if test="page != null">
+				<if test="page.sort!=null">
+					order by 
+					<foreach collection="page.sort" item="item" separator=" ">
+						${item.property} ${item.direction}
+					</foreach>
+				</if>
+			</if>	
+	</select>
+	
+	<insert id="insert" parameterType="com.yonyou.iuap.example.sanydelivery.entity.SanyDeliveryDetail">
+		insert into SANY_DELIVERYDETAIL (
+				  id,
+				arrivalDate,
+				deliveryCode,
+				deliveryDate,
+				consigneeAddress,
+				deliveryman,
+				ladingId,
+				licenseNumber,
+				phone,
+				station,
+				transportCompany,
+				transportNumber,
+				transportation,
+				voucherDate,
+				
+				  remark,
+				  version,
+				  createTime,
+				  createUser,
+				  lastModified,
+				  lastModifyUser,
+				  ts,
+				  dr
+		)values(	#{id,jdbcType=VARCHAR},
+					#{arrivalDate,jdbcType=DATE},
+					#{deliveryCode,jdbcType=VARCHAR},
+					#{deliveryDate,jdbcType=DATE},
+					#{consigneeAddress,jdbcType=VARCHAR},
+					#{deliveryman,jdbcType=VARCHAR},
+					#{ladingId,jdbcType=VARCHAR},
+					#{licenseNumber,jdbcType=VARCHAR},
+					#{phone,jdbcType=VARCHAR},
+					#{station,jdbcType=VARCHAR},
+					#{transportCompany,jdbcType=VARCHAR},
+					#{transportNumber,jdbcType=VARCHAR},
+					#{transportation,jdbcType=VARCHAR},
+					#{voucherDate,jdbcType=DATE},
+					
+					#{remark,jdbcType=VARCHAR},
+					#{version,jdbcType=NUMERIC},
+					#{createTime,jdbcType=VARCHAR},
+					#{createUser,jdbcType=VARCHAR},
+					#{lastModified,jdbcType=VARCHAR},
+					#{lastModifyUser,jdbcType=VARCHAR},
+					#{ts,jdbcType=VARCHAR},
+					#{dr,jdbcType=DATE}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.yonyou.iuap.example.sanydelivery.entity.SanyDeliveryDetail">
+		update 	SANY_DELIVERYDETAIL
+		set		
+					arrivalDate=#{arrivalDate,jdbcType=DATE},
+					deliveryCode=#{deliveryCode,jdbcType=VARCHAR},
+					deliveryDate=#{deliveryDate,jdbcType=DATE},
+					consigneeAddress=#{consigneeAddress,jdbcType=VARCHAR},
+					deliveryman=#{deliveryman,jdbcType=VARCHAR},
+					ladingId=#{ladingId,jdbcType=VARCHAR},
+					licenseNumber=#{licenseNumber,jdbcType=VARCHAR},
+					phone=#{phone,jdbcType=VARCHAR},
+					station=#{station,jdbcType=VARCHAR},
+					transportCompany=#{transportCompany,jdbcType=VARCHAR},
+					transportNumber=#{transportNumber,jdbcType=VARCHAR},
+					transportation=#{transportation,jdbcType=VARCHAR},
+					voucherDate=#{voucherDate,jdbcType=DATE},
+					
+				remark=#{remark,jdbcType=VARCHAR},
+				version=#{version,jdbcType=NUMERIC}+1,
+				lastModified=#{lastModified,jdbcType=TIMESTAMP},
+				lastModifyUser=#{lastModifyUser,jdbcType=VARCHAR}
+		where	id=#{id}
+				and version=#{version}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM SANY_DELIVERYDETAIL
+		WHERE 1=1
+			<if test="condition==null">
+				and 1=2
+			</if>
+			<if test="condition!=null">
+				<if test="condition.id!=null and condition.id!=''">
+					and id = #{condition.id}
+				</if>
+				<if test="condition.ids!=null and condition.ids.size>0">
+					and id in (
+						<foreach collection="condition.ids" item="item" separator="," open="(" close=")">
+							#{item,jdbcType=VARCHAR}
+						</foreach>
+					)
+				</if>
+			</if>
+	</delete>
+	
+</mapper>
