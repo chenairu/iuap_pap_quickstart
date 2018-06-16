@@ -15,6 +15,35 @@ pjt.messge = function(messge){
 };
 
 /**
+ * 信息框
+ * @param messge	显示信息
+ */
+pjt.message = function(messge){
+	u.messageDialog({
+	    msg: messge,
+	    title: "友情提醒",
+	    btnText: "确定",
+	    width:"400px"
+	});
+};
+
+
+
+
+/**
+ * 将对象组装在数组中
+ * @param {*} data 
+ */
+pjt.genDataList = function (data) {
+	var datalist = [];
+	datalist.push(data);
+	return datalist;
+};
+
+
+
+
+/**
  * ajax删除数据
  * @param url	删除URL
  * @param data	要删除的数据
@@ -35,6 +64,34 @@ pjt.ajaxDelData = function(url,data,succCallBack) {
 		}
 	});
 };
+
+
+/**
+ * ajax删除数据
+ * @param url	删除URL
+ * @param data	要删除的数据
+ * @param succCallBack	成功回调函数
+ */
+pjt.ajaxDelData = function (url, data, succCallBack, errorCallBack) {
+	$.ajax({
+		url: appCtx + url,
+		type: 'POST',
+		contentType: 'application/json',
+		data: JSON.stringify(data),
+		success: function (result) {
+			if (result.state == "success" || result.success == "success") {
+				if (succCallBack) {
+					succCallBack(result.detailMsg.data);
+				}
+			} else {
+				if (errorCallBack) {
+					errorCallback(result.message);
+				}
+			}
+		}
+	});
+};
+
 
 /**
  * ajax保存数据
@@ -58,6 +115,36 @@ pjt.ajaxSaveData = function(url,data,succCallBack) {
 	});
 };
 
+
+/**
+ * ajax保存数据
+ * @param url	保存URL
+ * @param data	要保存的数据
+ * @param succCallBack	成功回调函数
+ */
+pjt.ajaxSaveData = function (url, data, succCallBack, errorCallBack) {
+	$.ajax({
+		url: appCtx + url,
+		type: 'POST',
+		contentType: 'application/json',
+		data: JSON.stringify(data),
+		success: function (result) {
+			if (result.state == "success" || result.success == "success") {
+				if (succCallBack) {
+					succCallBack(result.detailMsg.data);
+				}
+			} else {
+				if (errorCallBack) {
+					errorCallback(result.message);
+				}
+			}
+		}
+	});
+};
+
+
+
+
 /**
  * ajax查询数据
  * @param url	查询URL
@@ -80,6 +167,65 @@ pjt.ajaxQueryData = function(url,queryData,succCallBack){
 		}
 	});
 };
+
+
+/**
+ * ajax查询数据
+ * @param url	查询URL
+ * @param data	要查询的数据
+ * @param succCallBack	成功回调函数
+ */
+pjt.ajaxQueryData = function (url, queryData, succCallBack, errorCallBack) {
+	$.ajax({
+		type: 'GET',
+		url: appCtx + url,
+		data: queryData,
+		contentType: 'application/json;charset=utf-8',
+		dataType: 'json',
+		success: function (result) {
+			if (result.state == "success" || result.success == "success") {
+				if (succCallBack) {
+					succCallBack(result.detailMsg.data);
+				}
+			} else {
+				if (errorCallBack) {
+					errorCallback(result.message);
+				}
+			}
+		}
+	});
+};
+
+
+/**
+ * ajax调用iuap提供的第三方服务
+ * @param url	查询URL
+ * @param data	要查询的数据
+ * @param succCallBack	成功回调函数
+ */
+pjt.ajaxQueryThridService = function (url, queryData, succCallBack, errorCallBack) {
+	$.ajax({
+		type: 'GET',
+		url: url,
+		data: queryData,
+		contentType: 'application/json;charset=utf-8',
+		dataType: 'json',
+		success: function (result) {
+			if (result.state == "success" || result.success == "success") {
+				if (succCallBack) {
+					succCallBack(result.detailMsg.data);
+				}
+			} else {
+				if (errorCallBack) {
+					errorCallback(result.message);
+				}
+			}
+		}
+	});
+};
+
+
+
 
 /**
  * ajax查询数据
@@ -124,6 +270,31 @@ pjt.htmlDecode = function (text) {
     temp = null; 
     return output; 
 };
+
+
+
+/**
+ * 下载excel模板
+ * @param {*} mainPage 外层DIV对象，用来附加表单的
+ * @param {*} url 后台下载模板地址
+ */
+pjt.downloadTemple = function (mainPage, url) {
+	var form = $("<form>");   //定义一个form表单
+	form.attr('style', 'display:none');   //在form表单中添加查询参数
+	form.attr('target', '');
+	form.attr('method', 'post');
+	form.attr('action', appCtx + url);
+	mainPage.append(form);  //将form放置在web中
+	var input2 = $('<input>');
+	input2.attr('type', 'hidden');
+	input2.attr('name', 'x-xsrf-token');
+	input2.attr('value', window.x_xsrf_token);
+	form.append(input2);
+	form.submit();
+}
+
+
+
 
 /**
  * 模板打印
@@ -276,6 +447,26 @@ pjt.excelDataImp = function (mainPage,url) {
         });
     }); 
 };
+
+
+
+/**
+ * jquery显示Div
+ * @param strDiv div的Id或者class，id需要携带#
+ */
+pjt.showDiv = function (strDiv) {
+	$(strDiv).show();
+}
+
+/**
+ * jquery隐藏Div
+ * @param strDiv div的Id或者class，id需要携带#
+ */
+pjt.hideDiv = function (strDiv) {
+	$(strDiv).hide();
+}
+
+
 
 /**
  * 元素只读
@@ -651,3 +842,33 @@ pjt.loadProcess = function(viewModel,cookie,callBack){
         callBack(cookie.id);
     }
 };
+
+
+
+
+/**
+ * 模板打印，通过funCode,nodeKey取到打印模板
+ * @param funCode	业务功能编码
+ * @param nodeKey	打印nodeKey
+ * @param qureyDataURL iuap打印服务获取业务数据的地址
+ * @param businessPk	业务主键
+ */
+pjt.print = function (funCode, nodeKey, qureyDataURL, businessPk) {
+	var getPrintTempUrl = '/eiap-plus/appResAllocate/queryPrintTemplateAllocate?funccode=' + funCode + '&nodekey=' + nodeKey;
+	pjt.ajaxQueryThridService(getPrintTempUrl, '', function (data) {
+		var templateCode = data.res_code;
+		var tenantId = "tenant";//固定字符串
+		var serverUrl = appCtx + qureyDataURL;//取数据的url地址
+		var params = {//去后台打印数据的参数
+			'id': businessPk
+		};
+		params = encodeURIComponent(JSON.stringify(params));//URL参数部分有特殊字符，必须编码(不同的tomcat对特殊字符的处理不一样)
+		var url = '/print_service/print/preview?tenantId='
+			+ tenantId + '&printcode=' + templateCode + '&serverUrl=' + serverUrl
+			+ '&params=' + params + '&sendType=post';
+		window.open(url);
+	}, function (data) {
+		pjt.message('没有找到打印模板');
+	})
+}
+

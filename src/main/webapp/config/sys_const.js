@@ -1,3 +1,3 @@
 define(function() {
-    appCtx="/iuap-example";
+    appCtx="/iuap_pap_quickstart";
 });

@@ -14,6 +14,7 @@ import com.yonyou.iuap.example.print.entity.ExamplePrint;
 
 import com.yonyou.iuap.example.print.dao.ExamplePrintMapper;
 import com.yonyou.iuap.mvc.type.SearchParams;
+import com.yonyou.uap.ieop.busilog.config.annotation.BusiLogConfig;
 
 @Component
 public class ExamplePrintService {
@@ -62,6 +63,8 @@ public class ExamplePrintService {
      * void
      * @param str
      */
+    
+	@BusiLogConfig("print_delete")
     public void batchDeleteByPrimaryKey(List<ExamplePrint> list) {
     	mapper.batchDeleteByPrimaryKey(list);
     }
