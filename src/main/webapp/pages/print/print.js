@@ -3,7 +3,7 @@ define(['text!./print.html',
 	'css!./print.css',
 	'../../config/sys_const.js',
 	"../../utils/utils.js",
-	"../../utils/iuap-common.js",
+	"../../utils/pjt-common.js",
 	"./viewModel.js"], function (template) {
 		var listRowUrl, saveRowUrl, delRowUrl, getUrl, element;
 		function init(element) {
@@ -59,14 +59,14 @@ define(['text!./print.html',
 						queryParameters[key] = encodeURI(removeSpace(searchinfo[key]));
 					}
 				}
-				iuap.ajaxQueryData(listRowUrl, queryParameters, function (data) {
+				pjt.ajaxQueryData(listRowUrl, queryParameters, function (data) {
 					if (data != null) {
 						viewModel.gridData.setSimpleData(data.content, { unSelect: true });
 						viewModel.gridData.totalPages(data.totalPages);
 						viewModel.gridData.totalRow(data.totalElements);
 					}
 				}, function (data) {
-					iuap.message(data);
+					pjt.message(data);
 				});
 			},
 
@@ -75,7 +75,7 @@ define(['text!./print.html',
 				viewModel.formData.clear();
 				viewModel.formData.createEmptyRow();
 				viewModel.formData.setRowSelect(0);
-				iuap.showDiv('#form-div');
+				pjt.showDiv('#form-div');
 				document.getElementById("myTitle").innerHTML = "新增记录";
 			},
 
@@ -85,17 +85,17 @@ define(['text!./print.html',
 				if (currentData != null && currentData != "") {
 					viewModel.formData.setSimpleData(currentData[0]);
 					viewModel.optType = 1;//编辑状态
-					iuap.showDiv('#form-div');
+					pjt.showDiv('#form-div');
 					document.getElementById("myTitle").innerHTML = "编辑记录";
 				} else {
-					iuap.message("请选择要编辑的数据！");
+					pjt.message("请选择要编辑的数据！");
 				}
 			},
 
 			// 返回按钮点击
 			backBtnClick: function () {
 				viewModel.formData.clear();
-				iuap.hideDiv('#form-div');
+				pjt.hideDiv('#form-div');
 			},
 
 			//保存按钮点击
@@ -107,11 +107,11 @@ define(['text!./print.html',
 				}
 				var data = viewModel.formData.getSimpleData()[0];
 				//由于后台要求传递list对象。所以做了list组装，如果后台没有则不需要组装list
-				var listData = iuap.genDataList(data);
-				iuap.ajaxSaveData(saveRowUrl, listData, function (result) {
+				var listData = pjt.genDataList(data);
+				pjt.ajaxSaveData(saveRowUrl, listData, function (result) {
 					viewModel.formData.clear();
 					viewModel.event.queryData();
-					iuap.hideDiv('#form-div');
+					pjt.hideDiv('#form-div');
 				});
 			},
 
@@ -129,7 +129,7 @@ define(['text!./print.html',
 						}
 					});
 				} else {
-					iuap.message("请选择要删除的数据！");
+					pjt.message("请选择要删除的数据！");
 				}
 			},
 
@@ -141,8 +141,8 @@ define(['text!./print.html',
 						id: data[i].id
 					});
 				}
-				iuap.ajaxDelData(delRowUrl, arr, function (result) {
-					iuap.message("删除成功！");
+				pjt.ajaxDelData(delRowUrl, arr, function (result) {
+					pjt.message("删除成功！");
 					viewModel.event.queryData();
 				});
 			},
@@ -174,7 +174,7 @@ define(['text!./print.html',
 				var nodeKey = "test_print2";
 				var serverUrl = '/examplePrint/dataForPrint';//取数据的url地址
 				var bussPK = rows[0].getSimpleData().id;
-				iuap.print(funCode, nodeKey, serverUrl, bussPK);
+				pjt.print(funCode, nodeKey, serverUrl, bussPK);
 			}
 		}
 		return {

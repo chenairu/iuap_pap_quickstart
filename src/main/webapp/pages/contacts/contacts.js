@@ -3,7 +3,7 @@ define(["text!./contacts.html",
     "css!./contacts.css",
     "../../config/sys_const.js",
     "../sever.js",
-    "../../utils/iuap-common.js",
+    "../../utils/pjt-common.js",
     "./viewModel.js",
 ], function (html) {
     var element;
@@ -51,7 +51,7 @@ define(["text!./contacts.html",
 
         //加载组织机构树
         loadTree: function () {
-            iuap.ajaxQueryData(treeListUrl, '', function (data) {
+            pjt.ajaxQueryData(treeListUrl, '', function (data) {
                 if (data != null) {
                     viewModel.treeData.removeAllRows();
                     viewModel.treeData.clear();
@@ -61,7 +61,7 @@ define(["text!./contacts.html",
                     $("#orgTree")[0]["u-meta"].tree.expandAll(true);
                 }
             }, function (data) {
-                iuap.message(data);
+                pjt.message(data);
             });
         },
         /* 获得树节点的所有子节点 */
@@ -115,7 +115,7 @@ define(["text!./contacts.html",
                 });
                 $('.u-msg-dialog').css('width', '800px')
             } else {
-                iuap.message("请选择要编辑的数据！");
+                pjt.message("请选择要编辑的数据！");
             }
         },
         // 保存组织机构点击
@@ -124,8 +124,8 @@ define(["text!./contacts.html",
                 return;
             }
             var data = viewModel.formData_org.getSimpleData()[0];
-            var listData = iuap.genDataList(data);
-            iuap.ajaxSaveData(treeSaveUrl, listData, function (result) {
+            var listData = pjt.genDataList(data);
+            pjt.ajaxSaveData(treeSaveUrl, listData, function (result) {
                 viewModel.formData_org.clear();
                 viewModel.event.loadTree();
                 md.close();
@@ -150,14 +150,14 @@ define(["text!./contacts.html",
                     }
                 });
             } else {
-                iuap.message("请选择要删除的数据！");
+                pjt.message("请选择要删除的数据！");
             }
         },
         //删除组织机构
         deleteTree: function (data) {
-            var datalist = iuap.genDataList(data);
-            iuap.ajaxDelData(treeDelUrl, datalist, function (result) {
-                iuap.message("删除成功！");
+            var datalist = pjt.genDataList(data);
+            pjt.ajaxDelData(treeDelUrl, datalist, function (result) {
+                pjt.message("删除成功！");
                 viewModel.event.loadTree();
             });
         },
@@ -187,7 +187,7 @@ define(["text!./contacts.html",
             var dtVal = viewModel.treeData.getValue("institname");
             infoDiv.innerHTML = dtVal;
 
-            iuap.ajaxQueryData(tableListUrl, queryParameters, function (data) {
+            pjt.ajaxQueryData(tableListUrl, queryParameters, function (data) {
                 if (data != null) {
                     viewModel.gridData.removeAllRows();
                     viewModel.gridData.setSimpleData(data.content, { unSelect: true });
@@ -195,7 +195,7 @@ define(["text!./contacts.html",
                     viewModel.gridData.totalRow(data.totalElements);
                 }
             }, function (data) {
-                iuap.message(data);
+                pjt.message(data);
             });
         },
 
@@ -212,12 +212,12 @@ define(["text!./contacts.html",
         },
         //删除人员
         delMan: function (data) {
-            var datalist = iuap.genDataList(data);
-            iuap.ajaxDelData(tableDelUrl, datalist, function (result) {
-                iuap.message("删除成功！");
+            var datalist = pjt.genDataList(data);
+            pjt.ajaxDelData(tableDelUrl, datalist, function (result) {
+                pjt.message("删除成功！");
                 viewModel.event.loadTelbook(treeid);
             }, function (data) {
-                iuap.message(data);
+                pjt.message(data);
             });
         },
 
@@ -241,7 +241,7 @@ define(["text!./contacts.html",
                 });
                 $('.u-msg-dialog').css('width', '800px');
             } else {
-                iuap.message("请选择部门！");
+                pjt.message("请选择部门！");
             }
         },
 
@@ -262,7 +262,7 @@ define(["text!./contacts.html",
                 });
                 $('.u-msg-dialog').css('width', '800px');
             } else {
-                iuap.message("请选择要编辑的数据！");
+                pjt.message("请选择要编辑的数据！");
             }
         },
         delManClick: function (rowId) {
@@ -283,7 +283,7 @@ define(["text!./contacts.html",
                     }
                 });
             } else {
-                iuap.message("请选择要删除的数据！");
+                pjt.message("请选择要删除的数据！");
             }
         },
         saveManClick: function () {
@@ -291,8 +291,8 @@ define(["text!./contacts.html",
                 return;
             }
             var data = viewModel.formData_person.getSimpleData()[0];
-            var listData = iuap.genDataList(data);
-            iuap.ajaxSaveData(tableSaveUrl, listData, function (result) {
+            var listData = pjt.genDataList(data);
+            pjt.ajaxSaveData(tableSaveUrl, listData, function (result) {
                 viewModel.formData_person.clear();
                 viewModel.event.loadTelbook(treeid);
                 md.close();
