@@ -64,7 +64,6 @@ public class ExamplePrintService {
      * @param str
      */
     
-	@BusiLogConfig("print_delete")
     public void batchDeleteByPrimaryKey(List<ExamplePrint> list) {
     	mapper.batchDeleteByPrimaryKey(list);
     }
