@@ -164,6 +164,8 @@ define(["text!./contacts.html",
 
         //载入表格数据
         loadTelbook: function (instit) {
+            viewModel.gridData.removeAllRows();
+            viewModel.gridData.clear();
             var queryParameters = {};
             queryParameters["pageIndex"] = viewModel.gridData.pageIndex();
             queryParameters["pageSize"] = viewModel.gridData.pageSize();
