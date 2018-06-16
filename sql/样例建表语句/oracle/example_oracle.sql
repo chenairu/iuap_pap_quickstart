@@ -346,6 +346,11 @@ ALTER TABLE example_article ADD PRIMARY KEY (id);
 
 
 
+
+
+-- ----------------------------
+-- 导入导出示例表
+-- ----------------------------
 create table example_template(
 id VARCHAR2(36) NOT NULL ,
 code VARCHAR2(50) NULL,
@@ -353,7 +358,16 @@ name VARCHAR2(50) NULL,
 remark VARCHAR2(50) NULL
 );
 ALTER TABLE example_template ADD PRIMARY KEY (id);
+COMMENT ON COLUMN example_template.id IS '主键';
+COMMENT ON COLUMN example_template.code IS '编码';
+COMMENT ON COLUMN example_template.name IS '名称';
+COMMENT ON COLUMN example_template.remark IS '备注';
 
+
+
+-- ----------------------------
+-- 打印示例表
+-- ----------------------------
 create table example_print(
 id VARCHAR2(36) NOT NULL ,
 code VARCHAR2(50) NULL,
@@ -361,14 +375,24 @@ name VARCHAR2(50) NULL,
 remark VARCHAR2(50) NULL
 );
 ALTER TABLE example_print ADD PRIMARY KEY (id);
+COMMENT ON COLUMN example_print.id IS '主键';
+COMMENT ON COLUMN example_print.code IS '编码';
+COMMENT ON COLUMN example_print.name IS '名称';
+COMMENT ON COLUMN example_print.remark IS '备注';
 
+
+-- ----------------------------
+-- 附件示例表
+-- ----------------------------
 create table example_attachment(
 id VARCHAR2(36) NOT NULL ,
 code VARCHAR2(50) NULL,
-name VARCHAR2(50) NULL,
+name VARCHAR2(50) NULL
 );
 ALTER TABLE example_attachment ADD PRIMARY KEY (id);
-
+COMMENT ON COLUMN example_attachment.id IS '主键';
+COMMENT ON COLUMN example_attachment.code IS '编码';
+COMMENT ON COLUMN example_attachment.name IS '名称';
 
 
 
