@@ -3,7 +3,7 @@
 -- ----------------------------
 -- Table structure for example_contacts
 -- ----------------------------
--- DROP TABLE example_contacts;
+DROP TABLE example_contacts;
 CREATE TABLE example_contacts (
 id NCHAR(36) NOT NULL ,
 peocode VARCHAR2(100) NOT NULL ,
@@ -29,7 +29,7 @@ dr NUMBER(11) NULL
 -- ----------------------------
 -- Table structure for example_dictionary
 -- ----------------------------
--- DROP TABLE example_dictionary;
+DROP TABLE example_dictionary;
 CREATE TABLE example_dictionary (
 id VARCHAR2(36) NOT NULL ,
 code VARCHAR2(50) NULL ,
@@ -49,7 +49,7 @@ remark VARCHAR2(50) NULL
 -- ----------------------------
 -- Table structure for example_goods
 -- ----------------------------
--- DROP TABLE example_goods;
+DROP TABLE example_goods;
 CREATE TABLE example_goods (
 id VARCHAR2(64) NOT NULL ,
 goodsCode VARCHAR2(20) NOT NULL ,
@@ -94,7 +94,7 @@ COMMENT ON COLUMN example_goods.dr IS '删除标志：0-可用；1-已删除';
 -- ----------------------------
 -- Table structure for example_order_bill
 -- ----------------------------
--- DROP TABLE example_order_bill;
+DROP TABLE example_order_bill;
 CREATE TABLE example_order_bill (
 id NCHAR(36) NOT NULL ,
 orderCode VARCHAR2(50) NULL ,
@@ -146,7 +146,7 @@ COMMENT ON COLUMN example_order_bill.dr IS '删除标志：0-未删除；1-已�
 -- ----------------------------
 -- Table structure for example_order_detail
 -- ----------------------------
--- DROP TABLE example_order_detail;
+DROP TABLE example_order_detail;
 CREATE TABLE example_order_detail (
 id NCHAR(36) NOT NULL ,
 orderId NCHAR(36) NULL ,
@@ -184,7 +184,7 @@ COMMENT ON COLUMN example_order_detail.dr IS '删除标志：0-未删除；1-已
 -- ----------------------------
 -- Table structure for example_organization
 -- ----------------------------
--- DROP TABLE example_organization;
+DROP TABLE example_organization;
 CREATE TABLE example_organization (
 institid NCHAR(36) NOT NULL ,
 instit_code VARCHAR2(200) NOT NULL ,
@@ -235,6 +235,7 @@ ALTER TABLE example_order_detail ADD PRIMARY KEY (id);
 -- ----------------------------
 ALTER TABLE example_organization ADD PRIMARY KEY (institid);
 
+DROP TABLE example_equip;
 CREATE TABLE example_equip (
 id VARCHAR2(36) NOT NULL ,
 code VARCHAR2(255) NULL ,
@@ -254,6 +255,7 @@ tenant_id VARCHAR2(36) NULL
 );
 ALTER TABLE example_equip ADD PRIMARY KEY (id);
 
+DROP TABLE example_bill;
 CREATE TABLE example_bill (
 id VARCHAR2(36) NOT NULL ,
 code VARCHAR2(255) NULL ,
@@ -295,6 +297,7 @@ COMMENT ON COLUMN example_bill.update_user_name IS '更新人';
 COMMENT ON COLUMN example_bill.update_time IS '更新时间';
 COMMENT ON COLUMN example_bill.version IS '版本';
 
+DROP TABLE example_customer;
 CREATE TABLE example_customer (
 id VARCHAR2(36) NOT NULL ,
 customer_code VARCHAR2(255) NULL ,
@@ -312,6 +315,7 @@ COMMENT ON COLUMN example_customer.city IS '城市';
 COMMENT ON COLUMN example_customer.corpSize IS '企业规模';
 COMMENT ON COLUMN example_customer.status IS '状态';
 
+DROP TABLE example_as_val;
 CREATE TABLE example_as_val (
 id VARCHAR2(36) NOT NULL ,
 pid VARCHAR2(36) NOT NULL ,
@@ -330,6 +334,7 @@ COMMENT ON COLUMN example_as_val.ord_index IS '顺序';
 COMMENT ON COLUMN example_as_val.lstdate IS '最后更新时间';
 COMMENT ON COLUMN example_as_val.is_system IS '是否系统预置';
 
+DROP TABLE example_article;
 CREATE TABLE example_article (
 id VARCHAR2(255) NULL ,
 title VARCHAR2(255) NULL ,
@@ -351,6 +356,7 @@ ALTER TABLE example_article ADD PRIMARY KEY (id);
 -- ----------------------------
 -- 导入导出示例表
 -- ----------------------------
+DROP TABLE example_template;
 create table example_template(
 id VARCHAR2(36) NOT NULL ,
 code VARCHAR2(50) NULL,
@@ -368,6 +374,7 @@ COMMENT ON COLUMN example_template.remark IS '备注';
 -- ----------------------------
 -- 打印示例表
 -- ----------------------------
+DROP TABLE example_print;
 create table example_print(
 id VARCHAR2(36) NOT NULL ,
 code VARCHAR2(50) NULL,
@@ -384,6 +391,7 @@ COMMENT ON COLUMN example_print.remark IS '备注';
 -- ----------------------------
 -- 附件示例表
 -- ----------------------------
+DROP TABLE example_attachment;
 create table example_attachment(
 id VARCHAR2(36) NOT NULL ,
 code VARCHAR2(50) NULL,
@@ -396,59 +404,4 @@ COMMENT ON COLUMN example_attachment.name IS '名称';
 
 
 
-CREATE TABLE EX_NOTICE
-(
-    PK_NOTICE                      VARCHAR2(64) NOT NULL,
-    NOTICE_CODE                    VARCHAR2(30),
-    NOTICE_NAME                    VARCHAR2(100),
-    DSP_DEPT                       VARCHAR2(64),
-    DSP_DATE                       DATE,
-    NOTICE_CONTENT                 VARCHAR2(4000),
-    EMERGENCY                      NUMBER,
-    DR                             NUMBER,
-    TS                             DATE,
-    VERSION                        NUMBER,
-    LAST_MODIFIED                  DATE,
-    LAST_MODIFY_USER               VARCHAR2(64),
-    CREATE_TIME                    DATE,
-    CREATE_USER                    VARCHAR2(64),
-    PROCESS_DEFINITION_KEY         VARCHAR2(100),
-    PROCESS_STATUS                 VARCHAR2(100)
-)
-/
-ALTER TABLE EX_NOTICE
-    ADD(PRIMARY KEY (PK_NOTICE) USING INDEX)
-/
-COMMENT ON COLUMN EX_NOTICE.PK_NOTICE IS '主键'
-/
-COMMENT ON COLUMN EX_NOTICE.NOTICE_CODE IS '通知编码'
-/
-COMMENT ON COLUMN EX_NOTICE.NOTICE_NAME IS '通知名称'
-/
-COMMENT ON COLUMN EX_NOTICE.DSP_DEPT IS '发文部门'
-/
-COMMENT ON COLUMN EX_NOTICE.DSP_DATE IS '发文时间'
-/
-COMMENT ON COLUMN EX_NOTICE.NOTICE_CONTENT IS '通知内容'
-/
-COMMENT ON COLUMN EX_NOTICE.EMERGENCY IS '紧急状态'
-/
-COMMENT ON COLUMN EX_NOTICE.DR IS '是否删除'
-/
-COMMENT ON COLUMN EX_NOTICE.TS IS '更新时间'
-/
-COMMENT ON COLUMN EX_NOTICE.VERSION IS '版本号'
-/
-COMMENT ON COLUMN EX_NOTICE.LAST_MODIFIED IS '最后修改时间'
-/
-COMMENT ON COLUMN EX_NOTICE.LAST_MODIFY_USER IS '最后修改人'
-/
-COMMENT ON COLUMN EX_NOTICE.CREATE_TIME IS '创建时间'
-/
-COMMENT ON COLUMN EX_NOTICE.CREATE_USER IS '创建人'
-/
-COMMENT ON COLUMN EX_NOTICE.PROCESS_DEFINITION_KEY IS '流程定义KEY'
-/
-COMMENT ON COLUMN EX_NOTICE.PROCESS_STATUS IS '流程状态'
-/
 

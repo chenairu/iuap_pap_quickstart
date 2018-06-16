@@ -5,12 +5,12 @@
  * 创建日期 : 2018年6月12日
  */
 
-package com.yonyou.iuap.example.base.business.filesystem.service;
+package com.yonyou.iuap.example.base.filesystem.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
-import com.yonyou.iuap.example.base.business.filesystem.entity.PubFileSystem;
+import com.yonyou.iuap.example.base.filesystem.entity.PubFileSystem;
 import com.yonyou.iuap.mvc.type.SearchParams;
 
 /**

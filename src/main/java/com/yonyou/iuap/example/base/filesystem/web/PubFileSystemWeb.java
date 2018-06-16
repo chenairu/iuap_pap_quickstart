@@ -5,7 +5,7 @@
  * 创建日期 : 2018年6月12日
  */
 
-package com.yonyou.iuap.example.base.business.filesystem.web;
+package com.yonyou.iuap.example.base.filesystem.web;
 
 import java.util.Map;
 
@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.yonyou.iuap.example.base.business.filesystem.entity.PubFileSystem;
-import com.yonyou.iuap.example.base.business.filesystem.service.PubFileSystemService;
+import com.yonyou.iuap.example.base.filesystem.entity.PubFileSystem;
+import com.yonyou.iuap.example.base.filesystem.service.PubFileSystemService;
 import com.yonyou.iuap.example.base.common.constant.SysConstant;
 import com.yonyou.iuap.example.base.utils.result.ResultUtil;
 import com.yonyou.iuap.mvc.type.SearchParams;

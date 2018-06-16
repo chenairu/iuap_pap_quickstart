@@ -3,6 +3,10 @@ package com.yonyou.iuap.example.asval.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ExampleAsVal implements Serializable {
 
     private String id;

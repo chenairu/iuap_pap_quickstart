@@ -5,16 +5,16 @@
  * 创建日期 : 2018年6月12日
  */
 
-package com.yonyou.iuap.example.base.business.filesystem.service.impl;
+package com.yonyou.iuap.example.base.filesystem.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import com.yonyou.iuap.example.base.business.filesystem.dao.PubFileSystemMapper;
-import com.yonyou.iuap.example.base.business.filesystem.entity.PubFileSystem;
-import com.yonyou.iuap.example.base.business.filesystem.service.PubFileSystemService;
+import com.yonyou.iuap.example.base.filesystem.dao.PubFileSystemMapper;
+import com.yonyou.iuap.example.base.filesystem.entity.PubFileSystem;
+import com.yonyou.iuap.example.base.filesystem.service.PubFileSystemService;
 import com.yonyou.iuap.mvc.type.SearchParams;
 
 /**

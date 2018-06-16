@@ -5,14 +5,14 @@
  * 创建日期 : 2018年6月12日
  */
 
-package com.yonyou.iuap.example.base.business.filesystem.dao;
+package com.yonyou.iuap.example.base.filesystem.dao;
 
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.PageRequest;
 
-import com.yonyou.iuap.example.base.business.filesystem.entity.PubFileSystem;
+import com.yonyou.iuap.example.base.filesystem.entity.PubFileSystem;
 import com.yonyou.iuap.mybatis.type.PageResult;
 import com.yonyou.iuap.persistence.mybatis.anotation.MyBatisRepository;
 

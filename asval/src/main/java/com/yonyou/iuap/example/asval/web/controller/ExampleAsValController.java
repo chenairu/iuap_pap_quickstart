@@ -10,7 +10,8 @@ import com.yonyou.iuap.example.asval.service.ExampleAsValService;
 import com.yonyou.iuap.example.asval.validator.ExampleAsValValidator;
 import com.yonyou.iuap.mvc.type.SearchParams;
 import com.yonyou.iuap.persistence.vo.pub.util.StringUtil;
-import com.yonyou.uap.wb.process.org.OrganizationBrief;
+import com.yonyou.uap.wb.entity.org.Organization;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,11 +71,15 @@ public class ExampleAsValController extends BaseController {
         return result;
     }
 
-    private List<OrganizationBrief> transformTOBriefEntity(List<ExampleAsVal> asValList){
-        List<OrganizationBrief> results = new ArrayList<>();
+    private List<Organization> transformTOBriefEntity(List<ExampleAsVal> asValList){
+        List<Organization> results = new ArrayList<>();
         if(!CollectionUtils.isEmpty(asValList)){
             for (ExampleAsVal entity:asValList){
-                results.add(new OrganizationBrief(entity.getId(),entity.getName(),entity.getValue()));
+            	Organization organization =new Organization();
+            	organization.setCode(entity.getCode());
+            	organization.setName(entity.getName());
+            	organization.setId(entity.getId());
+                results.add(organization);
             }
         }
 

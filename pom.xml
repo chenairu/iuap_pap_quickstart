@@ -2,9 +2,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.yonyou.iuap</groupId>
+        <groupId>com.yonyou.iuap.pap</groupId>
         <artifactId>eiap-plus-parent</artifactId>
-        <version>3.6.0-SNAPSHOT</version>
+        <version>3.5.1-RELEASE</version>
     </parent>
 
     <artifactId>iuap_pap_quickstart</artifactId>
@@ -22,8 +22,8 @@
         </dependency>
  -->        
         <dependency>
-            <groupId>com.yonyou.iuap</groupId>
-            <artifactId>eiap-plus-common</artifactId>
+              <groupId>com.yonyou.iuap.pap</groupId>
+  			<artifactId>eiap-plus-common</artifactId>
             <version>${module.version}</version>
         </dependency>
 
@@ -262,27 +262,9 @@
         <!-- Swagger2 -->
 
         <dependency>
-            <groupId>com.yonyou.iuap.pap.workbench</groupId>
-            <artifactId>workbench-model</artifactId>
-            <version>${module.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.yonyou.iuap.portal</groupId>
-                    <artifactId>portal</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.yonyou.iuap.pap.passwordpolicy</groupId>
-                    <artifactId>iuap-passwordpolicy</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.yonyou.iuap.pap.authrbac</groupId>
-                    <artifactId>iuap-authrbac-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.yonyou.iuap.pap</groupId>
-                    <artifactId>iweb_app_fe</artifactId>
-                </exclusion>
-            </exclusions>
+              <groupId>com.yonyou.iuap.pap.workbench</groupId>
+  <artifactId>workbench-sdk</artifactId>
+  <version>3.5.1-RELEASE</version>
         </dependency>
         <dependency>
             <groupId>com.yonyou.iuap.pap.authrbac</groupId>

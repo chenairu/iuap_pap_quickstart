@@ -5,7 +5,7 @@
  * 创建日期 : 2018年6月12日
  */
 
-package com.yonyou.iuap.example.base.business.filesystem.entity;
+package com.yonyou.iuap.example.base.filesystem.entity;
 
 import java.io.Serializable;
 
