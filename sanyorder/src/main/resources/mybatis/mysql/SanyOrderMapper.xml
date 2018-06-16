@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yonyou.iuap.example.sanyorder.dao.SanyOrderMapper">
+
+	<select id="selectAllByPage" resultType="com.yonyou.iuap.example.sanyorder.entity.SanyOrder">
+SELECT  t.ID,
+				t.ORDERCODE,
+				t.ORDERNAME,
+				t.SUPPLIER,
+				t.supplierName,
+				t.type,
+				t.purchasing,
+				t.purchasingGroup,
+				t.voucherDate,
+				CASE WHEN t.type='0' THEN '投诉工单' WHEN t.type='1' THEN '对账工单' ELSE '已办结' END AS type_name,
+				t.APPROVALSTATE,
+				CASE WHEN t.APPROVALSTATE='0' THEN '未提交' WHEN t.APPROVALSTATE='1' THEN '已提交' END AS approvalState_name,		
+				t.CONFIRMSTATE,
+				CASE WHEN t.CONFIRMSTATE='0' THEN '未确认' WHEN t.CONFIRMSTATE='1' THEN '已确认' WHEN t.CONFIRMSTATE='2' THEN '拒绝' END AS confirmState_name,
+				t.CLOSESTATE,
+				CASE WHEN t.CLOSESTATE='0' THEN '未关闭' WHEN t.CLOSESTATE='1' THEN '已关闭' END AS closeState_name,
+				t.remark,
+				t.version,
+				t.createTime,
+				t.createUser,
+				t.lastModified,
+				t.ts,
+				t.dr FROM SANY_ORDER t WHERE 1=1
+			<if test="condition != null">
+				<if test="condition.searchMap.code!=null and condition.searchMap.code!='' ">
+					and t.ORDERCODE like CONCAT(CONCAT('%', ${condition.searchMap.orderCode}),'%')
+				</if>
+				<if test="condition.searchMap.supplierName!=null and condition.searchMap.supplierName!='' ">
+					and t.supplierName like CONCAT(CONCAT('%', ${condition.searchMap.supplierName}),'%')
+				</if>
+				<if test="condition.searchMap.voucherDate!=null and condition.searchMap.voucherDate!='' ">
+					and t.voucherDate between to_date(${condition.searchMap.startTime},'yyyy-mm-dd hh24:mi:ss') and to_date(${condition.searchMap.endTime},'yyyy-mm-dd hh24:mi:ss')
+				</if>
+				<if test="condition.searchMap.type!=null and condition.searchMap.type!='' ">
+					and t.type = ${condition.searchMap.type}
+				</if>
+				<if test="condition.searchMap.approvalState!=null and condition.searchMap.approvalState!='' ">
+					and t.APPROVALSTATE = ${condition.searchMap.APPROVALSTATE}
+				</if>
+				<if test="condition.searchMap.confirmState!=null and condition.searchMap.confirmState!='' ">
+					and t.CONFIRMSTATE = ${condition.searchMap.CONFIRMSTATE}
+				</if>
+				<if test="condition.searchMap.closeState!=null and condition.searchMap.closeState!='' ">
+					and t.CLOSESTATE = ${condition.searchMap.CLOSESTATE}
+				</if>
+			</if>		
+			<if test="page != null">
+				<if test="page.sort!=null">
+					order by 
+					<foreach collection="page.sort" item="item" separator=" ">
+						${item.property} ${item.direction}
+					</foreach>
+				</if>
+			</if>	
+	</select>
+	
+	<insert id="insert" parameterType="com.yonyou.iuap.example.sanyrole.entity.SanyRole">
+		insert into SANY_ORDER (
+				 ID,
+				ORDERCODE,
+				ORDERNAME,
+				SUPPLIER,
+				supplierName,
+				type,
+				purchasing,
+				purchasingGroup,
+				voucherDate,
+				APPROVALSTATE,
+				CONFIRMSTATE,
+				CLOSESTATE,
+				remark,
+				version,
+				createTime,
+				createUser,
+				lastModified,
+				lastModifyUser,
+				ts,
+				dr 
+		)values(	#{id,jdbcType=VARCHAR},
+						#{orderCode,jdbcType=VARCHAR},
+						#{orderName,jdbcType=VARCHAR},
+						#{supplier,jdbcType=VARCHAR},
+						#{supplierName,jdbcType=VARCHAR},
+						#{type,jdbcType=NUMERIC},
+						#{purchasing,jdbcType=VARCHAR},
+						#{purchasingGroup,jdbcType=VARCHAR},
+						#{voucherDate,jdbcType=DATE},
+						#{approvalState,jdbcType=NUMERIC},
+						#{confirmState,jdbcType=NUMERIC},
+						#{closeState,jdbcType=NUMERIC},
+					#{remark,jdbcType=VARCHAR},
+					#{version,jdbcType=NUMERIC},
+					#{createTime,jdbcType=VARCHAR},
+					#{createUser,jdbcType=VARCHAR},
+					#{lastModified,jdbcType=VARCHAR},
+					#{lastModifyUser,jdbcType=VARCHAR},
+					#{ts,jdbcType=VARCHAR},
+					#{dr,jdbcType=DATE}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.yonyou.iuap.example.sanyrole.entity.SanyRole">
+		update 	SANY_ORDER
+		set		
+				ORDERCODE=#{orderCode,jdbcType=VARCHAR},
+				ORDERNAME=#{orderName,jdbcType=VARCHAR},
+				SUPPLIER=#{supplier,jdbcType=VARCHAR},
+				supplierName=#{supplierName,jdbcType=VARCHAR},
+				type=#{type,jdbcType=NUMERIC},
+				purchasing=#{purchasing,jdbcType=VARCHAR},
+				purchasingGroup=#{purchasingGroup,jdbcType=VARCHAR},
+				voucherDate=#{voucherDate,jdbcType=DATE},
+				APPROVALSTATE=#{approvalState,jdbcType=NUMERIC},
+				CONFIRMSTATE=#{confirmState,jdbcType=NUMERIC},
+				CLOSESTATE=#{closeState,jdbcType=NUMERIC},
+				remark=#{remark,jdbcType=VARCHAR},
+				version=#{version,jdbcType=NUMERIC}+1,
+				lastModified=#{lastModified,jdbcType=TIMESTAMP},
+				lastModifyUser=#{lastModifyUser,jdbcType=VARCHAR}
+		where	id=#{id}
+				and version=#{version}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM SANY_ORDER
+		WHERE 1=1
+			<if test="condition==null">
+				and 1=2
+			</if>
+			<if test="condition!=null">
+				<if test="condition.id!=null and condition.id!=''">
+					and id = #{condition.id}
+				</if>
+				<if test="condition.ids!=null and condition.ids.size>0">
+					and id in (
+						<foreach collection="condition.ids" item="item" separator="," open="(" close=")">
+							#{item,jdbcType=VARCHAR}
+						</foreach>
+					)
+				</if>
+			</if>
+	</delete>
+	
+</mapper>

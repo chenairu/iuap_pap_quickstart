@@ -1,0 +1,224 @@
+<div class="u-mdlayout" id="u-mdlayout">
+	<!-- 标题区域 -->
+    <div class="aline-center b-margin">
+        <h4>通知公告</h4>
+    </div>
+    
+    <!-- 搜索区域begin -->
+    <div class="u-container-fluid" style="background-color:#f5f5f5">
+        <div class="u-row">
+            <div class="u-col-md-12">
+                <div class="u-widget-fluid">
+                    <div class="u-widget-heading" id="collapse">
+                        <h3 class="u-widget-title">查询与筛选
+                            <a class="u-link u-widget-more">
+                                <i class="icon uf uf-2arrow-down" id="icon"></i>
+                            </a>
+                    </div>
+                    <div class="u-widget-body" id="collapse-body" style="display:none;">
+                        <div class="u-row">
+                            <div class="u-col-12 u-col-sm-12 b-margin">
+				                <div class="u-col-3">
+				                    <div class="u-col-3 aline-right">通知名称</div>
+				                    <div class="u-col-9" u-meta='{"id":"search_noticeName","type":"string","data":"condition","field":"search_noticeName"}'>
+				                        <input class="u-form-control search-enter" name="noticeName" autocomplete="off" />
+				                    </div>
+				                </div>
+				                <div class="u-col-3">
+				                    <div class="u-col-3 aline-right">发文单位</div>
+				                    <!--参照需要把u-meta写在input的外层，否则会出现无法弹出参照界面-->
+		                            <div class="u-col-9" 
+		                            	u-meta='{"id":"search_dspDept","type":"uiRefer","data":"condition","field":"search_dspDept","onlySelect":true,"display":"search_dspDept"}'>
+		                                <input type="text" class="u-form-control" placeholder="" autocomplete="off" />
+		                                <span class="u-form-control-feedback fa fa-list-ul refer"></span>
+		                            </div>
+				                </div>
+				                <div class="u-col-3">
+				                    <div class="u-col-3 aline-right">发文时间</div>
+				                    <!--时间选择需要把u-meta写在input的外层，否则会出现无法获取到时间-->
+		                            <div class="u-col-md-9 u-datepicker" 
+		                            	u-meta='{"id":"search_dspDate","type":"u-datetime","data":"condition","field":"search_dspDate","format":"YYYY-MM-DD"}'>
+		                                <input type="text" class="u-form-control" id="dspDate" placeholder="" autocomplete="off"/>
+		                            </div>
+				                </div>
+				                <div class="u-col-3">
+				                    <div class="u-col-3 aline-right">紧急状态</div>
+				                    <div class="u-col-9 u-combo">
+			                            <div class="u-input-group ">
+			                                <div u-meta='{"id":"search_emergency","type":"u-combobox","data":"condition","field":"search_emergency","datasource":"status"}'>
+			                                    <!--autocomplete="off"防止input出现缓存，点击以后有上次输入的值-->
+			                                    <input class="u-form-control" autocomplete="off"/>
+			                                    <span class="u-form-control-feedback uf uf-arrow-down" data-role="combo-button"></span>
+			                                </div>
+			                            </div>
+			                        </div>
+				                </div>
+				                <div class="u-col-12 b-margin">
+					               <div class="aline-center">
+				                        <button class="u-button" data-bind="click: event.search">查询</button>
+				                        <button class="u-button" data-bind="click: event.cleanSearch">清空</button>
+					               </div>
+					            </div>
+				            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <!-- 表格区域（按钮、表格、分页）begin  -->
+    <div class="u-mdlayout-detail width-full">
+        <div class="u-mdlayout-page u-navlayout-fixed-header" id="list">
+            <div id="dicttype_list_button_2" class="b-margin">
+                <div class="b-edit">
+                    <button class="u-button" id="addData" data-bind="click: event.addData">增加</button>
+		            <button class="u-button" id="editData" data-bind="click: event.editData">编辑</button>
+		            <button class="u-button" id="readData" data-bind="click: event.readData">查阅</button>
+		            <button class="u-button" id="delData" data-bind="click: event.delData">删除</button>
+		            <button class="u-button" id="printData" data-bind="click: event.printData">打印</button>
+		            
+                    <button class="u-button u-menu-button" id="menu-impData">
+                        <span>导入</span>
+                        <span class="margin-left-10"> <i class="uf uf-arrow-down"></i> </span>
+                    </button>
+                    <ul class="u-menu" for="menu-impData">
+                        <li class="u-menu-item" data-bind="click: event.downloadExcelTpl">模板下载</li>
+                        <li class="u-menu-item" data-bind="click: event.impData">数据导入</li>
+                    </ul>
+        
+		            <button class="u-button" id="expData" data-bind="click: event.expData">导出</button>
+                </div>
+            </div>
+            <div class="u-mdlayout-page-section">
+                <div type="text" id="mainGrid" u-meta='{"id":"mainGrid","data":"mainGridData","type":"grid","editable":false,"editType":"default","rowHeight":"40px","multiSelect":true,"canDrag":false,"canSwap":false}'>
+                    <div options='{"field":"noticeCode","dataType":"String","title":"通知编号","editType":"string","editOptions":{"validType":"string","required":true}}'></div>
+                    <div options='{"field":"noticeName","dataType":"String","title":"通知名称","editType":"string","editOptions":{"validType":"string","required":true},"renderType":"event.renderName"}'></div>
+                    <div options='{"field":"dspDept","dataType":"String","title":"发文部门","renderType":"ncReferRender","editType":"ncReferEditType","showField":"dspDeptName","editOptions":{"validType":"string"}}'></div>
+                    <div options='{"field":"emergency","dataType":"String","title":"紧急程度","editType":"combo","editOptions":{"datasource":"status","type":"combo","onlySelect":true},"renderType":"event.statusGrid"}'></div>
+                    <div options='{"field":"dspDate","dataType":"date","title":"下发时间","editType":"date","renderType":"dateRender","format":"YYYY-MM-DD"}'></div>
+                    <div options='{"field":"createUser","dataType":"String","title":"创建人","renderType":"ncReferRender","editType":"ncReferEditType","showField":"createUserName","editOptions":{"validType":"string"}}'></div>
+                    <div options='{"field":"createTime","dataType":"date","title":"创建时间","editType":"date","renderType":"dateRender","format":"YYYY-MM-DD"}'></div>
+                </div>
+				<div id='mainPagingtion' class='u-pagination pagination' u-meta='{"type":"pagination","data":"mainGridData","pageChange":"event.pageChange","sizeChange":"event.sizeChange"}'></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 表单区域 -->
+    <div id="form-div" style="display:none;">
+        <div id="form-div-header">
+            <div class="u-row" id="btnGroupInlayer">
+                <div class="u-col-md-4 aline-let paddingL30 ">
+                    <button type="button " class="goback" data-bind="click:event.closeInfo">
+                        <i class="uf uf-arrow-left"></i>返回</button>
+                </div>
+                <div class="u-col-md-4 aline-center">
+                    <h4 id="myTitle">通知公告详情</h4>
+                </div>
+                <div class="u-col-md-4 aline-right paddingR30 ">
+                    <button id="saveBtn" type="button" class="u-button" data-bind="click:event.saveOrUpdateRow">保存</button>
+                    <button id="editorBtn" type="button" class="u-button" data-bind="click:event.saveOrUpdateRow">编辑</button>
+                    <button class="u-button u-menu-button" id="menu-flowOpe">
+                        <span class="margin-left-15">流程</span>
+                        <span> <i class="uf uf-arrow-down"></i> </span>
+                    </button>
+					<ul class="u-menu" for="menu-flowOpe">
+                        <li class="u-menu-item" data-bind="click: event.submitFlow">流程提交</li>
+                        <li class="u-menu-item">流程撤销</li>
+                        <li class="u-menu-item">流程终止</li>
+                        <li class="u-menu-item">流程删除</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="form-div-body" id="form-div-body">
+            <div class="u-row margin-top-30">
+                <div class="u-col-3">
+                	<div class="u-form-group">
+                      	<label class="u-col-md-3 u-form-label">通知编号:</label>
+                        <div class="u-col-md-9">
+                            <input type="text" class="u-form-control" id="noticeCode" placeholder=""
+                            u-meta='{"id":"noticeCode","type":"string","data":"infoData","field":"noticeCode"}'>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="u-col-3">
+                  <div class="u-form-group">
+                    <label class="u-col-md-3 u-form-label">通知名称:</label>
+                    <div class="u-col-md-9">
+                        <input type="text" class="u-form-control" id="noticeName" placeholder="" 
+                        u-meta='{"id":"noticeName","type":"string","data":"infoData","field":"noticeName"}'>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="u-col-3">
+                  <div class="u-form-group">
+                    <label class="u-col-md-3 u-form-label">发文单位:</label>
+                    <!--参照需要把u-meta写在input的外层，否则会出现无法弹出参照界面-->
+                    <div class="u-col-md-9" 
+                    	u-meta='{"id":"dspDept","type":"uiRefer","data":"infoData","field":"dspDept","onlySelect":true,"display":"dspDeptName"}'>
+                        <input type="text" class="u-form-control" id="dspDept" placeholder="" autocomplete="off">
+                        <span class="u-form-control-feedback fa fa-list-ul refer"></span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="u-col-3">
+                  <div class="u-form-group">
+                    <label class="u-col-md-3 u-form-label">发文时间:</label>
+                    <!--时间选择需要把u-meta写在input的外层，否则会出现无法获取到时间-->
+                    <div class="u-col-md-9 u-datepicker" 
+                    	u-meta='{"id":"dspDate","type":"u-datetime","data":"infoData","field":"dspDate","format":"YYYY-MM-DD"}'>
+                        <input type="text" class="u-form-control" id="dspDate" placeholder="" >
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="u-col-3">
+                  <div class="u-form-group">
+                    <label class="u-col-md-3 u-form-label">紧急状态:</label>
+                    <!--combo必须使用三层div包裹,html代码如下，一定要全部拷贝，否则会出现样式和用户体验问题-->
+                    <div class="u-col-md-9 u-combo">
+                        <div class="u-input-group ">
+                            <div u-meta='{"id":"emergency","type":"u-combobox","data":"infoData","field":"emergency","datasource":"status"}'>
+                                <input class="u-form-control" />
+                                <span class="u-form-control-feedback uf uf-arrow-down" data-role="combo-button"></span>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+          </div>
+   	 		
+   	 		<div class="u-row margin-top-30">
+				<div class="u-tabs u-tabs-pill">
+                        <div class="u-tabs__tab-bar">
+                            <a href="#tab-pills-panel-1" class="u-tabs__tab is-active"><i class="uf uf-home"></i>通知内容</a>
+                            <a href="#tab-pills-panel-2" class="u-tabs__tab"><i class="uf uf-home"></i>通知附件</a>
+                        </div>
+                        <!--通知内容开始-->
+                        <div class="u-tabs__panel is-active" id="tab-pills-panel-1">
+                        	<div class="u-widget aline-center" >
+								<script id="informContent" type="text/plain" style="height:400px;"></script>
+							</div>
+                        </div>
+                        <!--通知内容结束-->
+                        
+                        <!--附件管理开始-->
+		                <div class="u-tabs__panel" id="tab-pills-panel-2">
+		                	
+		                </div>
+		                <!--附件管理结束-->
+                </div>
+			</div>
+											
+   	 	</div>
+    </div>
+    
+    
+</div>
+

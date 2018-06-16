@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yonyou.iuap.example.sanysupplier.dao.SanySupplierMapper">
+
+	<select id="selectAllByPage" resultType="com.yonyou.iuap.example.sanysupplier.entity.SanySupplier">
+SELECT  t.ID,
+				t.suppliername,t.firmnature,t.unisocialcode,
+t.contactname,t.phonenum,t.email,t.identifycode,
+t.engname,t.componyurl,t.companyphone,t.establishtime,
+t.country, t.province,t.city,t.addressdetail,
+t.entrepresent,t.totalemplyee,
+t.amount,t.regmeasure,t.fixedassets,t.fixedmeasure,
+t.trancur,t.annualsales,t.annualmeasure,
+t.supplycategory,t.mainproduct,
+t.agency,t.brand,
+t.totalfunds,t.totalmeasure,
+t.agengcyqualify,
+t.maincustomer,t.secmaincus,t.thirdmaincus,
+t.banktype,t.bankpro,t.bankcity,
+t.bankname,t.bankconnum,
+t.accountnum,t.accountname,
+t.detection,t.businesslicense,
+				
+				t.remark,
+				t.version,
+				t.createTime,
+				t.createUser,
+				t.lastModified,
+				t.ts,
+				t.dr FROM SANY_SUPPLIER t WHERE 1=1
+			<if test="page != null">
+				<if test="page.sort!=null">
+					order by 
+					<foreach collection="page.sort" item="item" separator=" ">
+						${item.property} ${item.direction}
+					</foreach>
+				</if>
+			</if>	
+	</select>
+	
+	<insert id="insert" parameterType="com.yonyou.iuap.example.sanysupplier.entity.SanySupplier">
+		insert into SANY_SUPPLIER (
+				  id,
+				  suppliername,firmnature,unisocialcode,
+contactname,phonenum,email,identifycode,
+engname,componyurl,companyphone,establishtime,
+country, province,city,addressdetail,
+entrepresent,totalemplyee,
+amount,regmeasure,fixedassets,fixedmeasure,
+trancur,annualsales,annualmeasure,
+supplycategory,mainproduct,
+agency,brand,
+totalfunds,totalmeasure,
+agengcyqualify,
+maincustomer,secmaincus,thirdmaincus,
+banktype,bankpro,bankcity,
+bankname,bankconnum,
+accountnum,accountname,
+detection,businesslicense,
+
+				  remark,
+				  version,
+				  createTime,
+				  createUser,
+				  lastModified,
+				  lastModifyUser,
+				  ts,
+				  dr
+		)values(	#{id,jdbcType=VARCHAR},
+					#{suppliername,jdbcType=VARCHAR},
+					#{firmnature,jdbcType=VARCHAR},
+					#{unisocialcode,jdbcType=VARCHAR},
+#{contactname,jdbcType=VARCHAR},
+#{phonenum,jdbcType=VARCHAR},
+#{email,jdbcType=VARCHAR},
+#{identifycode,jdbcType=VARCHAR},
+#{engname,jdbcType=VARCHAR},
+#{componyurl,jdbcType=VARCHAR},
+#{companyphone,jdbcType=VARCHAR},
+#{establishtime,jdbcType=DATE},
+#{country,jdbcType=VARCHAR},
+#{province,jdbcType=VARCHAR},
+#{city,jdbcType=VARCHAR},
+#{addressdetail,jdbcType=VARCHAR},
+#{entrepresent,jdbcType=VARCHAR},
+#{totalemplyee,jdbcType=VARCHAR},
+#{amount,jdbcType=VARCHAR},
+#{regmeasure,jdbcType=VARCHAR},
+#{fixedassets,jdbcType=VARCHAR},
+#{fixedmeasure,jdbcType=VARCHAR},
+#{trancur,jdbcType=VARCHAR},
+#{annualsales,jdbcType=VARCHAR},
+#{annualmeasure,jdbcType=VARCHAR},
+#{supplycategory,jdbcType=VARCHAR},
+#{mainproduct,jdbcType=VARCHAR},
+#{agency,jdbcType=VARCHAR},
+#{brand,jdbcType=VARCHAR},
+#{totalfunds,jdbcType=VARCHAR},
+#{totalmeasure,jdbcType=VARCHAR},
+#{agengcyqualify,jdbcType=VARCHAR},
+#{maincustomer,jdbcType=VARCHAR},
+#{secmaincus,jdbcType=VARCHAR},
+#{thirdmaincus,jdbcType=VARCHAR},
+#{banktype,jdbcType=VARCHAR},
+#{bankpro,jdbcType=VARCHAR},
+#{bankcity,jdbcType=VARCHAR},
+#{bankname,jdbcType=VARCHAR},
+#{bankconnum,jdbcType=VARCHAR},
+#{accountnum,jdbcType=VARCHAR},
+#{accountname,jdbcType=VARCHAR},
+#{detection,jdbcType=VARCHAR},
+#{businesslicense,jdbcType=VARCHAR},
+
+					#{remark,jdbcType=VARCHAR},
+					#{version,jdbcType=NUMERIC},
+					#{createTime,jdbcType=VARCHAR},
+					#{createUser,jdbcType=VARCHAR},
+					#{lastModified,jdbcType=VARCHAR},
+					#{lastModifyUser,jdbcType=VARCHAR},
+					#{ts,jdbcType=VARCHAR},
+					#{dr,jdbcType=DATE}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.yonyou.iuap.example.sanysupplier.entity.SanySupplier">
+		update 	SANY_SUPPLIER
+		set		
+					suppliername=#{suppliername,jdbcType=VARCHAR},
+					firmnature=#{firmnature,jdbcType=VARCHAR},
+					unisocialcode=#{unisocialcode,jdbcType=VARCHAR},
+contactname=#{contactname,jdbcType=VARCHAR},
+phonenum=#{phonenum,jdbcType=VARCHAR},
+email=#{email,jdbcType=VARCHAR},
+identifycode=#{identifycode,jdbcType=VARCHAR},
+engname=#{engname,jdbcType=VARCHAR},
+componyurl=#{componyurl,jdbcType=VARCHAR},
+companyphone=#{companyphone,jdbcType=VARCHAR},
+establishtime=#{establishtime,jdbcType=DATE},
+country=#{country,jdbcType=VARCHAR},
+province=#{province,jdbcType=VARCHAR},
+city=#{city,jdbcType=VARCHAR},
+addressdetail=#{addressdetail,jdbcType=VARCHAR},
+entrepresent=#{entrepresent,jdbcType=VARCHAR},
+totalemplyee=#{totalemplyee,jdbcType=VARCHAR},
+amount=#{amount,jdbcType=VARCHAR},
+regmeasure=#{regmeasure,jdbcType=VARCHAR},
+fixedassets=#{fixedassets,jdbcType=VARCHAR},
+fixedmeasure=#{fixedmeasure,jdbcType=VARCHAR},
+trancur=#{trancur,jdbcType=VARCHAR},
+annualsales=#{annualsales,jdbcType=VARCHAR},
+annualmeasure=#{annualmeasure,jdbcType=VARCHAR},
+supplycategory=#{supplycategory,jdbcType=VARCHAR},
+mainproduct=#{mainproduct,jdbcType=VARCHAR},
+agency=#{agency,jdbcType=VARCHAR},
+brand=#{brand,jdbcType=VARCHAR},
+totalfunds=#{totalfunds,jdbcType=VARCHAR},
+totalmeasure=#{totalmeasure,jdbcType=VARCHAR},
+agengcyqualify=#{agengcyqualify,jdbcType=VARCHAR},
+maincustomer=#{maincustomer,jdbcType=VARCHAR},
+secmaincus=#{secmaincus,jdbcType=VARCHAR},
+thirdmaincus=#{thirdmaincus,jdbcType=VARCHAR},
+banktype=#{banktype,jdbcType=VARCHAR},
+bankpro=#{bankpro,jdbcType=VARCHAR},
+bankcity=#{bankcity,jdbcType=VARCHAR},
+bankname=#{bankname,jdbcType=VARCHAR},
+bankconnum=#{bankconnum,jdbcType=VARCHAR},
+accountnum=#{accountnum,jdbcType=VARCHAR},
+accountname=#{accountname,jdbcType=VARCHAR},
+detection=#{detection,jdbcType=VARCHAR},
+businesslicense=#{businesslicense,jdbcType=VARCHAR},
+				
+				remark=#{remark,jdbcType=VARCHAR},
+				version=#{version,jdbcType=NUMERIC}+1,
+				lastModified=#{lastModified,jdbcType=TIMESTAMP},
+				lastModifyUser=#{lastModifyUser,jdbcType=VARCHAR}
+		where	id=#{id}
+				and version=#{version}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM SANY_SUPPLIER
+		WHERE 1=1
+			<if test="condition==null">
+				and 1=2
+			</if>
+			<if test="condition!=null">
+				<if test="condition.id!=null and condition.id!=''">
+					and id = #{condition.id}
+				</if>
+				<if test="condition.ids!=null and condition.ids.size>0">
+					and id in (
+						<foreach collection="condition.ids" item="item" separator="," open="(" close=")">
+							#{item,jdbcType=VARCHAR}
+						</foreach>
+					)
+				</if>
+			</if>
+	</delete>
+	
+</mapper>

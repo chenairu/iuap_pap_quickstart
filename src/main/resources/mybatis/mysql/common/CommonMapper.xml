@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yonyou.iuap.example.base.common.dao.CommonMapper">
+	<!--
+		此处用到动态调用表名和字段名
+		#{} 解析为一个 JDBC 预编译语句（prepared statement）的参数标记符。
+		${} 仅仅为一个纯碎的 string 替换，在动态 SQL 解析阶段将会进行变量替换
+	-->
+	<update id="updateProcessToBusinessTable" parameterType="com.yonyou.iuap.example.base.common.entity.ProcessEntity">
+		update ${businessTable}
+		set process_definition_key = #{processDefinitionKey},
+		process_status = #{processStatus}
+		where ${businessPkFiled} = #{businessPk}
+	</update>
+	
+</mapper>

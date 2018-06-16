@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yonyou.iuap.example.base.business.notice.dao.ExNoticeMapper">
+	<sql id="fieldList">
+		pk_notice,notice_code,notice_name,dsp_dept,dsp_date,notice_content,emergency,
+		dr,ts,version,last_modified,last_modify_user,create_time,create_user
+	</sql>
+	
+	<resultMap id="BaseResultMap" type="com.yonyou.iuap.example.base.business.notice.entity.ExNotice">
+		<id column="pk_notice" property="pkNotice" />
+		<result column="notice_code" property="noticeCode" />
+		<result column="notice_name" property="noticeName" />
+		<result column="dsp_dept" property="dspDept" />
+		<result column="dsp_dept_name" property="dspDeptName" />
+		<result column="dsp_date" property="dspDate" />
+		<result column="notice_content" property="noticeContent" />
+		<result column="emergency" property="emergency" />
+		<result column="dr" property="dr" />
+		<result column="ts" property="ts" />
+		<result column="version" property="version" />
+		<result column="last_modified" property="lastModified" />
+		<result column="last_modify_user" property="lastModifyUser" />
+		<result column="create_time" property="createTime" />
+		<result column="create_user" property="createUser" />
+		<result column="create_user_name" property="createUserName" />
+		<result column="last_modify_user_name" property="lastModifyUserName" />
+	</resultMap>
+	
+	<select id="selectAllByPage" resultMap="BaseResultMap" resultType="java.util.List">
+		select
+		<include refid="fieldList" />
+		,(select name from org_organization where ex_notice.dsp_dept = org_organization.id) dsp_dept_name
+		,(select name from app_user where app_user.id = ex_notice.create_user) create_user_name
+		,(select name from app_user where app_user.id = ex_notice.last_modify_user) last_modify_user_name
+		from ex_notice where dr=0
+        <if test="search != null">
+            <if test="search.noticeName!=null and search.noticeName!='' ">
+                and notice_name like CONCAT(CONCAT('%', #{search.noticeName}),'%')
+            </if>
+            <if test="search.dspDept!=null and search.dspDept!='' ">
+                and dsp_dept like CONCAT(CONCAT('%', #{search.dspDept}),'%')
+            </if>
+            <if test="search.dspDate!=null and search.dspDate!='' ">
+                and dsp_date = #{search.dspDate}
+            </if>
+            <if test="search.emergency!=null and search.emergency!='' ">
+                and emergency = #{search.emergency}
+            </if>
+        </if>
+        
+        order by create_time desc
+	</select>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="fieldList" />
+		,(select name from org_organization where ex_notice.dsp_dept = org_organization.id) dsp_dept_name
+		from ex_notice
+		where dr=0 and pk_notice = #{pkNotice}
+	</select>
+	
+	<select id="selectByPrimaryKeys" resultMap="BaseResultMap" parameterType="java.util.List">
+		SELECT
+		<include refid="fieldList" />
+		,(select name from org_organization where ex_notice.dsp_dept = org_organization.id) dsp_dept_name
+		from ex_notice where 
+		dr=0 and pk_notice in
+		<foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+			#{item,jdbcType=VARCHAR}
+		</foreach>
+	</select>
+	
+	<select id="selectByPrimaryKeysExists" resultType="java.lang.String" parameterType="java.util.List">
+		SELECT
+		pk_notice
+		from ex_notice where 
+		dr=0 and pk_notice in
+		<foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+			#{item,jdbcType=VARCHAR}
+		</foreach>
+	</select>
+	
+	<insert id="insert" parameterType="com.yonyou.iuap.example.base.business.notice.entity.ExNotice">
+	    insert into ex_notice (<include refid="fieldList" />)
+	    values (#{pkNotice},#{noticeCode},#{noticeName},#{dspDept},#{dspDate},#{noticeContent},#{emergency},
+	    #{dr},#{ts},#{version},#{lastModified},#{lastModifyUser},#{createTime},#{createUser})
+	</insert>
+	
+	<update id="update" parameterType="com.yonyou.iuap.example.base.business.notice.entity.ExNotice">
+		update ex_notice
+		set notice_code = #{noticeCode},
+		notice_name = #{noticeName},
+		dsp_dept = #{dspDept},
+		dsp_date = #{dspDate},
+		notice_content = #{noticeContent},
+		emergency = #{emergency},
+		ts = #{ts},
+		version = #{version},
+		last_modified = #{lastModified},
+		last_modify_user = #{lastModifyUser}
+		where pk_notice = #{pkNotice}
+	</update>
+	
+	<delete id="delete" parameterType="java.lang.String">
+		update ex_notice
+		set dr = 1
+		where pk_notice = #{pkNotice}
+	</delete>
+	
+</mapper>
