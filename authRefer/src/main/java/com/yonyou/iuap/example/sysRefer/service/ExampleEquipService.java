@@ -8,6 +8,8 @@ import com.yonyou.iuap.example.sysRefer.entity.ExampleEquip;
 import com.yonyou.iuap.mvc.type.SearchParams;
 import com.yonyou.uap.ieop.security.entity.DataPermission;
 import com.yonyou.uap.ieop.security.sdk.AuthRbacClient;
+
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -36,15 +38,29 @@ public class ExampleEquipService {
         return exampleEquipMapper.findByCode(code);
     }
 
-    public void save(ExampleEquip exampleEquip){
-        if(exampleEquip.getId() == null){
-            String id = UUID.randomUUID().toString();
-            exampleEquip.setId(id);
-            exampleEquip.setTenantId("tenant");
-            exampleEquipMapper.insert(exampleEquip);
-        }else {
-            exampleEquipMapper.updateByPrimaryKey(exampleEquip);
-        }
+    public void save(List<ExampleEquip> exampleEquips){
+    	List<ExampleEquip> addList = new ArrayList<>();
+    	List<ExampleEquip> updateList = new ArrayList<>();
+    	for(ExampleEquip exampleEquip :exampleEquips){
+    		
+    		if(exampleEquip.getId() == null){
+                String id = UUID.randomUUID().toString();
+                exampleEquip.setId(id);
+                exampleEquip.setTenantId("tenant");
+                addList.add(exampleEquip);
+            }else {
+                updateList.add(exampleEquip);
+            }
+    	}
+    	
+    	if(CollectionUtils.isNotEmpty(addList)){
+    		exampleEquipMapper.batchInsert(addList);
+    	}
+    	if(CollectionUtils.isNotEmpty(updateList)){
+    		exampleEquipMapper.batchUpdate(updateList);
+    	}
+    	
+        
     }
 
     public void delete(List<ExampleEquip> exampleEquips){
@@ -55,7 +71,7 @@ public class ExampleEquipService {
         }
     }
 
-
+   
     /**
      * 构造数据权限SQL
      * @return

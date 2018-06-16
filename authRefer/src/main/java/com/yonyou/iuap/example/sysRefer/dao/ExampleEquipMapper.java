@@ -16,6 +16,9 @@ public interface ExampleEquipMapper {
     int insert(ExampleEquip record);
 
     int insertSelective(ExampleEquip record);
+    
+    int batchInsert(List<ExampleEquip> exampleEquips);
+    int batchUpdate(List<ExampleEquip> exampleEquips);
 
     ExampleEquip selectByPrimaryKey(String id);
 
