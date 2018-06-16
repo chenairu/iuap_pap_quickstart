@@ -274,3 +274,25 @@ status varchar(255) NULL,
 PRIMARY KEY (`id`)
 );
 ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*************示例应用：通知公告***************/
+DROP TABLE IF EXISTS `ex_notice`;
+CREATE TABLE `ex_notice`  (
+  `pk_notice` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `notice_code` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '通知编码',
+  `notice_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '通知名称',
+  `dsp_dept` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `dsp_date` datetime(0) NULL DEFAULT NULL COMMENT '发文时间',
+  `notice_content` varchar(4000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '通知内容',
+  `emergency` int(11) NULL DEFAULT NULL,
+  `dr` int(11) NULL DEFAULT NULL COMMENT '是否删除',
+  `ts` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+  `version` int(11) NULL DEFAULT NULL COMMENT '版本号',
+  `last_modified` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+  `last_modify_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '最后修改人',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `create_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
+  `process_definition_key` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '流程定义KEY',
+  `process_status` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '流程状态',
+  PRIMARY KEY (`pk_notice`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '通知公告' ROW_FORMAT = Compact;
