@@ -209,7 +209,43 @@
       tenant_id = #{tenantId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+<insert id="batchInsert" parameterType="java.util.List">
+        insert into example_equip(id, code, name, org_id, org_name, dept_id, dept_name, create_user_id, create_user_name, 
+    update_user_id, update_user_name, create_time, update_time, version, tenant_id)
 
+        <foreach collection="list" item="item" index="index" separator="union" open="(" close=")">
+            select
+            #{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{orgId,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, #{deptId,jdbcType=VARCHAR}, 
+      #{deptName,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, 
+      #{updateUserId,jdbcType=VARCHAR}, #{updateUserName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER}, #{tenantId,jdbcType=VARCHAR}
+            from dual
+        </foreach>
+    </insert>
+
+    <update id="batchUpdate" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            update example_equip
+            <set>
+                code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      org_id = #{orgId,jdbcType=VARCHAR},
+      org_name = #{orgName,jdbcType=VARCHAR},
+      dept_id = #{deptId,jdbcType=VARCHAR},
+      dept_name = #{deptName,jdbcType=VARCHAR},
+      create_user_id = #{createUserId,jdbcType=VARCHAR},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      update_user_id = #{updateUserId,jdbcType=VARCHAR},
+      update_user_name = #{updateUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      version = #{version,jdbcType=INTEGER},
+      tenant_id = #{tenantId,jdbcType=VARCHAR}
+            </set>
+            where id = #{item.id,jdbcType=VARCHAR}
+        </foreach>
+    </update>
   <select id="selectAllByPage" resultMap="BaseResultMap"
           resultType="java.util.List">
     SELECT

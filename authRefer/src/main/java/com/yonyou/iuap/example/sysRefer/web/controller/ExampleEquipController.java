@@ -35,8 +35,8 @@ public class ExampleEquipController extends BaseController {
     }
 
     @RequestMapping(value={"/save"},method = RequestMethod.POST)
-    public Object insert(@RequestBody ExampleEquip exampleEquip){
-        exampleEquipService.save(exampleEquip);
+    public Object insert(@RequestBody List<ExampleEquip> exampleEquips){
+        exampleEquipService.save(exampleEquips);
         return buildSuccess();
     }
 
