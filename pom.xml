@@ -14,13 +14,13 @@
     <url>http://maven.apache.org</url>
 
     <dependencies>
-
+<!-- 
         <dependency>
             <groupId>com.yonyou.iuap.baseservice</groupId>
 			<artifactId>iuap-pap-baseservice-controller</artifactId>
             <version>3.5.1-SNAPSHOT</version>
         </dependency>
-        
+ -->        
         <dependency>
             <groupId>com.yonyou.iuap</groupId>
             <artifactId>eiap-plus-common</artifactId>
