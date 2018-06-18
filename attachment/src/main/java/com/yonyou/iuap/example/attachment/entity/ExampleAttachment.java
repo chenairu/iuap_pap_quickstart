@@ -1,10 +1,12 @@
 package com.yonyou.iuap.example.attachment.entity;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * mybatis方式
  */
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ExampleAttachment {
 	
 	private String id;

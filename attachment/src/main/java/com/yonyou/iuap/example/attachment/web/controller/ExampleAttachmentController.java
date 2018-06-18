@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * <p>
@@ -66,4 +67,12 @@ public class ExampleAttachmentController extends BaseController {
     	service.batchDeleteByPrimaryKey(list);
         return buildSuccess();
     }
+    
+    @RequestMapping(value = "/getCode", method = RequestMethod.GET)
+    public String getACode() {
+    	return UUID.randomUUID().toString();
+    }
+    	
+  
+    
 }

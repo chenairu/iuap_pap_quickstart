@@ -81,7 +81,11 @@ pjt.ajaxDelData = function (url, data, succCallBack, errorCallBack) {
 		success: function (result) {
 			if (result.state == "success" || result.success == "success") {
 				if (succCallBack) {
-					succCallBack(result.detailMsg.data);
+					if(result.detailMsg){
+						succCallBack(result.detailMsg.data);
+					}else if(result.data){
+						succCallBack(result.data);
+					}
 				}
 			} else {
 				if (errorCallBack) {
@@ -131,7 +135,11 @@ pjt.ajaxSaveData = function (url, data, succCallBack, errorCallBack) {
 		success: function (result) {
 			if (result.state == "success" || result.success == "success") {
 				if (succCallBack) {
-					succCallBack(result.detailMsg.data);
+					if(result.detailMsg){
+						succCallBack(result.detailMsg.data);
+					}else if(result.data){
+						succCallBack(result.data);
+					}
 				}
 			} else {
 				if (errorCallBack) {
@@ -185,7 +193,11 @@ pjt.ajaxQueryData = function (url, queryData, succCallBack, errorCallBack) {
 		success: function (result) {
 			if (result.state == "success" || result.success == "success") {
 				if (succCallBack) {
-					succCallBack(result.detailMsg.data);
+					if(result.detailMsg){
+						succCallBack(result.detailMsg.data);
+					}else if(result.data){
+						succCallBack(result.data);
+					}
 				}
 			} else {
 				if (errorCallBack) {
@@ -363,7 +375,7 @@ pjt.excelDataImp = function (mainPage,url) {
         	           '		 <div class="u-msg-uplode-content">'+
         	           '     	 	<div class="choosefile">'+
         	           '         		<div class="choosefileImg">'+
-        	           '             		<img src="../example/static/beforeUpload.svg" id="excelUploadImg">'+
+        	           '             		<img src="../iuap_pap_quickstart/static/beforeUpload.svg" id="excelUploadImg">'+
         	           '         		</div>'+
         	           '         		<div id="excelUploadMsg" class="uploadingMsg"></div>'+
         	           '         		<button class="u-button u-button-border uploadBtn " title="选择上传文件" id="selectFileBtn" onclick="document.getElementById(\'excelImpFile\').click()">选择上传文件</button>'+
@@ -399,7 +411,7 @@ pjt.excelDataImp = function (mainPage,url) {
     	var strFileName=file.replace(/^.+?\\([^\\]+?)(\.[^\.\\]*?)?$/gi,"$1");
     	$("#filenamediv2").html(strFileName);
     	//改变显示图标
-        $("#excelUploadImg").attr("src", "../example/static/uploading.svg");
+        $("#excelUploadImg").attr("src", "../iuap_pap_quickstart/static/uploading.svg");
         //改变显示信息
         $("#excelUploadMsg").html("文件上传中").addClass("uploading").removeClass("success").removeClass("fail");
         //显示文件上传进度条
@@ -515,7 +527,7 @@ pjt.attachmentFile = function (mainPage,businessPk) {
         	           '		 <div class="u-msg-uplode-content">'+
         	           '     	 	<div class="choosefile">'+
         	           '         		<div class="choosefileImg">'+
-        	           '             		<img src="../example/static/beforeUpload.svg" id="fileUploadImg">'+
+        	           '             		<img src="../iuap_pap_quickstart/static/beforeUpload.svg" id="fileUploadImg">'+
         	           '         		</div>'+
         	           '         		<div id="fileUploadMsg" class="uploadingMsg"></div>'+
         	           '         		<button class="u-button u-button-border uploadBtn " title="选择上传文件" id="selectFileBtn" onclick="document.getElementById(\'uploadFile\').click()">选择上传文件</button>'+
@@ -552,7 +564,7 @@ pjt.attachmentFile = function (mainPage,businessPk) {
     	var strFileName=file.replace(/^.+?\\([^\\]+?)(\.[^\.\\]*?)?$/gi,"$1");
     	$("#filenamediv2").html(strFileName);
     	//改变显示图标
-        $("#fileUploadImg").attr("src", "../example/static/uploading.svg");
+        $("#fileUploadImg").attr("src", "../iuap_pap_quickstart/static/uploading.svg");
         //改变显示信息
         $("#fileUploadMsg").html("文件上传中").addClass("uploading").removeClass("success").removeClass("fail");
         //显示文件上传进度条
@@ -734,9 +746,9 @@ pjt.createAttachment = function(viewModel,mainPage,depend){
 		var queryData = {};
     	queryData["search_filepath"] = viewModel.businessPk;
     	queryData["pageIndex"] = viewModel.attachmentData.pageIndex();
-        queryData["pageSize"] = viewModel.attachmentData.pageSize();
+		queryData["pageSize"] = viewModel.attachmentData.pageSize();
 		pjt.ajaxQueryData('/pubfilesystemweb/list',queryData,function(result){
-			var data = result.data;
+			var data = result;
 			if(data!=null){
 				viewModel.attachmentData.setSimpleData(data.content,{unSelect:true});
 				viewModel.attachmentData.totalPages(data.totalPages);

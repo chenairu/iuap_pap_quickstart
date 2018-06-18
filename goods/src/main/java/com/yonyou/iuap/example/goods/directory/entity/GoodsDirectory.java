@@ -3,9 +3,10 @@ package com.yonyou.iuap.example.goods.directory.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.yonyou.iuap.example.common.entity.AbsGenericEntity;
 import com.yonyou.iuap.example.common.entity.GenericEntity;
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class GoodsDirectory extends AbsGenericEntity implements GenericEntity {
 
 	private String code;

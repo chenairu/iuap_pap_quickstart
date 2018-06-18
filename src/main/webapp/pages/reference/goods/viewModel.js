@@ -23,7 +23,7 @@ var meta = {
 										"pageCount":0,
 										"pageSize":100},
 							"refCode":'currency',
-							"refModelUrl":"http://127.0.0.1:8180/iuap-example/reference/dictionary/",
+							"refModelUrl":"http://127.0.0.1:8180/iuap_pap_quickstart/reference/dictionary/",
 							"refName": "币种",
 							"refUIType": "RefGrid",
 							"rootName": "币种列表"
@@ -49,7 +49,7 @@ var meta = {
 										"pageCount":0,
 										"pageSize":100},
 							"refCode":'customOrganization',
-							"refModelUrl":"http://127.0.0.1:8180/iuap-example/reference/organization/",
+							"refModelUrl":"http://127.0.0.1:8180/iuap_pap_quickstart/reference/organization/",
 							"refName": "生产厂商",
 							"refUIType": "RefTree",
 							"rootName": "生产厂商列表"
@@ -70,7 +70,7 @@ var meta = {
 				    			strFieldName : ["编码", "名称","电话","邮箱"],
 				    			strFieldCode : ["refcode", "refname","reftel","refemail"],
 				    			defaultFieldCount : 4,
-				    			"refModelUrl" : "http://127.0.0.1:8180/iuap-example/reference/treegrid/",
+				    			"refModelUrl" : "http://127.0.0.1:8180/iuap_pap_quickstart/reference/treegrid/",
 				    			"refUIType" : "RefGridTree"
 						}),
 			 'refcfg' : '{"ctx":"/uitemplate_web"}'
@@ -84,7 +84,7 @@ var meta = {
 										"pageCount":0,
 										"pageSize":100},
 							"refCode":'director',
-							"refModelUrl":"http://127.0.0.1:8180/iuap-example/reference/director/",
+							"refModelUrl":"http://127.0.0.1:8180/iuap_pap_quickstart/reference/director/",
 							"rootName": "业务负责人",
 							"refName": "业务负责人列表",
 			    			strFieldName : ["负责人编码", "负责人名称", "所属机构"],
