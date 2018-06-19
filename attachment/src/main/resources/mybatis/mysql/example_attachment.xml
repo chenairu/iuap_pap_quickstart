@@ -16,6 +16,13 @@
 		from example_attachment
 		where id = #{id}
 	</select>
+	
+	
+	<select id="getIds" resultType="String">
+		select Id
+		from example_attachment
+	</select>
+	
 
 <!--  
 	<select id="selectAllByPage" resultMap="BaseResultMap"

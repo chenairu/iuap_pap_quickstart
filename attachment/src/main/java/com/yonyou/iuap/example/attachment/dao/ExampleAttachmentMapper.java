@@ -41,4 +41,7 @@ public interface ExampleAttachmentMapper {
 
     void batchDeleteByPrimaryKey(List<ExampleAttachment> list);
     
+    List<String> getIds();    
+    
+    
 }

@@ -1,17 +1,10 @@
 package com.yonyou.iuap.example.dictionary.web.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.yonyou.iuap.base.web.BaseController;
-import com.yonyou.iuap.example.common.utils.CommonUtils;
-import com.yonyou.iuap.example.dictionary.entity.Dictionary;
-import com.yonyou.iuap.example.dictionary.service.DictionaryService;
-import com.yonyou.iuap.example.dictionary.validator.DictionaryValidator;
-import com.yonyou.iuap.mvc.type.SearchParams;
-import com.yonyou.iuap.persistence.vo.pub.util.StringUtil;
-import com.yonyou.iuap.utils.PropertyUtil;
-import com.yonyou.uap.wb.process.org.OrganizationBrief;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,9 +17,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.yonyou.iuap.base.web.BaseController;
+import com.yonyou.iuap.example.common.utils.CommonUtils;
+import com.yonyou.iuap.example.dictionary.entity.Dictionary;
+import com.yonyou.iuap.example.dictionary.service.DictionaryService;
+import com.yonyou.iuap.example.dictionary.validator.DictionaryValidator;
+import com.yonyou.iuap.mvc.type.SearchParams;
+import com.yonyou.iuap.persistence.vo.pub.util.StringUtil;
+import com.yonyou.uap.wb.entity.org.Organization;
 
 @Controller
 @RequestMapping(value = "/example_dictionary")
@@ -98,11 +99,16 @@ public class DictionaryController extends BaseController {
         result.put("data", transformTOBriefEntity(currtypeList));
         return result;
     }
-    private List<OrganizationBrief> transformTOBriefEntity(List<Dictionary> currtypeList){
-        List<OrganizationBrief> results = new ArrayList<>();
+    
+    private List<Organization> transformTOBriefEntity(List<Dictionary> currtypeList){
+        List<Organization> results = new ArrayList<>();
         if(!CollectionUtils.isEmpty(currtypeList)){
             for (Dictionary entity:currtypeList){
-                results.add(new OrganizationBrief(entity.getId(),entity.getName(),entity.getCode()));
+            	Organization organization =new Organization();
+            	organization.setCode(entity.getCode());
+            	organization.setName(entity.getName());
+            	organization.setId(entity.getId());
+                results.add(organization);
             }
         }
 

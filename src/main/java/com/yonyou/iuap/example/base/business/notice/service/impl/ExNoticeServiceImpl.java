@@ -74,7 +74,7 @@ public class ExNoticeServiceImpl implements ExNoticeService {
       * 保存通知公告
       * @param exNotice   通知公告
      */
-    @BusiLogConfig(method = "ex_info_save", busiName = "通知公告")
+//    @BusiLogConfig(method = "ex_info_save", busiName = "通知公告")
     @Transactional
     @Override
     public void save(ExNotice exNotice) {
@@ -94,7 +94,7 @@ public class ExNoticeServiceImpl implements ExNoticeService {
       * 更新通知公告
       * @param exNotice   通知公告
      */
-    @BusiLogConfig(method = "ex_info_update", busiName = "通知公告")
+//    @BusiLogConfig(method = "ex_info_update", busiName = "通知公告")
     @Transactional
     @Override
     public void update(ExNotice exNotice) {
@@ -108,7 +108,7 @@ public class ExNoticeServiceImpl implements ExNoticeService {
       * 删除通知公告
       * @param pkNotice   通知公告主键
      */
-    @BusiLogConfig(method = "ex_info_del", busiName = "通知公告")
+//    @BusiLogConfig(method = "ex_info_del", busiName = "通知公告")
     @Transactional
     @Override
     public void delete(String pkNotice) {
