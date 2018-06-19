@@ -14,7 +14,7 @@ var meta = {
                 "refClientPageInfo":{"currPageIndex":0,
                 "pageCount":0,"pageSize":5},
                 "refCode":"billType",
-                "refModelUrl":"http://172.168.200.103:8081/iuap-example/restExampleAsVal/",
+                "refModelUrl":"http://127.0.0.1:8081/iuap_pap_quickstart/restExampleAsVal/",
                 "refName":"单据类型",
                 "refUIType":"RefGrid",
                 "rootName":"单据类型"
@@ -47,7 +47,7 @@ var meta = {
                 "refClientPageInfo":{"currPageIndex":0,
                     "pageCount":0,"pageSize":5},
                 "refCode":"currtype",
-                "refModelUrl":"http://172.168.200.1:8082/iuap-example/restExampleAsVal/",
+                "refModelUrl":"http://127.0.0.1:8081/iuap_pap_quickstart/restExampleAsVal/",
                 "refName":"单据类型",
                 "refUIType":"RefGrid",
                 "rootName":"单据类型"
@@ -72,7 +72,7 @@ var meta = {
                 "refClientPageInfo":{"currPageIndex":0,
                     "pageCount":0,"pageSize":5},
                 "refCode":"currtype",
-                "refModelUrl":"http://172.168.200.1:8082/iuap-example/restExampleAsVal/",
+                "refModelUrl":"http://127.0.0.1:8081/iuap_pap_quickstart/restExampleAsVal/",
                 "refName":"单据类型",
                 "refUIType":"RefGrid",
                 "rootName":"单据类型"
