@@ -180,20 +180,6 @@ define(['text!./attachment.html',
 				viewModel.condition.createEmptyRow();
 				viewModel.condition.setRowSelect(0);
 				viewModel.gridData.addParams(null);
-			},
-
-			/** 打印*/
-			printPage: function () {
-				var rows = viewModel.gridData.getSelectedRows();
-				if (rows.length > 1 || rows.length < 1) {
-					u.messageDialog({ msg: '请选择一条数据进行打印', title: '提示', btnText: '确定' });
-					return;
-				}
-				var funCode = "testFun_print";
-				var nodeKey = "test_print2";
-				var serverUrl = '/examplePrint/dataForPrint';//取数据的url地址
-				var bussPK = rows[0].getSimpleData().id;
-				pjt.print(funCode, nodeKey, serverUrl, bussPK);
 			}
 		}
 		return {
