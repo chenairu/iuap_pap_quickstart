@@ -18,9 +18,7 @@ institid NCHAR(36) NULL ,
 institname NCHAR(50) NULL ,
 ts DATE NULL ,
 dr NUMBER(11) NULL 
-)
-
-;
+);
 
 -- ----------------------------
 -- Records of example_contacts
@@ -38,9 +36,7 @@ sys VARCHAR2(50) NULL ,
 creator VARCHAR2(50) NULL ,
 create_time VARCHAR2(50) NULL ,
 remark VARCHAR2(50) NULL 
-)
-
-;
+);
 
 -- ----------------------------
 -- Records of example_dictionary
@@ -67,9 +63,7 @@ lastModified DATE NULL ,
 lastModifyUser VARCHAR2(64) NULL ,
 ts DATE NULL ,
 dr NUMBER(11) NULL 
-)
-
-;
+);
 COMMENT ON COLUMN example_goods.id IS '主键ID';
 COMMENT ON COLUMN example_goods.goodsCode IS '商品编码';
 COMMENT ON COLUMN example_goods.goodsName IS '商品名称';
@@ -116,9 +110,7 @@ lastModifyUser VARCHAR2(36) NULL ,
 ts DATE NULL ,
 dr NUMBER(11) NULL,
 tenant_id varchar2(32)
-)
-
-;
+);
 COMMENT ON COLUMN example_order_bill.id IS '主键ID';
 COMMENT ON COLUMN example_order_bill.orderCode IS '订单编号';
 COMMENT ON COLUMN example_order_bill.orderName IS '订单名称';
@@ -161,9 +153,7 @@ remark NCLOB NULL ,
 VERSION NUMBER(11) NULL ,
 ts DATE NULL ,
 dr NUMBER(11) NULL 
-)
-
-;
+);
 COMMENT ON COLUMN example_order_detail.id IS '订单明细ID';
 COMMENT ON COLUMN example_order_detail.orderId IS '订单ID';
 COMMENT ON COLUMN example_order_detail.detailCode IS '订单明细编号';
@@ -197,9 +187,7 @@ creator VARCHAR2(20) NULL ,
 creationtime DATE NULL ,
 ts DATE NULL ,
 dr NUMBER(11) NULL 
-)
-
-;
+);
 
 -- ----------------------------
 -- Records of example_organization
@@ -401,6 +389,51 @@ ALTER TABLE example_attachment ADD PRIMARY KEY (id);
 COMMENT ON COLUMN example_attachment.id IS '主键';
 COMMENT ON COLUMN example_attachment.code IS '编码';
 COMMENT ON COLUMN example_attachment.name IS '名称';
+
+
+
+-- ----------------------------
+-- 流程示例表
+-- ----------------------------
+CREATE TABLE example_workorder(
+	id VARCHAR2 (64) NOT NULL ENABLE,
+	code VARCHAR2 (20) NOT NULL ENABLE,
+	name VARCHAR2 (64) NOT NULL ENABLE,
+	type VARCHAR2 (64) DEFAULT NULL,
+	content VARCHAR2 (1024) DEFAULT NULL,
+	status VARCHAR2 (10),
+	applicant VARCHAR2 (64),
+	applyTime DATE DEFAULT NULL,
+	finishTime DATE DEFAULT NULL,
+	remark VARCHAR2 (1024) DEFAULT NULL,
+	version NUMBER (*, 0) DEFAULT 0,
+	createTime TIMESTAMP (0),
+	createUser VARCHAR2 (64),
+	lastModified TIMESTAMP (0),
+	lastModifyUser VARCHAR2 (64),
+	ts TIMESTAMP (0) DEFAULT NULL,
+	dr NUMBER (*, 0),
+	PRIMARY KEY (id) USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 NOCOMPRESS LOGGING
+);
+COMMENT ON COLUMN example_workorder.id IS '主键';
+COMMENT ON COLUMN example_workorder.code IS '工单编码';
+COMMENT ON COLUMN example_workorder.name IS '工单名称';
+COMMENT ON COLUMN example_workorder.type IS '工单类型';
+COMMENT ON COLUMN example_workorder.content IS '工单内容';
+COMMENT ON COLUMN example_workorder.status IS '工单状态: 0-未提交；1:已提交; 2:审批中; 3:已办结';
+COMMENT ON COLUMN example_workorder.applicant IS '申请人';
+COMMENT ON COLUMN example_workorder.applyTime IS '申请时间';
+COMMENT ON COLUMN example_workorder.finishTime IS '办结时间';
+COMMENT ON COLUMN example_workorder.remark IS '备注';
+COMMENT ON COLUMN example_workorder.version IS '版本';
+COMMENT ON COLUMN example_workorder.createTime IS '创建人';
+COMMENT ON COLUMN example_workorder.createUser IS '创建时间';
+COMMENT ON COLUMN example_workorder.lastModified IS '修改人';
+COMMENT ON COLUMN example_workorder.lastModifyUser IS '修改时间';
+COMMENT ON COLUMN example_workorder.ts IS '数据创建时间';
+COMMENT ON COLUMN example_workorder.dr IS '删除标志：0-可用；1-已删除';
+
+
 
 
 
