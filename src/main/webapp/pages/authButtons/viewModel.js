@@ -1,12 +1,12 @@
 var meta = {
     meta: {
-        id: {type: 'string'},
+        id: { type: 'string' },
         title: {
             type: 'string',
-            require:true,
-            nullMsg:"标题不能为空"
+            require: true,
+            nullMsg: "标题不能为空"
         },
-        
+
         content: {
             type: 'string'
         },
@@ -19,39 +19,36 @@ var meta = {
             type: 'string'
         },
 
-        publishUserId:{
-            
+        publishUserId: {
+
         },
-        publishUserName:{
+        publishUserName: {
         },
 
         createTime: {
 
         },
-        publishTime:{
+        publishTime: {
 
         },
-        status:{
-            
+        status: {
+
         }
-    },
-    
-    pageSize: 5,
-    //启用前端缓存
-    pageCache: false,
+    }
 }
+
+
+var conditionMeta = {
+    meta: {
+        search_title: {
+            type: "string"
+        }
+    }
+};
+
 var viewModel = {
-    draw: 1,
-    pageSize: 5,
+    condition: new u.DataTable(conditionMeta),//查询条件
     gridData: new u.DataTable(meta),
     formData: new u.DataTable(meta),
-    yesOrNo: [{
-        name: "是",
-        value: "1"
-    },
-        {
-            name: "否",
-            value: "0"
-        }
-    ]
+    yesOrNo: [{name: "是",value: "1"},{name: "否",value: "0"}]
 };

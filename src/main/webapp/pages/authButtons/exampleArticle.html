@@ -1,157 +1,145 @@
-<div class="u-mdlayout" id="user-mdlayout">
-	<!-- 标题区域 -->
-	<div class="aline-center b-margin">
-		<h4>按钮权限</h4>
-	</div>
-	<!-- 搜索区域begin -->
-	<div class="form-search">
-		<div class="u-panel-heading  u-collapse-updown">
-			<div id='condition-toggle' class="u-col-12">查询与筛选
-				<div class="float-right">
-					<span id="condition-text">展开</span>
-					<i id="condition-icon" class="uf uf-arrow-down"></i>
-				</div>
-			</div>
+<div class="u-mdlayout" id="myLayout">
+	<!-- 主页面显示区域 -->
+	<div class="u-mdlayout-detail width-full" style="overflow-y: auto">
+		<!-- 标题区域 -->
+		<div class="aline-center b-margin">
+			<h4>按钮权限</h4>
 		</div>
-		<div class="u-row" id="search-modul" style="display:none;">
-			<div class="u-col-12 u-col-sm-12 b-margin">
-				<div class="u-col-8 u-col-sm-6">
-					<div class="u-col-4 aline-right">
-						<label>标题</label>
-					</div>
-					<div class="u-col-8 u-col-sm-12">
-						<input class="u-form-control search-enter" id="search_title" name="search_title" />
-					</div>
-				</div>
-				<!--<div class="u-col-4 u-col-sm-6">
-					<div class="u-col-4 aline-right">名称
-					</div>
-					<div class="u-col-8 u-col-sm-12">
-						<input class="u-form-control search-enter" id="search_name" name="search_name" />
-					</div>
-				</div> -->
-				<div class="u-col-4 u-col-sm-6">
-					<div class=" float-right">
-						<button class="u-button" data-bind="click: event.cleanSearch">清空</button>
-						<button class="u-button" data-bind="click: event.search">搜索</button>
+		<!-- 搜索区域 -->
+		<div class="u-container-fluid" style="background-color:#f5f5f5">
+			<div class="u-row">
+				<div class="u-col-md-12">
+					<div class="u-widget-fluid">
+						<div class="u-widget-heading" id="collapse">
+							<h3 class="u-widget-title">查询与筛选
+								<a class="u-link u-widget-more">
+									<i class="icon uf uf-2arrow-down" id="icon"></i>
+								</a>
+						</div>
+						<div class="u-widget-body" id="collapse-body" style="display:none;">
+							<div class="u-row">
+								<div class="u-col-8">
+									<div class="u-col-4 u-col-sm-4">名称:</div>
+									<div class="u-col-8 u-col-sm-8" u-meta='{"id":"search_title","type":"string","data":"condition","field":"search_title"}'>
+										<input class="u-form-control search-enter" name="title" />
+									</div>
+								</div>
+								<div class="u-col-4">
+									<div class=" float-right">
+										<button class="u-button" data-bind="click: event.cleanSearch">清空</button>
+										<button class="u-button" data-bind="click: event.search">搜索</button>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-
-	<!-- 表格区域（按钮、表格、分页）begin  -->
-	<div class="u-mdlayout-detail width-full" style="height:600px;">
-		<div class="u-mdlayout-page u-navlayout-fixed-header" id="list">
-			<div id="dicttype_list_button_2" class="b-margin">
-				<div class="b-edit">
-					<button class="u-button" data-bind="click:event.btnAddClicked.bind($data,-1),visible:buttonShowGroup['add']">增加</button>
-					<button class="u-button" id="user-action-del" disabled=true data-bind="click: event.delRows,visible:buttonShowGroup['del']">删除</button>
-					<button class="u-button" id="user-action-pub" disabled=true data-bind="click: event.pub,visible:buttonShowGroup['pub']">发布</button>
-					<button class="u-button" id="user-action-stop" disabled=true data-bind="click: event.stop,visible:buttonShowGroup['stop']">停用</button>
-
-				</div>
-			</div>
-			<div class="u-mdlayout-page-section">
-				<div id="grid" u-meta='{"id":"dataGrid","type":"grid","data":"gridData","columnMenu":false,"onDblClickFun":"event.dbClickRow","onRowSelected":"event.selectRow","onRowUnSelected":"event.selectRow","onRowHover":"event.rowHoverHandel","fixedFloat":"right","canDrag":false,"sortable":true,"canSwap":false,"columnWidth":"150px","rowHeight":"40" ,"sumRowHeight":"40","multiSelect":true}'>
-					<div options='{"field":"title","dataType":"String","title":"标题","editType":"string"}'></div>
-					<div options='{"field":"createUserName","width":"250","dataType":"String","title":"创建人","editType":"string"}'></div>
-                    <div options='{"field":"createTime","dataType":"String","title":"创建时间","renderType":"dateRender","format":"YYYY-MM-DD"}'></div>
-					<div options='{"field":"publishUserName","dataType":"String","title":"发布人","editType":"string"}'></div>
-					<div options='{"field":"publishTime","dataType":"String","title":"发布时间","renderType":"dateRender","format":"YYYY-MM-DD"}'></div>
-					<div options='{"field":"status","dataType":"String","title":"状态","renderType":"event.showValue"}'></div>
-					<div options='{"field":"operate","dataType":"String","title":"","renderType":"event.optFun","editable":true}'></div>
-				</div>
-				<div class="aline-center">
-					<div id='pagination' class='pagination u-pagination pagination-sm'></div>
-				</div>
-
-			</div>
+		<!-- 按钮区域 -->
+		<div class="padding-5">
+			<button class="u-button" data-bind="click: event.addBtnClicked,visible:buttonShowGroup['add']">增加</button>
+			<button class="u-button" data-bind="click: event.delRows,visible:buttonShowGroup['delete']">删除</button>
+			<button class="u-button" data-bind="click: event.pub,visible:buttonShowGroup['pub']">发布</button>
+			<button class="u-button" data-bind="click: event.stop,visible:buttonShowGroup['stop']">停用</button>
 		</div>
-	</div>
-</div>
-
-<!-- 表单区域 -->
-<div id="form-div">
-	<div id="form-div-header">
-		<div class="u-row">
-			<div class="u-col-md-4 aline-let paddingL30 ">
-				<button type="button " class="goback" data-bind="click:event.formDivShow(false)"><i class="uf uf-arrow-left"></i>返回</button>
-			</div>
-			<div class="u-col-md-4 aline-center">
-				<h4>编辑页</h4>
-			</div>
-			<div class="u-col-md-4 aline-right paddingR30 ">
-				<button id="save" type="button" class="u-button" data-bind="click:event.saveClick">保存</button>
-			</div>
+		<!-- 表格区域 -->
+		<div type="text" id="gridDiv" class="padding-3" u-meta='{"id":"dataGrid","type":"grid","data":"gridData","columnMenu":false,"onDblClickFun":"event.dbClickRow","onRowSelected":"event.selectRow","onRowUnSelected":"event.selectRow","onRowHover":"event.rowHoverHandel","fixedFloat":"right","canDrag":false,"sortable":true,"canSwap":false,"columnWidth":"150px","rowHeight":"40" ,"sumRowHeight":"40","multiSelect":true}'>
+			<div options='{"field":"title","dataType":"String","title":"标题","editType":"string"}'></div>
+			<div options='{"field":"createUserName","width":"250","dataType":"String","title":"创建人","editType":"string"}'></div>
+			<div options='{"field":"createTime","dataType":"String","title":"创建时间","renderType":"dateRender","format":"YYYY-MM-DD"}'></div>
+			<div options='{"field":"publishUserName","dataType":"String","title":"发布人","editType":"string"}'></div>
+			<div options='{"field":"publishTime","dataType":"String","title":"发布时间","renderType":"dateRender","format":"YYYY-MM-DD"}'></div>
+			<div options='{"field":"status","dataType":"String","title":"状态","renderType":"event.showValue"}'></div>
+			<div options='{"field":"operate","dataType":"String","title":"","renderType":"event.optFun","editable":true}'></div>
+		</div>
+		<!-- 分页区域 -->
+		<div class="aline-center margin-top-5">
+			<div id='mainPagingtion' class='u-pagination pagination' u-meta='{"type":"pagination","data":"gridData","pageChange":"event.pageChange","sizeChange":"event.sizeChange"}'></div>
 		</div>
 	</div>
 
-	<div id="form-div-body">
-		<div class="u-row">
-			<div class="u-col-md-12">
-				<div class="u-form-group width100">
-					<label class="u-col-1">标题</label>
-					<div class="u-col-11" u-meta='{"id":"title","type":"u-text","data":"formData","field":"title"}'>
-						<div class="u-input-group-before">*</div>
-						<input type="text" class="u-form-control" placeholder="请输入标题">
-					</div>
-				</div>
-			</div>
-		</div>
-		
-        <div class="u-row">
-			<div class="u-col-md-6">
-                <div class="u-form-group width100">
-                    <label class="u-col-2">创建人</label>
-                    <div class="u-col-10" u-meta='{"id":"createUserName","type":"u-text","data":"formData","field":"createUserName"}'>
-						<div class="u-input-group-before">*</div>
-                        <input type="text" class="u-form-control" placeholder="请输入名称">
-                    </div>
-                </div>
-            </div>
-			<div class="u-col-md-6">
-				<div class="u-form-group width100">
-					<label class="u-col-2">创建时间</label>
-					<div class="u-col-10" u-meta='{"id":"createTime","type":"u-date","data":"formData","field":"createTime"}'>
-						<div class="u-input-group-before">*</div>
-						<input type="text" class="u-form-control" placeholder="">
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="u-row">
-			<div class="u-col-md-6">
-				<div class="u-form-group width100">
-					<label class="u-col-2">发布人</label>
-					<div class="u-col-10" u-meta='{"id":"publishUserName","type":"u-text","data":"formData","field":"publishUserName"}'>
-						<input type="text" class="u-form-control" placeholder="">
-					</div>
-				</div>
-			</div>
-			<div class="u-col-md-6">
-				<div class="u-form-group width100">
-					<label class="u-col-2">发布时间</label>
-					<div class="u-col-10" u-meta='{"id":"publishTime","type":"u-date","data":"formData","field":"publishTime"}'>
-						<input type="text" class="u-form-control" placeholder="">
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="u-row">
-			<div class="u-col-md-12">
-				<div class="u-form-group width100">
-					<label class="u-col-1">内容</label>
-					<div class="u-col-11" id="txtWrap">
-						<textarea u-meta='{"id":"content","data":"formData","field":"content","type":"textarea"}'></textarea>
-					</div>
-				</div>
-			</div>
-		</div>
 
+
+	<!-- 隐藏的表单区域 -->
+	<div id="form-div" style="display: none">
+		<!-- 固定头部 -->
+		<div id="form-div-header">
+			<div class="u-row">
+				<div class="u-col-md-4 aline-let paddingL30 ">
+					<button type="button " class="goback" data-bind="click:event.backBtnClick">
+						<i class="uf uf-arrow-left"></i>返回</button>
+				</div>
+				<div class="u-col-md-4 aline-center">
+					<h4 id="myTitle">新增记录</h4>
+				</div>
+				<div class="u-col-md-4 aline-right paddingR30 ">
+					<button id="save" type="button" class="u-button" data-bind="click:event.saveClick">保存</button>
+				</div>
+			</div>
+		</div>
+		<!-- 表单体 -->
+		<div id="form-div-body">
+			<div class="u-row margin-top-20">
+				<div class="u-col-md-12">
+					<div class="u-form-group width100">
+						<label class="u-col-1">标题</label>
+						<div class="u-col-11" u-meta='{"id":"title","type":"u-text","data":"formData","field":"title"}'>
+							<div class="u-input-group-before">*</div>
+							<input type="text" class="u-form-control" placeholder="请输入标题">
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="u-row margin-top-20">
+				<div class="u-col-md-6">
+					<div class="u-form-group width100">
+						<label class="u-col-2">创建人</label>
+						<div class="u-col-10" u-meta='{"id":"createUserName","type":"u-text","data":"formData","field":"createUserName"}'>
+							<div class="u-input-group-before">*</div>
+							<input type="text" class="u-form-control" placeholder="请输入名称">
+						</div>
+					</div>
+				</div>
+				<div class="u-col-md-6">
+					<div class="u-form-group width100">
+						<label class="u-col-2">创建时间</label>
+						<div class="u-col-10" u-meta='{"id":"createTime","type":"u-date","data":"formData","field":"createTime"}'>
+							<div class="u-input-group-before">*</div>
+							<input type="text" class="u-form-control" placeholder="">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="u-row margin-top-20">
+				<div class="u-col-md-6">
+					<div class="u-form-group width100">
+						<label class="u-col-2">发布人</label>
+						<div class="u-col-10" u-meta='{"id":"publishUserName","type":"u-text","data":"formData","field":"publishUserName"}'>
+							<input type="text" class="u-form-control" placeholder="">
+						</div>
+					</div>
+				</div>
+				<div class="u-col-md-6">
+					<div class="u-form-group width100">
+						<label class="u-col-2">发布时间</label>
+						<div class="u-col-10" u-meta='{"id":"publishTime","type":"u-date","data":"formData","field":"publishTime"}'>
+							<input type="text" class="u-form-control" placeholder="">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="u-row margin-top-20">
+				<div class="u-col-md-12">
+					<div class="u-form-group width100">
+						<label class="u-col-1">内容</label>
+						<div class="u-col-11" id="txtWrap">
+							<textarea u-meta='{"id":"content","data":"formData","field":"content","type":"textarea"}'></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-</div>
-
-<div id="tenant_dialog_content"  style="display:none;">
-
 </div>
