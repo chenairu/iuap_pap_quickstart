@@ -1,57 +1,56 @@
-<div class="u-mdlayout" style="height: 100%; overflow-y: auto">
-    <!-- 标题区域 -->
-    <div class="aline-center b-margin">
-        <h4>综合表单示例</h4>
-    </div>
+<div class="u-mdlayout" id="myLayout">
+    <!-- 主页面显示区域 -->
+    <div class="u-mdlayout-detail width-full" style="overflow-y: auto">
+        <!-- 标题区域 -->
+        <div class="aline-center b-margin">
+            <h4>复杂表单示例</h4>
+        </div>
 
-    <!-- 按钮区域 -->
-    <div class="u-button-group" style="height: 40px; padding: 5px;">
-        <button class="u-button u-button-primary raised gray-btn u-button-squared" data-bind="click:event.addClick">新增</button>
-        <button class="u-button u-button-primary pull-right font-size-14 " data-bind="click:event.deleteClick">删除</button>
-    </div>
-
-
-
-    <div>
-        <div class="u-row">
-            <div class="u-col-md-4">
-                <div class="u-row">
-                    <div class="u-col-md-4">
-                        输入框
-                    </div>
-                    <div class="u-col-md-8">
-                        <div u-meta='{"id":"code","type":"u-text","data":"formData","field":"code"}'>
-                            <input type="text" class="u-form-control padding-left-20" placeholder="编码不能为空">
-                        </div>
+        <div class="u-row margin-top-20">
+            <div class="u-col-md-6">
+                <div class="u-col-3 aline-right">
+                    普通输入框
+                </div>
+                <div class="u-col-9">
+                    <div u-meta='{"id":"code","type":"u-text","data":"formData1","field":"code"}'>
+                        <input type="text" class="u-form-control padding-left-20" placeholder="编码不能为空">
                     </div>
                 </div>
             </div>
-            <div class="u-col-md-4">
-                <div class="u-row">
-                    <div class="u-col-md-4">
-                        输入框
-                    </div>
-                    <div class="u-col-md-8">
-                        <div u-meta='{"id":"code","type":"u-text","data":"formData","field":"code"}'>
-                            <input type="text" class="u-form-control padding-left-20" placeholder="编码不能为空">
-                        </div>
+            <div class="u-col-md-6">
+                <div class="u-col-3 aline-right">
+                    日期控件
+                </div>
+                <div class="u-col-9">
+                    <div u-meta='{"type":"u-date","data":"formData1","field":"createtime"}'>
+                        <input type="text" class="u-form-control" placeholder="">
                     </div>
                 </div>
             </div>
-            <div class="u-col-md-4">
-                <div class="u-row">
-                    <div class="u-col-md-4">
-                        输入框
-                    </div>
-                    <div class="u-col-md-8">
-                        <div u-meta='{"id":"code","type":"u-text","data":"formData","field":"code"}'>
-                            <input type="text" class="u-form-control padding-left-20" placeholder="编码不能为空">
-                        </div>
+        </div>
+        <div class="u-row margin-top-20">
+            <div class="u-col-md-6">
+                <div class="u-col-3 aline-right">
+                    下拉控件1
+                </div>
+                <div class="u-col-9">
+                    <div id="sysDiv" u-meta='{"id":"sysCom","type":"u-combobox","data":"formData1","field":"sys","datasource":"com1"}'>
+                        <input class="u-form-control" />
+                        <span class="u-form-control-feedback uf uf-arrow-down" data-role="combo-button"></span>
                     </div>
                 </div>
             </div>
-
+            <div class="u-col-md-6">
+                <div class="u-col-3 aline-right">
+                    下拉控件2
+                </div>
+                <div class="u-col-9">
+                    <div id="sxeDiv" u-meta='{"id":"sexCom","type":"u-combobox","data":"formData2","field":"sex","datasource":"com2"}'>
+                        <input class="u-form-control" />
+                        <span class="u-form-control-feedback uf uf-arrow-down" data-role="combo-button"></span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
 </div>
