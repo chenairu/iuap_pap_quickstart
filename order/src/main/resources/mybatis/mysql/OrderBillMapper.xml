@@ -46,6 +46,7 @@
 		  dr
 	</sql>
 	
+	<!-- 
 	<select id="selectAllByPage" resultMap="BaseResultMap" resultType="java.util.List">
 		SELECT
 			<include refid="Base_Column_List" />
@@ -70,6 +71,23 @@
 				</if>
 			</if>	
 	</select>
+	 -->
+	
+	
+	<select id="selectAllByPage" resultMap="BaseResultMap" resultType="java.util.List">
+		SELECT
+			<include refid="Base_Column_List" />
+		FROM example_order_bill where 1=1
+			<if test="condition != null">
+				<if test="condition.orderCode!=null and condition.orderCode!='' ">
+					and ORDERCODE like CONCAT(CONCAT('%', #{condition.orderCode}),'%')
+				</if>
+				<if test="condition.orderName!=null and condition.orderName!='' ">
+					and ORDERNAME like CONCAT(CONCAT('%', #{condition.orderName}),'%')
+				</if>
+			</if>
+	</select>
+	
 	
 	<select id="queryList" resultMap="BaseResultMap" parameterType="java.util.List">
 		SELECT

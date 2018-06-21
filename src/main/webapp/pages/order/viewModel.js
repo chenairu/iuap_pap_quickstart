@@ -48,7 +48,6 @@ var meta = {
 		lastModifyUser_name: {},
 		orderDetails: {},
 		version: {}
-
 	}
 };
 
@@ -90,11 +89,23 @@ var meta_sub = {
 	}
 };
 
-var searchData = {
-	meta: {
-		id: {},
-		code: {},
-		name: {},
-		ly_code: {},
-	}
-};
+var conditionMeta = {
+    meta: {
+      search_orderCode: { 
+        type: "string" 
+      },
+      search_orderName: {
+        type: "string"
+      }
+    }
+  };
+  
+  var viewModel = {
+    condition: new u.DataTable(conditionMeta),//查询条件
+    gridData: new u.DataTable(meta),  //表格数据
+    formData: new u.DataTable(meta),  //表单数据
+    subGridData: new u.DataTable(meta_sub),
+    yesOrNo: [{name: "是", value: "是"}, {name: "否", value: "否"}],
+    comboData:[{name:'新订单',value:'01'},{name:'已完成',value:'02'},{name:'已取消',value:'03'}]
+  };
+  

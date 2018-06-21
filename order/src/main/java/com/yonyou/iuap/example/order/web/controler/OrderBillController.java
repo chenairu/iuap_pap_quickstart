@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yonyou.iuap.base.web.BaseController;
+import com.yonyou.iuap.example.common.utils.CommonUtils;
 import com.yonyou.iuap.example.order.entity.OrderBill;
 import com.yonyou.iuap.example.order.entity.OrderDetail;
 import com.yonyou.iuap.example.order.service.OrderBillService;
@@ -37,12 +38,10 @@ public class OrderBillController extends BaseController {
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseBody
-	public Object list(PageRequest pageRequest,
-			@FrontModelExchange(modelType = OrderBill.class) SearchParams searchParams) {
-		logger.debug("execute data search.");
-		
+	public Object list(PageRequest pageRequest,SearchParams searchParams) {
+		logger.debug("./list execute data search.");
+		CommonUtils.decode(searchParams);
 		Page<OrderBill> page = orderBillService.selectAllByPage(pageRequest, searchParams);
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("data", page);
 		return this.buildMapSuccess(map);

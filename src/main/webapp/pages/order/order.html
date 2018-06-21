@@ -1,109 +1,92 @@
-<div class="u-mdlayout" style="height: 100%; overflow-y: auto">
-	<!-- 标题区域 -->
-	<div class="aline-center b-margin">
-		<h4>订单管理</h4>
-	</div>
+<div class="u-mdlayout" id="myLayout">
+	<!-- 主页面显示区域 -->
+	<div class="u-mdlayout-detail width-full" style="overflow-y: auto">
 
-	<!-- 搜索区域 -->
-	<div class="u-container-fluid" style="background-color:#f5f5f5">
-		<div class="u-row">
-			<div class="u-col-md-12">
-				<div class="u-widget-fluid">
-					<div class="u-widget-heading" id="collapse">
-						<h3 class="u-widget-title">查询与筛选
-							<a class="u-link u-widget-more">
-								<i class="icon uf uf-2arrow-down" id="icon"></i>
-							</a>
-					</div>
-					<div class="u-widget-body" id="collapse-body" style="display:none;">
-						<div class="u-row">
-							<div class="u-col-3">
-								<div class="u-col-4 u-col-sm-4">
-									编号:
-								</div>
-								<div class="u-col-8 u-col-sm-8">
-									<input class="u-form-control  input_search search-enter" id="search_orderCode" name="search_orderName" />
-								</div>
-							</div>
-							<div class="u-col-3">
-								<div class="example-col">
-									<div class="u-col-4 u-col-sm-4">
-										日期:
-									</div>
-									<div class="u-col-8 u-col-sm-8">
-										<!-- <input class="u-form-control sm input_search search-enter" id="search_orderDate_start" name="search_orderDate_end" /> -->
-										<div u-meta='{"type":"u-date","data":"formData","field":"orderDate"}'>
-											<input type="text" class="u-form-control" placeholder="">
-										</div>
+		<div class="aline-center b-margin">
+			<h4>订单管理</h4>
+		</div>
+
+		<!-- 搜索区域 -->
+		<div class="u-container-fluid" style="background-color:#f5f5f5">
+			<div class="u-row">
+				<div class="u-col-md-12">
+					<div class="u-widget-fluid">
+						<div class="u-widget-heading" id="collapse">
+							<h3 class="u-widget-title">查询与筛选
+								<a class="u-link u-widget-more">
+									<i class="icon uf uf-2arrow-down" id="icon"></i>
+								</a>
+						</div>
+						<div class="u-widget-body" id="collapse-body" style="display:none;">
+							<div class="u-row">
+								<div class="u-col-4">
+									<div class="u-col-4 u-col-sm-4">编码:</div>
+									<div class="u-col-8 u-col-sm-8" u-meta='{"id":"search_orderCode","type":"string","data":"condition","field":"search_orderCode"}'>
+										<input class="u-form-control search-enter" name="orderCode" autocomplete="off" />
 									</div>
 								</div>
-							</div>
-							<div class="u-col-3">
-								<div class="u-col-4 u-col-sm-4">
-									状态:
+								<div class="u-col-4">
+									<div class="u-col-4 u-col-sm-4">名称:</div>
+									<div class="u-col-8 u-col-sm-8" u-meta='{"id":"search_orderName","type":"string","data":"condition","field":"search_orderName"}'>
+										<input class="u-form-control search-enter" name="orderName" />
+									</div>
 								</div>
-								<div class="u-col-8 u-combo u-col-8" u-meta='{"type":"u-combobox","datasource":"comboData","data":"ygdemo_searchFormDa","field":"ly_code","onlySelect":true}'>
-									<span class="u-form-control-feedback fa fa-angle-down" data-role="combo-button" style="padding: 5px 30px 5px 0px;"></span>
-									<input class="u-form-control  input_search search-enter" placeholder="订单状态" name="search_orderState" readonly/>
+								<div class="u-col-4">
+									<div class=" float-right">
+										<button class="u-button" data-bind="click: event.cleanSearch">清空</button>
+										<button class="u-button" data-bind="click: event.search">搜索</button>
+									</div>
 								</div>
 							</div>
-							<div class="u-col-3">
-								<button class="u-button u-button-border raised gray-btn margin-right-20" id="user-action-cleanSearch" data-bind="click: event.cleanSearch">清空
-								</button>
-								<button class="u-button u-button-primary raised gray-btn" id="user-action-search" data-bind="click: event.search">搜索
-								</button>
-							</div>			
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<!-- 按钮区域 -->
-	<div class="u-button-group" style="height: 40px; padding: 5px;">
-		<button class="u-button u-button-primary raised gray-btn u-button-squared" data-bind="click:event.addClick">新增</button>
-		<button class="u-button u-button-primary pull-right font-size-14 " data-bind="click:event.deleteClick">删除</button>
-	</div>
-
-	<!-- 这里的 class="u-mdlayout-detail必须加上，不然报错 -->
-	<div class="u-mdlayout-detail width-full">
-		<!-- 表格区域 -->
-		<div class="user-datagrid">
-			<div class="table-container" id="table-container">
-				<div id="grid" u-meta='{"id":"dataGrid","type":"grid","data":"gridData","columnMenu":false,"onDblClickFun":"event.dbClickRow","fixedFloat":"right","canDrag":false,"sortable":true,"canSwap":false,"columnWidth":"150px","rowHeight":"40" ,"sumRowHeight":"40","multiSelect":true}'>
-					<div options='{"field":"orderCode","dataType":"String","title":"订单编号","renderType":"event.dubancodelink"}'></div>
-					<div options='{"field":"orderName","dataType":"String","title":"订单名称"}'></div>
-					<div options='{"field":"customer","dataType":"String","title":"客户"}'></div>
-					<div options='{"field":"busiman","dataType":"String","title":"业务员"}'></div>
-					<div options='{"field":"dept","dataType":"String","title":"所属单位"}'></div>
-					<div options='{"field":"operate","dataType":"String","title":"操作","renderType":"optFunc","editable":true,"fixed":true,"width":"180px"}'></div>
-				</div>
-			</div>
-			<div class="aline-center">
-				<div id='pagination' class='pagination u-pagination pagination-sm'></div>
-			</div>
+		<!-- 按钮区域 -->
+		<div class="padding-5">
+			<button class="u-button" data-bind="click:event.addBtnClicked">新增</button>
+			<button class="u-button" data-bind="click:event.editBtnClicked">编辑</button>
+			<button class="u-button" data-bind="click: event.delRows">删除</button>
 		</div>
+
+
+		<!-- 表格区域 -->
+		<div type="text" id="gridDiv" class="padding-3" u-meta='{"id":"dataGrid","type":"grid","data":"gridData","columnMenu":false,"onDblClickFun":"event.dbClickRow","fixedFloat":"right","canDrag":false,"sortable":true,"canSwap":false,"columnWidth":"150px","rowHeight":"40" ,"sumRowHeight":"40","multiSelect":true}'>
+			<div options='{"field":"orderCode","dataType":"String","title":"订单编号","renderType":"event.dubancodelink"}'></div>
+			<div options='{"field":"orderName","dataType":"String","title":"订单名称"}'></div>
+			<div options='{"field":"customer","dataType":"String","title":"客户"}'></div>
+			<div options='{"field":"busiman","dataType":"String","title":"业务员"}'></div>
+			<div options='{"field":"dept","dataType":"String","title":"所属单位"}'></div>
+			<div options='{"field":"operate","dataType":"String","title":"操作","renderType":"optFunc","editable":true,"fixed":true,"width":"180px"}'></div>
+		</div>
+
+		<!-- 分页区域 -->
+		<div class="aline-center margin-top-5">
+			<div id='mainPagingtion' class='u-pagination pagination' u-meta='{"type":"pagination","data":"gridData","pageChange":"event.pageChange","sizeChange":"event.sizeChange"}'></div>
+		</div>
+
 	</div>
-
-
-	<!-- 新增或者修改的表单区域 -->
+	<!-- 隐藏的表单区域 -->
 	<div id="form-div" style="display: none">
+		<!-- 固定头部 -->
 		<div id="form-div-header">
 			<div class="u-row">
 				<div class="u-col-md-4 aline-let paddingL30 ">
-					<button type="button " class="goback" data-bind="click:event.goBack">
+					<button type="button " class="goback" data-bind="click:event.backBtnClick">
 						<i class="uf uf-arrow-left"></i>返回</button>
 				</div>
 				<div class="u-col-md-4 aline-center">
-					<label id="formTitle" style="font-size:20px">新增订单</label>
+					<h4 id="myTitle">新增记录</h4>
 				</div>
 				<div class="u-col-md-4 aline-right paddingR30 ">
 					<button id="save" type="button" class="u-button" data-bind="click:event.saveClick">保存</button>
 				</div>
 			</div>
 		</div>
-		<div id="form-div-body" style="overflow-x: hidden">
+		<!-- 表单体 -->
+		<div id="form-div-body">
 			<div class="u-row">
 				<div class="u-col-md-4">
 					<div class="u-row">
@@ -194,7 +177,7 @@
 						<div class="u-col-3 aline-right">
 							<label>订单状态</label>
 						</div>
-						<div class="u-col-9 u-combo u-col-8" u-meta='{"type":"u-combobox","datasource":"comboData","data":"ygdemo_searchFormDa","field":"ly_code","onlySelect":true}'>
+						<div class="u-col-9 u-combo u-col-8" u-meta='{"type":"u-combobox","datasource":"comboData","data":"formData","field":"orderState","onlySelect":true}'>
 							<span class="u-form-control-feedback fa fa-angle-down" data-role="combo-button" style="padding: 5px 30px 5px 0px;"></span>
 							<input class="u-form-control input_search search-enter" placeholder="订单状态" name="search_orderState" readonly/>
 						</div>
@@ -241,22 +224,20 @@
 				</div>
 			</div>
 
-
-
 			<div class="u-row margin-top-20">
 				<div class="u-col-md-4 aline-let" style="padding-left: 30px">
-					<button class="u-button" data-bind="click: event.addRow4SubGrid">增行</button>
+					<button class="u-button" data-bind="click: event.addSubGridRow">新增</button>
+					<button class="u-button" data-bind="click: event.deleteSubGridRow">删除</button>
 				</div>
 				<div class="u-col-md-4 aline-center">
 					<label style="font-size:16px">订单明细信息</label>
 				</div>
 				<div class="u-col-md-4 aline-right" style="padding: 0,50,0,0">
-
 				</div>
 			</div>
 
-			<div class="table-container" style="overflow-y:auto">
-				<div id="subGrid" u-meta='{"id":"subDataGrid","type":"grid","height":"250px","data":"subGridData","columnMenu":false,"canDrag":false,"sortable":false,"canSwap":false,"editable":true,"editType":"default","columnWidth":"12%","rowHeight":"40" ,"sumRowHeight":"40","onRowHover":"event.rowHover4SubGrid","fixedFloat":"right"}'>
+			<div class="u-row" style="height: 50%; overflow-y: auto;">
+				<div type="text" id="subGridDiv" class="padding-3" u-meta='{"id":"subDataGrid","type":"grid","data":"subGridData","columnMenu":false,"canDrag":false,"sortable":false,"canSwap":false,"editable":true,"editType":"default","columnWidth":"12%","rowHeight":"40" ,"sumRowHeight":"40","onRowHover":"event.rowHover4SubGrid","fixedFloat":"right"}'>
 					<div options='{"field":"detailCode","dataType":"String","title":"明细编号","editType":"string"}'></div>
 					<div options='{"field":"goodsCode","dataType":"String","title":"商品编号","editType":"string"}'></div>
 					<div options='{"field":"goodsName","dataType":"String","title":"商品名称","editType":"string"}'></div>
@@ -266,10 +247,11 @@
 					<div options='{"field":"amount","dataType":"String","title":"金额","editType":"string", "editable":false}'></div>
 					<div options='{"field":"operate","dataType":"String","title":"操作","renderType":"event.optFunc4SubGrid","editType":"string","editable":false}'></div>
 				</div>
-				<div id='child_card_pagination' class='pagination u-pagination pagination-sm pagination-center'></div>
+				<!-- 分页区域 -->
+				<div class="aline-center">
+					<div class='u-pagination pagination' u-meta='{"type":"pagination","data":"subGridData","pageChange":"event.subPageChange","sizeChange":"event.subSizeChange"}'></div>
+				</div>
 			</div>
 		</div>
-
-
 	</div>
 </div>

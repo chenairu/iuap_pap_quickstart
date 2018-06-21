@@ -27,7 +27,7 @@ public class OrderBillService extends GenericService<OrderBill>{
 
 	//根据传递的参数，进行分页查询
 	public Page<OrderBill> selectAllByPage(PageRequest pageRequest, SearchParams searchParams) {		
-		Page<OrderBill> pageResult = orderBillMapper.selectAllByPage(pageRequest, searchParams).getPage();
+		Page<OrderBill> pageResult = orderBillMapper.selectAllByPage(pageRequest, searchParams.getSearchMap()).getPage();
 		return pageResult;
 	}
 	
