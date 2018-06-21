@@ -157,6 +157,5 @@ public class ExampleAsValService {
             logger.error("{billObjCode:" + billObjCode + ",pkAssign:" + pkAssign + ",billvo:" + billVo + "},错误信息:" + errMsg);
             throw new BusinessException("返回单据号失败",errMsg);
         }
-
     }
 }

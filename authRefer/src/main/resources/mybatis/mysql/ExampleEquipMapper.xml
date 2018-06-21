@@ -215,11 +215,11 @@
 
         <foreach collection="list" item="item" index="index" separator="union" open="(" close=")">
             select
-            #{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{orgId,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, #{deptId,jdbcType=VARCHAR}, 
-      #{deptName,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, 
-      #{updateUserId,jdbcType=VARCHAR}, #{updateUserName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER}, #{tenantId,jdbcType=VARCHAR}
+            #{item.id,jdbcType=VARCHAR}, #{item.code,jdbcType=VARCHAR}, #{item.name,jdbcType=VARCHAR},
+      #{item.orgId,jdbcType=VARCHAR}, #{item.orgName,jdbcType=VARCHAR}, #{item.deptId,jdbcType=VARCHAR},
+      #{item.deptName,jdbcType=VARCHAR}, #{item.createUserId,jdbcType=VARCHAR}, #{item.createUserName,jdbcType=VARCHAR},
+      #{item.updateUserId,jdbcType=VARCHAR}, #{item.updateUserName,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP},
+      #{item.updateTime,jdbcType=TIMESTAMP}, #{item.version,jdbcType=INTEGER}, #{item.tenantId,jdbcType=VARCHAR}
             from dual
         </foreach>
     </insert>
@@ -228,20 +228,20 @@
         <foreach collection="list" item="item" index="index" open="" close="" separator=";">
             update example_equip
             <set>
-                code = #{code,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      org_id = #{orgId,jdbcType=VARCHAR},
-      org_name = #{orgName,jdbcType=VARCHAR},
-      dept_id = #{deptId,jdbcType=VARCHAR},
-      dept_name = #{deptName,jdbcType=VARCHAR},
-      create_user_id = #{createUserId,jdbcType=VARCHAR},
-      create_user_name = #{createUserName,jdbcType=VARCHAR},
-      update_user_id = #{updateUserId,jdbcType=VARCHAR},
-      update_user_name = #{updateUserName,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      version = #{version,jdbcType=INTEGER},
-      tenant_id = #{tenantId,jdbcType=VARCHAR}
+                code = #{item.code,jdbcType=VARCHAR},
+      name = #{item.name,jdbcType=VARCHAR},
+      org_id = #{item.orgId,jdbcType=VARCHAR},
+      org_name = #{item.orgName,jdbcType=VARCHAR},
+      dept_id = #{item.deptId,jdbcType=VARCHAR},
+      dept_name = #{item.deptName,jdbcType=VARCHAR},
+      create_user_id = #{item.createUserId,jdbcType=VARCHAR},
+      create_user_name = #{item.createUserName,jdbcType=VARCHAR},
+      update_user_id = #{item.updateUserId,jdbcType=VARCHAR},
+      update_user_name = #{item.updateUserName,jdbcType=VARCHAR},
+      create_time = #{item.createTime,jdbcType=TIMESTAMP},
+      update_time = #{item.updateTime,jdbcType=TIMESTAMP},
+      version = #{item.version,jdbcType=INTEGER},
+      tenant_id = #{item.tenantId,jdbcType=VARCHAR}
             </set>
             where id = #{item.id,jdbcType=VARCHAR}
         </foreach>

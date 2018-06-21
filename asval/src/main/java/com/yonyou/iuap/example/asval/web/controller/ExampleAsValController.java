@@ -8,6 +8,7 @@ import com.yonyou.iuap.base.web.BaseController;
 import com.yonyou.iuap.example.asval.entity.ExampleAsVal;
 import com.yonyou.iuap.example.asval.service.ExampleAsValService;
 import com.yonyou.iuap.example.asval.validator.ExampleAsValValidator;
+import com.yonyou.iuap.example.common.utils.CommonUtils;
 import com.yonyou.iuap.mvc.type.SearchParams;
 import com.yonyou.iuap.persistence.vo.pub.util.StringUtil;
 import com.yonyou.uap.wb.entity.org.Organization;
@@ -34,7 +35,7 @@ public class ExampleAsValController extends BaseController {
     private ExampleAsValValidator exampleAsValValidator;
     @RequestMapping(value={"/list"},method = {RequestMethod.GET})
     public Object list(PageRequest pageRequest, SearchParams searchParams) {
-
+        CommonUtils.decode(searchParams);
         Page<ExampleAsVal> tmpdata = exampleAsValService.selectAllByPage(pageRequest,searchParams);
         return buildSuccess(tmpdata);
     }

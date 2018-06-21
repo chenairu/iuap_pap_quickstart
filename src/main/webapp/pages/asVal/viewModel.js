@@ -46,7 +46,7 @@ var meta = {
 //所以在创建查询mete时，在字段前添加search_
 var conditionMeta = {
     meta: {
-        search_code: {
+        search_value: {
             type: "string"
         },
         search_name: {

@@ -151,7 +151,7 @@
   <include refid="Base_Column_List"/>
   from example_article where 1=1
   <if test="search != null">
-    <if test="search.code!=null and search.code!='' ">
+    <if test="search.title!=null and search.title!='' ">
       and title like CONCAT(CONCAT('%', #{search.title}),'%')
     </if>
   </if>
