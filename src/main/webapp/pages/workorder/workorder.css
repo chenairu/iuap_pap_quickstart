@@ -4,3 +4,7 @@
     padding-left: 0 !important;
     height: 200% !important;
 }
+
+.modal-backdrop{
+    z-index: -1 !important;
+}

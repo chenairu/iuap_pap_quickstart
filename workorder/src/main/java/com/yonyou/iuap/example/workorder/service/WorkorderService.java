@@ -8,6 +8,8 @@ import java.util.Random;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
@@ -16,9 +18,11 @@ import com.yonyou.iuap.bpm.service.BPMSubmitBasicService;
 import com.yonyou.iuap.bpm.util.BpmRestVarType;
 import com.yonyou.iuap.context.InvocationInfoProxy;
 import com.yonyou.iuap.example.common.service.GenericService;
+import com.yonyou.iuap.example.order.entity.OrderBill;
 import com.yonyou.iuap.example.workorder.dao.WorkorderMapper;
 import com.yonyou.iuap.example.workorder.entity.Workorder;
 import com.yonyou.iuap.example.workorder.util.WorkFlowUtils;
+import com.yonyou.iuap.mvc.type.SearchParams;
 import com.yonyou.iuap.persistence.vo.pub.BusinessException;
 import com.yonyou.uap.ieop.busilog.config.annotation.BusiLogConfig;
 
@@ -27,6 +31,15 @@ import yonyou.bpm.rest.request.RestVariable;
 
 @Service
 public class WorkorderService extends GenericService<Workorder>{
+	
+	
+	//根据传递的参数，进行分页查询
+	
+    @Override
+	public Page<Workorder> selectAllByPage(PageRequest pageRequest, SearchParams searchParams) {		
+		return workorderMapper.selectAllByPage(pageRequest, searchParams.getSearchMap()).getPage();
+	}
+	
 	
 	public void batchSave(List<Workorder> listWorkorder) {
 		for(int i=0; i<listWorkorder.size(); i++) {
@@ -52,7 +65,7 @@ public class WorkorderService extends GenericService<Workorder>{
 	 * @param listWorkorder
 	 * @param processDefineCode
 	 */
-	@BusiLogConfig("workorder_bmp_submit")
+	@BusiLogConfig(method="workorder_bmp_submit", busiName = "")
 	public String batchSubmit(List<Workorder> listWorkorder, String processDefineCode) {
 		StringBuffer errorMsg = new StringBuffer("");
 		for(Workorder workorder : listWorkorder) {
@@ -149,10 +162,14 @@ public class WorkorderService extends GenericService<Workorder>{
 			String orgId = "";// usercxt.getSysUser().getOrgId() ;				
 			bpmform.setOrgId(orgId);													// 组织
 			bpmform.setOtherVariables(assemblingOtherVariables(workorder));				// 其他变量			
-			bpmform.setFormUrl("/iuap-example/pages/workorder/workorder.js");			// 单据url
+			bpmform.setFormUrl("/iuap_pap_quickstart/pages/workorder/workorder.js");	// 单据url
 			bpmform.setProcessInstanceName(title);										// 流程实例名称
-			String url = "/iuap-example/example_workorder";								// 流程审批后，执行的业务处理类(controller对应URI前缀)
+			String url = "/iuap_pap_quickstart/example_workorder";						// 流程审批后，执行的业务处理类(controller对应URI前缀)
 			bpmform.setServiceClass(url);
+			
+			
+			System.out.println("--------------"+bpmform);
+			
 			return bpmform;
 		}catch(Exception ex){
 			throw new RuntimeException(ex.getMessage());

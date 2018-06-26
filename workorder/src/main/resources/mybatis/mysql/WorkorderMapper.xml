@@ -2,7 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yonyou.iuap.example.workorder.dao.WorkorderMapper">
 
-	<select id="selectAllByPage" resultType="com.yonyou.iuap.example.workorder.entity.Workorder">
+
+  <resultMap id="BaseResultMap" type="com.yonyou.iuap.example.workorder.entity.Workorder" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CODE"  property="code" jdbcType="VARCHAR" />
+    <result column="NAME"  property="name" jdbcType="VARCHAR" />
+    <result column="TYPE"  property="type" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="APPLICANT" property="applicant" jdbcType="VARCHAR" />
+    <result column="APPLYTIME" property="applyTime" jdbcType="VARCHAR" />
+    <result column="FINISHTIME" property="finishTime" jdbcType="VARCHAR" />
+    <result column="REMARK"  property="remark" jdbcType="VARCHAR" />
+    <result column="VERSION" property="version" jdbcType="INTEGER" />
+    <result column="CREATETIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATEUSER" property="createUser" jdbcType="VARCHAR" />
+    <result column="LASTMODIFIED" property="lastModified" jdbcType="VARCHAR" />
+    <result column="LASTMODIFYUSER" property="lastModifyUser" jdbcType="VARCHAR" />
+    <result column="TS"  property="ts" jdbcType="VARCHAR" />
+    <result column="DR" property="dr" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    ID,CODE,NAME,TYPE,CONTENT,STATUS,APPLICANT,APPLYTIME,FINISHTIME,REMARK,VERSION,CREATETIME,CREATEUSER,LASTMODIFIED,LASTMODIFYUSER,TS,DR
+  </sql>
+
+	<select id="selectAllByPage1" resultType="com.yonyou.iuap.example.workorder.entity.Workorder">
 		SELECT	t.id,
 				t.code,
 				t.name,
@@ -18,8 +43,8 @@
 				t.version,
 				t.createTime,
 				t.createUser,
-				t.lastModified,
-				t.lastModified,
+				t.LASTMODIFIED,
+				t.LASTMODIFYUSER,
 				t.ts,
 				t.dr
 		FROM  example_workorder t
@@ -38,6 +63,26 @@
 				</if>
 			</if>	
 	</select>
+	
+	<select id="selectAllByPage" resultMap="BaseResultMap" resultType="java.util.List">
+		SELECT
+			<include refid="Base_Column_List" />
+		FROM example_workorder where 1=1
+			<if test="condition != null">
+				<if test="condition.code!=null and condition.code!='' ">
+					and code like CONCAT(CONCAT('%', #{condition.code}),'%')
+				</if>
+				<if test="condition.name!=null and condition.name!='' ">
+					and name like CONCAT(CONCAT('%', #{condition.name}),'%')
+				</if>
+				<if test="condition.refParam!=null and condition.refParam!='' ">
+					and ( code like CONCAT(CONCAT('%', #{condition.refParam}),'%') or name like CONCAT(CONCAT('%', #{condition.refParam}),'%') )
+				</if>
+			</if>
+	</select>
+	
+	
+	
 	
 	<select id="queryList" resultType="com.yonyou.iuap.example.workorder.entity.Workorder">
 		SELECT	t.id,

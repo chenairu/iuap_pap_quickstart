@@ -11,14 +11,25 @@ var meta = {
 		},
 		type : {
 			required : true,
-			nullMsg : "不能为空"
+			nullMsg : "不能为空",
+			default: "投诉工单"
 		},
 		type_name : {},
-		content : {},
-		applicant : {},
-		applyTime : {},
+		content : {
+			required : true,
+			nullMsg : "不能为空",
+		},
+		applicant : {
+			enable : false
+		},
+		applyTime : {
+			enable : false
+		},
 		finishTime : {},
-		status : {},
+		status : {
+			enable : false,
+			default: "未提交"
+		},
 		status_name : {},
 		remark : {},
 		version : {},
@@ -28,9 +39,20 @@ var meta = {
 		lastModifyUser : {}
 	}
 };
+
+
+var conditionMeta = {
+	meta: {
+	  search_code: { 
+		type: "string" 
+	  },
+	  search_name: {
+		type: "string"
+	  }
+	}
+  };
 var viewModel = {
-	draw: 1,				//页数(第几页)
-	pageSize: 5,
+	condition: new u.DataTable(conditionMeta),//查询条件
 	gridData: new u.DataTable(meta),
 	formData: new u.DataTable(meta),
 	workorderType_list:[{name:"投诉工单",value:"0"},{name:"对账工单",value:"1"}],

@@ -55,7 +55,7 @@ define(['text!./goodsDirectory.html',"require","dialogmin",
                 },
                 async:{
                     enable:true,
-                    url: "/iuap-example/goodsDirectory/children",
+                    url: "/iuap_pap_quickstart/goodsDirectory/children",
                     autoParam:["id","level"]
                 },
                 callback: {
