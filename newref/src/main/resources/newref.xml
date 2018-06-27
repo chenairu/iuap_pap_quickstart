@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<table name="EXAMPLE_CONTACTS">
+		<showcol code="peocode">人员编码</showcol>
+		<showcol code="peoname">人员名称</showcol>
+		<showcol code="pidfield">INSTITID</showcol>
+	</table>
+	
+	<tableTree name="EXAMPLE_ORGANIZATION">
+		<idfield code="idfield">INSTITID</idfield>
+		<codefield code="codefield">INSTIT_CODE</codefield>
+		<namefield code="namefield">INSTIT_NAME</namefield>
+		<pidfield code="pidfield">PARENT_ID</pidfield>
+	</tableTree>
+</root>
