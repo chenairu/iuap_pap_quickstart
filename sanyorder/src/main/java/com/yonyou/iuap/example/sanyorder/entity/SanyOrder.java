@@ -3,29 +3,59 @@ package com.yonyou.iuap.example.sanyorder.entity;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.yonyou.iuap.example.common.entity.AbsGenericEntity;
-import com.yonyou.iuap.example.common.entity.GenericEntity;
+import com.yonyou.iuap.baseservice.entity.AbsDrModel;
+import com.yonyou.iuap.baseservice.persistence.mybatis.ext.annotation.Condition;
+import com.yonyou.iuap.baseservice.persistence.mybatis.ext.support.Match;
+
+import javax.persistence.Column;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SanyOrder extends AbsGenericEntity implements GenericEntity {
+@Table(name="sany_order")
+public class SanyOrder extends AbsDrModel {
 
+	@Condition(match=Match.LIKE)
+	@Column(name="ORDERCODE")
 	private String orderCode;//订单编号
+	@Condition(match=Match.LIKE)
+	@Column(name="ORDERNAME")
 	private String orderName;//订单名称
+	@Condition(match=Match.LIKE)
+	@Column(name="SUPPLIER")
 	private String supplier;//供应商
+	@Condition(match=Match.LIKE)
+	@Column(name="supplierName")
 	private String supplierName;//供应商名称
+	@Condition(match=Match.EQ)
+	@Column(name="TYPE")
 	private String type;//类型
-	
+	@Condition(match=Match.LIKE)
+	@Column(name="PURCHASING")
 	private String purchasing;//采购组织
+	@Condition(match=Match.LIKE)
+	@Column(name="PURCHASINGGROUP")
 	private String purchasingGroup;//采购组
+	@Condition(match=Match.EQ)
+	@Column(name="VOUCHERDATE")
 	private Date voucherDate;//凭证日期
+	@Condition(match=Match.EQ)
+	@Column(name="APPROVALSTATE")
 	private Integer approvalState;//审批状态
+	@Condition(match=Match.EQ)
+	@Column(name="CONFIRMSTATE")
 	private Integer confirmState;//确认状态
+	@Condition(match=Match.EQ)
+	@Column(name="CLOSESTATE")
 	private Integer closeState;//关闭状态
-	
-	
+
+	@Transient
 	private String type_name;//类型名称
+	@Transient
 	private String approvalState_name;//关闭状态
+	@Transient
 	private String confirmState_name;//关闭状态
+	@Transient
 	private String closeState_name;//关闭状态
 	
 	

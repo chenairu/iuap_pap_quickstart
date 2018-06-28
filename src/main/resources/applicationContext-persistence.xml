@@ -132,5 +132,8 @@
 		<property name="jt" ref="jdbcTemplate" />
 	</bean>
 
-
+	<bean id="autoMapperLoader" class="com.yonyou.iuap.baseservice.persistence.mybatis.ext.AutoMapperLoader"
+		  lazy-init="false">
+		<property name="basePackage" value="com.yonyou.iuap.**.dao"/>
+	</bean>
 </beans>

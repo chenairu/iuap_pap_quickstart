@@ -3,7 +3,7 @@
 <mapper namespace="com.yonyou.iuap.example.sanyorder.dao.SanyOrderMapper">
 
 	<select id="selectAllByPage" resultType="com.yonyou.iuap.example.sanyorder.entity.SanyOrder">
-SELECT  t.ID,
+			SELECT  t.ID,
 				t.ORDERCODE,
 				t.ORDERNAME,
 				t.SUPPLIER,
@@ -21,9 +21,9 @@ SELECT  t.ID,
 				CASE WHEN t.CLOSESTATE='0' THEN '未关闭' WHEN t.CLOSESTATE='1' THEN '已关闭' END AS closeState_name,
 				t.remark,
 				t.version,
-				t.createTime,
-				t.createUser,
-				t.lastModified,
+				t.create_Time,
+				t.create_User,
+				t.last_Modified,
 				t.ts,
 				t.dr FROM SANY_ORDER t WHERE 1=1
 			<if test="condition != null">
@@ -58,92 +58,5 @@ SELECT  t.ID,
 				</if>
 			</if>	
 	</select>
-	
-	<insert id="insert" parameterType="com.yonyou.iuap.example.sanyrole.entity.SanyRole">
-		insert into SANY_ORDER (
-				 ID,
-				ORDERCODE,
-				ORDERNAME,
-				SUPPLIER,
-				supplierName,
-				type,
-				purchasing,
-				purchasingGroup,
-				voucherDate,
-				APPROVALSTATE,
-				CONFIRMSTATE,
-				CLOSESTATE,
-				remark,
-				version,
-				createTime,
-				createUser,
-				lastModified,
-				lastModifyUser,
-				ts,
-				dr 
-		)values(	#{id,jdbcType=VARCHAR},
-						#{orderCode,jdbcType=VARCHAR},
-						#{orderName,jdbcType=VARCHAR},
-						#{supplier,jdbcType=VARCHAR},
-						#{supplierName,jdbcType=VARCHAR},
-						#{type,jdbcType=NUMERIC},
-						#{purchasing,jdbcType=VARCHAR},
-						#{purchasingGroup,jdbcType=VARCHAR},
-						#{voucherDate,jdbcType=DATE},
-						#{approvalState,jdbcType=NUMERIC},
-						#{confirmState,jdbcType=NUMERIC},
-						#{closeState,jdbcType=NUMERIC},
-					#{remark,jdbcType=VARCHAR},
-					#{version,jdbcType=NUMERIC},
-					#{createTime,jdbcType=VARCHAR},
-					#{createUser,jdbcType=VARCHAR},
-					#{lastModified,jdbcType=VARCHAR},
-					#{lastModifyUser,jdbcType=VARCHAR},
-					#{ts,jdbcType=VARCHAR},
-					#{dr,jdbcType=DATE}
-		)
-	</insert>
-	
-	<update id="update" parameterType="com.yonyou.iuap.example.sanyrole.entity.SanyRole">
-		update 	SANY_ORDER
-		set		
-				ORDERCODE=#{orderCode,jdbcType=VARCHAR},
-				ORDERNAME=#{orderName,jdbcType=VARCHAR},
-				SUPPLIER=#{supplier,jdbcType=VARCHAR},
-				supplierName=#{supplierName,jdbcType=VARCHAR},
-				type=#{type,jdbcType=NUMERIC},
-				purchasing=#{purchasing,jdbcType=VARCHAR},
-				purchasingGroup=#{purchasingGroup,jdbcType=VARCHAR},
-				voucherDate=#{voucherDate,jdbcType=DATE},
-				APPROVALSTATE=#{approvalState,jdbcType=NUMERIC},
-				CONFIRMSTATE=#{confirmState,jdbcType=NUMERIC},
-				CLOSESTATE=#{closeState,jdbcType=NUMERIC},
-				remark=#{remark,jdbcType=VARCHAR},
-				version=#{version,jdbcType=NUMERIC}+1,
-				lastModified=#{lastModified,jdbcType=TIMESTAMP},
-				lastModifyUser=#{lastModifyUser,jdbcType=VARCHAR}
-		where	id=#{id}
-				and version=#{version}
-	</update>
-	
-	<delete id="delete">
-		DELETE FROM SANY_ORDER
-		WHERE 1=1
-			<if test="condition==null">
-				and 1=2
-			</if>
-			<if test="condition!=null">
-				<if test="condition.id!=null and condition.id!=''">
-					and id = #{condition.id}
-				</if>
-				<if test="condition.ids!=null and condition.ids.size>0">
-					and id in (
-						<foreach collection="condition.ids" item="item" separator="," open="(" close=")">
-							#{item,jdbcType=VARCHAR}
-						</foreach>
-					)
-				</if>
-			</if>
-	</delete>
-	
+
 </mapper>

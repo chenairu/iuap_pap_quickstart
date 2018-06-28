@@ -4,25 +4,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import com.yonyou.iuap.baseservice.service.GenericExService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.yonyou.iuap.example.common.service.GenericService;
 import com.yonyou.iuap.example.sanyorder.dao.SanyOrderMapper;
 import com.yonyou.iuap.example.sanyorder.entity.SanyOrder;
 
 import yonyou.bpm.rest.ex.util.DateUtil;
 
 @Service
-public class SanyOrderService extends GenericService<SanyOrder>{
-	
-	public void batchSave(List<SanyOrder> listSanyOrder) {
-		for(int i=0; i<listSanyOrder.size(); i++) {
-			this.save(listSanyOrder.get(i));
-		}
-	}
-	
+public class SanyOrderService extends GenericExService<SanyOrder>{
 
 	/**
 	 * 新增保存工单信息
@@ -37,13 +30,11 @@ public class SanyOrderService extends GenericService<SanyOrder>{
 	}
 	
 
-	/******************************************************/
-	private SanyOrderMapper SanyOrderMapper;
+	private SanyOrderMapper sanyOrderMapper;
 
 	@Autowired
-	public void setSanyOrderMapper(SanyOrderMapper SanyOrderMapper) {
-		this.SanyOrderMapper = SanyOrderMapper;
-		super.setIbatisMapper(SanyOrderMapper);
+	public void setSanyOrderMapper(SanyOrderMapper sanyOrderMapper) {
+		this.sanyOrderMapper = sanyOrderMapper;
+		super.setIbatisMapperEx(sanyOrderMapper);
 	}
-	
 }

@@ -1,9 +1,11 @@
 package com.yonyou.iuap.example.sanyorder.dao;
 
-import com.yonyou.iuap.example.common.dao.GenericMapper;
+import com.yonyou.iuap.baseservice.persistence.mybatis.mapper.GenericExMapper;
 import com.yonyou.iuap.example.sanyorder.entity.SanyOrder;
+import com.yonyou.iuap.mybatis.anotation.MyBatisRepository;
 
-public interface SanyOrderMapper extends GenericMapper<SanyOrder>{
+@MyBatisRepository
+public interface SanyOrderMapper extends GenericExMapper<SanyOrder> {
 
 	
 }
