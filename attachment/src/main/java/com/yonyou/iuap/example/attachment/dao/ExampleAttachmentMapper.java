@@ -1,8 +1,6 @@
 package com.yonyou.iuap.example.attachment.dao;
 
 import com.yonyou.iuap.example.attachment.entity.ExampleAttachment;
-import com.yonyou.iuap.example.template.entity.ExampleTemplate;
-import com.yonyou.iuap.mvc.type.SearchParams;
 import com.yonyou.iuap.mybatis.type.PageResult;
 import com.yonyou.iuap.persistence.mybatis.anotation.MyBatisRepository;
 

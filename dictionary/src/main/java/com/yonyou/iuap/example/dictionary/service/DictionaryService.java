@@ -18,6 +18,7 @@ import com.yonyou.iuap.example.common.service.GenericService;
 import com.yonyou.iuap.example.dictionary.dao.DictionaryMapper;
 import com.yonyou.iuap.example.dictionary.entity.Dictionary;
 import com.yonyou.iuap.mvc.type.SearchParams;
+import com.yonyou.uap.ieop.busilog.config.annotation.BusiLogConfig;
 
 @Service
 public class DictionaryService extends GenericService<Dictionary>{
@@ -31,6 +32,7 @@ public class DictionaryService extends GenericService<Dictionary>{
      * @return
      */
     @Override
+    @BusiLogConfig(method="bill_save", busiName = "123")
     public Page<Dictionary> selectAllByPage(PageRequest pageRequest, SearchParams searchParams) {
         return dictionaryMapper.selectAllByPage(pageRequest, searchParams.getSearchMap()).getPage();
     }

@@ -266,7 +266,7 @@
         <dependency>
             <groupId>com.yonyou.iuap</groupId>
             <artifactId>iuap-file</artifactId>
-            <version>${iuap.modules.version}</version>
+            <version>3.2.2-SNAPSHOT</version>
         </dependency>
 
 <!-- 		<dependency> -->

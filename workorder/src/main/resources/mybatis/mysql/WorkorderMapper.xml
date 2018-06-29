@@ -2,56 +2,33 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yonyou.iuap.example.workorder.dao.WorkorderMapper">
 
-
-  <resultMap id="BaseResultMap" type="com.yonyou.iuap.example.workorder.entity.Workorder" >
-    <id column="ID" property="id" jdbcType="VARCHAR" />
-    <result column="CODE"  property="code" jdbcType="VARCHAR" />
-    <result column="NAME"  property="name" jdbcType="VARCHAR" />
-    <result column="TYPE"  property="type" jdbcType="VARCHAR" />
-    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
-    <result column="STATUS" property="status" jdbcType="VARCHAR" />
-    <result column="APPLICANT" property="applicant" jdbcType="VARCHAR" />
-    <result column="APPLYTIME" property="applyTime" jdbcType="VARCHAR" />
-    <result column="FINISHTIME" property="finishTime" jdbcType="VARCHAR" />
-    <result column="REMARK"  property="remark" jdbcType="VARCHAR" />
-    <result column="VERSION" property="version" jdbcType="INTEGER" />
-    <result column="CREATETIME" property="createTime" jdbcType="VARCHAR" />
-    <result column="CREATEUSER" property="createUser" jdbcType="VARCHAR" />
-    <result column="LASTMODIFIED" property="lastModified" jdbcType="VARCHAR" />
-    <result column="LASTMODIFYUSER" property="lastModifyUser" jdbcType="VARCHAR" />
-    <result column="TS"  property="ts" jdbcType="VARCHAR" />
-    <result column="DR" property="dr" jdbcType="INTEGER" />
-  </resultMap>
-  
-  <sql id="Base_Column_List" >
-    ID,CODE,NAME,TYPE,CONTENT,STATUS,APPLICANT,APPLYTIME,FINISHTIME,REMARK,VERSION,CREATETIME,CREATEUSER,LASTMODIFIED,LASTMODIFYUSER,TS,DR
-  </sql>
-
-	<select id="selectAllByPage1" resultType="com.yonyou.iuap.example.workorder.entity.Workorder">
+	<select id="selectAllByPage" resultType="com.yonyou.iuap.example.workorder.entity.Workorder">
 		SELECT	t.id,
 				t.code,
 				t.name,
 				t.type,
-				CASE WHEN t.type='0' THEN '投诉工单' WHEN t.type='1' THEN '对账工单' ELSE t.type END AS type_name,
+				CASE WHEN t.type='0' THEN '投诉工单' WHEN t.type='1' THEN '对账工单' ELSE '已办结' END AS type_name,
 				t.content,
 				t.applicant,
 				t.applyTime,
 				t.finishTime,
 				t.status,
-				CASE WHEN t.status='0' THEN '未提交' WHEN t.status='1' THEN '已提交' WHEN t.status='2' THEN '审批中' WHEN t.status='3' THEN '已完结' END AS status_name,
+				CASE WHEN t.status='0' THEN '未提交' WHEN t.status='1' THEN '已提交' WHEN t.status='2' THEN '审批中' WHEN t.status='0' THEN '已办结' END AS status_name,
 				t.remark,
 				t.version,
 				t.createTime,
 				t.createUser,
-				t.LASTMODIFIED,
-				t.LASTMODIFYUSER,
+				t.lastModified,
 				t.ts,
 				t.dr
 		FROM  example_workorder t
 		WHERE 1=1
 			<if test="condition != null">
-				<if test="condition.searchMap.id!=null and condition.searchMap.id!='' ">
-					and id = #{id, jdbcType=VARCHAR}
+				<if test="condition.searchMap.code!=null and condition.searchMap.code!='' ">
+					and t.code like CONCAT(CONCAT('%', ${condition.searchMap.code}),'%')
+				</if>
+				<if test="condition.searchMap.name!=null and condition.searchMap.name!='' ">
+					and t.name like CONCAT(CONCAT('%', ${condition.searchMap.name}),'%')
 				</if>
 			</if>		
 			<if test="page != null">
@@ -64,37 +41,17 @@
 			</if>	
 	</select>
 	
-	<select id="selectAllByPage" resultMap="BaseResultMap" resultType="java.util.List">
-		SELECT
-			<include refid="Base_Column_List" />
-		FROM example_workorder where 1=1
-			<if test="condition != null">
-				<if test="condition.code!=null and condition.code!='' ">
-					and code like CONCAT(CONCAT('%', #{condition.code}),'%')
-				</if>
-				<if test="condition.name!=null and condition.name!='' ">
-					and name like CONCAT(CONCAT('%', #{condition.name}),'%')
-				</if>
-				<if test="condition.refParam!=null and condition.refParam!='' ">
-					and ( code like CONCAT(CONCAT('%', #{condition.refParam}),'%') or name like CONCAT(CONCAT('%', #{condition.refParam}),'%') )
-				</if>
-			</if>
-	</select>
-	
-	
-	
-	
 	<select id="queryList" resultType="com.yonyou.iuap.example.workorder.entity.Workorder">
 		SELECT	t.id,
 				t.code,
 				t.name,
 				t.type,
-				CASE WHEN t.type='0' THEN '投诉工单' WHEN t.type='1' THEN '对账工单' ELSE t.type END AS type_name,
+				CASE WHEN t.type='0' THEN '投诉工单' WHEN t.type='1' THEN '对账工单' ELSE '已办结' END AS type_name,
 				t.content,
 				t.applicant,
 				t.applyTime,
 				t.status,
-				CASE WHEN t.status='0' THEN '未提交' WHEN t.status='1' THEN '已提交' WHEN t.status='2' THEN '审批中' WHEN t.status='3' THEN '已完结' END AS status_name,
+				CASE WHEN t.status='0' THEN '未提交' WHEN t.status='1' THEN '已提交' WHEN t.status='2' THEN '审批中' WHEN t.status='0' THEN '已办结' END AS status_name,
 				t.remark,
 				t.version,
 				t.createTime,
@@ -151,7 +108,8 @@
 	
 	<update id="update" parameterType="com.yonyou.iuap.example.workorder.entity.Workorder">
 		update 	example_workorder
-		set		code=#{code,jdbcType=VARCHAR},
+		set		
+				code=#{code,jdbcType=VARCHAR},
 				name=#{name,jdbcType=VARCHAR},
 				type=#{type,jdbcType=VARCHAR},
 				content=#{content,jdbcType=VARCHAR},

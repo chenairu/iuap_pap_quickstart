@@ -10,6 +10,7 @@ import com.yonyou.iuap.context.InvocationInfoProxy;
 import com.yonyou.iuap.example.common.dao.GenericMapper;
 import com.yonyou.iuap.example.common.entity.GenericEntity;
 import com.yonyou.iuap.mvc.type.SearchParams;
+import com.yonyou.uap.ieop.busilog.config.annotation.BusiLogConfig;
 
 public abstract class GenericService<T extends GenericEntity> {
 	

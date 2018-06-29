@@ -24,7 +24,9 @@ SELECT
 				t.createUser,
 				t.lastModified,
 				t.ts,
-				t.dr FROM SANY_DELIVERYDETAIL t WHERE 1=1
+				t.dr ,
+				t.attachmenturl
+				FROM SANY_DELIVERYDETAIL t WHERE 1=1
 			<if test="page != null">
 				<if test="page.sort!=null">
 					order by 
@@ -59,7 +61,7 @@ SELECT
 				  lastModified,
 				  lastModifyUser,
 				  ts,
-				  dr
+				  dr,attachmenturl
 		)values(	#{id,jdbcType=VARCHAR},
 					#{arrivalDate,jdbcType=DATE},
 					#{deliveryCode,jdbcType=VARCHAR},
@@ -82,7 +84,8 @@ SELECT
 					#{lastModified,jdbcType=VARCHAR},
 					#{lastModifyUser,jdbcType=VARCHAR},
 					#{ts,jdbcType=VARCHAR},
-					#{dr,jdbcType=DATE}
+					#{dr,jdbcType=DATE},
+					#{attachmenturl,jdbcType=DATE}
 		)
 	</insert>
 	
@@ -106,7 +109,8 @@ SELECT
 				remark=#{remark,jdbcType=VARCHAR},
 				version=#{version,jdbcType=NUMERIC}+1,
 				lastModified=#{lastModified,jdbcType=TIMESTAMP},
-				lastModifyUser=#{lastModifyUser,jdbcType=VARCHAR}
+				lastModifyUser=#{lastModifyUser,jdbcType=VARCHAR},
+				attachmenturl=#{attachmenturl,jdbcType=VARCHAR}
 		where	id=#{id}
 				and version=#{version}
 	</update>

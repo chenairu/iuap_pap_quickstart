@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yonyou.iuap.base.web.BaseController;
-import com.yonyou.iuap.example.common.utils.CommonUtils;
 import com.yonyou.iuap.example.workorder.entity.Workorder;
 import com.yonyou.iuap.example.workorder.service.WorkorderService;
 import com.yonyou.iuap.mvc.annotation.FrontModelExchange;
@@ -39,14 +38,13 @@ public class WorkorderController extends BaseController{
 	@ResponseBody
 	public Object list(PageRequest pageRequest,
 			@FrontModelExchange(modelType = Workorder.class) SearchParams searchParams) {
-		CommonUtils.decode(searchParams);
 		Page<Workorder> page = workorderService.selectAllByPage(pageRequest, searchParams);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("data", page);
 		return this.buildMapSuccess(map);
 	}
 	
-	@RequestMapping(value = "/get", method = RequestMethod.GET)
+	@RequestMapping(value = "/get", method = RequestMethod.POST)
 	@ResponseBody
 	public Object get(@RequestParam("id") String id) {
 		Workorder workorder = workorderService.findById(id);
