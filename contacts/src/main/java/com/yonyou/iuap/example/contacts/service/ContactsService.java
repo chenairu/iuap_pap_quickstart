@@ -7,6 +7,8 @@ import com.yonyou.iuap.example.contacts.entity.Organization;
 import com.yonyou.iuap.example.contacts.entity.Contacts;
 import com.yonyou.iuap.mvc.type.SearchParams;
 import com.yonyou.iuap.persistence.vo.pub.util.StringUtil;
+import com.yonyou.uap.ieop.busilog.config.annotation.BusiLogConfig;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,6 +31,7 @@ public class ContactsService extends GenericService<Contacts>{
     /**
      * 分页相关
      */
+    @BusiLogConfig(method="workorder_bmp_submit", busiName = "123")
     public Page<Contacts> selectAllByPage(PageRequest pageRequest, SearchParams searchParams ,String institid) {
         List<String> list = new ArrayList<String>();
         String[] ids = institid.split(",");

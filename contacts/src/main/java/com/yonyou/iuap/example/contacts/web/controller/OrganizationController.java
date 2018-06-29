@@ -3,6 +3,7 @@ package com.yonyou.iuap.example.contacts.web.controller;
 import com.yonyou.iuap.base.web.BaseController;
 import com.yonyou.iuap.example.contacts.entity.Organization;
 import com.yonyou.iuap.example.contacts.service.OrganizationService;
+import com.yonyou.iuap.example.contacts.utils.TreeTransform;
 import com.yonyou.iuap.example.contacts.validator.OrganizationValidator;
 
 import org.slf4j.Logger;
@@ -46,6 +47,7 @@ public class OrganizationController extends BaseController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public @ResponseBody Object loadTree() {
         List<Organization> data = oranizationService.findAll();
+        data = TreeTransform.get(data);
         return buildSuccess(data);
     }
 

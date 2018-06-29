@@ -22,6 +22,8 @@ public class SanyDeliveryDetail extends AbsGenericEntity implements GenericEntit
 	private String transportNumber;
 	private String transportation;
 	private Date voucherDate;
+	
+	private String attachmenturl;
 
 	private String remark;
 
@@ -135,6 +137,14 @@ public class SanyDeliveryDetail extends AbsGenericEntity implements GenericEntit
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public String getAttachmenturl() {
+		return attachmenturl;
+	}
+
+	public void setAttachmenturl(String attachmenturl) {
+		this.attachmenturl = attachmenturl;
 	}
 
 }

@@ -32,17 +32,17 @@ import com.yonyou.iuap.mvc.type.SearchParams;
 @RequestMapping(value = "/sany_supplier")
 public class SanySupplierController extends GenericController<SanySupplier>{
 
-	private Logger logger = LoggerFactory.getLogger(SanySupplierController.class);
+//	private Logger logger = LoggerFactory.getLogger(SanySupplierController.class);
 
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	@ResponseBody
-	public Object list(PageRequest pageRequest,
-			@FrontModelExchange(modelType = SanySupplier.class) SearchParams searchParams) {
-		Page<SanySupplier> page = sanySupplierService.selectAllByPage(pageRequest, searchParams);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("data", page);
-		return this.buildMapSuccess(map);
-	}
+//	@RequestMapping(value = "/list", method = RequestMethod.GET)
+//	@ResponseBody
+//	public Object list(PageRequest pageRequest,
+//			@FrontModelExchange(modelType = SanySupplier.class) SearchParams searchParams) {
+//		Page<SanySupplier> page = sanySupplierService.selectAllByPage(pageRequest, searchParams);
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("data", page);
+//		return this.buildMapSuccess(map);
+//	}
 //	
 //	@RequestMapping(value = "/get", method = RequestMethod.POST)
 //	@ResponseBody

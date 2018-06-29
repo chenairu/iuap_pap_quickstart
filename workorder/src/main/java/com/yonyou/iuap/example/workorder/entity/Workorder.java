@@ -8,6 +8,7 @@ import com.yonyou.iuap.example.common.entity.GenericEntity;
 import com.yonyou.iuap.persistence.vo.BaseEntity;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+//public class Workorder extends BaseEntity implements GenericEntity {
 public class Workorder extends AbsGenericEntity implements GenericEntity {
 
 //	private static final long serialVersionUID = 7415955552838232647L;

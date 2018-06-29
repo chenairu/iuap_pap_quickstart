@@ -1,6 +1,7 @@
 package com.yonyou.iuap.example.contacts.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.yonyou.iuap.example.common.entity.AbsGenericEntity;
@@ -16,6 +17,8 @@ public class Organization extends AbsGenericEntity{
 	private  String instittype;
 	private  String parentid;
 	private  String institcode;
+	
+	private  List<Organization> children;
 	
 	public Date getCreationtime() {
 		return creationtime;
@@ -70,6 +73,12 @@ public class Organization extends AbsGenericEntity{
 	}
 	public void setInstitcode(String institcode) {
 		this.institcode = institcode;
+	}
+	public List<Organization> getChildren() {
+		return children;
+	}
+	public void setChildren(List<Organization> children) {
+		this.children = children;
 	}
 	
 	
