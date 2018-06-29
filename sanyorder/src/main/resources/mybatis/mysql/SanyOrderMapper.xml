@@ -27,26 +27,29 @@
 				t.ts,
 				t.dr FROM SANY_ORDER t WHERE 1=1
 			<if test="condition != null">
-				<if test="condition.searchMap.code!=null and condition.searchMap.code!='' ">
-					and t.ORDERCODE like CONCAT(CONCAT('%', ${condition.searchMap.orderCode}),'%')
+				<if test="condition.searchMap.orderCode!=null and condition.searchMap.orderCode!='' ">
+					and t.ORDERCODE LIKE CONCAT('%', #{condition.searchMap.orderCode}, '%')
 				</if>
 				<if test="condition.searchMap.supplierName!=null and condition.searchMap.supplierName!='' ">
-					and t.supplierName like CONCAT(CONCAT('%', ${condition.searchMap.supplierName}),'%')
+					and t.supplierName like CONCAT('%', #{condition.searchMap.supplierName}, '%')
 				</if>
 				<if test="condition.searchMap.voucherDate!=null and condition.searchMap.voucherDate!='' ">
 					and t.voucherDate between to_date(${condition.searchMap.startTime},'yyyy-mm-dd hh24:mi:ss') and to_date(${condition.searchMap.endTime},'yyyy-mm-dd hh24:mi:ss')
 				</if>
 				<if test="condition.searchMap.type!=null and condition.searchMap.type!='' ">
-					and t.type = ${condition.searchMap.type}
+					and t.type = #{condition.searchMap.type}
 				</if>
 				<if test="condition.searchMap.approvalState!=null and condition.searchMap.approvalState!='' ">
-					and t.APPROVALSTATE = ${condition.searchMap.APPROVALSTATE}
+					and t.APPROVALSTATE = #{condition.searchMap.APPROVALSTATE}
 				</if>
 				<if test="condition.searchMap.confirmState!=null and condition.searchMap.confirmState!='' ">
-					and t.CONFIRMSTATE = ${condition.searchMap.CONFIRMSTATE}
+					and t.CONFIRMSTATE = #{condition.searchMap.CONFIRMSTATE}
 				</if>
 				<if test="condition.searchMap.closeState!=null and condition.searchMap.closeState!='' ">
-					and t.CLOSESTATE = ${condition.searchMap.CLOSESTATE}
+					and t.CLOSESTATE = #{condition.searchMap.CLOSESTATE}
+				</if>
+				<if test="condition.searchMap.purchasingGroup!=null and condition.searchMap.purchasingGroup!='' ">
+					and t.PURCHASINGGROUP = #{condition.searchMap.purchasingGroup}
 				</if>
 			</if>		
 			<if test="page != null">
