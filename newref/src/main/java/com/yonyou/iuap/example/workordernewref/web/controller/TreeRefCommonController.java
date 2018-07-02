@@ -256,10 +256,14 @@ public class TreeRefCommonController extends AbstractTreeGridRefModel{
 			ValueConvertor convertor = new ValueConvertor();
 			for (Map<String, Object> entity : headVOs) {
 				Map<String, String> refDataMap = new HashMap<String, String>();
-				refDataMap.put("refpk", entity.get("ID").toString());
 				for (String key : entity.keySet()) {
-					refDataMap.put(key.toLowerCase(), 
-							convertor.convertToJsonType(entity.get(key)).toString());
+					if(key.equalsIgnoreCase("id")){
+						refDataMap.put("refpk", entity.get(key).toString());
+						refDataMap.put(key.toLowerCase(), entity.get(key).toString());
+					}else{
+						refDataMap.put(key.toLowerCase(), 
+								convertor.convertToJsonType(entity.get(key)).toString());
+					}
 				}
 				results.add(refDataMap);
 			}
@@ -280,14 +284,21 @@ public class TreeRefCommonController extends AbstractTreeGridRefModel{
 			ValueConvertor convertor = new ValueConvertor();
 			for (Map<String, Object> entity : headVOs) {
 				Map<String, String> refDataMap = new HashMap<String, String>();
-				refDataMap.put("refpk", entity.get("ID").toString());
-				if(entity.get("PID") == null){
-					refDataMap.put("pid","");
-				}
-				
+				String pid =null;
 				for (String key : entity.keySet()) {
-					refDataMap.put(key.toLowerCase(), 
-							convertor.convertToJsonType(entity.get(key)).toString());
+					if(key.equalsIgnoreCase("id")){
+						refDataMap.put("refpk", entity.get(key).toString());
+						refDataMap.put(key.toLowerCase(), entity.get(key).toString());
+					}else if(key.equalsIgnoreCase("pid")){
+						pid = key;
+					}else{
+						refDataMap.put(key.toLowerCase(), convertor.convertToJsonType(entity.get(key)).toString());
+					}
+				}
+				if(pid != null){
+					refDataMap.put(pid.toLowerCase(), convertor.convertToJsonType(entity.get(pid)).toString());
+				}else{
+					refDataMap.put("pid", "");
 				}
 				results.add(refDataMap);
 			}
