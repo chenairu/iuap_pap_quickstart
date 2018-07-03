@@ -26,9 +26,9 @@ public class NewRefCommonService {
 	}
 
 	public Page<Map<String, Object>> getTreeRefData(PageRequest pageRequest,
-			String tablename, String idfield,String pidfield, Map<String, String> condition,List<String> extColumns) {
+			String tablename, String idfield, Map<String, String> condition,List<String> extColumns) {
 		
-		Page<Map<String,Object>> result = mapper.treerefselectAllByPage(pageRequest,tablename,idfield,pidfield, extColumns,condition).getPage();
+		Page<Map<String,Object>> result = mapper.treerefselectAllByPage(pageRequest,tablename,idfield, extColumns,condition).getPage();
 		return result;
 	}
 
