@@ -30,7 +30,7 @@ import com.yonyou.iuap.ref.sdk.refmodel.model.AbstractTreeGridRefModel;
  */
 @Controller
 @RequestMapping(value = "/common/newref")
-public class TreeRefCommonController extends AbstractTreeGridRefModel{
+public class NewCommonController extends AbstractTreeGridRefModel{
 
 	@Autowired
 	private NewRefCommonService service;
