@@ -1,8 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yonyou.iuap.example.sanyorder.dao.SanyOrderMapper">
+    <resultMap id="BaseResultMap" type="com.yonyou.iuap.example.sanyorder.entity.SanyOrder">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="ORDERCODE" property="ordercode" />
+        <result column="ORDERNAME" property="ordername" />
+        <result column="SUPPLIER" property="type" />
+        <result column="supplierName" property="type_name" />
+        <result column="type" property="content" />
+        <result column="purchasing" property="applicant" />
+        <result column="purchasingGroup" property="applyTime" />
+        <result column="voucherDate" property="finishTime" />
 
-	<select id="selectAllByPage" resultType="com.yonyou.iuap.example.sanyorder.entity.SanyOrder">
+        <result column="type_name" property="status" />
+        <result column="status_name" property="status_name" />
+        <result column="approvalState_name" property="remark" />
+
+        <result column="APPROVALSTATE" property="approvalstate" />
+        <result column="CONFIRMSTATE" property="confirmstate" />
+        <result column="confirmState_name" property="confirmState_name" />
+        <result column="CLOSESTATE" property="closestate" />
+
+        <result column="closeState_name" property="closeState_name" />
+
+        <result column="dr" property="dr" />
+        <result column="ts" property="ts" />
+        <result column="last_modified" property="lastModified" />
+        <result column="last_modify_user" property="lastModifyUser" />
+        <result column="create_time" property="createTime" />
+        <result column="create_user" property="createUser" />
+
+        <result column="bpm_state" property="bpmState" />
+        <result column="bpm_task_key" property="taskKey" />
+        <result column="bpm_taskid" property="taskId" />
+        <result column="bpm_process_instance" property="processInstanceId" />
+        <result column="bpm_process_define" property="processDefineCode" />
+
+    </resultMap>
+
+
+	<select id="selectAllByPage"  resultMap="BaseResultMap">
 			SELECT  t.ID,
 				t.ORDERCODE,
 				t.ORDERNAME,
@@ -21,12 +58,18 @@
 				CASE WHEN t.CLOSESTATE='0' THEN '未关闭' WHEN t.CLOSESTATE='1' THEN '已关闭' END AS closeState_name,
 				t.remark,
 				t.version,
-				t.create_Time as creatTime,
-				t.create_User as creatUser,
-				t.last_Modified as lastModified,
-				t.last_Modify_User as lastModifyUser,
+				t.create_Time ,
+				t.create_User ,
+				t.last_Modified ,
+				t.last_Modify_User ,
 				t.ts,
-				t.dr FROM SANY_ORDER t WHERE 1=1
+				t.dr,
+                t.bpm_state,
+                t.bpm_task_key,
+                t.bpm_taskid,
+                t.bpm_process_instance,
+                t.bpm_process_define
+        FROM SANY_ORDER t WHERE 1=1
 			<if test="condition != null">
 				<if test="condition.searchMap.orderCode!=null and condition.searchMap.orderCode!='' ">
 					and t.ORDERCODE LIKE CONCAT('%', #{condition.searchMap.orderCode}, '%')
