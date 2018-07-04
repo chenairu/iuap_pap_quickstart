@@ -22,7 +22,7 @@ public class SanyOrderService extends GenericExService<SanyOrder>{
 	 */
 	@Override
 	public SanyOrder insert(SanyOrder SanyOrder) {
-		if(StringUtils.isEmpty(SanyOrder.getId())) {
+		if(SanyOrder.getId()==null) {
 			//编码code生成
 			SanyOrder.setOrderCode(DateUtil.toDateString(new Date(), "yyyyMMddHHmmss"+new Random().nextInt(10)));
 		}

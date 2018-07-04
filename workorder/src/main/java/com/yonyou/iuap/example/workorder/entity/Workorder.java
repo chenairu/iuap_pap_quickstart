@@ -1,34 +1,66 @@
 package com.yonyou.iuap.example.workorder.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.yonyou.iuap.baseservice.bpm.entity.AbsBpmModel;
+import com.yonyou.iuap.baseservice.support.condition.Condition;
+import com.yonyou.iuap.baseservice.support.generator.GeneratedValue;
+import com.yonyou.iuap.baseservice.support.generator.Strategy;
 import com.yonyou.iuap.example.common.entity.AbsGenericEntity;
 import com.yonyou.iuap.example.common.entity.GenericEntity;
 import com.yonyou.iuap.persistence.vo.BaseEntity;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-//public class Workorder extends BaseEntity implements GenericEntity {
-public class Workorder extends AbsGenericEntity implements GenericEntity {
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
-//	private static final long serialVersionUID = 7415955552838232647L;
+@JsonIgnoreProperties(ignoreUnknown = true)
+@Table(name ="example_workorder_bpm")
+public class Workorder extends AbsBpmModel {
+
+	@Id
+    @GeneratedValue(strategy=Strategy.UUID, module="bpm")
+	@Column(name="id")
+	@Condition
+	protected String id;
 
 	private String code;
 	private String name;
 	
 	private String type;
+	@Transient
 	private String type_name;
 	private Integer status;
+	@Transient
 	private String status_name;
 
 	private String remark;
 	
 	private String content;
 	private String applicant;
+	@Column(name = "applytime")
 	private Date applyTime;
+    @Column(name = "finishtime")
 	private Date finishTime;
 
-	public String getCode() {
+    @Override
+    public String getId() {
+        return id;
+    }
+    //这个是为baseservice做数据保存时用的
+    @Override
+    public void setId(Serializable id) {
+        this.id = id.toString();
+        super.setId(id);
+    }
+    //这个是为mybatis做type映射用的
+    public void setId(String id) {
+        this.id = id;
+    }
+    public String getCode() {
 		return code;
 	}
 
@@ -116,4 +148,8 @@ public class Workorder extends AbsGenericEntity implements GenericEntity {
 		this.finishTime = finishTime;
 	}
 
+	@Override
+	public String getBpmBillCode() {
+		return null;
+	}
 }

@@ -3,23 +3,23 @@
 <mapper namespace="com.yonyou.iuap.example.sanyorder.dao.SanyOrderMapper">
     <resultMap id="BaseResultMap" type="com.yonyou.iuap.example.sanyorder.entity.SanyOrder">
         <id column="id" jdbcType="VARCHAR" property="id" />
-        <result column="ORDERCODE" property="ordercode" />
-        <result column="ORDERNAME" property="ordername" />
-        <result column="SUPPLIER" property="type" />
-        <result column="supplierName" property="type_name" />
-        <result column="type" property="content" />
-        <result column="purchasing" property="applicant" />
-        <result column="purchasingGroup" property="applyTime" />
-        <result column="voucherDate" property="finishTime" />
+        <result column="ordercode" property="orderCode" />
+        <result column="ordername" property="ordeName" />
+        <result column="SUPPLIER" property="supplier" />
+        <result column="supplierName" property="supplierName" />
+        <result column="type" property="type" />
+        <result column="purchasing" property="purchasing" />
+        <result column="purchasingGroup" property="purchasingGroup" />
+        <result column="voucherDate" property="voucherDate" />
 
-        <result column="type_name" property="status" />
+        <result column="type_name" property="type_name" />
         <result column="status_name" property="status_name" />
-        <result column="approvalState_name" property="remark" />
+        <result column="approvalState_name" property="approvalState_name" />
 
-        <result column="APPROVALSTATE" property="approvalstate" />
-        <result column="CONFIRMSTATE" property="confirmstate" />
+        <result column="approvalstate" property="approvalState" />
+        <result column="confirmstate" property="confirmState" />
         <result column="confirmState_name" property="confirmState_name" />
-        <result column="CLOSESTATE" property="closestate" />
+        <result column="closestate" property="closeState" />
 
         <result column="closeState_name" property="closeState_name" />
 
@@ -69,7 +69,7 @@
                 t.bpm_taskid,
                 t.bpm_process_instance,
                 t.bpm_process_define
-        FROM SANY_ORDER t WHERE 1=1
+        FROM SANY_ORDER t WHERE dr=0
 			<if test="condition != null">
 				<if test="condition.searchMap.orderCode!=null and condition.searchMap.orderCode!='' ">
 					and t.ORDERCODE LIKE CONCAT('%', #{condition.searchMap.orderCode}, '%')

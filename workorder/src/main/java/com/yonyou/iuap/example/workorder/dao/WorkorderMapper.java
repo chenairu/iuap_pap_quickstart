@@ -1,9 +1,10 @@
 package com.yonyou.iuap.example.workorder.dao;
 
-import com.yonyou.iuap.example.common.dao.GenericMapper;
+import com.yonyou.iuap.baseservice.persistence.mybatis.mapper.GenericExMapper;
 import com.yonyou.iuap.example.workorder.entity.Workorder;
+import com.yonyou.iuap.mybatis.anotation.MyBatisRepository;
 
-public interface WorkorderMapper extends GenericMapper<Workorder>{
+@MyBatisRepository
+public interface WorkorderMapper extends GenericExMapper<Workorder> {
 
-	
 }
