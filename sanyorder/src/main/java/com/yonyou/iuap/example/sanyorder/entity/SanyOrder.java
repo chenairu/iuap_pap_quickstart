@@ -1,13 +1,17 @@
 package com.yonyou.iuap.example.sanyorder.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.yonyou.iuap.baseservice.entity.AbsDrModel;
 import com.yonyou.iuap.baseservice.support.condition.Condition;
 import com.yonyou.iuap.baseservice.support.condition.Match;
+import com.yonyou.iuap.baseservice.support.generator.GeneratedValue;
+import com.yonyou.iuap.baseservice.support.generator.Strategy;
 
 import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -15,6 +19,11 @@ import javax.persistence.Transient;
 @Table(name="sany_order")
 public class SanyOrder extends AbsDrModel {
 
+	@Id
+	@GeneratedValue(strategy=Strategy.UUID, module="order")
+	@Column(name="ID")
+	@Condition
+	protected String id;//订单ID
 	@Condition(match=Match.LIKE)
 	@Column(name="ORDERCODE")
 	private String orderCode;//订单编号
@@ -188,6 +197,22 @@ public class SanyOrder extends AbsDrModel {
 
 	public void setCloseState_name(String closeState_name) {
 		this.closeState_name = closeState_name;
+	}
+	@Override
+	public String getId() {
+		return id;
+	}
+	//base use
+	@Override
+	public void setId(Serializable id){
+		this.id= id.toString();
+		super.id = id;
+	}
+	
+	
+	// mybatis use
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	

@@ -21,9 +21,10 @@
 				CASE WHEN t.CLOSESTATE='0' THEN '未关闭' WHEN t.CLOSESTATE='1' THEN '已关闭' END AS closeState_name,
 				t.remark,
 				t.version,
-				t.create_Time,
-				t.create_User,
-				t.last_Modified,
+				t.create_Time as creatTime,
+				t.create_User as creatUser,
+				t.last_Modified as lastModified,
+				t.last_Modify_User as lastModifyUser,
 				t.ts,
 				t.dr FROM SANY_ORDER t WHERE 1=1
 			<if test="condition != null">

@@ -78,6 +78,22 @@ public interface NewRefCommonMapper {
 			@Param("idfield") String idfield,
 			@Param("extcols") List<String> extcols,
 			@Param("condmap") Map<String,String> condmap);
+	/**
+	 * 根据ids批量查询
+	 * @param pageRequest
+	 * @param tablename
+	 * @param idfield
+	 * @param codefield
+	 * @param namefield
+	 * @param extcols
+	 * @param condmap
+	 * @return
+	 */
+	List<Map<String, Object>> findUserListByIds(
+			@Param("tablename") String tablename,
+			@Param("idfield") String idfield,
+			@Param("extcols") List<String> extcols,
+			@Param("ids") List<String> ids);
 	
 	/**
 	 * 树表型参照--树的数据查询

@@ -17,9 +17,17 @@ public class NewRefCommonService {
 	@Autowired
 	private NewRefCommonMapper mapper;
 	
+	public List<Map<String, Object>> getFilterRef(String tablename,String idfield,
+			List<String> extColumns,List<String> ids) {
+
+		List<Map<String, Object>> result = mapper.findUserListByIds(tablename,idfield,extColumns,ids);
+		
+		return result;
+	}
+	
 	public Page<Map<String,Object>> getGridRefData(PageRequest pageRequest,String tablename,String idfield,String codefield,String namefield,
 			Map<String, String> condition, List<String> extColumns,String likefilter) {
-
+		
 		Page<Map<String,Object>> result = mapper.gridrefselectAllByPage(pageRequest,tablename,idfield,codefield,namefield, extColumns,condition,likefilter).getPage();
 		
 		return result;
