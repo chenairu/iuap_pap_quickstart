@@ -30,7 +30,7 @@ import com.yonyou.iuap.ref.sdk.refmodel.model.AbstractTreeGridRefModel;
  */
 @Controller
 @RequestMapping(value = "/common/newref")
-public class TreeRefCommonController extends AbstractTreeGridRefModel{
+public class NewCommonController extends AbstractTreeGridRefModel{
 
 	@Autowired
 	private NewRefCommonService service;
@@ -203,16 +203,14 @@ public class TreeRefCommonController extends AbstractTreeGridRefModel{
 			
 			String idfield = StringUtils.isBlank(refParamVO.getIdfield()) ? "id"
 					: refParamVO.getIdfield();
-			String pidfield = StringUtils.isBlank(refParamVO.getPidfield()) ? "pid"
-					: refParamVO.getPidfield();
 
 			//根据树节点 查找树下的列表
-			if(condition != null && !"".equals(condition)){
-				conditions.put(pidfield,condition);
+			if(condition != null && !"".equals(condition) && refParamVO.getPidfield()!=null && !"".equals(refParamVO.getPidfield())){
+				conditions.put(refParamVO.getPidfield(),condition);
 			}
 			
 			Page<Map<String, Object>> headpage = this.service.getTreeRefData(
-					request, refParamVO.getTablename(), idfield,pidfield, conditions, refParamVO.getExtcol());
+					request, refParamVO.getTablename(), idfield, conditions, refParamVO.getExtcol());
 			
 			//总页数
 			refModel.getRefClientPageInfo().setPageCount(headpage.getTotalPages());
@@ -250,7 +248,6 @@ public class TreeRefCommonController extends AbstractTreeGridRefModel{
 	 */
 	private List<Map<String, String>> buildRtnValsOfRef(
 			List<Map<String, Object>> headVOs) {
-
 		List<Map<String, String>> results = new ArrayList<Map<String, String>>();
 		if ((headVOs != null) && (!headVOs.isEmpty())) {
 			ValueConvertor convertor = new ValueConvertor();

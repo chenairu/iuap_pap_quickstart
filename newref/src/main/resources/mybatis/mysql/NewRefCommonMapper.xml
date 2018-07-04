@@ -44,7 +44,7 @@
 	</select>
 	
 	<select id="treerefselectAllByPage" resultType="java.util.HashMap">
-			Select ${idfield} as id,${pidfield} as pid
+			Select ${idfield} as id
 			<if test="extcols != null">
 				<foreach collection="extcols" item="item" index="index">
 					, ${item}

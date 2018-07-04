@@ -76,7 +76,6 @@ public interface NewRefCommonMapper {
 			@Param("page") PageRequest pageRequest,
 			@Param("tablename") String tablename,
 			@Param("idfield") String idfield,
-			@Param("pidfield") String pidfield,
 			@Param("extcols") List<String> extcols,
 			@Param("condmap") Map<String,String> condmap);
 	

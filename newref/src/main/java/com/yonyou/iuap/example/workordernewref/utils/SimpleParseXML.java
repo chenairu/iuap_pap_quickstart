@@ -91,7 +91,10 @@ public class SimpleParseXML {
 					String code = showe.attributeValue("code");
 					String name = showe.getText();
 					if("pidfield".equals(code)){
-						refParamVO.setPidfield(name);
+						if(!"".equals(name)){
+							refParamVO.setPidfield(name);
+							list.add(name);
+						}
 					}else{
 						map.put(code,name);
 						list.add(code);
