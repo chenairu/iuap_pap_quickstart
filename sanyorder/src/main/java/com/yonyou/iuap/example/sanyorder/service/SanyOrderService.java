@@ -1,5 +1,6 @@
 package com.yonyou.iuap.example.sanyorder.service;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.yonyou.iuap.baseservice.bpm.service.GenericBpmService;
+import com.yonyou.iuap.baseservice.support.generator.GeneratorManager;
 import com.yonyou.iuap.example.sanyorder.dao.SanyOrderAttachmentMapper;
 import com.yonyou.iuap.example.sanyorder.dao.SanyOrderMapper;
 import com.yonyou.iuap.example.sanyorder.entity.AttachmentEntity;
@@ -17,6 +19,7 @@ import com.yonyou.iuap.example.sanyorder.entity.SanyOrder;
 import com.yonyou.iuap.mvc.type.SearchParams;
 import com.yonyou.iuap.mybatis.type.PageResult;
 
+import cn.hutool.core.util.StrUtil;
 import yonyou.bpm.rest.ex.util.DateUtil;
 
 @Service
@@ -45,6 +48,10 @@ public class SanyOrderService extends GenericBpmService<SanyOrder>{
 			for(AttachmentEntity att:attachments){
 				att.setRefId(id);
 				att.setRefName(name);
+				if(att.getId()==null || StrUtil.isBlankIfStr(att.getId())) {
+				    Serializable attid = GeneratorManager.generateID(att);
+					att.setId(attid);
+				}
 				sanyOrderAttachmentMapper.insert(att);
 			}
 			return insertSanyOrder;

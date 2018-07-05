@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yonyou.iuap.baseservice.bpm.controller.GenericBpmController;
 import com.yonyou.iuap.example.sanyorder.entity.SanyOrder;
@@ -28,12 +29,14 @@ public class SanyOrderController extends GenericBpmController<SanyOrder> {
 	private SanyOrderService sanyOrderService;
 	
 	@RequestMapping(value = "/saveWithAttach", method = RequestMethod.POST)
+	@ResponseBody
 	public Object setFileBill(@RequestBody SanyOrder entity){
 		SanyOrder sanyOrder = sanyOrderService.saveWithAttachment(entity);
 		return this.buildSuccess(sanyOrder);
 	}
 	
 	@RequestMapping(value = "/getListWithAttach", method = RequestMethod.GET)
+	@ResponseBody
 	public Object getFileBill(PageRequest pageRequest,
 			   @FrontModelExchange(modelType = SanyOrder.class) SearchParams searchParams){
 		Page<SanyOrder> page = sanyOrderService.getListWithAttach(pageRequest,searchParams);
