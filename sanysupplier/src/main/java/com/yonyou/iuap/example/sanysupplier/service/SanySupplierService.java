@@ -29,7 +29,7 @@ public class SanySupplierService extends GenericService<SanySupplier>{
 	 */
 	@Override
 	public SanySupplier insert(SanySupplier SanySupplier) {
-		if(StringUtils.isEmpty(SanySupplier.getId())) {
+		if(SanySupplier.getId()==null) {
 			//编码code生成
 			SanySupplier.setIdentifycode(DateUtil.toDateString(new Date(), "yyyyMMddHHmmss"+new Random().nextInt(10)));
 		}

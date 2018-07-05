@@ -1,14 +1,26 @@
 package com.yonyou.iuap.example.sanysupplier.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.yonyou.iuap.baseservice.entity.AbsModel;
 import com.yonyou.iuap.baseservice.entity.Model;
+import com.yonyou.iuap.baseservice.support.condition.Condition;
+import com.yonyou.iuap.baseservice.support.generator.GeneratedValue;
+import com.yonyou.iuap.baseservice.support.generator.Strategy;
+
+import javax.persistence.Column;
+import javax.persistence.Id;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SanySupplier extends AbsModel implements Model {
 
+    @Id
+    @GeneratedValue(strategy=Strategy.UUID, module="order")
+    @Column(name="ID")
+    @Condition
+    protected String id;//供应商id
 	private String suppliername;
 	private String firmnature;
 	private String unisocialcode;
@@ -54,7 +66,24 @@ public class SanySupplier extends AbsModel implements Model {
 	private String detection;
 	private String businesslicense;
 	private String remark;
-	public String getSuppliername() {
+
+    @Override
+    public String getId() {
+        return id;
+    }
+    //base use
+    @Override
+    public void setId(Serializable id){
+        this.id= id.toString();
+        super.id = id;
+    }
+    // mybatis use
+    public void setId(String id) {
+        this.id = id;
+    }
+
+
+    public String getSuppliername() {
 		return suppliername;
 	}
 	public void setSuppliername(String suppliername) {

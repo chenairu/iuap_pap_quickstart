@@ -25,14 +25,14 @@ public class WorkorderBPMController extends GenericBpmController<Workorder> {
 
     @Override
     public Object callbackSubmit(@RequestBody List<Workorder> list, HttpServletRequest request, HttpServletResponse response) {
-        InvocationInfoProxy.setUserid("2ede26e3e5d54efd84c9d67560076ea8");
-        InvocationInfoProxy.setUsername("test01");
+//        InvocationInfoProxy.setUserid("2ede26e3e5d54efd84c9d67560076ea8");
+//        InvocationInfoProxy.setUsername("test01");
         return super.callbackSubmit(list,request,response);
     }
     @Override
     public Object callbakRecall(@RequestBody List<Workorder> list, HttpServletRequest request, HttpServletResponse response) {
-        InvocationInfoProxy.setUserid("2ede26e3e5d54efd84c9d67560076ea8");
-        InvocationInfoProxy.setUsername("test01");
+//        InvocationInfoProxy.setUserid("2ede26e3e5d54efd84c9d67560076ea8");
+//        InvocationInfoProxy.setUsername("test01");
         return super.callbakRecall(list,request,response);
     }
 	/**************************************************************************************/
