@@ -25,7 +25,7 @@ public class FilterRefCommonController {
 	@Autowired
 	private NewRefCommonService service;
 	
-	@RequestMapping(value = "/filterRef",method = RequestMethod.GET)
+	@RequestMapping(value = "/filterRef",method = RequestMethod.POST)
 	@ResponseBody
 	public List<Map<String,String>> filterRef(@RequestBody List<Map<String,String>> list) {
 		String refCode = "";
