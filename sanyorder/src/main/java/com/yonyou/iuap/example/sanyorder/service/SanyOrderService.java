@@ -25,6 +25,7 @@ public class SanyOrderService extends GenericBpmService<SanyOrder>{
 			//编码code生成
 			SanyOrder.setOrderCode(DateUtil.toDateString(new Date(), "yyyyMMddHHmmss"+new Random().nextInt(10)));
 		}
+		
 		return super.insert(SanyOrder);
 	}
 	

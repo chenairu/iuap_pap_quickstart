@@ -74,19 +74,28 @@ public class SimpleParseXML {
 		return doc;
 	}
 	
-	//根据table表名获取字段
-	public RefParamVO getMSConfig(String tableName) {
+	//根据refCode获取表名和字段 --表格
+	public RefParamVO getMSConfig(String refCode) {
 		// 得到根节点
 		Element root = refConfigDocument.getRootElement();
-		List<Element> ele = root.elements("table");
-		RefParamVO refParamVO = new RefParamVO();
-		Map<String,String> map = new HashMap<String,String>();
-		List<String> list = new ArrayList<String>();
-		for(Element e:ele){
-			String value = e.attributeValue("name");
-			if(tableName != null && tableName.equals(value)){
-				refParamVO.setTablename(value);
-				List<Element> showele = e.elements();
+		List<Element> RefViewModelVOs = root.elements("RefViewModelVO");
+		for(Element refviewmodel:RefViewModelVOs){
+			if(refCode.equals(refviewmodel.attributeValue("code"))){
+				List<Element> ele = refviewmodel.elements("table");
+				Element tableE = null;
+				if(ele.size() == 1){
+					tableE = ele.get(0);
+				}else{
+					//xml结构错误
+				}
+				
+				String tableName = tableE.attributeValue("name");
+				RefParamVO refParamVO = new RefParamVO();
+				Map<String,String> map = new HashMap<String,String>();
+				List<String> list = new ArrayList<String>();
+				
+				refParamVO.setTablename(tableName);
+				List<Element> showele = tableE.elements();
 				for(Element showe : showele){
 					String code = showe.attributeValue("code");
 					String name = showe.getText();
@@ -107,19 +116,28 @@ public class SimpleParseXML {
 		}
 		return null;
 	}
-	//根据table表名获取字段
-	public RefParamVO getMSConfigTree(String tableName) {
+	//根据refCode获取表名和字段 --树表
+	public RefParamVO getMSConfigTree(String refCode) {
 		// 得到根节点
 		Element root = refConfigDocument.getRootElement();
-		List<Element> ele = root.elements("tableTree");
-		RefParamVO refParamVO = new RefParamVO();
-		Map<String,String> map = new HashMap<String,String>();
-		List<String> list = new ArrayList<String>();
-		for(Element e:ele){
-			String value = e.attributeValue("name");
-			if(tableName != null && tableName.equals(value)){
-				refParamVO.setTablename(value);
-				List<Element> showele = e.elements();
+		List<Element> RefViewModelVOs = root.elements("RefViewModelVO");
+		for(Element refviewmodel:RefViewModelVOs){
+			if(refCode.equals(refviewmodel.attributeValue("code"))){
+				List<Element> ele = refviewmodel.elements("tableTree");
+				Element tableE = null;
+				if(ele.size() == 1){
+					tableE = ele.get(0);
+				}else{
+					//xml结构错误
+				}
+				
+				RefParamVO refParamVO = new RefParamVO();
+				Map<String,String> map = new HashMap<String,String>();
+				List<String> list = new ArrayList<String>();
+				String tableName = tableE.attributeValue("name");
+				
+				refParamVO.setTablename(tableName);
+				List<Element> showele = tableE.elements();
 				for(Element showe : showele){
 					String code = showe.attributeValue("code");
 					String name = showe.getText();
@@ -135,14 +153,14 @@ public class SimpleParseXML {
 				}
 				return refParamVO;
 			}
-		}
+		}	
 		return null;
 	}
 	
 	public static void main(String[] args) {
 
-		RefParamVO refParamVO = SimpleParseXML.getInstance().getMSConfig("EXAMPLE_CONTACTS");
-		RefParamVO refParamVOTree = SimpleParseXML.getInstance().getMSConfigTree("EXAMPLE_ORGANIZATION");
+		RefParamVO refParamVO = SimpleParseXML.getInstance().getMSConfig("common_ref");
+		RefParamVO refParamVOTree = SimpleParseXML.getInstance().getMSConfigTree("common_ref");
 		System.out.println("123");
 	}
 

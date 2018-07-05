@@ -2,6 +2,7 @@ package com.yonyou.iuap.example.sanyorder.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -67,7 +68,8 @@ public class SanyOrder extends AbsBpmModel {
 	@Transient
 	private String closeState_name;//关闭状态
 	
-	
+	@Transient
+	private List<AttachmentEntity> attachment;
 
 	private String remark;
 
@@ -219,6 +221,14 @@ public class SanyOrder extends AbsBpmModel {
 	public String getBpmBillCode() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public List<AttachmentEntity> getAttachment() {
+		return attachment;
+	}
+
+	public void setAttachment(List<AttachmentEntity> attachment) {
+		this.attachment = attachment;
 	}
 
 	
