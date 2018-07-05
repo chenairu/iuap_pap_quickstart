@@ -21,7 +21,7 @@
 			SELECT  *
         FROM sany_order_attachment t WHERE dr=0
 			<if test="id != null">
-				and id = #{id}
+				and refId = #{id}
 			</if>		
 			
 	</select>
