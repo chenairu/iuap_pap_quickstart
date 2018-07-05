@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yonyou.iuap.example.sanyorder.dao.SanyOrderAttachmentMapper">
+    <resultMap id="BaseResultMap" type="com.yonyou.iuap.example.sanyorder.entity.AttachmentEntity">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="fileName" property="fileName" />
+        <result column="accessAddress" property="accessAddress" />
+        <result column="refId" property="refId" />
+        <result column="refName" property="refName" />
+
+        <result column="dr" property="dr" />
+        <result column="ts" property="ts" />
+        <result column="last_modified" property="lastModified" />
+        <result column="last_modify_user" property="lastModifyUser" />
+        <result column="create_time" property="createTime" />
+        <result column="create_user" property="createUser" />
+    </resultMap>
+
+
+	<select id="getRefId"  resultMap="BaseResultMap">
+			SELECT  *
+        FROM sany_order_attachment t WHERE dr=0
+			<if test="id != null">
+				and id = #{id}
+			</if>		
+			
+	</select>
+
+</mapper>

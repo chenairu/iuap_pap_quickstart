@@ -44,16 +44,16 @@ public class NewCommonController extends AbstractTreeGridRefModel{
 	public RefViewModelVO getRefModelInfo(@RequestBody RefViewModelVO refViewModel) {
 		
 		RefViewModelVO refModel = super.getRefModelInfo(refViewModel);
-		String transmitParam = refViewModel.getTransmitParam();
-		String tableName = "";
-		if(transmitParam.contains(",")){
-			String[] tableNames = transmitParam.split(",");
-			tableName = tableNames[0];
-		}else{
-			tableName = transmitParam;
-		}
+//		String transmitParam = refViewModel.getTransmitParam();
+//		String tableName = "";
+//		if(transmitParam.contains(",")){
+//			String[] tableNames = transmitParam.split(",");
+//			tableName = tableNames[0];
+//		}else{
+//			tableName = transmitParam;
+//		}
 		
-		RefParamVO refParamVO = SimpleParseXML.getInstance().getMSConfig(tableName);
+		RefParamVO refParamVO = SimpleParseXML.getInstance().getMSConfig(refViewModel.getRefCode());
 		
 		Map<String,String> showcolMap = refParamVO.getShowcol();
 		String[] showcode = null;
@@ -107,16 +107,16 @@ public class NewCommonController extends AbstractTreeGridRefModel{
 	@ResponseBody
 	public Map<String, Object> blobRefTree(@RequestBody RefViewModelVO refModel) {
 
-		String transmitParam = refModel.getTransmitParam();
-		String tableName = "";
-		if(transmitParam.contains(",")){
-			String[] tableNames = transmitParam.split(",");
-			tableName = tableNames[1];
-		}else{
-			//前台没有传递树的表名
-		}
+//		String transmitParam = refModel.getTransmitParam();
+//		String tableName = "";
+//		if(transmitParam.contains(",")){
+//			String[] tableNames = transmitParam.split(",");
+//			tableName = tableNames[1];
+//		}else{
+//			//前台没有传递树的表名
+//		}
 		//构建表体，其中list中为要查询的字段，必须和表头设置的相同，并且必须为表中的字段值
-		RefParamVO params = SimpleParseXML.getInstance().getMSConfigTree(tableName);
+		RefParamVO params = SimpleParseXML.getInstance().getMSConfigTree(refModel.getRefCode());
 
 		Map<String, Object> mapList = new HashMap<String, Object>();
 		List<Map<String, String>> results = new ArrayList<Map<String, String>>();
@@ -164,17 +164,17 @@ public class NewCommonController extends AbstractTreeGridRefModel{
 	@ResponseBody
 	public Map<String, Object> blobRefSearch(@RequestBody RefViewModelVO refModel) {
 
-		String transmitParam = refModel.getTransmitParam();
-		String tableName = "";
-		if(transmitParam.contains(",")){
-			String[] tableNames = transmitParam.split(",");
-			tableName = tableNames[0];
-		}else{
-			tableName = transmitParam;
-		}
+//		String transmitParam = refModel.getTransmitParam();
+//		String tableName = "";
+//		if(transmitParam.contains(",")){
+//			String[] tableNames = transmitParam.split(",");
+//			tableName = tableNames[0];
+//		}else{
+//			tableName = transmitParam;
+//		}
 		
 		//构建表体，其中list中为要查询的字段，必须和表头设置的相同，并且必须为表中的字段值
-		RefParamVO refParamVO = SimpleParseXML.getInstance().getMSConfig(tableName);
+		RefParamVO refParamVO = SimpleParseXML.getInstance().getMSConfig(refModel.getRefCode());
 		
 		Map<String, Object> mapList = new HashMap<String, Object>();
 		List<Map<String, String>> results = new ArrayList<Map<String, String>>();

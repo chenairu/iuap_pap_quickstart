@@ -2,22 +2,23 @@ package com.yonyou.iuap.example.sanyorder.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.yonyou.iuap.baseservice.entity.AbsDrModel;
-import com.yonyou.iuap.baseservice.support.condition.Condition;
-import com.yonyou.iuap.baseservice.support.condition.Match;
-import com.yonyou.iuap.baseservice.support.generator.GeneratedValue;
-import com.yonyou.iuap.baseservice.support.generator.Strategy;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.yonyou.iuap.baseservice.bpm.entity.AbsBpmModel;
+import com.yonyou.iuap.baseservice.support.condition.Condition;
+import com.yonyou.iuap.baseservice.support.condition.Match;
+import com.yonyou.iuap.baseservice.support.generator.GeneratedValue;
+import com.yonyou.iuap.baseservice.support.generator.Strategy;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Table(name="sany_order")
-public class SanyOrder extends AbsDrModel {
+public class SanyOrder extends AbsBpmModel {
 
 	@Id
 	@GeneratedValue(strategy=Strategy.UUID, module="order")
@@ -67,7 +68,8 @@ public class SanyOrder extends AbsDrModel {
 	@Transient
 	private String closeState_name;//关闭状态
 	
-	
+	@Transient
+	private List<AttachmentEntity> attachment;
 
 	private String remark;
 
@@ -213,6 +215,20 @@ public class SanyOrder extends AbsDrModel {
 	// mybatis use
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	@Override
+	public String getBpmBillCode() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<AttachmentEntity> getAttachment() {
+		return attachment;
+	}
+
+	public void setAttachment(List<AttachmentEntity> attachment) {
+		this.attachment = attachment;
 	}
 
 	
