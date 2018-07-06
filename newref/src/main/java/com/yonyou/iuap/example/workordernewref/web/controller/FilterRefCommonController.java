@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,24 +29,28 @@ public class FilterRefCommonController {
 	@RequestMapping(value = "/filterRef",method = RequestMethod.POST)
 	@ResponseBody
 	public List<Map<String,String>> filterRef(@RequestBody List<Map<String,String>> list) {
-		String refCode = "";
-		List<String> ids = new ArrayList<String>();
-		List<Map<String, String>> results = new ArrayList<Map<String, String>>();
-		
-		for(Map<String,String> map:list){
-			refCode = map.get("refCode");
-			String id = map.get("id");
-			ids.add(id);
+		if(list.size() > 0){
+			String refCode = "";
+			List<String> ids = new ArrayList<String>();
+			List<Map<String, String>> results = new ArrayList<Map<String, String>>();
+			
+			for(Map<String,String> map:list){
+				refCode = map.get("refCode");
+				String id = map.get("id");
+				ids.add(id);
+			}
+			
+			RefParamVO refParamVO = SimpleParseXML.getInstance().getMSConfig(refCode);
+			String idfield = StringUtils.isBlank(refParamVO.getIdfield()) ? "id"
+					: refParamVO.getIdfield();
+			String tableName = refParamVO.getTablename();
+			List<Map<String, Object>> obj = service.getFilterRef(tableName,idfield,refParamVO.getExtcol(),ids);
+			if (CollectionUtils.isNotEmpty(obj)) {
+				results = buildRtnValsOfRef(obj);
+			}
+			return results;
 		}
-		
-		RefParamVO refParamVO = SimpleParseXML.getInstance().getMSConfig(refCode);
-		String idField = refParamVO.getIdfield();
-		String tableName = refParamVO.getTablename();
-		List<Map<String, Object>> obj = service.getFilterRef(tableName,idField,refParamVO.getExtcol(),ids);
-		if (CollectionUtils.isNotEmpty(obj)) {
-			results = buildRtnValsOfRef(obj);
-		}
-		return results;
+		return null;
 	}
 	
 	/**
