@@ -1,10 +1,14 @@
 package com.yonyou.iuap.example.sanyorder.service;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import com.yonyou.iuap.bpm.pojo.BPMFormJSON;
+import com.yonyou.iuap.context.InvocationInfoProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -89,5 +93,24 @@ public class SanyOrderService extends GenericBpmService<SanyOrder>{
 		this.sanyOrderMapper = sanyOrderMapper;
 		super.setIbatisMapperEx(this.sanyOrderMapper);
 	}
+
+    @Override
+    public  BPMFormJSON buildVariables(SanyOrder entity)
+    {
+        BPMFormJSON bpmform = new BPMFormJSON();
+        String userName = InvocationInfoProxy.getUsername();
+        try {
+            userName = URLDecoder.decode(userName,"utf-8");
+        } catch (UnsupportedEncodingException e) {
+            userName =InvocationInfoProxy.getUsername();
+        }
+        String title = userName + "提交的【工单】,单号 是" + entity.getBpmBillCode() + ", 请审批";
+        bpmform.setTitle(title);
+        bpmform.setFormUrl("/iuap_pap_quickstart/pages/workorder/workorder.js");	// 单据url
+        bpmform.setProcessInstanceName(title);										// 流程实例名称
+        bpmform.setServiceClass("/iuap_pap_quickstart/sany_order");// 流程审批后，执行的业务处理类(controller对应URI前缀)
+
+        return bpmform;
+    }
 
 }
