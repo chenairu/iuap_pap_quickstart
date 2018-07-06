@@ -76,11 +76,8 @@ public class SanyOrderService extends GenericBpmService<SanyOrder>{
 				if(att.getDel() != null){
 					att.setDr(1);
 					String now = DateUtil.format(new Date(), "yyyy-MM-dd HH:mm:ss SSS");
-					att.setCreateTime(now);
-					att.setCreateUser(InvocationInfoProxy.getUserid());
 					att.setLastModified(now);
 					att.setLastModifyUser(InvocationInfoProxy.getUserid());
-					att.setTs(now);
 					sanyOrderAttachmentMapper.update(att);
 				}else{
 					if(att.getId()==null || StrUtil.isBlankIfStr(att.getId())){
