@@ -3,10 +3,12 @@ package com.yonyou.iuap.example.sanyorder.service;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
-import com.yonyou.iuap.bpm.pojo.BPMFormJSON;
-import com.yonyou.iuap.context.InvocationInfoProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,15 +16,17 @@ import org.springframework.stereotype.Service;
 
 import com.yonyou.iuap.baseservice.bpm.service.GenericBpmService;
 import com.yonyou.iuap.baseservice.support.generator.GeneratorManager;
+import com.yonyou.iuap.bpm.pojo.BPMFormJSON;
+import com.yonyou.iuap.context.InvocationInfoProxy;
 import com.yonyou.iuap.example.sanyorder.dao.SanyOrderAttachmentMapper;
 import com.yonyou.iuap.example.sanyorder.dao.SanyOrderMapper;
 import com.yonyou.iuap.example.sanyorder.entity.AttachmentEntity;
 import com.yonyou.iuap.example.sanyorder.entity.SanyOrder;
 import com.yonyou.iuap.mvc.type.SearchParams;
-import com.yonyou.iuap.mybatis.type.PageResult;
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
-import yonyou.bpm.rest.ex.util.DateUtil;
+
 
 @Service
 public class SanyOrderService extends GenericBpmService<SanyOrder>{
@@ -34,7 +38,7 @@ public class SanyOrderService extends GenericBpmService<SanyOrder>{
 	public SanyOrder insert(SanyOrder SanyOrder) {
 		if(SanyOrder.getId()==null) {
 			//编码code生成
-			SanyOrder.setOrderCode(DateUtil.toDateString(new Date(), "yyyyMMddHHmmss"+new Random().nextInt(10)));
+			SanyOrder.setOrderCode(DateUtil.format(new Date(), "yyyyMMddHHmmss"+new Random().nextInt(10)));
 		}
 		
 		return super.insert(SanyOrder);
@@ -54,6 +58,12 @@ public class SanyOrderService extends GenericBpmService<SanyOrder>{
 				    Serializable attid = GeneratorManager.generateID(att);
 					att.setId(attid);
 				}
+				String now = DateUtil.format(new Date(), "yyyy-MM-dd HH:mm:ss SSS");
+				att.setCreateTime(now);
+				att.setCreateUser(InvocationInfoProxy.getUserid());
+				att.setLastModified(now);
+				att.setLastModifyUser(InvocationInfoProxy.getUserid());
+				att.setTs(now);
 				sanyOrderAttachmentMapper.insert(att);
 			}
 			return insertSanyOrder;
@@ -65,6 +75,12 @@ public class SanyOrderService extends GenericBpmService<SanyOrder>{
 			for(AttachmentEntity att:attachments){
 				if(att.getDel() != null){
 					att.setDr(1);
+					String now = DateUtil.format(new Date(), "yyyy-MM-dd HH:mm:ss SSS");
+					att.setCreateTime(now);
+					att.setCreateUser(InvocationInfoProxy.getUserid());
+					att.setLastModified(now);
+					att.setLastModifyUser(InvocationInfoProxy.getUserid());
+					att.setTs(now);
 					sanyOrderAttachmentMapper.update(att);
 				}else{
 					if(att.getId()==null || StrUtil.isBlankIfStr(att.getId())){
@@ -72,6 +88,12 @@ public class SanyOrderService extends GenericBpmService<SanyOrder>{
 						att.setId(attid);
 						att.setRefId(id);
 						att.setRefName(name);
+						String now = DateUtil.format(new Date(), "yyyy-MM-dd HH:mm:ss SSS");
+						att.setCreateTime(now);
+						att.setCreateUser(InvocationInfoProxy.getUserid());
+						att.setLastModified(now);
+						att.setLastModifyUser(InvocationInfoProxy.getUserid());
+						att.setTs(now);
 						sanyOrderAttachmentMapper.insert(att);
 					}
 				}
