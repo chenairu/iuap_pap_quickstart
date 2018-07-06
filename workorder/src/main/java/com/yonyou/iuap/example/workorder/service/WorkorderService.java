@@ -1,6 +1,7 @@
 package com.yonyou.iuap.example.workorder.service;
 
 import com.yonyou.iuap.baseservice.bpm.service.GenericBpmService;
+import com.yonyou.iuap.bpm.pojo.BPMFormJSON;
 import com.yonyou.iuap.example.workorder.dao.WorkorderMapper;
 import com.yonyou.iuap.example.workorder.entity.Workorder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,13 @@ import java.util.Random;
 
 @Service
 public class WorkorderService extends GenericBpmService<Workorder> {
-	
-	/**
+
+    @Override
+    public BPMFormJSON buildVariables(Workorder entity) {
+        return null;
+    }
+
+    /**
 	 * 新增保存工单信息
 	 */
 	@Override
