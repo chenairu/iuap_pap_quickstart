@@ -61,9 +61,18 @@ public class SanyOrderService extends GenericBpmService<SanyOrder>{
 			String name = SanyOrder.getOrderName();
 			List<AttachmentEntity> attachments = SanyOrder.getAttachment();
 			for(AttachmentEntity att:attachments){
-				att.setRefId(id);
-				att.setRefName(name);
-				sanyOrderAttachmentMapper.insert(att);
+				if(att.getDel() != null){
+					att.setDr(1);
+					sanyOrderAttachmentMapper.update(att);
+				}else{
+					if(att.getId()==null || StrUtil.isBlankIfStr(att.getId())){
+						Serializable attid = GeneratorManager.generateID(att);
+						att.setId(attid);
+						att.setRefId(id);
+						att.setRefName(name);
+						sanyOrderAttachmentMapper.insert(att);
+					}
+				}
 			}
 			return SanyOrder;
 		}

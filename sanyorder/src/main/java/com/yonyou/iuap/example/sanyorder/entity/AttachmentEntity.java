@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.yonyou.iuap.baseservice.entity.AbsDrModel;
@@ -34,6 +35,10 @@ public class AttachmentEntity extends AbsDrModel {
 	@Condition(match=Match.LIKE)
 	@Column(name="REFNAME")
 	private String refName;//表单名称
+	
+	@Transient
+	private String del ;
+	
 	@Override
 	public String getId() {
 		return id;
@@ -73,6 +78,12 @@ public class AttachmentEntity extends AbsDrModel {
 	}
 	public void setRefName(String refName) {
 		this.refName = refName;
+	}
+	public String getDel() {
+		return del;
+	}
+	public void setDel(String del) {
+		this.del = del;
 	}
 	
 }
