@@ -19,7 +19,7 @@ import com.yonyou.iuap.example.workordernewref.utils.SimpleParseXML;
 import com.yonyou.iuap.example.workordernewref.utils.ValueConvertor;
 
 @Controller
-@RequestMapping(value = "/common/filterRef")
+@RequestMapping(value = "/common")
 public class FilterRefCommonController {
 
 	@Autowired
