@@ -1,6 +1,8 @@
 package com.yonyou.iuap.example.sanyorder.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +33,9 @@ public class SanyOrderAttachmentService extends GenericExService<AttachmentEntit
 
 	public List<AttachmentEntity> getRefId(String id) {
 		// TODO Auto-generated method stub
-		List<AttachmentEntity> AttachmentEntitys = sanyOrderAttachmentMapper.getRefId(id);
+        Map params = new HashMap<>();
+        params.put("refId",id   );
+		List<AttachmentEntity> AttachmentEntitys = sanyOrderAttachmentMapper.queryList(params);
 		return AttachmentEntitys;
 	}
 }

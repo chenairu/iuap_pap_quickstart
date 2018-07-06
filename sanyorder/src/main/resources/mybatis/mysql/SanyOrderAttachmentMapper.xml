@@ -16,14 +16,4 @@
         <result column="create_user" property="createUser" />
     </resultMap>
 
-
-	<select id="getRefId"  resultMap="BaseResultMap">
-			SELECT  *
-        FROM sany_order_attachment t WHERE dr=0
-			<if test="id != null">
-				and refId = #{id}
-			</if>		
-			
-	</select>
-
 </mapper>

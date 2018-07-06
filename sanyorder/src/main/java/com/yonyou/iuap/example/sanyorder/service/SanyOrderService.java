@@ -3,9 +3,7 @@ package com.yonyou.iuap.example.sanyorder.service;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import com.yonyou.iuap.bpm.pojo.BPMFormJSON;
 import com.yonyou.iuap.context.InvocationInfoProxy;
@@ -86,7 +84,11 @@ public class SanyOrderService extends GenericBpmService<SanyOrder>{
 		Page<SanyOrder> page = sanyOrderMapper.selectAllByPage(pageRequest, searchParams).getPage();
 		List<SanyOrder> listSanyOrder = page.getContent();
 		for(SanyOrder sanyOrder : listSanyOrder){
-			List<AttachmentEntity> attachments = sanyOrderAttachmentMapper.getRefId(sanyOrder.getId());
+
+            Map params = new HashMap<>();
+            params.put("refId",sanyOrder.getId()   );
+            List<AttachmentEntity> attachments = sanyOrderAttachmentMapper.queryList(params);
+//			List<AttachmentEntity> attachments = sanyOrderAttachmentMapper.getRefId(sanyOrder.getId());
 			sanyOrder.setAttachment(attachments);
 		}
 		return page;

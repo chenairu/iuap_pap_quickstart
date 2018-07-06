@@ -11,7 +11,5 @@ import com.yonyou.iuap.mybatis.anotation.MyBatisRepository;
 @MyBatisRepository
 public interface SanyOrderAttachmentMapper extends GenericExMapper<AttachmentEntity> {
 
-	List<AttachmentEntity> getRefId(@Param("id")String id);
-
 	
 }

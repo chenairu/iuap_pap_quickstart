@@ -29,7 +29,7 @@ public class AttachmentEntity extends AbsDrModel {
 	@Condition(match=Match.LIKE)
 	@Column(name="accessAddress")
 	private String accessAddress;//附件路径
-	@Condition(match=Match.LIKE)
+	@Condition(match=Match.EQ)
 	@Column(name="REFID")
 	private String refId;//表单ID
 	@Condition(match=Match.LIKE)
