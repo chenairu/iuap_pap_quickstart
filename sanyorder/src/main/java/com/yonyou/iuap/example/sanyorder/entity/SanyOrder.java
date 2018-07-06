@@ -3,6 +3,7 @@ package com.yonyou.iuap.example.sanyorder.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -15,6 +16,7 @@ import com.yonyou.iuap.baseservice.support.condition.Condition;
 import com.yonyou.iuap.baseservice.support.condition.Match;
 import com.yonyou.iuap.baseservice.support.generator.GeneratedValue;
 import com.yonyou.iuap.baseservice.support.generator.Strategy;
+import yonyou.bpm.rest.ex.util.DateUtil;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Table(name="sany_order")
@@ -219,8 +221,7 @@ public class SanyOrder extends AbsBpmModel {
 
 	@Override
 	public String getBpmBillCode() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.orderCode;
 	}
 
 	public List<AttachmentEntity> getAttachment() {
