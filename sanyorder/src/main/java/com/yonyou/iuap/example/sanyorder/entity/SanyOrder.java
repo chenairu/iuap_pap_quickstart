@@ -1,26 +1,27 @@
 package com.yonyou.iuap.example.sanyorder.entity;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
-
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
+import cn.hutool.core.date.DateUtil;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.yonyou.iuap.baseservice.attachment.entity.AttachmentEntity;
+import com.yonyou.iuap.baseservice.attachment.entity.Attachmentable;
 import com.yonyou.iuap.baseservice.bpm.entity.AbsBpmModel;
 import com.yonyou.iuap.baseservice.support.condition.Condition;
 import com.yonyou.iuap.baseservice.support.condition.Match;
 import com.yonyou.iuap.baseservice.support.generator.GeneratedValue;
 import com.yonyou.iuap.baseservice.support.generator.Strategy;
-import yonyou.bpm.rest.ex.util.DateUtil;
+
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Table(name="sany_order")
-public class SanyOrder extends AbsBpmModel {
+public class SanyOrder extends AbsBpmModel implements Attachmentable {
 
 	@Id
 	@GeneratedValue(strategy=Strategy.UUID, module="order")
@@ -221,7 +222,10 @@ public class SanyOrder extends AbsBpmModel {
 
 	@Override
 	public String getBpmBillCode() {
-		return this.orderCode;
+        return  this.id==null
+                ?DateUtil.format(new Date(), "yyyyMMddHHmmss"+new Random().nextInt(10))
+                :this.orderCode
+		 ;
 	}
 
 	public List<AttachmentEntity> getAttachment() {

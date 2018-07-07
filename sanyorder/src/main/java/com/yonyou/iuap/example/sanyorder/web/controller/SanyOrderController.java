@@ -28,23 +28,6 @@ public class SanyOrderController extends GenericBpmController<SanyOrder> {
 
 	private SanyOrderService sanyOrderService;
 	
-	@RequestMapping(value = "/saveWithAttach", method = RequestMethod.POST)
-	@ResponseBody
-	public Object setFileBill(@RequestBody SanyOrder entity){
-		SanyOrder sanyOrder = sanyOrderService.saveWithAttachment(entity);
-		return this.buildSuccess(sanyOrder);
-	}
-	
-	@RequestMapping(value = "/getListWithAttach", method = RequestMethod.GET)
-	@ResponseBody
-	public Object getFileBill(PageRequest pageRequest,
-			   @FrontModelExchange(modelType = SanyOrder.class) SearchParams searchParams){
-		Page<SanyOrder> page = sanyOrderService.getListWithAttach(pageRequest,searchParams);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("data", page);
-		return this.buildMapSuccess(map);
-	}
-	
 	@Autowired
 	public void setSanyOrderService(SanyOrderService sanyOrderService) {
 		this.sanyOrderService = sanyOrderService;

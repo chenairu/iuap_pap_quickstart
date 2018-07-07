@@ -22,8 +22,8 @@ import com.yonyou.iuap.file.utils.BucketPermission;
 import com.yonyou.iuap.utils.PropertyUtil;
 import com.yonyou.uap.wb.utils.JsonResponse;
 
-@Controller
-@RequestMapping(value = "/fileMananger")
+//@Controller
+//@RequestMapping(value = "/fileMananger")
 public class FileManagerController {
 	
 	@RequestMapping(value = "/fastDfs/imgUpload", method = RequestMethod.POST)
