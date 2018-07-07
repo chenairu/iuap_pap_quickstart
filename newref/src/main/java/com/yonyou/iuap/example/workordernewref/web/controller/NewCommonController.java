@@ -28,7 +28,7 @@ import com.yonyou.iuap.ref.sdk.refmodel.model.AbstractTreeGridRefModel;
  * @author my
  *
  */
-@Controller
+//@Controller
 @RequestMapping(value = "/common/newref")
 public class NewCommonController extends AbstractTreeGridRefModel{
 
