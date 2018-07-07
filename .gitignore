@@ -13,7 +13,7 @@ buildNumber.properties
 
 /.settings/  
 /target/  
-  
+demo/
 # built application files  
 *.apk  
 *.ap_  

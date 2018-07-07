@@ -1,7 +1,6 @@
 package com.yonyou.iuap.example.sanyorder.web.controller;
 
 import com.yonyou.iuap.baseservice.attachment.controller.GenericAtController;
-import com.yonyou.iuap.baseservice.attachment.service.GenericAtService;
 import com.yonyou.iuap.example.sanyorder.entity.SanyOrder;
 import com.yonyou.iuap.example.sanyorder.service.SanyOrderAttachmentService;
 import com.yonyou.iuap.mvc.annotation.FrontModelExchange;
