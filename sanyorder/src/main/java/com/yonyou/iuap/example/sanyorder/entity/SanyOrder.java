@@ -43,7 +43,7 @@ public class SanyOrder extends AbsBpmModel {
 	private String type;//类型
 	@Condition(match=Match.LIKE)
 	@Column(name="PURCHASING")
-	@Reference(code="common_ref", srcProperties={"peoname"}, desProperties={"purchasing"})
+	@Reference(code="common_ref", srcProperties={"id", "peoname"}, desProperties={"purchasing", "purchasingName"})
 	private String purchasing;//采购组织
 	@Condition(match=Match.LIKE)
 	@Column(name="PURCHASINGGROUP")
@@ -69,11 +69,21 @@ public class SanyOrder extends AbsBpmModel {
 	private String confirmState_name;//关闭状态
 	@Transient
 	private String closeState_name;//关闭状态
-	
+	@Transient
+	private String purchasingName;//供应商名称
+
 	@Transient
 	private List<AttachmentEntity> attachment;
 
 	private String remark;
+
+	public String getPurchasingName() {
+		return purchasingName;
+	}
+
+	public void setPurchasingName(String purchasingName) {
+		this.purchasingName = purchasingName;
+	}
 
 	public String getOrderCode() {
 		return orderCode;
