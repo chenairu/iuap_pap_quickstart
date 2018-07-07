@@ -72,6 +72,9 @@
         FROM SANY_ORDER t WHERE dr=0
 			<if test="condition != null">
 				<if test="condition.searchMap.orderCode!=null and condition.searchMap.orderCode!='' ">
+					and t.ID = #{condition.searchMap.id}
+				</if>
+				<if test="condition.searchMap.orderCode!=null and condition.searchMap.orderCode!='' ">
 					and t.ORDERCODE LIKE CONCAT(CONCAT('%', ${condition.searchMap.code}),'%')
 				</if>
 				<if test="condition.searchMap.supplierName!=null and condition.searchMap.supplierName!='' ">
