@@ -11,6 +11,7 @@ import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.yonyou.iuap.baseservice.bpm.entity.AbsBpmModel;
+import com.yonyou.iuap.baseservice.entity.annotation.Reference;
 import com.yonyou.iuap.baseservice.support.condition.Condition;
 import com.yonyou.iuap.baseservice.support.condition.Match;
 import com.yonyou.iuap.baseservice.support.generator.GeneratedValue;
@@ -42,6 +43,7 @@ public class SanyOrder extends AbsBpmModel {
 	private String type;//类型
 	@Condition(match=Match.LIKE)
 	@Column(name="PURCHASING")
+	@Reference(code="common_ref", srcProperties={"peoname"}, desProperties={"purchasing"})
 	private String purchasing;//采购组织
 	@Condition(match=Match.LIKE)
 	@Column(name="PURCHASINGGROUP")
