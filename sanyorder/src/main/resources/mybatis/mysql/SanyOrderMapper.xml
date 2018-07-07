@@ -72,10 +72,10 @@
         FROM SANY_ORDER t WHERE dr=0
 			<if test="condition != null">
 				<if test="condition.searchMap.orderCode!=null and condition.searchMap.orderCode!='' ">
-					and t.ORDERCODE LIKE CONCAT('%', #{condition.searchMap.orderCode}, '%')
+					and t.ORDERCODE LIKE CONCAT(CONCAT('%', ${condition.searchMap.code}),'%')
 				</if>
 				<if test="condition.searchMap.supplierName!=null and condition.searchMap.supplierName!='' ">
-					and t.supplierName like CONCAT('%', #{condition.searchMap.supplierName}, '%')
+					and t.supplierName like CONCAT(CONCAT('%', #{condition.searchMap.supplierName}), '%')
 				</if>
 				<if test="condition.searchMap.voucherDate!=null and condition.searchMap.voucherDate!='' ">
 					and t.voucherDate between to_date(${condition.searchMap.startTime},'yyyy-mm-dd hh24:mi:ss') and to_date(${condition.searchMap.endTime},'yyyy-mm-dd hh24:mi:ss')
