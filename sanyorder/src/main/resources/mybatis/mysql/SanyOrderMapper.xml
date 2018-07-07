@@ -49,7 +49,7 @@
 				t.purchasing,
 				t.purchasingGroup,
 				t.voucherDate,
-				CASE WHEN t.type='0' THEN '投诉工单' WHEN t.type='1' THEN '对账工单' ELSE '已办结' END AS type_name,
+				CASE WHEN t.type='0' THEN 'D001' WHEN t.type='1' THEN 'D002' WHEN t.type='2' THEN 'D003' WHEN t.type='3' THEN 'D004' END AS type_name,
 				t.APPROVALSTATE,
 				CASE WHEN t.APPROVALSTATE='0' THEN '未提交' WHEN t.APPROVALSTATE='1' THEN '已提交' END AS approvalState_name,		
 				t.CONFIRMSTATE,
@@ -72,10 +72,13 @@
         FROM SANY_ORDER t WHERE dr=0
 			<if test="condition != null">
 				<if test="condition.searchMap.orderCode!=null and condition.searchMap.orderCode!='' ">
-					and t.ORDERCODE LIKE CONCAT('%', #{condition.searchMap.orderCode}, '%')
+					and t.ID = #{condition.searchMap.id}
+				</if>
+				<if test="condition.searchMap.orderCode!=null and condition.searchMap.orderCode!='' ">
+					and t.ORDERCODE LIKE CONCAT(CONCAT('%', ${condition.searchMap.code}),'%')
 				</if>
 				<if test="condition.searchMap.supplierName!=null and condition.searchMap.supplierName!='' ">
-					and t.supplierName like CONCAT('%', #{condition.searchMap.supplierName}, '%')
+					and t.supplierName like CONCAT(CONCAT('%', #{condition.searchMap.supplierName}), '%')
 				</if>
 				<if test="condition.searchMap.voucherDate!=null and condition.searchMap.voucherDate!='' ">
 					and t.voucherDate between to_date(${condition.searchMap.startTime},'yyyy-mm-dd hh24:mi:ss') and to_date(${condition.searchMap.endTime},'yyyy-mm-dd hh24:mi:ss')
