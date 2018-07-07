@@ -1,6 +1,7 @@
 package com.yonyou.iuap.example.sanyorder.entity;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.yonyou.iuap.baseservice.attachment.entity.AttachmentEntity;
 import com.yonyou.iuap.baseservice.attachment.entity.Attachmentable;
@@ -222,11 +223,11 @@ public class SanyOrder extends AbsBpmModel implements Attachmentable {
 
 	@Override
 	public String getBpmBillCode() {
-        return  this.id==null
+        return  this.id==null||StrUtil.isEmpty(this.orderCode )
                 ?DateUtil.format(new Date(), "yyyyMMddHHmmss"+new Random().nextInt(10))
                 :this.orderCode
-		 ;
-	}
+    ;
+}
 
 	public List<AttachmentEntity> getAttachment() {
 		return attachment;
