@@ -32,7 +32,7 @@ public class SanyOrder extends AbsBpmModel implements Attachmentable {
     protected String id;//订单ID
     @Condition(match=Match.LIKE)
     @Column(name="ORDERCODE")
-    private String orderCode;//订单编号
+    private String orderCode =getBpmBillCode();//订单编号
     @Condition(match=Match.LIKE)
     @Column(name="ORDERNAME")
     private String orderName;//订单名称
@@ -47,9 +47,7 @@ public class SanyOrder extends AbsBpmModel implements Attachmentable {
     private String type;//类型
     @Condition(match=Match.LIKE)
     @Column(name="PURCHASING")
-    @Reference(code="common_ref",
-            srcProperties={ "PEONAME"},
-            desProperties={ "purchasingName"})
+    @Reference(code="common_ref",srcProperties={ "PEONAME"}, desProperties={ "purchasingName"})
     private String purchasing;//采购组织
     @Condition(match=Match.LIKE)
     @Column(name="PURCHASINGGROUP")
@@ -237,9 +235,8 @@ public class SanyOrder extends AbsBpmModel implements Attachmentable {
 
     @Override
     public String getBpmBillCode() {
-        return  this.id==null||StrUtil.isEmpty(this.orderCode )
-                ?DateUtil.format(new Date(), "yyyyMMddHHmmss"+new Random().nextInt(10))
-                :this.orderCode
+        return  DateUtil.format(new Date(),
+                "yyyyMMddHHmmss"+new Random().nextInt(10))
                 ;
     }
 
