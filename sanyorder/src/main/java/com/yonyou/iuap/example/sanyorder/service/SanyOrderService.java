@@ -19,14 +19,14 @@ public class SanyOrderService extends GenericBpmService<SanyOrder>{
 	 * 新增保存工单信息
 	 */
     @Override
-    public SanyOrder insert(SanyOrder SanyOrder) {
-            SanyOrder.setOrderCode(SanyOrder.getBpmBillCode());//编码code生成
-        return super.insert(SanyOrder);
+    public SanyOrder insert(SanyOrder entity) {
+        entity.setOrderCode(entity.getBpmBillCode());//编码code生成
+        return super.insert(entity);
     }
 	@Override
-	public SanyOrder save(SanyOrder SanyOrder) {
-			SanyOrder.setOrderCode(SanyOrder.getBpmBillCode());//编码code生成
-		return super.save(SanyOrder);
+	public SanyOrder save(SanyOrder entity) {
+        entity.setOrderCode(entity.getBpmBillCode());//编码code生成
+		return super.save(entity);
 	}
 	
 

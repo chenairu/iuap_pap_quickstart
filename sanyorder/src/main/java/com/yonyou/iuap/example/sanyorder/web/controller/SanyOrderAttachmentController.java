@@ -1,6 +1,7 @@
 package com.yonyou.iuap.example.sanyorder.web.controller;
 
 import com.yonyou.iuap.baseservice.attachment.controller.GenericAtController;
+import com.yonyou.iuap.baseservice.attachment.entity.Attachmentable;
 import com.yonyou.iuap.example.sanyorder.entity.SanyOrder;
 import com.yonyou.iuap.example.sanyorder.service.SanyOrderAttachmentService;
 import com.yonyou.iuap.mvc.annotation.FrontModelExchange;
@@ -8,6 +9,7 @@ import com.yonyou.iuap.mvc.type.SearchParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -22,7 +24,8 @@ public class SanyOrderAttachmentController extends GenericAtController<SanyOrder
     }
     @Override
     public Object getListWithAttach(PageRequest pageRequest,
-                       @FrontModelExchange(modelType = SanyOrder.class) SearchParams searchParams) {
+                       @FrontModelExchange(modelType = SanyOrder.class) SearchParams searchParams) throws Exception {
         return super.getListWithAttach(pageRequest,searchParams);
     }
+
 }

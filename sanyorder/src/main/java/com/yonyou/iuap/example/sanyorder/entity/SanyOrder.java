@@ -47,7 +47,9 @@ public class SanyOrder extends AbsBpmModel implements Attachmentable {
     private String type;//类型
     @Condition(match=Match.LIKE)
     @Column(name="PURCHASING")
-    @Reference(code="common_ref", srcProperties={"id", "peoname"}, desProperties={"purchasing", "purchasingName"})
+    @Reference(code="common_ref",
+            srcProperties={ "PEONAME"},
+            desProperties={ "purchasingName"})
     private String purchasing;//采购组织
     @Condition(match=Match.LIKE)
     @Column(name="PURCHASINGGROUP")

@@ -12,7 +12,7 @@
 				from ${tablename}
 			<where> 
 				dr = 0 and id in
-					<foreach collection="Ids" item="ids" open="(" close=")" separator=",">
+					<foreach collection="ids" item="ids" open="(" close=")" separator=",">
             			#{ids}
         			</foreach>
 			</where>

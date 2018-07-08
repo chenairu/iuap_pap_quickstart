@@ -14,6 +14,13 @@ public class SanyOrderAttachmentService extends GenericAtService<SanyOrder> {
     @Autowired
     public void setSanyOrderMapper(SanyOrderMapper sanyOrderMapper) {
         this.sanyOrderMapper = sanyOrderMapper;
+        super.setIbatisMapperEx(sanyOrderMapper);
         super.setMapper(sanyOrderMapper);
+    }
+
+    @Override
+    public SanyOrder saveWithAttachment(SanyOrder entity) {
+        entity.setOrderCode(entity.getBpmBillCode());//编码code生成
+        return super.saveWithAttachment(entity);
     }
 }
