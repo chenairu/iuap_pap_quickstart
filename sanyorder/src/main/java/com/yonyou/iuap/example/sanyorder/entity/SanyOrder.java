@@ -27,7 +27,7 @@ public class SanyOrder extends AbsBpmModel implements Attachmentable {
 
     @Id
     @GeneratedValue(strategy=Strategy.UUID, module="order")
-    @Column(name="ID")
+    @Column(name="id")
     @Condition
     protected String id;//订单ID
     @Condition(match=Match.LIKE)
