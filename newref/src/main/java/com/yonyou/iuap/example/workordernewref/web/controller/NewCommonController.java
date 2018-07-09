@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.yonyou.iuap.example.workordernewref.entity.RefParamVO;
 import com.yonyou.iuap.example.workordernewref.service.NewRefCommonService;
 import com.yonyou.iuap.example.workordernewref.utils.SimpleParseXML;
@@ -164,14 +166,9 @@ public class NewCommonController extends AbstractTreeGridRefModel{
 	@ResponseBody
 	public Map<String, Object> blobRefSearch(@RequestBody RefViewModelVO refModel) {
 
-//		String transmitParam = refModel.getTransmitParam();
-//		String tableName = "";
-//		if(transmitParam.contains(",")){
-//			String[] tableNames = transmitParam.split(",");
-//			tableName = tableNames[0];
-//		}else{
-//			tableName = transmitParam;
-//		}
+		//前台传过来的refType来做请求参数过滤
+		String transmitParam = refModel.getTransmitParam();
+		String refType = transmitParam;
 		
 		//构建表体，其中list中为要查询的字段，必须和表头设置的相同，并且必须为表中的字段值
 		RefParamVO refParamVO = SimpleParseXML.getInstance().getMSConfig(refModel.getRefCode());
@@ -188,17 +185,28 @@ public class NewCommonController extends AbstractTreeGridRefModel{
 			
 			refModel.getRefClientPageInfo().setPageSize(pageSize);
 			
-			//获取查询条件
-			String content = refModel.getContent();
-			
 			//树节点的ID
 			String condition = refModel.getCondition();
 			
 			Map<String, String> conditions = new HashMap<String,String>();
-			if(content != null && !"".equals(content)){
-				//按照自定义第一个字段做搜索查询
-				conditions.put(refParamVO.getExtcol().get(0), content);
+			
+			//获取查询条件 --如果content
+			String content = refModel.getContent();
+			if("6".equals(refType)){
+				JSONObject jsonObject = JSON.parseObject(content);
+				Map<String,Object> map = jsonObject;
+				for(String key : map.keySet()){
+					conditions.put(key, (String)map.get(key));
+				}
+			}else{
+				if(content != null && !"".equals(content)){
+					//对参照所有列进行模糊查询
+					for(String extcol : refParamVO.getExtcol()){
+						conditions.put(extcol, content);
+					}
+				}
 			}
+			
 			conditions.put("dr", "0");
 			
 			String idfield = StringUtils.isBlank(refParamVO.getIdfield()) ? "id"
