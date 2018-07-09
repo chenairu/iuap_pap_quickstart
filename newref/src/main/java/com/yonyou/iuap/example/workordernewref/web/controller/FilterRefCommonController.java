@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.yonyou.iuap.base.web.BaseController;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ import com.yonyou.iuap.example.workordernewref.utils.ValueConvertor;
 
 @Controller
 @RequestMapping(value = "/common")
-public class FilterRefCommonController {
+public class FilterRefCommonController extends BaseController {
 
 	@Autowired
 	private NewRefCommonService service;
@@ -50,13 +51,12 @@ public class FilterRefCommonController {
 			}
 			return results;
 		}
-		return null;
+		return (new ArrayList<>());
 	}
 	
 	/**
 	 * 过滤完的数据组装--表格
 	 * 
-	 * @param peoplelist
 	 * @return
 	 */
 	private List<Map<String, String>> buildRtnValsOfRef(

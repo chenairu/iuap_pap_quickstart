@@ -71,7 +71,10 @@
                 t.bpm_process_define
         FROM SANY_ORDER t WHERE dr=0
 			<if test="condition != null">
-				<if test="condition.searchMap.orderCode!=null and condition.searchMap.orderCode!='' ">
+                <if test="condition.searchMap.id!=null and condition.searchMap.id!='' ">
+                    and t.ID = #{condition.searchMap.id}
+                </if>
+				<if test="condition.searchMap.id!=null and condition.searchMap.id!='' ">
 					and t.ID = #{condition.searchMap.id}
 				</if>
 				<if test="condition.searchMap.orderCode!=null and condition.searchMap.orderCode!='' ">
@@ -98,7 +101,8 @@
 				<if test="condition.searchMap.purchasingGroup!=null and condition.searchMap.purchasingGroup!='' ">
 					and t.PURCHASINGGROUP = #{condition.searchMap.purchasingGroup}
 				</if>
-			</if>		
+			</if>
+        ORDER by t.create_Time desc
 			<if test="page != null">
 				<if test="page.sort!=null">
 					order by 
