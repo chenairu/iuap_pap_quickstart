@@ -84,7 +84,7 @@
 					and t.supplierName like CONCAT(CONCAT('%', #{condition.searchMap.supplierName}), '%')
 				</if>
 				<if test="condition.searchMap.voucherDate!=null and condition.searchMap.voucherDate!='' ">
-					and t.voucherDate between to_date(${condition.searchMap.startTime},'yyyy-mm-dd hh24:mi:ss') and to_date(${condition.searchMap.endTime},'yyyy-mm-dd hh24:mi:ss')
+					and t.voucherDate between #{condition.searchMap.startTime} and #{condition.searchMap.endTime}
 				</if>
 				<if test="condition.searchMap.type!=null and condition.searchMap.type!='' ">
 					and t.type = #{condition.searchMap.type}
