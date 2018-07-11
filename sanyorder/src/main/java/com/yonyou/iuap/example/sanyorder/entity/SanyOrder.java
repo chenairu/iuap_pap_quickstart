@@ -54,7 +54,7 @@ public class SanyOrder extends AbsBpmModel implements Attachmentable {
     private String purchasingGroup;//采购组
     @Condition(match=Match.EQ)
     @Column(name="VOUCHERDATE")
-    private Date voucherDate;//凭证日期
+    private String voucherDate;//凭证日期
     @Condition(match=Match.EQ)
     @Column(name="APPROVALSTATE")
     private Integer approvalState;//审批状态
@@ -145,11 +145,11 @@ public class SanyOrder extends AbsBpmModel implements Attachmentable {
         this.purchasingGroup = purchasingGroup;
     }
 
-    public Date getVoucherDate() {
+    public String getVoucherDate() {
         return voucherDate;
     }
 
-    public void setVoucherDate(Date voucherDate) {
+    public void setVoucherDate(String voucherDate) {
         this.voucherDate = voucherDate;
     }
 
