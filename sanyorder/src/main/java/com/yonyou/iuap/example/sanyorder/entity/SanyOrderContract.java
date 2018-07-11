@@ -3,6 +3,7 @@ package com.yonyou.iuap.example.sanyorder.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.yonyou.iuap.baseservice.attachment.entity.AttachmentEntity;
 import com.yonyou.iuap.baseservice.attachment.entity.Attachmentable;
+import com.yonyou.iuap.baseservice.bpm.entity.AbsBpmModel;
 import com.yonyou.iuap.baseservice.entity.AbsDrModel;
 import com.yonyou.iuap.baseservice.support.condition.Condition;
 import com.yonyou.iuap.baseservice.support.condition.Match;
@@ -10,12 +11,13 @@ import com.yonyou.iuap.example.base.utils.date.DateUtil;
 
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Table(name="sany_order_contract")
-public class SanyOrderContract extends AbsDrModel implements Attachmentable,Associable {
+public class SanyOrderContract extends AbsBpmModel implements Attachmentable,Associable {
 
     @Condition(match=Match.EQ)
     private String orderId;
@@ -108,5 +110,12 @@ public class SanyOrderContract extends AbsDrModel implements Attachmentable,Asso
     @Override
     public String getAssoFieldName() {
         return "orderId";
+    }
+
+    @Override
+    public String getBpmBillCode() {
+          return  cn.hutool.core.date.DateUtil.format(new Date(),
+                "yyyyMMddHHmmss"+new Random().nextInt(10))
+                ;
     }
 }
