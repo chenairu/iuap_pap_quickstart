@@ -20,7 +20,7 @@ import com.yonyou.iuap.example.workordernewref.service.NewRefCommonService;
 import com.yonyou.iuap.example.workordernewref.utils.SimpleParseXML;
 import com.yonyou.iuap.example.workordernewref.utils.ValueConvertor;
 
-@Controller
+//@Controller 迁入baseService框架中
 @RequestMapping(value = "/common")
 public class FilterRefCommonController extends BaseController {
 
