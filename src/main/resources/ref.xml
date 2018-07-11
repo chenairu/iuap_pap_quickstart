@@ -34,8 +34,8 @@
 				<!-- 转换：如果是单表的表 可能没有pid字段  可以不传 -->
 	<!-- 			<showcol code="pidfield">INSTITID</showcol> -->
 				<!-- 业务需要展示的字段，code是字段名称 value是参照表头信息 -->
-				<showcol code="CODE">人员编码</showcol>
-				<showcol code="NAME">人员名称</showcol>
+				<showcol code="code">人员编码</showcol>
+				<showcol code="name">人员名称</showcol>
 			</table>
 	</RefViewModelVO>
 
