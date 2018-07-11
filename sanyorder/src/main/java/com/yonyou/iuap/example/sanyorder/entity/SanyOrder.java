@@ -41,6 +41,7 @@ public class SanyOrder extends AbsBpmModel implements Attachmentable {
     private String supplier;//供应商
     @Condition(match=Match.LIKE)
     @Column(name="supplierName")
+    @Reference(code="bd_common_user",srcProperties={ "NAME"}, desProperties={ "showSupplierName"})
     private String supplierName;//供应商名称
     @Condition(match=Match.EQ)
     @Column(name="TYPE")
@@ -75,6 +76,8 @@ public class SanyOrder extends AbsBpmModel implements Attachmentable {
     private String closeState_name;//关闭状态
     @Transient
     private String purchasingName;//供应商名称
+    @Transient
+    private String showSupplierName;//供应商名称
 
     @Transient
     private List<AttachmentEntity> attachment;
