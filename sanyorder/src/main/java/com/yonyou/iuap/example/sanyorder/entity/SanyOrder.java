@@ -27,7 +27,7 @@ public class SanyOrder extends AbsBpmModel implements Attachmentable {
 
     @Id
     @GeneratedValue(strategy=Strategy.UUID, module="order")
-    @Column(name="ID")
+    @Column(name="id")
     @Condition
     protected String id;//订单ID
     @Condition(match=Match.LIKE)
@@ -41,6 +41,7 @@ public class SanyOrder extends AbsBpmModel implements Attachmentable {
     private String supplier;//供应商
     @Condition(match=Match.LIKE)
     @Column(name="supplierName")
+    @Reference(code="bd_common_user",srcProperties={ "NAME"}, desProperties={ "showSupplierName"})
     private String supplierName;//供应商名称
     @Condition(match=Match.EQ)
     @Column(name="TYPE")
@@ -54,7 +55,7 @@ public class SanyOrder extends AbsBpmModel implements Attachmentable {
     private String purchasingGroup;//采购组
     @Condition(match=Match.EQ)
     @Column(name="VOUCHERDATE")
-    private Date voucherDate;//凭证日期
+    private String voucherDate;//凭证日期
     @Condition(match=Match.EQ)
     @Column(name="APPROVALSTATE")
     private Integer approvalState;//审批状态
@@ -75,6 +76,18 @@ public class SanyOrder extends AbsBpmModel implements Attachmentable {
     private String closeState_name;//关闭状态
     @Transient
     private String purchasingName;//供应商名称
+
+    public String getShowSupplierName() {
+        return showSupplierName;
+    }
+
+    public void setShowSupplierName(String showSupplierName) {
+        this.showSupplierName = showSupplierName;
+    }
+
+    @Transient
+    private String showSupplierName;//供应商名称
+
 
     @Transient
     private List<AttachmentEntity> attachment;
@@ -145,11 +158,11 @@ public class SanyOrder extends AbsBpmModel implements Attachmentable {
         this.purchasingGroup = purchasingGroup;
     }
 
-    public Date getVoucherDate() {
+    public String getVoucherDate() {
         return voucherDate;
     }
 
-    public void setVoucherDate(Date voucherDate) {
+    public void setVoucherDate(String voucherDate) {
         this.voucherDate = voucherDate;
     }
 

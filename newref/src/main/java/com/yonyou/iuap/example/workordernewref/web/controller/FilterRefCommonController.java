@@ -20,7 +20,7 @@ import com.yonyou.iuap.example.workordernewref.service.NewRefCommonService;
 import com.yonyou.iuap.example.workordernewref.utils.SimpleParseXML;
 import com.yonyou.iuap.example.workordernewref.utils.ValueConvertor;
 
-@Controller
+//@Controller 迁入baseService框架中
 @RequestMapping(value = "/common")
 public class FilterRefCommonController extends BaseController {
 
@@ -32,20 +32,25 @@ public class FilterRefCommonController extends BaseController {
 	public List<Map<String,String>> filterRef(@RequestBody List<Map<String,String>> list) {
 		if(list.size() > 0){
 			String refCode = "";
-			List<String> ids = new ArrayList<String>();
+			List<String> idsList = new ArrayList<String>();
 			List<Map<String, String>> results = new ArrayList<Map<String, String>>();
 			
 			for(Map<String,String> map:list){
 				refCode = map.get("refCode");
-				String id = map.get("id");
-				ids.add(id);
+				String ids = map.get("id");
+				if(ids != null && !"".equals(ids)){
+					String[] idArray =ids.split(",");
+					for(String id:idArray){
+						idsList.add(id);
+					}
+				}
 			}
 			
 			RefParamVO refParamVO = SimpleParseXML.getInstance().getMSConfig(refCode);
 			String idfield = StringUtils.isBlank(refParamVO.getIdfield()) ? "id"
 					: refParamVO.getIdfield();
 			String tableName = refParamVO.getTablename();
-			List<Map<String, Object>> obj = service.getFilterRef(tableName,idfield,refParamVO.getExtcol(),ids);
+			List<Map<String, Object>> obj = service.getFilterRef(tableName,idfield,refParamVO.getExtcol(),idsList);
 			if (CollectionUtils.isNotEmpty(obj)) {
 				results = buildRtnValsOfRef(obj);
 			}
