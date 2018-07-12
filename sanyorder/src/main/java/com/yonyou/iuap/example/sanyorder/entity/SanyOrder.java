@@ -1,11 +1,11 @@
 package com.yonyou.iuap.example.sanyorder.entity;
 
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.yonyou.iuap.baseservice.attachment.entity.AttachmentEntity;
 import com.yonyou.iuap.baseservice.attachment.entity.Attachmentable;
 import com.yonyou.iuap.baseservice.bpm.entity.AbsBpmModel;
+import com.yonyou.iuap.baseservice.entity.annotation.Associative;
 import com.yonyou.iuap.baseservice.entity.annotation.Reference;
 import com.yonyou.iuap.baseservice.support.condition.Condition;
 import com.yonyou.iuap.baseservice.support.condition.Match;
@@ -23,6 +23,7 @@ import java.util.Random;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Table(name="sany_order")
+@Associative(fkName="orderId")
 public class SanyOrder extends AbsBpmModel implements Attachmentable {
 
     @Id

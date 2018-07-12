@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.yonyou.iuap.baseservice.attachment.entity.AttachmentEntity;
 import com.yonyou.iuap.baseservice.attachment.entity.Attachmentable;
 import com.yonyou.iuap.baseservice.bpm.entity.AbsBpmModel;
-import com.yonyou.iuap.baseservice.entity.AbsDrModel;
 import com.yonyou.iuap.baseservice.support.condition.Condition;
 import com.yonyou.iuap.baseservice.support.condition.Match;
 import com.yonyou.iuap.example.base.utils.date.DateUtil;
@@ -17,14 +16,14 @@ import java.util.Random;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Table(name="sany_order_contract")
-public class SanyOrderContract extends AbsBpmModel implements Attachmentable,Associable {
+public class SanyOrderContract extends AbsBpmModel implements Attachmentable {
 
     @Condition(match=Match.EQ)
     private String orderId;
     @Condition(match=Match.EQ)
     private String contractCode;
     @Condition(match=Match.EQ)
-    private String contractTitle;
+    private String contractName;
     @Condition(match=Match.EQ)
     private String maker;
     @Condition(match=Match.EQ)
@@ -53,12 +52,12 @@ public class SanyOrderContract extends AbsBpmModel implements Attachmentable,Ass
         this.contractCode = contractCode;
     }
 
-    public String getContractTitle() {
-        return contractTitle;
+    public String getContractName() {
+        return contractName;
     }
 
-    public void setContractTitle(String contractTitle) {
-        this.contractTitle = contractTitle;
+    public void setContractName(String contractName) {
+        this.contractName = contractName;
     }
 
     public String getMaker() {
@@ -105,11 +104,6 @@ public class SanyOrderContract extends AbsBpmModel implements Attachmentable,Ass
     @Override
     public void setAttachment(List<AttachmentEntity> attachment) {
         this.attachment =attachment;
-    }
-
-    @Override
-    public String getAssoFieldName() {
-        return "orderId";
     }
 
     @Override
