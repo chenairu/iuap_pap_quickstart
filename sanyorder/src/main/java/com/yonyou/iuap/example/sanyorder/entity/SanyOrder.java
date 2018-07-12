@@ -76,8 +76,18 @@ public class SanyOrder extends AbsBpmModel implements Attachmentable {
     private String closeState_name;//关闭状态
     @Transient
     private String purchasingName;//供应商名称
+
+    public String getShowSupplierName() {
+        return showSupplierName;
+    }
+
+    public void setShowSupplierName(String showSupplierName) {
+        this.showSupplierName = showSupplierName;
+    }
+
     @Transient
     private String showSupplierName;//供应商名称
+
 
     @Transient
     private List<AttachmentEntity> attachment;
