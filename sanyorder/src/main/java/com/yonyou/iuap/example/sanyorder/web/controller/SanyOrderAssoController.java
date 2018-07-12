@@ -32,10 +32,11 @@ public class SanyOrderAssoController extends GenericAssoController<SanyOrder> {
      * @param sanyOrderContractService
      */
     @Autowired
-    public void setSanyOrderService(SanyOrderContractService sanyOrderContractService) {
+    public void setSanyOrderContractService(SanyOrderContractService sanyOrderContractService) {
         this.sanyOrderContractService = sanyOrderContractService;
         super.setSubService(SanyOrderContract.class,sanyOrderContractService);
     }
+
 
 
 }
