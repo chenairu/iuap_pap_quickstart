@@ -2,10 +2,12 @@ package com.yonyou.iuap.example.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.yonyou.iuap.baseservice.entity.AbsDrModel;
+import com.yonyou.iuap.baseservice.entity.annotation.Reference;
 import com.yonyou.iuap.baseservice.support.condition.Condition;
 import com.yonyou.iuap.baseservice.support.condition.Match;
 
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -30,8 +32,12 @@ public class ShowOffDetail extends AbsDrModel {
     private BigDecimal priceUnit;
     @Condition(match=Match.EQ)
     private String confirmTime;
+
     @Condition(match=Match.EQ)
+    @Reference(code="common_ref",srcProperties={ "peoname"}, desProperties={ "confirmUserName"})
     private String confirmUser;
+    @Transient
+    private String confirmUserName;
     @Condition(match=Match.EQ)
     private Integer deliveryStatus;
     @Condition(match=Match.EQ)
@@ -141,5 +147,13 @@ public class ShowOffDetail extends AbsDrModel {
 
     public void setDeliveryAddr(String deliveryAddr) {
         this.deliveryAddr = deliveryAddr;
+    }
+
+    public String getConfirmUserName() {
+        return confirmUserName;
+    }
+
+    public void setConfirmUserName(String confirmUserName) {
+        this.confirmUserName = confirmUserName;
     }
 }
