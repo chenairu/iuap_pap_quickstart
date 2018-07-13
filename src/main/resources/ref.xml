@@ -38,5 +38,33 @@
 				<showcol code="name">人员名称</showcol>
 			</table>
 	</RefViewModelVO>
+	
+	<!-- 单表参照  平台组织参照 -->
+	<RefViewModelVO code="bd_common_org">
+			<!-- 单表和树表的表 -->
+			<!-- name是数据库表名称 -->
+			<table name="ORG_ORGANIZATION">
+				<!-- 转换：如果是树表的表 需要有pid字段  将业务的pid字段映射到pidfield，code和value均为页面表字段 -->
+				<!-- 转换：如果是单表的表 可能没有pid字段  可以不传 -->
+	<!-- 			<showcol code="pidfield">INSTITID</showcol> -->
+				<!-- 业务需要展示的字段，code是字段名称 value是参照表头信息 -->
+				<showcol code="code">组织编码</showcol>
+				<showcol code="name">组织名称</showcol>
+			</table>
+	</RefViewModelVO>
+	
+	<!-- 单表参照  平台部门参照 -->
+	<RefViewModelVO code="bd_common_dept">
+			<!-- 单表和树表的表 -->
+			<!-- name是数据库表名称 -->
+			<table name="ORG_DEPARTMENT">
+				<!-- 转换：如果是树表的表 需要有pid字段  将业务的pid字段映射到pidfield，code和value均为页面表字段 -->
+				<!-- 转换：如果是单表的表 可能没有pid字段  可以不传 -->
+	<!-- 			<showcol code="pidfield">INSTITID</showcol> -->
+				<!-- 业务需要展示的字段，code是字段名称 value是参照表头信息 -->
+				<showcol code="code">部门编码</showcol>
+				<showcol code="name">部门名称</showcol>
+			</table>
+	</RefViewModelVO>
 
 </root>

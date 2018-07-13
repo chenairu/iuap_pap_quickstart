@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yonyou.iuap.example.dao.ShowOffMapper">
+
+    <resultMap id="BaseResultMap" type="com.yonyou.iuap.example.entity.ShowOff">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="pet_id"  property="petId" />
+        <result column="quantity"  property="quantity" />
+        <result column="ship_date"  property="shipDate" />
+        <result column="status"  property="status" />
+        <result column="complete"  property="complete" />
+
+        <result column="dr" property="dr" />
+        <result column="ts" property="ts" />
+        <result column="last_modified" property="lastModified" />
+        <result column="last_modify_user" property="lastModifyUser" />
+        <result column="create_time" property="createTime" />
+        <result column="create_user" property="createUser" />
+
+        <result column="bpm_state" property="bpmState" />
+        <result column="bpm_task_key" property="taskKey" />
+        <result column="bpm_taskid" property="taskId" />
+        <result column="bpm_process_instance" property="processInstanceId" />
+        <result column="bpm_process_define" property="processDefineCode" />
+
+    </resultMap>
+
+
+	<select id="selectAllByPage"  resultMap="BaseResultMap">
+		SELECT  t.* FROM show_off t WHERE t.dr=0
+			 
+			<if test="condition != null">
+                <if test="condition.searchMap.id!=null and condition.searchMap.id!='' ">
+                    and t.ID = #{condition.searchMap.id}
+                </if>
+			    <if test="condition.searchMap.petId!=null and condition.searchMap.petId!='' ">
+                    and t.pet_id = #{condition.searchMap.petId}
+                </if>
+			    <if test="condition.searchMap.quantity!=null and condition.searchMap.quantity!='' ">
+                    and t.quantity = #{condition.searchMap.quantity}
+                </if>
+			    <if test="condition.searchMap.shipDate!=null and condition.searchMap.shipDate!='' ">
+                    and t.ship_date = #{condition.searchMap.shipDate}
+                </if>
+			    <if test="condition.searchMap.status!=null and condition.searchMap.status!='' ">
+                    and t.status = #{condition.searchMap.status}
+                </if>
+			    <if test="condition.searchMap.complete!=null and condition.searchMap.complete!='' ">
+                    and t.complete = #{condition.searchMap.complete}
+                </if>
+			</if>
+			<if test="page != null">
+				<if test="page.sort!=null">
+					order by
+					<foreach collection="page.sort" item="item" separator=" ">
+                        ${item.property}  ${item.direction}
+					</foreach>
+				</if>
+			</if>
+	</select>
+
+</mapper>
