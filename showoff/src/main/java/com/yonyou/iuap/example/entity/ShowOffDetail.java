@@ -5,14 +5,37 @@ import com.yonyou.iuap.baseservice.entity.AbsDrModel;
 import com.yonyou.iuap.baseservice.entity.annotation.Reference;
 import com.yonyou.iuap.baseservice.support.condition.Condition;
 import com.yonyou.iuap.baseservice.support.condition.Match;
+import com.yonyou.iuap.baseservice.support.generator.GeneratedValue;
+import com.yonyou.iuap.baseservice.support.generator.Strategy;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Table(name="show_off_detail")
 public class ShowOffDetail extends AbsDrModel {
+
+    @Id
+    @GeneratedValue(strategy=Strategy.UUID)
+    @Column(name="id")
+    @Condition
+    protected String id;//ID
+    @Override
+    public String getId() {
+        return id;
+    }
+    @Override
+    public void setId(Serializable id){
+        this.id= id.toString();
+        super.id = id;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
 
     @Condition(match=Match.EQ)
     private String orderId;
