@@ -66,6 +66,9 @@ public class SanyOrder extends AbsBpmModel implements Attachmentable {
     @Condition(match=Match.EQ)
     @Column(name="CLOSESTATE")
     private Integer closeState;//关闭状态
+    @Condition(match=Match.EQ)
+    @Column(name="ISPAYMENT")
+    private String isPayment;//支付状态
 
     @Transient
     private String type_name;//类型名称
@@ -261,6 +264,14 @@ public class SanyOrder extends AbsBpmModel implements Attachmentable {
     public void setAttachment(List<AttachmentEntity> attachment) {
         this.attachment = attachment;
     }
+
+	public String getIsPayment() {
+		return isPayment;
+	}
+
+	public void setIsPayment(String isPayment) {
+		this.isPayment = isPayment;
+	}
 
 
 
