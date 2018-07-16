@@ -7,6 +7,7 @@
 			<table name="EXAMPLE_CONTACTS">
 				<!-- 转换：如果是树表的表 需要有pid字段  将业务的pid字段映射到pidfield，code和value均为页面表字段 -->
 				<!-- 转换：如果是单表的表 可能没有pid字段  可以不传 -->
+				<showcol code="idfield">ID</showcol>
 				<showcol code="pidfield">INSTITID</showcol>
 				<!-- 业务需要展示的字段，code是字段名称 value是参照表头信息 -->
 				<showcol code="peocode">人员编码</showcol>
