@@ -1,6 +1,5 @@
 package com.yonyou.iuap.example.controller;
 
-import com.yonyou.iuap.baseservice.controller.GenericAssoController;
 import com.yonyou.iuap.baseservice.vo.GenericAssoVo;
 import com.yonyou.iuap.example.entity.ShowOff;
 import com.yonyou.iuap.example.entity.ShowOffDetail;

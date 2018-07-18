@@ -1,4 +1,4 @@
-package com.yonyou.iuap.example.orderinfo.controller;
+package com.yonyou.iuap.example.controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yonyou.iuap.baseservice.bpm.controller.GenericBpmController;
-import com.yonyou.iuap.example.orderinfo.entity.OrderInfo;
-import com.yonyou.iuap.example.orderinfo.service.OrderInfoService;
+import com.yonyou.iuap.example.entity.OrderInfo;
+import com.yonyou.iuap.example.service.OrderInfoService;
 import com.yonyou.iuap.mvc.annotation.FrontModelExchange;
 import com.yonyou.iuap.mvc.type.SearchParams;
 

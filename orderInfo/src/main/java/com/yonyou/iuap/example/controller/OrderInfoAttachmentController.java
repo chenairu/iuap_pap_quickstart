@@ -1,8 +1,8 @@
-package com.yonyou.iuap.example.orderinfo.controller;
+package com.yonyou.iuap.example.controller;
 
 import com.yonyou.iuap.baseservice.attachment.controller.GenericAtController;
-import com.yonyou.iuap.example.orderinfo.entity.OrderInfo;
-import com.yonyou.iuap.example.orderinfo.service.OrderInfoAttachmentService;
+import com.yonyou.iuap.example.entity.OrderInfo;
+import com.yonyou.iuap.example.service.OrderInfoAttachmentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.yonyou.iuap.mvc.annotation.FrontModelExchange;

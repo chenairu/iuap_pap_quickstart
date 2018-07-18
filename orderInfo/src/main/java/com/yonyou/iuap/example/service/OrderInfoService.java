@@ -1,10 +1,10 @@
-package com.yonyou.iuap.example.orderinfo.service;
+package com.yonyou.iuap.example.service;
 
 import com.yonyou.iuap.baseservice.bpm.service.GenericBpmService;
 import com.yonyou.iuap.bpm.pojo.BPMFormJSON;
 import com.yonyou.iuap.context.InvocationInfoProxy;
-import com.yonyou.iuap.example.orderinfo.dao.OrderInfoMapper;
-import com.yonyou.iuap.example.orderinfo.entity.OrderInfo;
+import com.yonyou.iuap.example.dao.OrderInfoMapper;
+import com.yonyou.iuap.example.entity.OrderInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

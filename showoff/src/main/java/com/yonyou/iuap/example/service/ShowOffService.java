@@ -30,6 +30,7 @@ public class ShowOffService extends GenericBpmService<ShowOff>{
         String userName = InvocationInfoProxy.getUsername();
         try {
             userName = URLDecoder.decode(userName,"utf-8");
+            userName = URLDecoder.decode(userName,"utf-8");
         } catch (UnsupportedEncodingException e) {
             userName =InvocationInfoProxy.getUsername();
         }

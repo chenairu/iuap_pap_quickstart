@@ -1,4 +1,4 @@
-package com.yonyou.iuap.example.orderinfo.entity;
+package com.yonyou.iuap.example.entity;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
