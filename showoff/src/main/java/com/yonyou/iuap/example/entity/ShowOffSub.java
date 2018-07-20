@@ -7,7 +7,7 @@ import com.yonyou.iuap.baseservice.attachment.entity.AttachmentEntity;
 import com.yonyou.iuap.baseservice.attachment.entity.Attachmentable;
 import com.yonyou.iuap.baseservice.bpm.entity.AbsBpmModel;
 import com.yonyou.iuap.baseservice.entity.annotation.Reference;
-import com.yonyou.iuap.baseservice.entity.annotation.Associative;
+
 import com.yonyou.iuap.baseservice.support.condition.Condition;
 import com.yonyou.iuap.baseservice.support.condition.Match;
 import com.yonyou.iuap.baseservice.support.generator.GeneratedValue;
@@ -24,13 +24,13 @@ import java.util.Random;
 import java.math.BigDecimal;
 
 /**
- * 演示示例
+ * 演示示例-子表
  */
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Table(name = "show_off")
-@Associative(fkName = "showOffId")   
-public class ShowOff extends AbsBpmModel implements Attachmentable {
+@Table(name = "show_off_sub")
+
+public class ShowOffSub extends AbsBpmModel implements Attachmentable {
 
 	@Id
 	@GeneratedValue(strategy=Strategy.UUID)
@@ -50,74 +50,74 @@ public class ShowOff extends AbsBpmModel implements Attachmentable {
 		this.id = id;
 	}
 
-    @Condition(match=Match.EQ)
-    @Column(name="pet_id")
-        @Reference(code="common_ref",srcProperties={ "peoname"}, desProperties={ "petIdSr"})
-    private String petId;	//宠物标识
+    @Condition(match=Match.LIKE)
+    @Column(name="SHOW_OFF_ID")
+    private String showOffId;	//主表外键
+
+
+    @Condition(match=Match.LIKE)
+    @Column(name="CONTACT")
+        @Reference(code="common_ref",srcProperties={ "peoname"}, desProperties={ "confirmUserName"})
+    private String confirmUser;	//联系人
 
     @Transient
-    private String petIdSr;	//参照显示值
-    public void setpetIdSr(String refName){
-        this.petIdSr = refName;
+    private String confirmUserName;	//参照显示值
+    public void setconfirmUserName(String refName){
+        this.confirmUserName = refName;
     }
-    public String getPetIdSr(){
-        return this.petIdSr;
+    public String getConfirmUserName(){
+        return this.confirmUserName;
     }
 
     @Condition(match=Match.EQ)
-    @Column(name="quantity")
-    private BigDecimal quantity;	//单价
+    @Column(name="SEND_DATE")
+    private String sendDate;	//发货日期
 
 
     @Condition(match=Match.EQ)
-    @Column(name="ship_date")
-    private String shipDate;	//发货日期
+    @Column(name="DELIVER_STATE")
+    private String deliverState;	//发货状态
 
 
-    @Condition(match=Match.EQ)
-    @Column(name="status")
-    private String status;	//状态
-
-
-    @Condition(match=Match.EQ)
-    @Column(name="complete")
-    private Boolean complete;	//完成状态
+    @Condition(match=Match.LIKE)
+    @Column(name="REMARK")
+    private String remark;	//备注
 
 
 
-    public void setPetId(String petId){
-    this.petId = petId;
+    public void setShowOffId(String showOffId){
+    this.showOffId = showOffId;
     }
-    public String getPetId(){
-    return this.petId;
+    public String getShowOffId(){
+    return this.showOffId;
     }
 
-    public void setQuantity(BigDecimal quantity){
-    this.quantity = quantity;
+    public void setConfirmUser(String confirmUser){
+    this.confirmUser = confirmUser;
     }
-    public BigDecimal getQuantity(){
-    return this.quantity;
-    }
-
-    public void setShipDate(String shipDate){
-    this.shipDate = shipDate;
-    }
-    public String getShipDate(){
-    return this.shipDate;
+    public String getConfirmUser(){
+    return this.confirmUser;
     }
 
-    public void setStatus(String status){
-    this.status = status;
+    public void setSendDate(String sendDate){
+    this.sendDate = sendDate;
     }
-    public String getStatus(){
-    return this.status;
+    public String getSendDate(){
+    return this.sendDate;
     }
 
-    public void setComplete(Boolean complete){
-    this.complete = complete;
+    public void setDeliverState(String deliverState){
+    this.deliverState = deliverState;
     }
-    public Boolean getComplete(){
-    return this.complete;
+    public String getDeliverState(){
+    return this.deliverState;
+    }
+
+    public void setRemark(String remark){
+    this.remark = remark;
+    }
+    public String getRemark(){
+    return this.remark;
     }
 
 
