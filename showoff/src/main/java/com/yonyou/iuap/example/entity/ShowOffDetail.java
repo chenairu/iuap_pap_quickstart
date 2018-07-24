@@ -38,7 +38,8 @@ public class ShowOffDetail extends AbsDrModel {
     }
 
     @Condition(match=Match.EQ)
-    private String orderId;
+    @Column(name ="order_id")
+    private String showOffId;
     @Condition(match=Match.EQ)
     private String purchaseOrderId;
     @Condition(match=Match.EQ)
@@ -68,12 +69,12 @@ public class ShowOffDetail extends AbsDrModel {
     @Condition(match=Match.EQ)
     private String deliveryAddr;
 
-    public String getOrderId() {
-        return orderId;
+    public String getShowOffId() {
+        return showOffId;
     }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
+    public void setShowOffId(String showOffId) {
+        this.showOffId = showOffId;
     }
 
     public String getPurchaseOrderId() {

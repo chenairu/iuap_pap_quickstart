@@ -2,15 +2,14 @@
 package com.yonyou.iuap.example.controller;
 
 import com.yonyou.iuap.baseservice.controller.GenericAssoController;
-import com.yonyou.iuap.baseservice.vo.GenericAssoVo;
 import com.yonyou.iuap.example.entity.ShowOff;
-import com.yonyou.iuap.example.service.ShowOffService;
+import com.yonyou.iuap.example.entity.ShowOffDetail;
 import com.yonyou.iuap.example.entity.ShowOffSub;
+import com.yonyou.iuap.example.service.ShowOffDetailService;
+import com.yonyou.iuap.example.service.ShowOffService;
 import com.yonyou.iuap.example.service.ShowOffSubService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -19,6 +18,7 @@ public class ShowOffAssoController extends GenericAssoController<ShowOff> {
 
     private ShowOffService service;
     private ShowOffSubService showOffSubService;
+    private ShowOffDetailService showOffDetailService;
 
     /**
      * 注入主表service
@@ -36,6 +36,17 @@ public class ShowOffAssoController extends GenericAssoController<ShowOff> {
     public void setShowOffSubService(ShowOffSubService subService) {
         this.showOffSubService = subService;
         super.setSubService(ShowOffSub.class,subService);
+        ;
+    }
+
+
+    /**
+     * 注入子表ShowOffDetailService
+     */
+    @Autowired
+    public void setShowOffDetailService(ShowOffDetailService subService) {
+        this.showOffDetailService = subService;
+        super.setSubService(ShowOffDetail.class,subService);
     }
 
 

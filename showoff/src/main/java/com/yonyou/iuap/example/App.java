@@ -26,7 +26,6 @@ public class App {
 
         detail.setConfirmTime("2019-09-09");
         detail.setConfirmUser("sys");
-        detail.setOrderId("uuid");
         detail.setOrderItem(12);
 
 
