@@ -69,7 +69,7 @@ public class SanyOrderService extends GenericBpmService<SanyOrder>{
                 userName =InvocationInfoProxy.getUsername();
             }
             //title
-            String title = userName + "提交的【工单】,单号 是" + entity.getBpmBillCode() + ", 请审批";
+            String title = userName + "提交的单据,单号 是" + entity.getBpmBillCode() + ", 请审批";
             bpmform.setTitle(title);
 
             // 单据id
