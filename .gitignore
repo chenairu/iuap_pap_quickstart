@@ -12,8 +12,7 @@ buildNumber.properties
 !/.mvn/wrapper/maven-wrapper.jar
 
 /.settings/  
-/target/  
-demo/
+/target/
 # built application files  
 *.apk  
 *.ap_  
@@ -77,3 +76,6 @@ fabric.properties
 */pom.xml
 overlays
 
+src/main/java/com/yonyou/iuap/train/*
+src/main/resources/mybatis/mysql/TrainSaleOrderMapper.xml
+src/main/resources/mybatis/mysql/TrainSaleOrderSubMapper.xml

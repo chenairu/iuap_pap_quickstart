@@ -344,6 +344,19 @@
 			<version>20080701</version>
 	    </dependency>
 
+        <dependency>
+            <groupId>com.yonyou.iuap</groupId>
+            <artifactId>iuap-generic</artifactId>
+            <version>
+                3.1.0-RC003
+            </version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.data</groupId>
+                    <artifactId>spring-data-commons</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     </dependencies>
 
     <distributionManagement>

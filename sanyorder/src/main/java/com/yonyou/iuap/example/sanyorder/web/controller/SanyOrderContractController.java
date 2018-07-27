@@ -1,6 +1,7 @@
 package com.yonyou.iuap.example.sanyorder.web.controller;
 
 import com.yonyou.iuap.baseservice.controller.GenericExController;
+import com.yonyou.iuap.context.InvocationInfoProxy;
 import com.yonyou.iuap.example.sanyorder.entity.SanyOrderContract;
 import com.yonyou.iuap.example.sanyorder.service.SanyOrderContractService;
 import com.yonyou.iuap.mvc.annotation.FrontModelExchange;
@@ -21,6 +22,7 @@ public class SanyOrderContractController extends GenericExController<SanyOrderCo
 
     @Autowired
     public void setSanyOrderContractService(SanyOrderContractService service) {
+        InvocationInfoProxy.getParameter("local_serial");
         this.service = service;
         super.setService(service);
     }
