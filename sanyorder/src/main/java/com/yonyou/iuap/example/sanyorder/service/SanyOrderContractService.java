@@ -17,14 +17,4 @@ public class SanyOrderContractService extends GenericExService<SanyOrderContract
         super.setIbatisMapperEx(this.sanyOrderContractMapper);
     }
 
-    @Override
-    public SanyOrderContract insert(SanyOrderContract entity) {
-        entity.setContractCode(entity.getBpmBillCode());//编码code生成
-        return super.insert(entity);
-    }
-    @Override
-    public SanyOrderContract save(SanyOrderContract entity) {
-        entity.setContractCode(entity.getBpmBillCode());//编码code生成
-        return super.save(entity);
-    }
 }
