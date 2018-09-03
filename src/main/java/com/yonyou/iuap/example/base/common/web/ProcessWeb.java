@@ -73,4 +73,39 @@ public class ProcessWeb implements IBPMBusinessProcessController {
         return null;
     }
 
+    @Override
+    public JsonResponse doReject(Map<String, Object> map) throws Exception {
+        return null;
+    }
+
+    @Override
+    public JsonResponse doAddSign(Map<String, Object> map) throws Exception {
+        return null;
+    }
+
+    @Override
+    public JsonResponse doDelegate(Map<String, Object> map) throws Exception {
+        return null;
+    }
+
+    @Override
+    public JsonResponse doAssign(Map<String, Object> map) throws Exception {
+        return null;
+    }
+
+    @Override
+    public JsonResponse doWithdraw(Map<String, Object> map) throws Exception {
+        return null;
+    }
+
+    @Override
+    public JsonResponse doSuspend(Map<String, Object> map) throws Exception {
+        return null;
+    }
+
+    @Override
+    public JsonResponse doActivate(Map<String, Object> map) throws Exception {
+        return null;
+    }
+
 }
